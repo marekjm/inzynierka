@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage[T1]{fontenc}
 \usepackage{scrextend}
+\usepackage{hyperref}
 % \usepackage{nameref}
 % \usepackage{showlabels}
 % \usepackage{titlesec}
@@ -51,12 +52,6 @@ Brak odporności na błędy wynika częściowo z poniższych problemów:
 \item izolacja
 \end{itemize}
 
-% \begin{labeling}{quux} % longest item goes here
-% \item [foo] Foo
-% \item [bar] Bar
-% \item [quux] Quux
-% \end{labeling}
-
 \textbf{Wykrywanie} błędów nie zawsze jest automatyczne. Programowanie defensywne, którym
 programista się broni przed błędami, wręcz oczekując ich, potrafi prowadzić do rozwlekłego kodu. \\
 Problematyczne jest również to, że w modelu manualnego wykrywania błędów to programista-klient
@@ -90,28 +85,139 @@ Threadripper (Threadripper 1950x prezentował 32 logiczne rdzenie) podkreśliło
 
 Tymczasem, wiele systemów nie jest w stanie wykorzystać potencjału programowania równoległego.
 Wykorzystanie zmiennych globalnych, brak izolacji zadań w programach, brak sposobów na łatwą realizację
-komunikacji pomiędzy tymi zadaniami - to wszystko stoi na drodze do rozwoju oprogramowania.
+komunikacji pomiędzy tymi zadaniami - to wszystko stoi na drodze do rozwoju oprogramowania\ldots
 
 % \textbf{Uwaga}: opis {\small\ldots problemu}.
 
 \section{Cele systemu}
 
+Celem jest stworzenie maszyny wirtualnej (środowiska uruchomieniowego) zapewniającej narzędzia do
+pisania niezawodnych, równoległych systemów. Maszyna wirtualna i język służący do jej programowania
+ma w możliwie dużym stopniu asystować programistę w wykorzystywaniu zasobów systemu, oraz
+izolacji zadań i obsłudze błędów.
+
 \section{Kontekst systemu}
+
+Kontekstem maszyny wirtualnej Viua VM jest oprogramowanie serwerowe wysokiej dostępności, np.
+telekomunikacyjne, diagnostyczne czy monitorujące, w tym demony systemowe.
 
 \section{Zakres systemu (funkcjonalność)}
 
+Maszyna wirtualna powinna:
+
+\begin{enumerate}
+    \item prezentować zestaw instrukcji umożliwiający pisanie nietrywialnych, i niezawodnych programów
+    \item udostępniać mechanizmy izolacji zadań, i komunikacji między nimi
+    \item udostępniać mechanizmy automatycznego zarządzania zasobami (à la RAII)
+    \item automatycznie wykrywać błędy w programach i udostępniać mechanizm ich obsługi w spójny, jednolity
+        sposób
+    \item prezentować statycznie typowany język programowania umożliwiający wykrywanie błędów na etapie
+        kompilacji
+\end{enumerate}
+
+\subsection{Model programowania VM}
+
+Model programowania Viua VM odpowiada tzw. ``modelowi aktorów''
+\footnote{Carl Hewitt; Peter Bishop; Richard Steiger (1973). ``A Universal Moduler Actor Formalism for
+Artificial Intelligence''}
+\footnote{Gul Agha (1986). ``Actors: A Model of Concurrent Computation in Distributed Systems''}
+opracowanemu w latach 70. i 80. XX wieku.
+
+Model ten został z powodzeniem zaimplementowany i wykorzystany w języku Erlang
+\footnote{\url{http://www.erlang.org/}} (w firmie Ericsson).
+Viua VM jest nowoczesną implementacją maszyny wirtualnej prezentującej model programowania oparty o model
+aktorów.
+
 \section{Wymagania jakościowe i inne}
+
+Implementacja Viua VM musi charakteryzować się wysoką jakością wykonania jeśli ma być wykorzystywana jako
+stablina podstawa do tworzenia innych systemów. Nie może w niej być miejsca na podejście typu ``laissez
+faire''; implementacja powinna być konserwatywna i zachowawcza, stawiając na pierszym miejscu poprawność i
+niezwodność.
 
 \subsection{Wymagania jakościowe}
 
+\begin{enumerate}
+    \item brak wycieków zasbów (pamięci, czasu procesora, socketów, deskryptorów plików, itp.)
+    \item brak zakleszczeń w kodzie wielowątkowym
+    \item uniemożliwienie kontynuacji wykonywania programu po wykryciu błędu bez uprzedniego obsłużenia go
+    \item uniemożliwienie zawłaszczenia maszyny przez wykonywany program (wywłaszczanie procesów)
+    \item uniemożliwienie naruszenia stabilności maszyny przez wykonywany program (np. doprowadzenie do
+        wycieku pamięci, niekontrolowanego przepełnia stosu, niekontrolowanego zamknięcia procesu, itp.)
+    \item zestaw testów gwarantujących brak regresji podczas rozwoju VM
+\end{enumerate}
+
+Wymagania dotyczące uniemożliwienia naruszenia stabilności i zawłaszczenia maszyny dotyczą jedynie programów
+pisanych w języku assemblera Viua VM tj. skompilowanych do bytecodu VM i nie wykorzystujących zewnętrznych
+(pochodzących spoza biblioteki standardowej) modułów rozszerzeń.
+
 \subsection{Wymagania wydajnościowe}
+
+\begin{enumerate}
+    \item uruchamianie wielu współpracujących, schedulerów procesów wirtualnych w celu zwiększenia
+        przepustowości logiki (lepsze wykorzystanie czasu procesora)
+    \item uruchomienie wielu schedulerów I/O w celu zwiększenia przepustowości operacji I/O
+    \item uruchomienie wielu schedulerów FFI w celu zwiększenia przepustwowośc logiki wykonywanej w modułach
+        rozszerzeń (czyli niemożliwych do wywłaszczenia przez scheduler procesów wirtualnych)
+\end{enumerate}
+
+Założeniem Viua VM nie jest osiągnięcie najwyższej możliwej wydajności. Głównym celem jest niezawodność (tj.
+wydajność może być poświęcona na rzecz poprawności, nigdy na odwrót).
+
+\subsection{Wymagania narzędziowe}
+
+W standardowej dystrybucji Viua VM powinny znajdować się następujące narzędzia:
+
+\begin{labeling}{disassembler}
+\item [\texttt{assembler}] program pozwalający na przekształcenie kodu źródłowego w języku assemblera VM
+    na bytecode (formę binarną zrozumiałą dla VM)
+\item [\texttt{disassembler}] program pozwalający na przekształcenie bytecode'u na kod źródłowy w języku assemblera VM
+\item [\texttt{kernel}] program implementujący jądro VM pozwalający na uruchamianie programów
+\item [\texttt{debugger}] program pomagający w łataniu ewentualnych błędów
+\end{labeling}
 
 \subsection{Wymagania inne}
 
+Dodatkowym wymaganiem jest prezentacja przykładowego programu (``use case'') uruchamianego na VM.
+Programem tym jest chat internetowy, podobny do IRC. Jego wymagania to:
+
+\begin{enumerate}
+    \item możliwość logowania i wylogowania dla użytkowników
+    \item możliwość pokazania listy zalogowanych użytkowników
+    \item możliwość wysłania wiadomości przez użytkownika~A do użytkownika~B
+    \item możliwość założenia kanału i wysyłania wiadomości na kanał (widocznych dla wszystkich użytkowników
+        będących członkami kanału)
+\end{enumerate}
+
 \section{Wizja konstrukcyjna}
+
+Jądro maszyny składa się z kilku podsystemów:
+
+\begin{labeling}{process manager}
+\item [scheduler IO] zarządzający operacjami I/O
+\item [scheduler VP] zarządzający wirtualnymi procesami (przydzielający czas procesora)
+\item [scheduler FFI] zarządzający wywołaniami przez FFI
+\item [loader] ładujący moduły bytecode i rozszerzeń
+\item [process manager] zarządzający zasobami procesów, przydzielający im PID, mailboxy, przechowujący status,
+    itp.
+\end{labeling}
 
 \section{Ograniczenia}
 
+Czasowe. Na wykonanie pracy inżynierskiej jest rok.
+
 \section{Słownik pojęć}
+
+\begin{labeling}{współbieżność}
+\item [RAII] (ang. \emph{Resource Acquisition Is Initialisation}) model obsługi zasobów wprowadzony w C++
+\item [współbieżność] przeplatanie wykonania kilku zadań
+\item [równoległość] wykonywanie kilku zadań w tej samej jednostce czasu
+\item [VM] (ang. \emph{Virtual Machine}) maszyna wirtualna; software'owa realizacja zestawu instrukcji
+\item [I/O] wejście-wyjście; np. operacja zapisu do pliku, bądź odczytu z socket'u
+\item [FFI] (ang. \emph{Foreign Function Interface}) interfejs umożliwiający wywoływanie z języka A funkcji
+    napisanych w języku B
+\item [scheduler] ``zarządca''; zarządza wykonywaniem pewnego rodzaju działań, dba o zapewnienie dostępności
+    zasobu dla wielu procesów
+\end{labeling}
 
 \end{document}
