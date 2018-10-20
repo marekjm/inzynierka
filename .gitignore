@@ -1,0 +1,13 @@
+# PDF that is always recompiled anyway
+*.pdf
+
+# TeX-generated files we don't need
+*.dvi
+*.log
+*.aux
+*.toc
+*.out
+
+# Ignore hidden files
+.*
+!.gitignore
