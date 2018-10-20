@@ -7,6 +7,7 @@
 \usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage[T1]{fontenc}
+\usepackage{scrextend}
 % \usepackage{nameref}
 % \usepackage{showlabels}
 % \usepackage{titlesec}
@@ -18,20 +19,12 @@
 \author{Marek Marecki}
 \title{Dokument założeń wstępnych}
 
-% \theoremstyle{definition} \newtheorem*{ob}{ob}
-% \theoremstyle{definition} \newtheorem*{lab}{lab}
-% \theoremstyle{definition} \newtheorem*{spr}{spr}
-
 \begin{document}
 
 \maketitle
 
-\begin{center}
-    Siaba daba da.
-\end{center}
-
 Praca wygenerowana w systemie \LaTeX.
-Wykorzystana wersja \LaTeX~pochodzi z pakietu:\\ \emph{TeX 3.14159265 (TeX Live 2018/Arch Linux)}.
+Wykorzystana wersja \LaTeX~pochodzi z pakietu: \emph{TeX 3.14159265 (TeX Live 2018/Arch Linux)}.
 
 \tableofcontents
 
@@ -40,10 +33,66 @@ Wykorzystana wersja \LaTeX~pochodzi z pakietu:\\ \emph{TeX 3.14159265 (TeX Live 
 \section{Opis problemu}
 \label{opis_problemu}
 
-\textbf{Uwaga}: opis {\small\ldots problemu}.
+\subsection{Problem niezawodności}
 
-% \subsection{xyz}
-% \subsubsection{xyz}
+\begin{center}
+    Tworzenie \textbf{niezawodnych} systemów jest \textbf{trudne}.
+\end{center}
+
+Zazwyczaj, im bardziej rozbudowany i skomplikowany system tym większa jest
+jego ``delikatność'' (ang. \emph{fragility}) i ``kruchość'' (ang. \emph{brittleness}).
+Obie te cechy opisują brak odporności systemu na błędy.
+
+Brak odporności na błędy wynika częściowo z poniższych problemów:
+
+\begin{itemize}
+\item wykrywanie
+\item obsługa
+\item izolacja
+\end{itemize}
+
+% \begin{labeling}{quux} % longest item goes here
+% \item [foo] Foo
+% \item [bar] Bar
+% \item [quux] Quux
+% \end{labeling}
+
+\textbf{Wykrywanie} błędów nie zawsze jest automatyczne. Programowanie defensywne, którym
+programista się broni przed błędami, wręcz oczekując ich, potrafi prowadzić do rozwlekłego kodu. \\
+Problematyczne jest również to, że w modelu manualnego wykrywania błędów to programista-klient
+odpowiada za wykrywanie błędów, a nie twórca biblioteki (który z natury rzeczy będzie miał większą
+wiedzę co może pójść nie tak).
+
+\textbf{Obsługa} błędów nie zawsze jest oczywista. Mamy tu do czynienia z podziałem na ``szkoły''
+obsługi: wyjątki, kodu błędów, czy typy pozwalające opakować błąd, np. \texttt{Maybe} (Haskell) lub
+\texttt{option} (OCaml). \\
+Problemy przy obsłudze błędów sprawia również sposób zarządzania zasobami. Jeśli nie jest
+automatyczny (np. RAII w C++) to należy się liczyć ze zwiększonym ryzykiem wycieków.
+
+\textbf{Izolacja} poszczególnych części systemu jest zazwyczaj niewystarczająca. Powoduje to
+sytuacje, w których awaria jednej części systemu powoduje awarię kolejnej części, itd. \\
+Problemem jest to, że języki nie zapewniają wystarczających narzędzi do izolowania podystemów co
+zmusza programistów do wychodzenia poza ramy języka i wykorzystywania mechanizmów systemu
+operacyjnego (np. izolowanie poprzez wieloprocesowość na systemach POSIX).
+
+\subsection{Problem równoległości}
+
+\begin{center}
+    Tworzenie \textbf{równoległych} systemów jest \textbf{trudne}.
+\end{center}
+
+Mimo iż w ostatnich czasach współbieżność jest w modzie, równoległość w dalszym ciągu pozostaje
+zagadnieniem trudnym. Możliwość pisania niezawodnych programów równoległych (tj. mogących wykonywać
+wiele czynności naraz w tej samej jednostce czasu) staje się tym ważniejsza im bardziej powszechne
+stają się systemu wieloprocesorowe.
+Wprowadzenie przez AMD w 2017 roku na rynek \textbf{konsumencki} procesorów z serii
+Threadripper (Threadripper 1950x prezentował 32 logiczne rdzenie) podkreśliło ten fakt.
+
+Tymczasem, wiele systemów nie jest w stanie wykorzystać potencjału programowania równoległego.
+Wykorzystanie zmiennych globalnych, brak izolacji zadań w programach, brak sposobów na łatwą realizację
+komunikacji pomiędzy tymi zadaniami - to wszystko stoi na drodze do rozwoju oprogramowania.
+
+% \textbf{Uwaga}: opis {\small\ldots problemu}.
 
 \section{Cele systemu}
 
