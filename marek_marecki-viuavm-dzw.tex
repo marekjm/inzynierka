@@ -169,6 +169,21 @@ bez wymogu szeregowania wiadomości (tj. wiadomość $n+1$ może dotrzeć wcześ
 
 Tak jak w CSP, wewnętrzny stan każdego aktora jest prywatny.
 
+\subsubsection{Model prezentowany przez Viua VM}
+
+Viua VM prezentuje model programowania będący syntezą cech CSP i modelu aktorów.
+
+``Aktor'' w żargonie Viua nazywany jest ``procesem''. W dalszej części pracy te terminy mogą być używane
+zamiennie, jednak częściej termin ``aktor'' będzie oznaczał rozumienie modelowe, a termin ``proces''
+rozumienie implementacyjne.
+
+Procesy w Viua VM są izolowane, wewnętrznie sekwencyjne (tj. wykonanie wewnątrz pojedynczego procesu nie
+jest równoległe), ich stan jest prywatny.
+Komunikacja odbywa się bezpośrednio między procesami na podstawie adresu, za pomocą asynchronicznej wymiany
+wiadomości bez gwarancji kolejności i dostarczenia.
+
+Ten model będzie używany w dalszej części pracy.
+
 % \textbf{Uwaga}: opis {\small\ldots problemu}.
 
 \section{Cele systemu}
@@ -300,6 +315,9 @@ Czasowe. Na wykonanie pracy inżynierskiej jest rok.
     napisanych w języku B
 \item [scheduler] ``zarządca''; zarządza wykonywaniem pewnego rodzaju działań, dba o zapewnienie dostępności
     zasobu dla wielu procesów
+\item{aktor} Jednostka przetwarzania logiki w programie działająca niezależnie od innych, komunikująca się z
+    innymi aktorami za pomocą wymiany komunikatów.
+\item{proces} Implementacja ``aktora'' wewnątrz Viua VM.
 \end{labeling}
 
 \end{document}
