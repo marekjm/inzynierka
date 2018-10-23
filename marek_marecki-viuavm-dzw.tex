@@ -87,6 +87,37 @@ Tymczasem, wiele systemów nie jest w stanie wykorzystać potencjału programowa
 Wykorzystanie zmiennych globalnych, brak izolacji zadań w programach, brak sposobów na łatwą realizację
 komunikacji pomiędzy tymi zadaniami - to wszystko stoi na drodze do rozwoju oprogramowania\ldots
 
+\subsection{Potencjalne rozwiązania}
+
+\subsubsection{Communicating Sequential Processes}
+
+Model ``communicating sequential processes'' w swojej oryginalnej
+wersji\footnote{\url{https://dl.acm.org/citation.cfm?doid=359576.359585}} z 1978 opisywał prosty język
+programowania.
+Jeśli CSP miałoby być przez nas brane pod uwagę to byłaby to właśnie wersja oryginalna. Ma ona jednak
+kilka ``wad projektowych'', które stoją w sprzeczności z wyżej wymienionymi problemami niezawodności i
+równoległości:
+
+\begin{itemize}
+\item Programy CSP opisują pewną stałą liczbę procesów. Jest to dla nas o tyle niewygodne, że liczba
+    procesów w programie jest dynamiczna; jedne ulegają awariom, inne są powoływane do życia w celu
+    obsługi zadań jakie pojawiły się w systemie.
+\item Komunikaty są wymieniane synchronicznie. Jest to bardzo wygodne jeśli chcemy uzyskać semantykę
+    synchronizacji, na zasadzie \emph{rendezvous} pomiędzy procesami wymieniającymi wiadomość.
+    Wadą tego podejścia jest jednak fakt, że proces odbiorca, z którym proces nadawca chciałby nawiązać
+    \emph{rendezvous} mógł ulec awarii (być może w trakcie trwania komunikacji) co może skutkować
+    awarią systemu jeśli proces nadawca nie byłby w stanie takiej sytuacji obsłużyć.
+\end{itemize}
+
+Wartościowe idee CSP to wewnętrzna sekwencyjność każdego z procesów i możliwość wymiany informacji
+\textbf{jedynie} za pomocą komunikatów. Zapewnia to dobrą izolację stanu każdego procesu, co ułatwia
+wnioskowanie o zachowaniu każdego procesu z osobna i pozwala na budowanie systemów ze sprawdzonych
+części.
+
+\subsubsection{Calculus of communicating systems}
+\subsubsection{$\pi$-calculus}
+\subsubsection{Actor model}
+
 % \textbf{Uwaga}: opis {\small\ldots problemu}.
 
 \section{Cele systemu}
