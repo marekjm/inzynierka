@@ -142,7 +142,27 @@ dyskusji o przedstawionym rozwiązaniu projektu.
 
 \subsubsection{Actor model}
 
+Prawdopodobnie najbardziej znany (obok CSP) model. Zaprezentowany w 1973 przez Carla Hewitta, omawiany
+również przez Gula Aghę w 1985, i wielu innych aż do dziś.
 
+Model aktorów jest najbardziej ``elastyczny'' ze wszystkich tu wymienionych:
+
+\begin{itemize}
+\item Ilość aktorów w systemie jest zmienna.
+\item Komunikacja między nimi jest asynchroniczna.
+\item Reakcje na otrzymane komunikaty dynamiczne (aktor może każdorazowo podjąć decyzję jak zareagować
+    na otrzymaną wiadomość).
+\end{itemize}
+
+Oprócz solidnych podwalin teoretycznych, model aktorów został również sprawdzony w praktyce; m.in. jest
+podstawą języka Erlang\footnote{\url{http://www.erlang.org}}.
+
+Istotną zaletą modelu aktorów jest semantyka przekazywania komunikatów: odbywa się to bezpośrednio pomiędzy
+aktorami na podstawie adresów aktorów (inaczej niż w CSP, gdzie wiadomości są kierowane do kanałów; tak jak
+jest to realizowane m.in. przez język Go\footnote{\url{https://golang.org/}}), asynchronicznie, i
+bez wymogu szeregowania wiadomości (tj. wiadomość $n+1$ może dotrzeć wcześniej niż wiadomość $n$).
+
+Tak jak w CSP, wewnętrzny stan każdego aktora jest prywatny.
 
 % \textbf{Uwaga}: opis {\small\ldots problemu}.
 
