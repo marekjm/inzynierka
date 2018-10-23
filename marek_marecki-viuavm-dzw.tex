@@ -91,9 +91,10 @@ komunikacji pomiędzy tymi zadaniami - to wszystko stoi na drodze do rozwoju opr
 
 \subsubsection{Communicating Sequential Processes}
 
-Model ``communicating sequential processes'' w swojej oryginalnej
-wersji\footnote{\url{https://dl.acm.org/citation.cfm?doid=359576.359585}} z 1978 opisywał prosty język
-programowania.
+Model ``communicating sequential
+processes''\footnote{\url{https://en.wikipedia.org/wiki/Communicating_sequential_processes}}
+w swojej oryginalnej wersji\footnote{\url{https://dl.acm.org/citation.cfm?doid=359576.359585}} z 1978
+opisywał prosty język programowania.
 Jeśli CSP miałoby być przez nas brane pod uwagę to byłaby to właśnie wersja oryginalna. Ma ona jednak
 kilka ``wad projektowych'', które stoją w sprzeczności z wyżej wymienionymi problemami niezawodności i
 równoległości:
@@ -114,8 +115,28 @@ Wartościowe idee CSP to wewnętrzna sekwencyjność każdego z procesów i moż
 wnioskowanie o zachowaniu każdego procesu z osobna i pozwala na budowanie systemów ze sprawdzonych
 części.
 
-\subsubsection{Calculus of communicating systems}
+\subsubsection{Calculus of Communicating Systems}
+
+Zaprezentowany przez Robina Millera koło 1980 CSS służy do modelowania komunikacji między dwoma
+procesami. Może być też używany do analizy poprawności systemów współbieżnych (np. zakleszczeń).
+
+Nie jest to implementowalny język programowania, a narzędzie do analizy i oceny modeli i systemów.
+Z tego powodu nie będzie brany pod uwagę w innym zakresie niż dyskusja o przedstawionym finalnym
+rozwiązaniu projektu.
+
 \subsubsection{$\pi$-calculus}
+
+$\pi$-calculus jest kolejnym modelem autorstwa Robina Millera (tym razem współpracowali z nim
+Joachim Parrow i David Walkier). Został zaprezentowany w 1992 roku.
+
+Podobnie jak CCS, $\pi$-calculus służy do wnioskowania i opisu właściwości systemu, zamiast być
+bazą do stworzenia języka programowania. Mógłby być wykorzystany jedynie jako bazowy model interakcji
+pomiędzy procesami, wyrażenie fundamentalnych mechanizmów komunikacji zapewnianych przez omawiany
+język.
+
+W związku z tym, podobnie jak CCS, nie będzie brany pod uwagę w innym charakterze niż narzędzie do
+dyskusji o przedstawionym rozwiązaniu projektu.
+
 \subsubsection{Actor model}
 
 % \textbf{Uwaga}: opis {\small\ldots problemu}.
