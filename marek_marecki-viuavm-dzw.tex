@@ -235,7 +235,7 @@ niezwodność.
 \subsection{Wymagania jakościowe}
 
 \begin{enumerate}
-    \item brak wycieków zasbów (pamięci, czasu procesora, socketów, deskryptorów plików, itp.)
+    \item brak wycieków zasobów (pamięci, czasu procesora, socketów, deskryptorów plików, itp.)
     \item brak zakleszczeń w kodzie wielowątkowym
     \item uniemożliwienie kontynuacji wykonywania programu po wykryciu błędu bez uprzedniego obsłużenia go
     \item uniemożliwienie zawłaszczenia maszyny przez wykonywany program (wywłaszczanie procesów)
@@ -276,15 +276,17 @@ W standardowej dystrybucji Viua VM powinny znajdować się następujące narzęd
 \subsection{Wymagania inne}
 
 Dodatkowym wymaganiem jest prezentacja przykładowego programu (``use case'') uruchamianego na VM.
-Programem tym jest chat internetowy, podobny do IRC. Jego wymagania to:
+Programem tym jest chat internetowy Viua Chat, działający jako aplikacja internetowa, dostępna poprzez przeglądarkę. Podstawowy zakres funkcjonalności Viua Chat przewiduje:
 
 \begin{enumerate}
     \item możliwość logowania i wylogowania dla użytkowników
-    \item możliwość pokazania listy zalogowanych użytkowników
-    \item możliwość wysłania wiadomości przez użytkownika~A do użytkownika~B
-    \item możliwość założenia kanału i wysyłania wiadomości na kanał (widocznych dla wszystkich użytkowników
-        będących członkami kanału)
+    \item prymitywny system uprawnień administrator-nieadministrator
+    \item obecność oddzielnych kanałów - pokojów, do których mogą dołączać użytkownicy, a w obrębie których wiadomości są widoczne dla wszystkich użytkowników obecnych w pokoju
+    \item możliwość wysyłki prywatnych wiadomości bezpośrednio od użytkownika A do użytkownika B, widocznych wyłącznie dla tych użytkowników
+    \item podstawowe narzędzia administracyjne: tworzenie i usuwanie pokojów, wyrzucanie użytkowników z pokojów i z serwera
 \end{enumerate}
+
+Wymiana wiadomości pomiędzy interfejsem a aplikacją serwerową chatu będzie odbywać się z użyciem protokołu WebSocket. 
 
 \section{Wizja konstrukcyjna}
 
