@@ -1,4 +1,4 @@
-all: marek_marecki-viuavm-dzw.pdf
+all: viuavm-dzw.pdf
 
 .PHONY: watch
 
