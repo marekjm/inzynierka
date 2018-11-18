@@ -24,3 +24,4 @@ clean:
 	rm *.aux || true
 	rm *.toc || true
 	rm *.out || true
+	rm *.synctex.gz || true
