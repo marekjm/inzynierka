@@ -1,0 +1,217 @@
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+
+
+
+\setcounter{secnumdepth}{4}
+
+%% Author and title
+% \author{Marek Marecki \and Gr.52c \and Kod: 95 \and 2017\slash2018-2019}
+\author{Marek Marecki \and Krzysztof Franek}
+\title{%
+    Proving viability of Viua VM \\
+    \large Implementation of high-level language on Viua VM and\\
+    deployment of simple a application \\
+    ~\\
+    Wstępny Plan Projektu}
+
+\begin{document}
+
+\maketitle
+{\footnotesize
+\begin{center}
+  \begin{tabular}{ | l | l | l | }
+    \hline
+    \parbox[t]{6.5cm}{\textbf{Temat pracy i akronim projektu:}\\Proving viablity of Viua VM (VVIA)} & \parbox[t]{4.5cm}{\textbf{Zleceniodawca:}\\\colorbox{yellow}{Nieznany}} & \parbox[t]{4.5cm}{\textbf{Konsultant:}\\\colorbox{yellow}{Nieznany}} \\ \hline
+    \parbox[t]{6.5cm}{\textbf{Zespół projektowy:}\\Krzysztof Franek, Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Opiekun projektu:}\\dr hab. Marek A. Bednarczyk, prof. PJWSTK} \\ \hline
+    \parbox[t]{3.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \multicolumn{2}{|l|}{\parbox[t]{9cm}{\textbf{Odpowiedzialny za dokument:}\\Krzysztof Franek}} \\ 
+    \hline
+  \end{tabular}
+\end{center}
+}
+
+Celem dokumentu jest określenie założeń projektu (cele, zakres, ograniczenia, priorytety), przedstawienie wizji docelowego rozwiązania – kształtu systemu i strategii procesu wytwórczego oraz opisanie poszczególnych etapów, przedstawienie harmonogramu prac projektowych i konstrukcyjnych.
+
+Praca wygenerowana w systemie \LaTeX.
+
+\section{Założenia projektu}
+
+\subsection{Cel projektu}
+        
+Celem projektu jest umożliwienie programistom łatwego wytwarzania niezawodnych, współbieżnych aplikacji. W drodze do jego osiągnięcia, zespół projektowy musi zrealizować cele pośrednie, jakimi są:
+
+\begin{enumerate}
+	\item Dostarczenie udokumentowanego środowiska wytwórczego z dedykowanym językiem wysokiego poziomu, którego składnia wymusi tworzenie aplikacji o należytym poziomie izolacji procesów dzięki zastosowaniu modelu aktorów;
+	\item Dostarczenie kompilatora i środowiska uruchomieniowego, pozwalającego na zachowanie przenośności utworzonych aplikacji pomiędzy różnymi architekturami
+\end{enumerate}
+    
+\subsection{Zakres projektu}
+
+W zakresie opisywanego projektu zostały zawarte:
+
+\begin{enumerate}
+	\item Sporządzenie pełnej dokumentacji projektowej;
+    \item Wykonanie szkicu języka wysokiego poziomu ViuAct, stosującego model aktorów;
+    \item Przygotowanie testowych programów i ostatecznej składni języka ViuAct
+    \item Przygotowanie kompilatora ViuAct do języka asemblera Viua VM
+    \item Przetestowanie ww. kompilatora, w tym poprawności skompilowanego kodu i wydajności wynikowych programów;
+    \item Zaplanowanie i zaprojektowanie aplikacji przykładowej – serwera czatu;
+    \item Uzupełnienie maszyny wirtualnej Viua VM o biblioteki zewnętrzne, ułatwiające przygotowanie serwera czatu
+    \item Wytworzenie aplikacji serwera czatu z użyciem języka ViuAct;`
+    \item Testy i poprawki do aplikacji serwera czatu.
+\end{enumerate}
+
+\subsection{Spodziewane produkty}
+
+Zespół oczekuje, że w trakcie realizacji projektu dojdzie do wytworzenia następujących produktów:
+
+\begin{enumerate}
+    \item Szkice struktur języka ViuAct wraz z programami przykładowymi;
+    \item Kompletny, prawidłowy opis składni języka ViuAct;
+    \item Programy testowe, umożliwiające przetestowanie kompilatora języka ViuAct;
+    \item Kompilator języka ViuAct do języka asemblera maszyny Viua VM;
+    \item Kod źródłowy aplikacji serwera czatu, sporządzony w języku ViuAct;
+    \item Przypadki testowe dla aplikacji serwera czatu;
+    \item Maszyna wirtualna Viua VM, uzupełniona o biblioteki zewnętrzne przydatne dla utworzenia aplikacji serwera czatu;
+    \item Dokumentacja projektowa;
+    \item Praca dyplomowa.
+\end{enumerate}
+
+\subsection{Kontekst biznesowy i udziałowcy}
+
+Zidentyfikowano następujących udziałowców projektu:
+
+\begin{enumerate}
+	\item Uczestników;
+    \item Opiekuna;
+    \item Recenzentów;
+    \item Technologię maszyny Viua VM, dostępną w chwili rozpoczęcia projektu.
+\end{enumerate}
+
+Wyznaczono również użytkowników, którzy mają docelowo korzystać z produktów projektu:
+
+\begin{enumerate}
+	\item \textbf{Programista} – jest to osoba, która będzie wytwarzać aplikacje przy użyciu narzędzi, jakie dostarczy projekt. Oczekuje, że składnia języka będzie czytelna i prosta, a kompilator oraz środowisko uruchomieniowe przejmą od niego część obowiązków związanych z wykrywaniem i obsługą błędów. Chce, aby programy były stabilne.
+    \item \textbf{Odbiorca} – jest to osoba, która uruchamia program przygotowany przez programistę. Chce, aby aplikacje były wydajne, stabilne i niezawodne, niezależnie od środowiska, w którym będzie je uruchamiał
+\end{enumerate}
+
+\subsection{Uwarunkowania i ograniczenia}
+
+W pierwszej kolejności, należy wymienić ograniczenia, przed jakimi stoi projekt. Są to przede wszystkim okrojony skład osobowy (jedynie 2 członków) oraz krótkie terminy realizacji, szczególnie w porównaniu do zakresu projektu.
+
+Projekt, w przeciwieństwie do innych, inżynierskich prac dyplomowych, nie proponuje konkretnego rozwiązania problemu w postaci gotowej aplikacji, ale próbuje dostarczyć narzędzi do odnajdywania takich rozwiązań, poprzez zastosowanie stabilnych mechanizmów współbieżności. Stąd przeniesienie środka ciężkości pracy z typowych procesów wytwórczych na rozważania o charakterze badawczym. Serwer czatu jest jedynie pretekstem do tych rozważań, a także dowodem ich słuszności.
+
+\subsection{Założenia strategii}
+
+\subsection{Priorytety}
+
+\emph{Wśród celów projektu, priorytet projektu}
+
+\subsection{Projekty powiązane i partnerzy zewnętrzni}
+
+\emph{Jeśli realizowany projekt jest fragmentem jakieś większego projektu (jego zamkniętą funkcjonalnością, modułem) lub kiedy do jego prawidłowego / pełnego działania współpraca z innymi projektami jest konieczna / wymagana / zalecana}
+
+\subsection{Analiza ryzyka}
+
+\emph{Ocena głównych zagrożeń – zalecane przedstawienie w formie tabel(i) lub punktów – poprzez wskazanie: czynników ryzyka, głównych zagrożeń i i ich kontekstu (zakresu), prawdopodobieństwa wystąpienia oraz możliwych skutków zdarzenia, ich wpływu na projekt, planowane przeciwdziałania}
+
+\section{Wizja rozwiązania}
+
+\emph{Zakładany kształt systemu i organizacja działania}
+
+\subsection{Zakres systemu}
+
+\emph{Główne funkcjonalności lub usługi; także zadania, wymagane dla ich dostarczenia}
+
+\subsection{Rozwiązania techniczne}
+
+\emph{systemu, koncepcja, standardy, technologia}
+
+\subsection{Technologia i zamierzone środowisko}
+
+\emph{Docelowe, wytwórcze}
+
+\section{Proces wytwarzania}
+
+\emph{dobór strategii wytwarzania (patrz poniższe podpunkty)}
+
+\subsection{Strategia prowadzenia prac}
+
+\emph{wskazanie wg jakiej strategii będzie prowadzony projekt; dyskusja alternatywnych rozwiązań;; punkt powinien być zakończony uzasadnionym wyborem strategii prowadzenia prac}
+
+\subsection{Proces wytwórczy}
+
+\emph{szczegółowe opisanie wybranej strategii procesu, etapy procesu, cele, zadania, powiązania, produkty, miary}
+
+\subsubsection{Nazwa etapu/zadania}
+
+\emph{należy dla każdego etapu określić: cele, produkty etapu, główne zadania, miary oceny i kryteria akceptacji; wskazanie potencjalnych zagrożeń realizacji etapu; zasady zapewnienia jakości i zarządzania.Jeśli projekt realizowany bez podziału na kilka etapów powyższe musi być wyspecyfikowane tylko jeden raz dla całego projektu.}
+
+\subsection{Zapewnianie jakości}
+
+\emph{Zasady przyjęte w celu zapewnienia wysokiej jakości oprogramowania}
+
+\section{Infrastruktura}
+
+\emph{technologia, narzędzia, środowisko i ich dostępność; dopasowanie infrastuktury do przyjętych założeń i procesu wytwórczego}
+
+\subsection{Zakładane zasoby}
+
+\emph{Czym dysponujemy? Co jest nieodzowne? Co musimy pozyskać?; praca ludzka; środki materialne (trwałe, nietrwałe tj.: zasoby sprzętowe, specyficzny sprzęt, zasoby programowe, narzędzia, infrastuktura; środki niematerialne (wiedza, doświadczenie); usługi; pieniądze; czas}
+
+\subsection{Organizacja zespołu, odpowiedzialności}
+
+\emph{struktura organizacyjną projektu: kierownik, zespół, odpowiedzialności; zależność od specyfiki projektu (np. wdrożeniowego)}
+
+\subsection{Infrastruktura techniczna}
+
+\emph{Środowiska wytwarzania i integracji oprogramowania, także - zarządzania projektem}
+
+\subsection{Infrastruktura komunikacyjna}
+
+\emph{Przyjęte zasady komunikacji w zespole, z klientem i in. udziałowcami}
+
+\subsection{Infrastruktura dokumentacyjna}
+
+\emph{Zasady raportowania i dokumentacji}
+
+\section{Ramowy harmonogram}
+
+\subsection{Ograniczenia i uwarunkowania}
+
+\subsection{Zadania i produkty}
+
+\emph{Zadania i proodukty projektu w zgodzie z p. 3.}
+
+\subsection{Oszacowanie czasu i czasu realizacji etapów}
+
+\emph{Ramowy plan projektu}
+
+\subsection{Harmonogram projektu (wykres Gantt’a)}
+
+\emph{Powiązania zadań, oszacowania czasowe; etapy realizacji i produkty ‘w czasie’}
+
+\section{Słownik}
+
+\begin{labeling}{model aktorów}
+    \item [model aktorów] model przetwarzania współbieżnego, opierający się na podstawowych strukturach, nazywanych „aktorami”, posiadających swój własny prywatny stan i porozumiewających się pomiędzy sobą za pomocą komunikatów
+    \item [ViuAct] język wysokiego poziomu, oparty o modelu aktorów, kompilowany do języka asemblera Viua VM
+    \item [Viua VM] maszyna wirtualna, umożliwiająca uruchamianie programów wykorzystujących współbieżność
+\end{labeling}
+
+\end{document}
