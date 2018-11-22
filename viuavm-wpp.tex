@@ -66,13 +66,12 @@ W zakresie opisywanego projektu zostały zawarte:
 
 \begin{enumerate}
 	\item Sporządzenie pełnej dokumentacji projektowej;
-    \item Wykonanie szkicu języka wysokiego poziomu ViuAct, stosującego model aktorów;
-    \item Przygotowanie testowych programów i ostatecznej składni języka ViuAct
-    \item Przygotowanie kompilatora ViuAct do języka asemblera Viua VM
+    \item Przygotowanie składni języka wysokiego poziomu ViuAct, stosującego model aktorów;
+    \item Przygotowanie kompilatora ViuAct do języka asemblera Viua VM;
     \item Przetestowanie ww. kompilatora, w tym poprawności skompilowanego kodu i wydajności wynikowych programów;
     \item Zaplanowanie i zaprojektowanie aplikacji przykładowej – serwera czatu;
     \item Uzupełnienie maszyny wirtualnej Viua VM o biblioteki zewnętrzne, ułatwiające przygotowanie serwera czatu
-    \item Wytworzenie aplikacji serwera czatu z użyciem języka ViuAct;`
+    \item Wytworzenie aplikacji serwera czatu z użyciem języka ViuAct;
     \item Testy i poprawki do aplikacji serwera czatu.
 \end{enumerate}
 
@@ -120,22 +119,39 @@ Projekt, w przeciwieństwie do innych, inżynierskich prac dyplomowych, nie prop
 
 \subsection{Priorytety}
 
-\emph{Wśród celów projektu, priorytet projektu}
+Zespół ustalił następujące priorytety projektowe:
+
+\begin{itemize}
+	\item \textbf{Użytkowe} - możliwość kompilowania programów napisanych w języku ViuAct, dzięki zaimplementowaniu modelu aktorów, do programów nadających się do wykonania w maszynie wirtualnej Viua VM;
+	\item \textbf{Jakościowe} - skompilowane programy powinny zachowywać się w sposob stabilny i współbieżny, tj. być wolne od wycieków zasobów, nie kontynuować pracy po wykryciu błedu bez jego uprzedniego obsłużenia a także zawłaszczenia maszyny;
+	\item \textbf{Czasowe} - prototyp kompilatora ViuAct powinien funkcjonować pod koniec pierwszego semestru zajęć, zaś aplikacja czatu powinna być gotowa do oddania najpóźniej na przedostatnim zjeździe drugiego semestru.
+\end{itemize}
 
 \subsection{Projekty powiązane i partnerzy zewnętrzni}
 
-\emph{Jeśli realizowany projekt jest fragmentem jakieś większego projektu (jego zamkniętą funkcjonalnością, modułem) lub kiedy do jego prawidłowego / pełnego działania współpraca z innymi projektami jest konieczna / wymagana / zalecana}
+Do zrealizowania zadań, jakie postawił przed sobą zespół projektowy, niezbędne jest wykorzystanie maszyny wirtulanej Viua VM, autorstwa jednego z uczestników przedsięwzięcia, Marka Mareckiego. Dzięki innowacyjnemu podejsciu do zarządzania pamięcią oraz implementacji wielowątkowości na poziomie kodu bajtowego, maszyna ta została jednogłośnie wybrana jako podstawa do dalszych prac.
+
+Co istotne, sama konstrukcja kodu źródłowego maszyny Viua VM przewiduje rozbudowę o dodatkowe, zewnętrzne biblioteki, pisane nie tylko w natywnym kodzie maszynowym, ale również w języku C, co też może zostać wykorzystane do uzupełnienia środowiska uruchomieniowego o biblioteki przydatne przy realizacji przykładowego serwera czatu i ograniczyć pracę związaną z implementacją najbardziej fundamentalnych funkcjonalności.
+
 
 \subsection{Analiza ryzyka}
-
-\emph{Ocena głównych zagrożeń – zalecane przedstawienie w formie tabel(i) lub punktów – poprzez wskazanie: czynników ryzyka, głównych zagrożeń i i ich kontekstu (zakresu), prawdopodobieństwa wystąpienia oraz możliwych skutków zdarzenia, ich wpływu na projekt, planowane przeciwdziałania}
+ 
+{\footnotesize
+\begin{tabular}{ l l l l l l }
+	\hline
+	Lp & Czynnik ryzyka & Zagrożenia & Prawdopodob. & \parbox[t]{3.0cm}{Skutki i wpływ na projekt} & Plan przeciwdziałania \\ \hline
+	1 & \parbox[t]{3.0cm}{Konieczność dzielenia prywatnego czasu z pracą dyplomową} & \parbox[t]{3.0cm}{Nieukończenie poszczeglnych faz projektu w ustalonych terminach} & Wysokie & \parbox[t]{3.0cm}{Nieosiągnięcie zamierzonych celów, opóźnienie terminu obrony pracy} & \parbox[t]{3.0cm}{Cotygodniowe, wspólne podsumowania postępów prac} \\	\hline
+	2 & \parbox[t]{3.0cm}{Bliskośść terminu realizacji projektu} & \parbox[t]{3.0cm}{Niedopasowanie złożoności poszczególnych faz do czasowych możliwości} & Średnie & \parbox[t]{3.0cm}{Nieosiągnięcie zamierzonych celów, opóźnienie terminu obrony pracy} & \parbox[t]{3.0cm}{Stopniowanie wymagań i wyznaczenie priorytetów, na wypadek mniejszej ilości czasu} \\	\hline
+	3 & \parbox[t]{3.0cm}{Brak stabilnej wersji Viua VM w dniu rozpoczęcia prac} & \parbox[t]{3.0cm}{Nieoczekiwane problemy podczas kompilacji i wykonywania skompilowanych programów} & Średnie & \parbox[t]{3.0cm}{Opóźnienia i niemożność zrealizowania podstawowych celów projektu} & \parbox[t]{3.0cm}{Udział Viua VM Na wszystich etapach opracowywania kompilatora ViuAct;\\Programy testowe stosowane na wszystkich etapach tworzenia kompilatora} \\	\hline
+	4 & \parbox[t]{3.0cm}{Tworzenie oprogramowania w nowym, nietestowanym uprzednio języku oprogramowania} & \parbox[t]{3.0cm}{Nieoczekiwane błędy wynkające z nietestowanych wcześniej złożeń konstrukcji językowych} & Średnie & \parbox[t]{3.0cm}{Opóźnienia i niemożność zrealizowania demonstracyjnego serwera czatu} & \parbox[t]{3.0cm}{Planowana } \\	\hline
+\end{tabular}
+}
 
 \section{Wizja rozwiązania}
 
-\emph{Zakładany kształt systemu i organizacja działania}
-
 \subsection{Zakres systemu}
 
+Środowisko wytwórcze
 \emph{Główne funkcjonalności lub usługi; także zadania, wymagane dla ich dostarczenia}
 
 \subsection{Rozwiązania techniczne}
