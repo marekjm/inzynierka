@@ -150,25 +150,42 @@ Co istotne, sama konstrukcja kodu źródłowego maszyny Viua VM przewiduje rozbu
 
 \subsection{Zakres systemu}
 
-Język ViuAct powinien obejmować następujące struktury:
+Język ViuAct powinien oferować, między innymi, następujące funkcjonalności:
 
 \begin{itemize}
-	\item Deklaracje zmiennych i funkcji (\emph{let});
-	\item Sekwencyjne wywołania funkcji;
-	\item Tworzenie nowych procesów (\emph{process})
-	\item Prostą instrukcję warunkową (\emph{if})
+	\item Definicje zmiennych
+    \item Definicje funkcji
+    \item Definicje modułów
+    \item Wywołania funkcji (w tym wywołania rekurencji ogonowej, tzw. \emph{tail-calls})
+    \item Mechanizm tworzenia nowych procesów (aktorów)
+	\item Instrukcja warunkowa (\emph{if})
 	\item Instrukcje do prowadzenia komunikacji pomiędzy procesami (\emph{send}, \emph{receive});
-	\item Instrukcja rekurencji ogonowej (\emph{tailcall})
-	\item \colorbox{yellow}{Uzupełnić}
+    \item Podstawowe typy danych: liczba całkowita, liczba zmiennoprzecinkowa, napis, wartość boolowska
+    \item Złożony typ danych: wektor
+	\item Mechanizm tworzenia struktur danych zdefiniowanych przez programistę
 \end{itemize}
 
-Kompilator powinien przeprowadzać pełny proces kompilaci, obejmujący:
+Kompilator powinien przeprowadzać pełny proces kompilacji, obejmujący:
+
 \begin{itemize}
 	\item Analizę leksykalną i składniową
-	\item Serializację do formy pośredniej
-	\item Przekształcenie z formy pośredniej do kodu wynikowego
-	\item Rejestrowanie i zwracanie błędów na poszczególnych etapach, ze wskazaniem miejsca i źródeł błędów
+    \item Przetworzenie kodu źródłowego na formę pośrednią, wygodną w obróbce
+    \item Przetworzenie formy pośredniej na kod w języku assemblera Viua VM
+	\item Rejestrowanie i zwracanie błędów na poszczególnych etapach
 \end{itemize}
+
+Powyższy proces nie zakłada etapu optymalizacji programów.
+Sprawdzenie programu pod kątem poprawności (spójności typów, obecności wymaganych funkcji, poprawnej ilości
+parametrów, itd.) jest w większości delegowane do assemblera Viua VM, który jest w stanie te operacje
+przeprowadzić.
+
+Z uwagi na krótki czas na realizację projektu przy jednoczesnym dużym zakresie wymaganych prac, zespół nie
+jest w stanie duplikować funkcjonalności na poziomie kompilatora i assemblera.
+
+Wymienione wyżej punkty są jedynie wstępnym zarysem języka, a prezentowane końcowo funkcjonalności mogą
+odbiegać od tego co tutaj przedstawiono. Szczegółowy, i wiążący, opis języka (tj. składnia, dozwolone
+konstrukcje, oferowane typy danych, dostęp do mechanizów IO, itd.) będzie zawarty w osobnym dokumencie -
+specyfikacji języka ViuAct.
 
 \subsection{Rozwiązania techniczne}
 
