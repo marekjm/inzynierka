@@ -162,7 +162,13 @@ Język ViuAct powinien obejmować następujące struktury:
 	\item \colorbox{yellow}{Uzupełnić}
 \end{itemize}
 
-Kompilator, oprócz głównej części odpowiadającej za sam proces kompilacji, powinien mieć 
+Kompilator powinien przeprowadzać pełny proces kompilaci, obejmujący:
+\begin{itemize}
+	\item Analizę leksykalną i składniową
+	\item Serializację do formy pośredniej
+	\item Przekształcenie z formy pośredniej do kodu wynikowego
+	\item Rejestrowanie i zwracanie błędów na poszczególnych etapach, ze wskazaniem miejsca i źródeł błędów
+\end{itemize}
 
 \subsection{Rozwiązania techniczne}
 
