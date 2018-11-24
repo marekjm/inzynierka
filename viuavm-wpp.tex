@@ -56,7 +56,7 @@ Praca wygenerowana w systemie \LaTeX.
 Celem projektu jest umożliwienie programistom łatwego wytwarzania niezawodnych, współbieżnych aplikacji. W drodze do jego osiągnięcia, zespół projektowy musi zrealizować cele pośrednie, jakimi są:
 
 \begin{enumerate}
-	\item Dostarczenie udokumentowanego środowiska wytwórczego z dedykowanym językiem wysokiego poziomu, którego składnia wymusi tworzenie aplikacji o należytym poziomie izolacji procesów dzięki zastosowaniu modelu aktorów;
+	\item Dostarczenie udokumentowanego środowiska wytwórczego z dedykowanym językiem wysokiego poziomu, którego semantyka wymusi tworzenie aplikacji o należytym poziomie izolacji procesów dzięki zastosowaniu modelu aktorów;
 	\item Dostarczenie kompilatora i środowiska uruchomieniowego, pozwalającego na zachowanie przenośności utworzonych aplikacji pomiędzy różnymi architekturami
 \end{enumerate}
     
@@ -80,13 +80,12 @@ W zakresie opisywanego projektu zostały zawarte:
 Zespół oczekuje, że w trakcie realizacji projektu dojdzie do wytworzenia następujących produktów:
 
 \begin{enumerate}
-    \item Szkice struktur języka ViuAct wraz z programami przykładowymi;
     \item Kompletny, prawidłowy opis składni języka ViuAct;
     \item Programy testowe, umożliwiające przetestowanie kompilatora języka ViuAct;
     \item Kompilator języka ViuAct do języka asemblera maszyny Viua VM;
     \item Kod źródłowy aplikacji serwera czatu, sporządzony w języku ViuAct;
     \item Przypadki testowe dla aplikacji serwera czatu;
-    \item Maszyna wirtualna Viua VM, uzupełniona o biblioteki zewnętrzne przydatne dla utworzenia aplikacji serwera czatu;
+    \item Biblioteki zewnętrzne maszyny wirtualnej Viua VM, przydatne dla utworzenia aplikacji serwera czatu;
     \item Dokumentacja projektowa;
     \item Praca dyplomowa.
 \end{enumerate}
@@ -129,9 +128,9 @@ Zespół ustalił następujące priorytety projektowe:
 
 \subsection{Projekty powiązane i partnerzy zewnętrzni}
 
-Do zrealizowania zadań, jakie postawił przed sobą zespół projektowy, niezbędne jest wykorzystanie maszyny wirtulanej Viua VM, autorstwa jednego z uczestników przedsięwzięcia, Marka Mareckiego. Dzięki innowacyjnemu podejsciu do zarządzania pamięcią oraz implementacji wielowątkowości na poziomie kodu bajtowego, maszyna ta została jednogłośnie wybrana jako podstawa do dalszych prac.
+Do zrealizowania zadań, jakie postawił przed sobą zespół projektowy, niezbędne jest wykorzystanie maszyny wirtulanej Viua VM, autorstwa jednego z uczestników przedsięwzięcia, Marka Mareckiego. Dzięki innowacyjnemu podejściu do zarządzania pamięcią oraz implementacji wielowątkowości na poziomie kodu bajtowego, maszyna ta została jednogłośnie wybrana jako podstawa do dalszych prac.
 
-Co istotne, sama konstrukcja kodu źródłowego maszyny Viua VM przewiduje rozbudowę o dodatkowe, zewnętrzne biblioteki, pisane nie tylko w natywnym kodzie maszynowym, ale również w języku C, co też może zostać wykorzystane do uzupełnienia środowiska uruchomieniowego o biblioteki przydatne przy realizacji przykładowego serwera czatu i ograniczyć pracę związaną z implementacją najbardziej fundamentalnych funkcjonalności.
+Co istotne, sama konstrukcja kodu źródłowego maszyny Viua VM przewiduje rozbudowę o dodatkowe, zewnętrzne biblioteki, pisane nie tylko w natywnym kodzie maszynowym, ale również w języku C++, co też może zostać wykorzystane do uzupełnienia środowiska uruchomieniowego o biblioteki przydatne przy realizacji przykładowego serwera czatu i ograniczyć pracę związaną z implementacją najbardziej fundamentalnych funkcjonalności.
 
 
 \subsection{Analiza ryzyka}
@@ -141,9 +140,9 @@ Co istotne, sama konstrukcja kodu źródłowego maszyny Viua VM przewiduje rozbu
 	\hline
 	Lp & Czynnik ryzyka & Zagrożenia & Prawdopodob. & \parbox[t]{3.0cm}{Skutki i wpływ na projekt} & Plan przeciwdziałania \\ \hline
 	1 & \parbox[t]{3.0cm}{Konieczność dzielenia prywatnego czasu z pracą dyplomową} & \parbox[t]{3.0cm}{Nieukończenie poszczeglnych faz projektu w ustalonych terminach} & Wysokie & \parbox[t]{3.0cm}{Nieosiągnięcie zamierzonych celów, opóźnienie terminu obrony pracy} & \parbox[t]{3.0cm}{Cotygodniowe, wspólne podsumowania postępów prac} \\	\hline
-	2 & \parbox[t]{3.0cm}{Bliskośść terminu realizacji projektu} & \parbox[t]{3.0cm}{Niedopasowanie złożoności poszczególnych faz do czasowych możliwości} & Średnie & \parbox[t]{3.0cm}{Nieosiągnięcie zamierzonych celów, opóźnienie terminu obrony pracy} & \parbox[t]{3.0cm}{Stopniowanie wymagań i wyznaczenie priorytetów, na wypadek mniejszej ilości czasu} \\	\hline
+	2 & \parbox[t]{3.0cm}{Bliskość terminu realizacji projektu} & \parbox[t]{3.0cm}{Niedopasowanie złożoności poszczególnych faz do czasowych możliwości} & Średnie & \parbox[t]{3.0cm}{Nieosiągnięcie zamierzonych celów, opóźnienie terminu obrony pracy} & \parbox[t]{3.0cm}{Stopniowanie wymagań i wyznaczenie priorytetów, na wypadek mniejszej ilości czasu} \\	\hline
 	3 & \parbox[t]{3.0cm}{Brak stabilnej wersji Viua VM w dniu rozpoczęcia prac} & \parbox[t]{3.0cm}{Nieoczekiwane problemy podczas kompilacji i wykonywania skompilowanych programów} & Średnie & \parbox[t]{3.0cm}{Opóźnienia i niemożność zrealizowania podstawowych celów projektu} & \parbox[t]{3.0cm}{Udział Viua VM Na wszystich etapach opracowywania kompilatora ViuAct;\\Programy testowe stosowane na wszystkich etapach tworzenia kompilatora} \\	\hline
-	4 & \parbox[t]{3.0cm}{Tworzenie oprogramowania w nowym, nietestowanym uprzednio języku oprogramowania} & \parbox[t]{3.0cm}{Nieoczekiwane błędy wynkające z nietestowanych wcześniej złożeń konstrukcji językowych} & Średnie & \parbox[t]{3.0cm}{Opóźnienia i niemożność zrealizowania demonstracyjnego serwera czatu} & \parbox[t]{3.0cm}{Planowana } \\	\hline
+	4 & \parbox[t]{3.0cm}{Tworzenie oprogramowania w nowym, nietestowanym uprzednio języku oprogramowania} & \parbox[t]{3.0cm}{Nieoczekiwane błędy wynkające z nietestowanych wcześniej złożeń konstrukcji językowych} & Średnie & \parbox[t]{3.0cm}{Opóźnienia i niemożność zrealizowania demonstracyjnego serwera czatu} & \parbox[t]{3.0cm}{Utworzenie kompletnej i wewnętrznie spójnej specyfikacji języka przed podjęciem prac programistycznych} \\	\hline
 \end{tabular}
 }
 
@@ -151,8 +150,19 @@ Co istotne, sama konstrukcja kodu źródłowego maszyny Viua VM przewiduje rozbu
 
 \subsection{Zakres systemu}
 
-Środowisko wytwórcze
-\emph{Główne funkcjonalności lub usługi; także zadania, wymagane dla ich dostarczenia}
+Język ViuAct powinien obejmować następujące struktury:
+
+\begin{itemize}
+	\item Deklaracje zmiennych i funkcji (\emph{let});
+	\item Sekwencyjne wywołania funkcji;
+	\item Tworzenie nowych procesów (\emph{process})
+	\item Prostą instrukcję warunkową (\emph{if})
+	\item Instrukcje do prowadzenia komunikacji pomiędzy procesami (\emph{send}, \emph{receive});
+	\item Instrukcja rekurencji ogonowej (\emph{tailcall})
+	\item \colorbox{yellow}{Uzupełnić}
+\end{itemize}
+
+Kompilator, oprócz głównej części odpowiadającej za sam proces kompilacji, powinien mieć 
 
 \subsection{Rozwiązania techniczne}
 
