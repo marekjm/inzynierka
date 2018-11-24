@@ -193,6 +193,40 @@ specyfikacji języka ViuAct.
 
 \subsection{Technologia i zamierzone środowisko}
 
+\subsubsection{Środowisk wytwórcze i docelowe dla kompilatora}
+
+Środowisko wytwórcze i docelowe to dowolna dystrybucja systemu Linux wydana w ciągu ostatnich 4 lat (tzn.
+późniejsza niż rok 2014). Jest to uwarunkowane tym, że maszyna wirtualna Viua VM będąca podstawą projektu
+wykorzystuje w części swojej implementacji mechanizmy standardu POSIX (np. dostęp do zmiennych środowiskowych,
+pobieranie danych losowych z systemu). Teoretycznie, możliwe byłoby więc założenie, że środowisko wytwórcze i
+docelowe to dowolny system zgodny z POSIX (czyli np. Mac OS, FreeBSD, OpenBSD, itd.) jednak z uwagi na
+ograniczone zasoby przeznaczone na projekt nie byłoby możliwe przetestowanie pracy na wielu platformach.
+
+Dla środowiska wytwórczego musi istnieć port kompilatora GCC (w wersji 6 lub wyższej) lub Clang (w wersji 6
+lub wyższej). Jest to wymagane, gdyż kompilatory w starszych wersjach nie implementują pełnego standardu
+C++17, który jest wymagany do kompilacji Viua VM.
+
+Środowisko wytwórcze i docelowe musi posiadać bibliotekę glibc (w wersji 2.28 lub nowszej).
+
+Dla środowiska wytwórczego musi istnieć port GNU Make (w wersji 4.2.1 lub wyższej). Zakładane jest również
+istnienie standardowych narzędzi dostępnych w nowoczesnej dystrybucji systemu unixopodobnego (np. grep, sed,
+xargs).
+
+Obsługiwane architektury procesora fizycznego to x86 i ARM, przy czym zakłada się wariant 64-bitowy tych
+architektur, oraz model procesora wyprodukowany po 2012 roku. Obsługa architektury ARM nie jest testowana tak
+dokładnie jak architektury x86 i może zostać usunięta, jeśli okaże się, że koszt takiego wsparcia będzie zbyt
+wysoki.
+
+Środowisko wytwórcze musi być wyposażone w co najmniej 16GB pamięci RAM (w przeciwnym przypadku kompilacja
+Viua VM może się nie powieść jeśli zostanie wybrany najwyższy poziom optymalizacji).
+
+Środowisko wytwórcze i docelowe musi posiadać port interpretera CPython (w wersji 3.6 lub wyższej). To
+wymaganie może ulec zmianie. Prototyp kompilatora jest napisany w języku Python 3.6. Jeśli zasoby czasowe
+okażą się niewystarczające na przepisanie prototypu, zostanie on awansowany do wersji produkcyjnej, a to
+wymaganie będzie wiążące.
+
+\subsubsection{Środowisk wytwórcze i docelowe dla aplikacji czatu}
+
 \emph{Docelowe, wytwórcze}
 
 \section{Proces wytwarzania}
