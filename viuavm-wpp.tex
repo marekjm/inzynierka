@@ -142,7 +142,7 @@ Co istotne, sama konstrukcja kodu źródłowego maszyny Viua VM przewiduje rozbu
 	1 & \parbox[t]{3.0cm}{Konieczność dzielenia prywatnego czasu z pracą dyplomową} & \parbox[t]{3.0cm}{Nieukończenie poszczeglnych faz projektu w ustalonych terminach} & Wysokie & \parbox[t]{3.0cm}{Nieosiągnięcie zamierzonych celów, opóźnienie terminu obrony pracy} & \parbox[t]{3.0cm}{Cotygodniowe, wspólne podsumowania postępów prac} \\	\hline
 	2 & \parbox[t]{3.0cm}{Bliskość terminu realizacji projektu} & \parbox[t]{3.0cm}{Niedopasowanie złożoności poszczególnych faz do czasowych możliwości} & Średnie & \parbox[t]{3.0cm}{Nieosiągnięcie zamierzonych celów, opóźnienie terminu obrony pracy} & \parbox[t]{3.0cm}{Stopniowanie wymagań i wyznaczenie priorytetów, na wypadek mniejszej ilości czasu} \\	\hline
 	3 & \parbox[t]{3.0cm}{Brak stabilnej wersji Viua VM w dniu rozpoczęcia prac} & \parbox[t]{3.0cm}{Nieoczekiwane problemy podczas kompilacji i wykonywania skompilowanych programów} & Średnie & \parbox[t]{3.0cm}{Opóźnienia i niemożność zrealizowania podstawowych celów projektu} & \parbox[t]{3.0cm}{Udział Viua VM Na wszystich etapach opracowywania kompilatora ViuAct;\\Programy testowe stosowane na wszystkich etapach tworzenia kompilatora} \\	\hline
-	4 & \parbox[t]{3.0cm}{Tworzenie oprogramowania w nowym, nietestowanym uprzednio języku oprogramowania} & \parbox[t]{3.0cm}{Nieoczekiwane błędy wynkające z nietestowanych wcześniej złożeń konstrukcji językowych} & Średnie & \parbox[t]{3.0cm}{Opóźnienia i niemożność zrealizowania demonstracyjnego serwera czatu} & \parbox[t]{3.0cm}{Utworzenie kompletnej i wewnętrznie spójnej specyfikacji języka przed podjęciem prac programistycznych} \\	\hline
+	4 & \parbox[t]{3.0cm}{Tworzenie oprogramowania w nowym, nietestowanym uprzednio języku oprogramowania} & \parbox[t]{3.0cm}{Nieoczekiwane błędy wynikające z nietestowanych wcześniej złożeń konstrukcji językowych} & Średnie & \parbox[t]{3.0cm}{Opóźnienia i niemożność zrealizowania demonstracyjnego serwera czatu} & \parbox[t]{3.0cm}{Utworzenie kompletnej i wewnętrznie spójnej specyfikacji języka przed podjęciem prac programistycznych} \\	\hline
 \end{tabular}
 }
 
@@ -182,9 +182,9 @@ przeprowadzić.
 Z uwagi na krótki czas na realizację projektu przy jednoczesnym dużym zakresie wymaganych prac, zespół nie
 jest w stanie duplikować funkcjonalności na poziomie kompilatora i assemblera.
 
-Wymienione wyżej punkty są jedynie wstępnym zarysem języka, a prezentowane końcowo funkcjonalności mogą
+Wymienione wyżej punkty są jedynie wstępnym zarysem języka, a prezentowane końcowe funkcjonalności mogą
 odbiegać od tego co tutaj przedstawiono. Szczegółowy, i wiążący, opis języka (tj. składnia, dozwolone
-konstrukcje, oferowane typy danych, dostęp do mechanizów IO, itd.) będzie zawarty w osobnym dokumencie -
+konstrukcje, oferowane typy danych, dostęp do mechanizmów IO, itd.) będzie zawarty w osobnym dokumencie -
 specyfikacji języka ViuAct.
 
 \subsection{Rozwiązania techniczne}
@@ -227,35 +227,186 @@ wymaganie będzie wiążące.
 
 \subsubsection{Środowisk wytwórcze i docelowe dla aplikacji czatu}
 
-\emph{Docelowe, wytwórcze}
+Jako środowisko wytwórcze dla aplikacji czatu wybrano dwa przenośne komputery (laptopy).
+
+\textbf{Komputer A} to komputer przenośny z procesorem Intel Core i5 oraz systemem operacyjnym Windows 10,
+wyposażony w pakiet oprogramowania JetBrains WebStorm oraz PhpStorm. Pakiet wyselekcjonowano z uwagi
+na bogaty pakiet narzędzi, wspomagających praktyczną realizację \textit{frontendu} aplikacji ViuaChat.
+Był on również objęty licencją studencką, co pozwoliło wyeliminować koszty zakupu.
+
+Ponadto, na komputerze A zainstalowano zestaw XAMPP 7.2.7, obejmujący serwer Apache 2.4 oraz interpreter 
+języka PHP w wersji 7.2.7. Wybór został podjęty przede wszystkim z uwagi na prostotę instalacji i
+uruchomienia - docelowo, zestaw ma być wykorzystywany do uruchamiania prostych skryptów w języku
+PHP, pozwalających na zasymulowanie komunikacji \textit{frontendu} czatu z podstawionym \textit{backendem},
+dzięki zestawowi prostych skryptów PHP, a tym samym - przetestowanie i rozwój \textit{frontendu}, 
+niezależnie od tempa prac nad kompilatorem języka ViuAct oraz nad docelową, \textit{backendową} częścią 
+serwera, stworzoną w tym języku.
+
+\textbf{Komputer B} to komputer przenośny, na którym zainstalowano system operacyjny Linux Mint 19 
+,,Tara'', GNU Compiler Collection 8.2 (ostatnia stabilna wersja w dniu instalacji), a ponadto maszynę
+wirtualną Viua VM w wersji 0.9.0. Komputer ten został przeznaczony do przyszłych prac nad 
+\textit{backendem} ViuaChat w jezyku ViuAct. Ma również być drugą maszyną, która pozwoli praktyczne
+działanie czatu z wieloma użytkownikami, łączacymi się z różnych urządzeń.
+
+Ponadto, na obu komputerach zainstalowano edytor Texmaker oraz kompilator MiKTeX, aby prowadzić
+dokumentację projektową oraz sporządzać pracę dyplomową. W celu koordynacji i śledzenia postępu
+system wersjonowania Git.
 
 \section{Proces wytwarzania}
 
-\emph{dobór strategii wytwarzania (patrz poniższe podpunkty)}
-
 \subsection{Strategia prowadzenia prac}
+Przed przystąpieniem do prac, zespół przeanalizował kilka różnych strategii realizacji oprogramowania, wśród których znalazły się m.in.:
+\begin{itemize}
+	\item \textbf{Modele fazowe}, takie jak przyrostowo-kaskadowy oraz ,,V'', dobre przy określonych z góry wymaganiach 
+	oraz możliwości zużycia większych nakładów, nadające się do utrzymywania oprogramowania w odpowiedniej jakości, w praktyce - najlepszy przy niewielkich projektach;
+	\item \textbf{Model prototypowy}, dopasowany do przedsięwzięć, przy których klient nie jest w stanie wyraźić w sposób jednoznaczny swoich wymagań i należy je sformułować dopiero na etapie realizacji, nadaje się również doskonale w sytuacjach, w których należy zademonstrować działanie systemu, jego wewnętrzną spójność i prawidłowość;
+	\item \textbf{Modele lekkie} inaczej zwinne (z ang. \textit{agile}), powszechne we współczesnych przedsiębiorstwach IT, kładące nacisk na szybkie dostarczanie oprogramowania w niewielkich odstępach czasu, szybką adaptację do zmian oraz brak ścisłej specyfikacji czy sztywnego projektu architektury.
+\end{itemize}
 
-\emph{wskazanie wg jakiej strategii będzie prowadzony projekt; dyskusja alternatywnych rozwiązań;; punkt powinien być zakończony uzasadnionym wyborem strategii prowadzenia prac}
+Aby uniknąć chaosu oraz skupić się na efektywnej pracy, należało możliwie szybko zawężyć zakres rozważanych strategii. W podjęciu decyzji pomogły zespołowi liczne przesłanki. 
+
+Projekt dyplomowy można uznać niejako za złożenie dwóch \textit{podprojektów}: pierwszego związanego z ViuAct oraz drugiego, obejmującego chat ViuaChat. Charakter obu z nich jest zgoła odmienny, podobnie jak doświadczenie członków zespołu, desygnowanych do ich urzeczywistnienia. W przypadku ViuAct, składnia języka jest z góry przewidziana i ukształtowana przez twórcę maszyny ViuaVM, doświadczonego w konstruowaniu kompilatorów. Zakres funkcjonalny nowego języka wysokiego poziomu, jak i środowiska wytwórczego, które z nim powiązano, są dość klarownie sprecyzowane i nie ulegną zasadniczym zmianom. Tymczasem, w przypadku czatu ViuaChat, osoba odpowiedzialna za jego utworzenie, skupi się na licznych aspektach funkcjonalnych, znanych z bardziej konwencjolanych zagadnień z inżynierii oprogramowania. O ile wyjściowy katalog funkcjonalności przewidzianych dla czatu jest znany, o tyle może on ulegać z czasem stopniowej ewolucji.
+
+Kolejnym ważnym aspektem jest zdeterminowanie harmonogramu projektu przez dwa kamienie milowe, mianowicie prezentację prototypów przypadającą na ukończenie semestru zimowego oraz obrona pracy dyplomowej u schyłku semestru letniego. Należało zatem tak zsynchronizować pracę obu członków zespołu oraz rozplanować tempo rozwoju obu \textit{podprojektów}, aby oba z nich mogły być realizowane w sposób maksymalnie równoległy, przy uwzględnieniu charakteru każdego z nich.
 
 \subsection{Proces wytwórczy}
 
-\emph{szczegółowe opisanie wybranej strategii procesu, etapy procesu, cele, zadania, powiązania, produkty, miary}
+Po burzliwej dyskusji, członkowie zespołu projektowego zadecydowali kolegialnie o poprowadzenie projektu w dwóch
+różnych, ale prowadzonych równolegle, strategiach wytwórczych:
 
-\subsubsection{Nazwa etapu/zadania}
+\begin{enumerate}
+	\item Kompilator języka ViuAct będzie prowadzony samodzielnie przez Marka Mareckiego strategią prototypowania, wspieranego autorską techniką \textit{issue tracking}
+	\item Czat ViuaChat bedzie rozwijany przez Krzysztofa Franka strategią mini-Scrumu, zorganizowanego przy użyciu techniki Kanban;
+\end{enumerate}
 
-\emph{należy dla każdego etapu określić: cele, produkty etapu, główne zadania, miary oceny i kryteria akceptacji; wskazanie potencjalnych zagrożeń realizacji etapu; zasady zapewnienia jakości i zarządzania.Jeśli projekt realizowany bez podziału na kilka etapów powyższe musi być wyspecyfikowane tylko jeden raz dla całego projektu.}
+Główna strategia, zastosowania podczas wytwarzania kompilatora języka ViuAct - prototypowanie - została 
+wybrana intuicyjnie. Ponieważ p. Marecki dysponował już wcześniej 
+doświadczeniem i wiedzą na temat budowy kompilatorów, zdecydował się na napisanie modelu programowego w
+języku wysokiego poziomu - Pythonie. Uznał bowiem, że tworzenie kompilatora nowego języka jest wyzwaniem 
+ryzykownym przede wszystkim z perspektywy spójności nowatorskiej składni i zastosowanych w niej rozwiązań, a nie 
+implementacji powtarzalnych elementów, wspólnych dla większości kompilatorów, takich preprocesor czy parser.
+
+\textit{\textbf{Issue tracking}} jest to technika, opracowana przez kierownika projektu, Marka Mareckiego, podczas
+realizacji zadania w ramach przedmiotu Budowa i Integracja Systemów (BYT). Decyzja była podyktowana niewielkim
+rozmiarem zespołu oraz uznaniem metod zwinnych za zbyt obciążające pod względem tworzonej dokumentacji w proporcji 
+do kodu. Za inspirację do jej opracowania posłużyły praktyki popularne wśród twórców wolnego oprogramowania z 
+otwartym kodem źródłowym, aktywnych na serwisach takich jak GitHub czy GitLab. Zasadniczymi artefaktami tej 
+metodologii są \textbf{zadania} (ang. \textit{issue}), ustawiane na \textbf{liście zadań}. Projekt rozpoczyna się 
+od wytworzenia zadań i umieszczenia ich na liście, a następnie polega na cyklicznej realizacji poniższych kroków:
+
+\begin{enumerate}
+	\item Wybierz pierwsze zadanie na liście, możliwe do zrealizowania na obecnym etapie projektu;
+	\item Zrealizuj zadanie;
+	\item Utwórz i dodaj do listy nowe zadania, które ujawniły się w trakcie realizacji zadania;
+	\item Zamknij zadanie;
+\end{enumerate}
+
+P. Marecki opracował dla strategii \textit{issue trackingu} osobne narzędzie o nazwie Issue, ułatwiające
+śledzenie i zarządzanie zadaniami.
+
+Dla czatu ViuaChat, Krzysztof Franek, odpowiedzialny za tę część projektu, wybrał strategię mini-Scrum. Jest to
+wariant techniki Scrum, korzystający z tych podobnych wydarzeń (Sprint, Planowanie Sprintu, Przegląd Sprintu, 
+Retrospektywa Sprintu), tych samych artefaktów (Backlog Produktu, Backlog Sprintu, Przyrost) i niektórych ról 
+(Właściciel Produktu, Zespół Deweloperski). 
+
+Podstawową zaletą tej metodyki działania był podział zadań na mniejsze fragmenty, a także możliwość łatwego 
+planowania i nadzorowania tempa prac poprzez obserwowanie wykresu wypalania produktu. Umówiono się, że rolę 
+właściciela produktu (ang. \textit{product owner}) będzie pełnił p. Marecki, zaś w rolę zespołu deweloperskiego 
+wcieli się p. Franek. Z powodu mało licznego zespołu, w metodologi mini-Scrum dokonano pewnych uproszczeń w 
+stosunku do oryginalnego modelu Scruma, zaproponowanego przez Kena Schwabera i Jeffa Sutherlanda. Zrezygnowano 
+z codziennych scrumów (ang. \textit{daily scrums}), z uwagi na nieregularny charakter prac (uczestnicy projektu
+studiują w trybie zaocznym i realizują zadania w czasie wolnym od pracy), a także z odrębnej roli \textit{scrum 
+mastera}.
+
+Dodatkowo, jako technikę prowadzenia Sprintów mini-Scruma wybrano Kanban, w ramach którego każda z historyjek 
+w Sprincie będzie
+umieszczana w postaci ,,karteczki'' na wirtualnej tablicy i przemieszczana pomiędzy jej kolumnami, wraz z
+ich kolejnymi etapami realizacji. Przewidziano następujące kolumny: ,,Do zrobienia'', ,,W realizacji'', ,,W 
+testowaniu'', ,,Zrealizowano'', a także dodatkową, odrębną kolumnę, w charakterze Backlogu Produktu.
+
+Oprogramowanie zaproponowane do utrzymywania mini-Scruma dla ViuaChat to Trello, umożliwiające łatwe
+zaimplementowanie techniki Kanban, rejestrowanie czasu pracy oraz integrację z najpopularniejszymi
+dostarczycielami repozytoriów Git.
+
+\subsubsection{Pierwszy etap - kamień milowy}
+Celem tego etapu projektu jest przygotowanie gruntu pod efektywne przygotowanie kompilatora wraz z programem
+czatu, oraz zaprezentowanie postępu prac nad projektem inżynierskim jako całością. Termin realizacji
+tego kamienia milowego przypada na 8 zjazd 7 semestru, czyli 9 luty 2019 roku.
+
+Aby osiągnąć ten cel, z obu \textit{podprojektów} wyekstrahowano części nadające się na zaprezentowanie
+w charakterze prototypów. Uznano, że produktami pierwszego etapu prac powinny być:
+\begin{enumerate}
+	\item Dla języka ViuAct i jego kompilatora:
+		\begin{enumerate}
+			\item kompletna definicja języka ViuAct w notacji EBNF,
+			\item pełni funkcjonalny model programowy (prototyp) kompilatora, napisany w języku Python,
+			\item zestawem testowych, demonstracyjnych fragmentów kodu w języku ViuAct (w tym co najmniej 
+			jeden, eksponujący zastosowanie języka w programowaniu współbieżnym);
+		\end{enumerate}
+	\item Dla czatu ViuaChat:
+		\begin{enumerate}
+			\item działający \textit{frontend} aplikacji czatu, działającej w przeglądarce,
+			\item zestaw skryptów opracowanych w języku PHP, stanowiących makietę przyszłego, właściwego serwera czatu.
+		\end{enumerate}
+\end{enumerate}
+
+Jak wcześniej opisano, za rozwój języka i kompilatora ViuAct będzie odpowiadał p. Marecki, którego zadaniem 
+będzie opracowanie produktów na nim wymaganych. Z kolei, w przypadku czatu ViuaChat, kod źródłowy (zarówno 
+\textit{frontendu}, jak i makiety serwera czatu) zostanie sporządzony przez p. Franka pod nadzorem p. Mareckiego.
+
+Techniki zapewniania jakości prototypu kompilatora opisano w dalszej części oprogramowania. Z kolei w przypadku
+oprogramowania ViuaChat, dla każdej z historyjek został przewidziany dodatkowy etap testu, zanim zostanie
+oznaczona jako ,,ukończona'' (jest to element zindywidualizowanej definicji ukończenia, o której mowa w metodyce 
+Scrum).
+
+Dodatkowym zadaniem, spadającym na Krzysztofa Franka, jest przygotowanie listy bibliotek rozszerzeń, o które
+powinna zostać uzupełniona maszyna wirtualna ViuaVM, aby przyspieszyć prace nad serwerem czatu w języku
+ViuAct w kolejnym etapie prac.
+
+Każdy z członków zespołu realizuje swoje zadania w dużej mierze autonomicznie, przy czym przewidywane są co
+najmniej raz w tygodniu spotkania (online lub osobiście), podczas których będą podsumowywane postępy prac.
+
+\subsubsection{Drugi etap - finalizacja projektu}
+
+Celem tego etapu projektu jest osiągnięcie głównych celów projektu, tj.:
+\begin{enumerate}
+	\item Dla języka ViuAct i jego kompilatora:
+		\begin{enumerate}
+			\item w pełni funkcjonalny kompilator, napisany w języku Erlang;
+		\end{enumerate}
+	\item Dla czatu ViuaChat:
+		\begin{enumerate}
+			\item w pełni funkcjonalna aplikacja serwera czatu.
+		\end{enumerate}
+\end{enumerate}
+Termin realizacji tej części projektu (a tym samym jego całości) przypada na 7 zjazd 8 semestru, czyli 25 
+maja 2019 roku. Metody zarządzania jakością oraz zasady współpracy nie ulegną zmianie.
+
+W razie, gdyby realizacja tego etapu była zagrożona z uwagi na opóźnienia w pierwszym kamieniu milowym,
+przewidziano następujące działania zastępcze:
+
+\begin{enumerate}
+	\item Dla języka ViuAct i jego kompilatora:
+		\begin{enumerate}
+			\item rezygnacja z kompilatora w języku Erlang,
+			\item skupienie się na dokończeniu lub dopracowaniu modelu programowego w języku Python;
+		\end{enumerate}
+	\item Dla czatu ViuaChat:
+		\begin{enumerate}
+			\item ograniczenie zakresu funkcjonalności czatu i priorytetyzacja historyjek,
+			\item zmiana sposobu dzielenia Sprintów,
+			\item zmiana strategii z mini-Scrum na jeszcze lżejszą.
+		\end{enumerate}
+\end{enumerate}
 
 \subsection{Zapewnianie jakości}
 
-Jakość będzie zapewniona poprzez testowanie automatyczne, sporządzanie specyfikacji i dokumentacji, oraz
-dzięki wsparciu narzędzi; np. instrumentacji programów przez kompilator i sanitisery, użycie walidatorów (np.
+Jakość  będzie zapewniona poprzez testowanie automatyczne, sporządzanie specyfikacji i dokumentacji 
+oraz dzięki wsparciu narzędzi, np. instrumentacji programów przez kompilator i sanitizery, użycie walidatorów (np.
 Valgrind).
 
-\emph{Zasady przyjęte w celu zapewnienia wysokiej jakości oprogramowania}
 
 \section{Infrastruktura}
-
-\emph{technologia, narzędzia, środowisko i ich dostępność; dopasowanie infrastuktury do przyjętych założeń i procesu wytwórczego}
 
 \subsection{Zakładane zasoby}
 
@@ -264,6 +415,7 @@ rozwojowych i badawczych:
 
 \begin{itemize}
     \item 2 PC z procesorami x86
+    \item 2 laptopy z procesorami 64 bit
     \item SoC z procesorem ARM
     \item VPS na procesorze x86; do hostowania repozytorium kodu źródłowego, dokumentacji, infrastruktury CI, oraz
         z działającym kanałem IRC
@@ -280,11 +432,12 @@ na zakres projektu oraz fakt, że podczas prac mogą wystąpić nieprzewidziane 
 założeń, trudności implementacyjne, choroba członka zespołu) jest to zasób, z którym wiąże się największe
 ryzyko.
 
-\emph{Czym dysponujemy? Co jest nieodzowne? Co musimy pozyskać?; praca ludzka; środki materialne (trwałe, nietrwałe tj.: zasoby sprzętowe, specyficzny sprzęt, zasoby programowe, narzędzia, infrastuktura; środki niematerialne (wiedza, doświadczenie); usługi; pieniądze; czas}
-
 \subsection{Organizacja zespołu, odpowiedzialności}
 
-\emph{struktura organizacyjną projektu: kierownik, zespół, odpowiedzialności; zależność od specyfiki projektu (np. wdrożeniowego)}
+Jak ustalono, kierownikiem projektu jest Marek Marecki, a jego drugim członkiem jest Krzysztof Franek.
+Podział jednak odbywa się przede wszystkim według wcześniej wspomnianych \textit{podprojektów}, tj. Marek
+Marecki odpowiada za stronę związaną z kształtem i kompilatorem języka ViuAct, zaś Krzysztof Franek
+ma za zadanie przygotować program czatu, demonstrujący użyteczność zarówno języka, jak i jego kompilatora.
 
 \subsection{Infrastruktura techniczna}
 
@@ -292,9 +445,7 @@ ryzyko.
 
 \subsection{Infrastruktura komunikacyjna}
 
-Komunikacja w zespole odbywa się poprzez kanał IRC, email, oraz na spotkaniach.
-
-\emph{Przyjęte zasady komunikacji w zespole, z klientem i in. udziałowcami}
+Komunikacja w zespole odbywa się poprzez kanał IRC, email, kanał w aplikacji Discord oraz na spotkaniach osobistych.
 
 \subsection{Infrastruktura dokumentacyjna}
 
