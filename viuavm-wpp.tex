@@ -192,8 +192,9 @@ specyfikacji języka ViuAct.
 \emph{systemu, koncepcja, standardy, technologia}
 
 \subsection{Technologia i zamierzone środowisko}
+\label{sec:finalenvironment}
 
-\subsubsection{Środowisk wytwórcze i docelowe dla kompilatora}
+\subsubsection{Środowisko wytwórcze i docelowe dla kompilatora}
 
 Środowisko wytwórcze i docelowe to dowolna dystrybucja systemu Linux wydana w ciągu ostatnich 4 lat (tzn.
 późniejsza niż rok 2014). Jest to uwarunkowane tym, że maszyna wirtualna Viua VM będąca podstawą projektu
@@ -225,7 +226,7 @@ wymaganie może ulec zmianie. Prototyp kompilatora jest napisany w języku Pytho
 okażą się niewystarczające na przepisanie prototypu, zostanie on awansowany do wersji produkcyjnej, a to
 wymaganie będzie wiążące.
 
-\subsubsection{Środowisk wytwórcze i docelowe dla aplikacji czatu}
+\subsubsection{Środowisko wytwórcze i docelowe dla aplikacji czatu}
 
 Jako środowisko wytwórcze dla aplikacji czatu wybrano dwa przenośne komputery (laptopy).
 
@@ -405,7 +406,6 @@ Jakość  będzie zapewniona poprzez testowanie automatyczne, sporządzanie spec
 oraz dzięki wsparciu narzędzi, np. instrumentacji programów przez kompilator i sanitizery, użycie walidatorów (np.
 Valgrind).
 
-
 \section{Infrastruktura}
 
 \subsection{Zakładane zasoby}
@@ -441,15 +441,29 @@ ma za zadanie przygotować program czatu, demonstrujący użyteczność zarówno
 
 \subsection{Infrastruktura techniczna}
 
+W nawiązaniu do poprzednich sekcji, w szczególności \hyperref[sec:finalenvironment]{,,Technologia i zamierzone środowisko"}, należy 
+
 \emph{Środowiska wytwarzania i integracji oprogramowania, także - zarządzania projektem}
 
 \subsection{Infrastruktura komunikacyjna}
 
-Komunikacja w zespole odbywa się poprzez kanał IRC, email, kanał w aplikacji Discord oraz na spotkaniach osobistych.
+Komunikacja w zespole odbywa się poprzez kanał IRC, pocztę elektroniczną, kanał w aplikacji Discord oraz na spotkaniach osobistych.
 
 \subsection{Infrastruktura dokumentacyjna}
 
-\emph{Zasady raportowania i dokumentacji}
+Dokumentacja bieżących postępów projektu oraz podejmowanych decyzji będzie prowadzona w postaci:
+\begin{enumerate}
+	\item Zadań \textit{issue trackingu},
+	\item Wymagań biznesowych i historyjek (ang. \textit{user stories}),
+	\item Backlogów Produktu, Backlogów Sprintu i Przyrostów.
+\end{enumerate}
+Będzie ona gromadzona lokalnie, na komputerach przeznaczonych jako środowiska wytwórcze, a ich wymiana
+pomiędzy członkami zespołu będzie następowała poprzez usługę Google Drive, stanowiącą część uczelnianego
+pakietu Google G Suite. Może mieć również postać eksportów PDF z platformy Trello.
+
+Końcowe wersje dokumentów, takie jak specyfikacja języka ViuAct czy właściwy tekst pracy dyplomowej,
+będą miały postać plików tekstowych, sporządzanych i kompilowanych z użyciem środowiska LaTeX.
+Kod źródłowy dokumentów będzie rozwijany i utrzymywany w systemie wersjonowania Git.
 
 \section{Ramowy harmonogram}
 
