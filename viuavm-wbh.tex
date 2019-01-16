@@ -10,6 +10,7 @@
 \usepackage{scrextend}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{enumitem}
 % \usepackage{nameref}
 % \usepackage{showlabels}
 % \usepackage{titlesec}
@@ -283,7 +284,66 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
   \end{tabular}
 
 
-\section{Historyjki}
+\section{Historyjki (\textit{user stories})}
 
+\subsection{Funkcjonalne}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		HF-1
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Jako użytkownik serwera czatu, chcę móc się do niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+			U-1 Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika.
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+			\begin{enumerate}
+				\item Po wejściu na czat bez rozpoczętej sesji, pokazuje się monit o podanie nazwy użytkownika.
+				\item Po wpisaniu nazwy użytkownika i zatwierdzeniu, użytkownik rozpocznie sesję na serwerze czatu.
+				\item Tuż po rozpoczęciu sesji czatu, użytkownik zobaczy listę pokojów.
+			\end{enumerate}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		HF-1
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Jako użytkownik serwera czatu, chcę móc się do niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+			U-2 Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika.
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+			\begin{enumerate}
+				\item Po wejściu na czat bez rozpoczętej sesji, pokazuje się monit o podanie nazwy użytkownika.
+				\item Po wpisaniu nazwy użytkownika i zatwierdzeniu, użytkownik rozpocznie sesję na serwerze czatu.
+				\item Tuż po rozpoczęciu sesji czatu, użytkownik zobaczy listę pokojów.
+			\end{enumerate}
+			}
+		\\
+
+	\hline
+\end{tabular}
 
 \end{document}

@@ -1,0 +1,70 @@
+Prototyp zostanie jako wersja docelowa, bo wazniejsze jest dokończenie projektu niż popisywanie się !!! 19.12.2018 r.
+
+issue:
+- Ma zagnieżdżanie - nie da się zamknąć glównego zadania bez zamknięcia podzadań
+- Workflow: Open -> Closed
+- Są opisy issues
+- Są komentarze, pokazują się jeden pod drugim
+- Jest to system rozproszony, tak jak Git.
+- Można współpracować, widzieć wzajemne komentarze
+- Mozna pracować offline
+- Pokazuje statystyki ilość zgłoszeń otwartych i zamkniętych, a także statystyki czasu życia zgłoszeń
+Narzędzie jest sprawdzone w projekach open source Marka, było używane w praktyce w jednej z firm w której pracował, jest od 3 lat sprawdzone. Jest to software skończony i gotowy.
+Biblioteka dodatkowa: RedCLAP (Redesigned Command Line Arguments Parser), też wyprobowana
+
+1) Zassać RedCLAP (/clap)
+2) make local-install
+3) Zssać Issue (/issue)
+4) make install
+4a) apt sudo install python3-pip
+4b) apt sudo install python3-distutils
+4c) pip3 install unidecode
+5) cd projekt
+6) issue index
+
+=== Data 10.09.2019 ===
+Python 3.x + maszyna
+Ułożenie tokenów według istotności - chodzi o to, w jakiej kolejności są dopasowywane i na ile są do siebie podobne, np. podobieństwo do siebie, do nazw zmiennych
+
+Etapy:
+1) Analiza leksykalna:
+  - Budowanie listy tokenów z usuwaniem whitespace/nowych linii
+  - Usuwanie komentarzy
+  // Tu jest dump listy tokenów
+  
+2) Analiza składniowa - parsowanie
+//Cała składnia języka została zaprojektowana w taki sposób, aby uprościć ten proces
+ - Grupowanie tokenów //Nic tu więcej nie analizujemy oprócz nawiasów i kropek, resztę olewasz - prosty kod z 3 if'ami
+   (1)Gdy odnajdzie nazwias otwierający, wywołuje rekurencyjnie samego siebie na następnym tokenie 
+   (2)Gdy odnajdę token nawiasu zamykającego, tworzę grupę i zwraca ją "wyżej" - >>dziel i rządź<< 
+   (3)Gdy zauważy kropkę, to może być tylko nazwa modułu, nazwa zmiennej lub grupa która zostałą wcześniej zredukowana ("id" to skomplikowana nazwa), wówczas sprawdza czy to co jest przed nim jest sklejane z tym co jest wcześniej
+ - Główne parsowanie:
+   (1)Patrzymy tylko na 1 element grupy i w ten sposób sprawdzamy, z czym mamy do czynienia
+     * Wyjątki z patrzeniem na długość listy: "let" (wprowadzenie definicji zmiennej lub funkcji), wywołanie funkcji
+   // Dzięki takiej składni języka, parsowanie jest maksymalnie uproszczone pod kątem złożoności algorytmu
+   // Pierwszym, nawyższym elementem "leader" może być wyłącznie import, moduł lub nazwa funkcji ("let" z 4 elementami)
+   // więc na początku algorytmu parsowania są tylko 4 ramiona if'a (3 możliwości i błąd)
+     * Gdy moduł - sprawdzenie czy zgadza się typ tokenu na nazwę
+                 - parsowanie kolejno elementów w grupie w 3 elemencie
+                 - obecnie ciało modułu to zwykła grupa "()"
+     * Gdy funkcja - sprawdzenie czy nazwa to odpowiedni token
+                   - czy grupa ma 4 elementy
+                   - czy kolejnym elementem jest zwykła grupa (docelowo parametry)
+                   - czy ostatnim elementem jest zwykła grupa (docelowo jedno parametryzowane wyrażenie)
+                   - parsowanie wyrażenia które jest ciałem funkcji
+   // Na etapie wykrywania typu wyrażenia zostaje również wykonana obsługa błędów pod względem konstrukcyjnym- składniowym
+   // i dzięki temu funkcje parsera odpowiadające za parsowanie konkretnych wyrażeń mają gwarancję poprawności
+   // i nie muszą same analizować tego typu błędów
+3) Kompilacja - dwa rodzaje, występujące równolegle:
+3a)Kompilacja modułu
+ - Sprawdzenie czy leader modułu jest let, module, import
+ - Lowering // czyli proces przeniesienia struktury z kodu wyższego poziomu na struktury kodu niższego poziomu
+ 
+3b)Kompilacja programu wykonywalnego 
+ 
+( := struktura.a.b.c 3)
+
+[fao|":=",[id|"struktura",".","a",".","b",".","c"],"3"]
+
+
+
