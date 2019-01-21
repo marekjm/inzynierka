@@ -144,7 +144,7 @@ typ nieprzezroczysty.
 
 \subsection{Wyrażenia}
 
-\texttt{\emph{literal}
+\texttt{expression := \emph{literal}
 | \emph{name}
 | \emph{fn-call}
 | \emph{actor-call}
@@ -152,7 +152,7 @@ typ nieprzezroczysty.
 | \emph{try-expr}
 | \emph{if-expr}}
 \\
-\texttt{\{ \emph{expression}+ \}}
+\texttt{expression := \{ \emph{expression}+ \}}
 
 \begin{lstlisting}
 42
@@ -168,19 +168,44 @@ x
 { (let x 42) (print (+ x 1)) x }
 \end{lstlisting}
 
-Wyrażenia są najmniejszą konstrukcją językową jaką udostępnia Viuact.
-Dzielą się na wyrażenia proste -- literały, wywołania funkcji w różnej formie, wyrażenia warunkowe, i wyrażenia
-obsługi wyjątków; oraz wyrażenia złożone -- kilka wyrażeń prostych zgrupowanych w nawiasach klamrowych.
-
 Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
 reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (''\emph{run-time}'')
 zależnie od wcześniejszego stanu programu.
 
-\paragraph{Wyrażenia złożone}
+Większość konstrukcji jezykowych oferowanych przez Viuact może być użyta jako wyrażenie.
+Wyjątki to definicje zmiennych, definicje funkcji, definicje modułów, i przypisanie do pola struktury.
+
+\subsubsection{Wyrażenia złożone}
+
+Wyrażenia złożone są wyrażeniami składającymi się z kilku wyrażeń ograniczonych nawiasami klamrowymi.
+Wyrażenia składowe wyrażenia złożonego są wykonywane po kolei, a końcowa wartość wyrażenia złożonego jest
+wartością ostatniego wyrażenia składowego.
+
+Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \texttt{42}:
+
+\begin{lstlisting}
+{
+    (let x 42)
+    (print x)
+    x
+}
+\end{lstlisting}
+
+Wyrażenia złożone mogą być dowolnie zagnieżdżane. Mimo iż składają się z potencjalnie wielu wyrażeń
+wyrażenia złożone są traktowane jako jedno wyrażenie -- mogą być wykorzystywane wszędzie tam gdzie składnia
+języka wymaga użycia pojedynczego wyrażenia:
+
+\begin{lstlisting}
+(let x {
+    (let z (do_stuff))
+    (print z)
+    z
+})
+\end{lstlisting}
 
 \subsection{Definicje zmiennych}
 
-\texttt{(let \emph{name} \emph{expression})}
+\texttt{let-binding := (let \emph{name} \emph{expression})}
 
 \begin{lstlisting}
 (let i 42)
@@ -188,9 +213,11 @@ zależnie od wcześniejszego stanu programu.
 (let t "Hello World!")
 \end{lstlisting}
 
+Definicje zmiennych przypisują wartości wyrażeń do nazw.
+
 \subsection{Definicje funkcji}
 
-\texttt{(let \emph{name} (\emph{formal-parameters}) \emph{expression})}
+\texttt{function-definition := (let \emph{name} (\emph{formal-parameters}) \emph{expression})}
 
 \begin{lstlisting}
 (let f (x) (+ x 1))
@@ -201,16 +228,55 @@ zależnie od wcześniejszego stanu programu.
 \end{lstlisting}
 
 \subsubsection{Parametry formalne}
+
+\texttt{formal-parameters := \emph{name}*}
+\\
+
+Parametry formalne (\emph{formal parameters}) są nazwami zmiennych widocznymi wewnątrz funkcji.
+Parametry faktyczne (\emph{actual parameters}) są wartościami przypisywanymi parametrom formalnym na etapie
+wykonania przez wywołującego.
+
 \subsubsection{Ciało funkcji}
+
+Ciało funkcji jest reprezentowane jednym wyrażeniem (może to być wyrażenie złożone).
+
 \subsubsection{Wartość zwracana}
+
+Wartość zwracana z funkcji jest wartością, do której ewaluuje wyrażenie będące jej ciałem.
+Funkcje w Viuact to parametryzowane wyrażenia.
 
 \subsection{Definicje modułów}
 
-\texttt{(module \emph{module-name} (\emph{function-definition}+))}
+\texttt{inline-module-definition := (module \emph{module-name} (
+\newline
+\phantom{inline-module-definition := ~ }\emph{module-definition}*
+\newline
+\phantom{inline-module-definition := ~ }\emph{import}*
+\newline
+\phantom{inline-module-definition := ~ }\emph{function-definition}+
+))}
+\newline
+\texttt{module-definition := (module \emph{module-name}) | \emph{inline-module-definition}}
+\newline
+
+Moduł jest zbiorem definicji modułów, deklaracji import, i definicji funkcji.
+Taka kolejność w kodzie źródłowym nie jest wymagana, ale kompilator w takiej kolejności przetwarza konstrukcje
+składające się na definicję modułu.
 
 \subsection{Wywołanie funkcji}
 
-\texttt{(\emph{name} \emph{expression}*)}
+\texttt{mod-prefix := \emph{module-name} "."}
+\newline
+\texttt{id := \emph{mod-prefix}*~\emph{name}}
+\newline
+\texttt{fn-call := (\emph{id} \emph{expression}*)}
+\newline
+
+Wywołanie funkcji jest reprezentowane przez podanie jej nazwy w nawiasach okrągłych, po której podane jest
+zero lub więcej wyrażeń, których wartości zostaną przypisane do odpowiednich parametrów formalnych.
+
+Funkcje, których definicje znajdują się w innych modułach niż aktualnie przetwarzany muszą być poprzedzone
+pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix.Network.socket}).
 
 \subsection{Wywołanie ''tailcall''}
 
