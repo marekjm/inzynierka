@@ -1,0 +1,328 @@
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+
+
+
+\setcounter{secnumdepth}{4}
+
+%% Author and title
+% \author{Marek Marecki \and Gr.52c \and Kod: 95 \and 2017\slash2018-2019}
+\author{Marek Marecki \and Krzysztof Franek}
+\title{%
+    Proving viability of Viua VM \\
+    \large Implementation of high-level language on Viua VM and\\
+    deployment of a simple application \\
+    ~\\
+    Viuact language specification}
+
+\begin{document}
+
+\lstset{language=Lisp,
+basicstyle=\ttfamily,
+columns=fixed}
+
+\maketitle
+{\footnotesize
+\begin{center}
+  \begin{tabular}{ | l | l | l | }
+    \hline
+    \parbox[t]{6.5cm}{\textbf{Temat pracy i akronim projektu:}\\Proving viablity of Viua VM (VVIA)} & \parbox[t]{4.5cm}{\textbf{Zleceniodawca:}\\\colorbox{yellow}{Nieznany}} & \parbox[t]{4.5cm}{\textbf{Konsultant:}\\\colorbox{yellow}{Nieznany}} \\ \hline
+    \parbox[t]{6.5cm}{\textbf{Zespół projektowy:}\\Krzysztof Franek, Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Opiekun projektu:}\\dr hab. Marek A. Bednarczyk, prof. PJWSTK} \\ \hline
+    \parbox[t]{3.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \multicolumn{2}{|l|}{\parbox[t]{9cm}{\textbf{Odpowiedzialny za dokument:}\\Krzysztof Franek}} \\ 
+    \hline
+  \end{tabular}
+\end{center}
+}
+
+\tableofcontents
+\newpage
+
+\section{Specyfikacja języka Viuact}
+
+\section{Model programowania}
+
+\subsection{Podział programu}
+
+Najmniejszym elementem możliwym do wykonania jest wyrażenie.
+Wyrażenia są grupowane w funkcje.
+Funkcje są zebrane w modułach.
+
+\subsection{Wykonywanie programu}
+
+Program składa się z jednego lub większej ilości ''aktorów'' (procesów).
+Aktory są izolowane od siebie nawzajem i działają równolegle (wszystkie naraz).
+
+Wewnętrznie, każdy z aktorów wykonywany jest sekwencyjnie, bez jakiejkolwiek
+współbieżności.
+
+\subsection{Komunikacja między aktorami}
+
+Aktory komunikują się ze sobą za pomocą ''wymiany wiadomości''.
+Wymiana wiadomości ma następujące cechy:
+
+\begin{enumerate}
+    \item jest asynchroniczna (nadawca nie jest blokowany do momentu aż odbiorca otrzyma
+        wiadomość)
+    \item nie daje gwarancji dostarczenia (nadawca nie ma gwarancji, że jego wiadomość
+        dotrze do odbiorcy)
+    \item nie daje gwarancji kolejności dostarczenia (nadawca nie ma gwarancji w jakiej
+        kolejności wysłane przez niego wiadomości dotrą do odbiorcy)
+\end{enumerate}
+
+Ten model wymiany wiadomości jest warunkowany faktem, że nie jest fizycznie
+możliwe zagwarantowanie poprawności komunikacji.
+
+\subsection{Obsługa błędów}
+
+Obsługa błędów jest realizowana za pomocą wyjątków. Viuact oferuje typową
+składnię \texttt{try-catch}.
+
+\newpage
+\section{Typy danych}
+
+\subsection{Typy proste}
+
+\subsubsection{Liczba całkowita}
+
+\emph{Liczba całkowita ze znakiem, o szerokości 64 bitów, kodowana z dopełnienem do
+dwóch}
+
+\subsubsection{Liczba zmiennoprzecinkowa}
+
+\emph{Liczba zmiennoprzecinkowa o szerokości 64 bitów kodowana w standardzie IEEE 754-2008}
+
+\subsubsection{Wartość boolowska}
+
+\emph{Wartość logiczna reprezentująca prawdę lub fałsz o szerokości 8 bitów}
+
+\subsubsection{Tekst}
+
+\emph{Ciąg znaków Unicode, kodowany w formacie UTF-8}
+
+\subsubsection{String}
+
+\emph{Ciąg 8-bitowych bajtów}
+
+\subsection{Typy złożone}
+
+\subsubsection{Wektor}
+
+\emph{Sekwencja wartości dowolnych typów danych, indeksowana od 0}
+
+\subsubsection{Struktura}
+
+\emph{Struktura agregująca wartości dowolnych typów danych, w której jedna
+wartość jest mapowana do jednego pola}
+
+\subsection{Typy platformy}
+
+\subsubsection{PID}
+
+\emph{Wartość identyfikująca aktora w programie}
+
+Jest to typ dostarczany przez Viua VM. Dla programów pisanych w Viuact jest to
+typ nieprzezroczysty.
+
+\newpage
+\section{Konstrukcje języka}
+
+\subsection{Wyrażenia}
+
+\texttt{expression := \emph{literal}
+| \emph{name}
+| \emph{fn-call}
+| \emph{actor-call}
+| \emph{operator-call}
+| \emph{try-expr}
+| \emph{if-expr}}
+\\
+\texttt{expression := \{ \emph{expression}+ \}}
+
+\begin{lstlisting}
+42
+true
+3.14
+"Hello World!"
+x
+(print x)
+(actor server_loop sock)
+(+ x 1)
+
+; compound expression
+{ (let x 42) (print (+ x 1)) x }
+\end{lstlisting}
+
+Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
+reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (''\emph{run-time}'')
+zależnie od wcześniejszego stanu programu.
+
+Większość konstrukcji jezykowych oferowanych przez Viuact może być użyta jako wyrażenie.
+Wyjątki to definicje zmiennych, definicje funkcji, definicje modułów, i przypisanie do pola struktury.
+
+\subsubsection{Wyrażenia złożone}
+
+Wyrażenia złożone są wyrażeniami składającymi się z kilku wyrażeń ograniczonych nawiasami klamrowymi.
+Wyrażenia składowe wyrażenia złożonego są wykonywane po kolei, a końcowa wartość wyrażenia złożonego jest
+wartością ostatniego wyrażenia składowego.
+
+Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \texttt{42}:
+
+\begin{lstlisting}
+{
+    (let x 42)
+    (print x)
+    x
+}
+\end{lstlisting}
+
+Wyrażenia złożone mogą być dowolnie zagnieżdżane. Mimo iż składają się z potencjalnie wielu wyrażeń
+wyrażenia złożone są traktowane jako jedno wyrażenie -- mogą być wykorzystywane wszędzie tam gdzie składnia
+języka wymaga użycia pojedynczego wyrażenia:
+
+\begin{lstlisting}
+(let x {
+    (let z (do_stuff))
+    (print z)
+    z
+})
+\end{lstlisting}
+
+\subsection{Definicje zmiennych}
+
+\texttt{let-binding := (let \emph{name} \emph{expression})}
+
+\begin{lstlisting}
+(let i 42)
+(let f -3.14)
+(let t "Hello World!")
+\end{lstlisting}
+
+Definicje zmiennych przypisują wartości wyrażeń do nazw.
+
+\subsection{Definicje funkcji}
+
+\texttt{function-definition := (let \emph{name} (\emph{formal-parameters}) \emph{expression})}
+
+\begin{lstlisting}
+(let f (x) (+ x 1))
+(let f_with_print (x) {
+    (print x)
+    (+ x 1)
+})
+\end{lstlisting}
+
+\subsubsection{Parametry formalne}
+
+\texttt{formal-parameters := \emph{name}*}
+\\
+
+Parametry formalne (\emph{formal parameters}) są nazwami zmiennych widocznymi wewnątrz funkcji.
+Parametry faktyczne (\emph{actual parameters}) są wartościami przypisywanymi parametrom formalnym na etapie
+wykonania przez wywołującego.
+
+\subsubsection{Ciało funkcji}
+
+Ciało funkcji jest reprezentowane jednym wyrażeniem (może to być wyrażenie złożone).
+
+\subsubsection{Wartość zwracana}
+
+Wartość zwracana z funkcji jest wartością, do której ewaluuje wyrażenie będące jej ciałem.
+Funkcje w Viuact to parametryzowane wyrażenia.
+
+\subsection{Definicje modułów}
+
+\texttt{inline-module-definition := (module \emph{module-name} (
+\newline
+\phantom{inline-module-definition := ~ }\emph{module-definition}*
+\newline
+\phantom{inline-module-definition := ~ }\emph{import}*
+\newline
+\phantom{inline-module-definition := ~ }\emph{function-definition}+
+))}
+\newline
+\texttt{module-definition := (module \emph{module-name}) | \emph{inline-module-definition}}
+\newline
+
+Moduł jest zbiorem definicji modułów, deklaracji import, i definicji funkcji.
+Taka kolejność w kodzie źródłowym nie jest wymagana, ale kompilator w takiej kolejności przetwarza konstrukcje
+składające się na definicję modułu.
+
+\subsection{Wywołanie funkcji}
+
+\texttt{mod-prefix := \emph{module-name} "."}
+\newline
+\texttt{id := \emph{mod-prefix}*~\emph{name}}
+\newline
+\texttt{fn-call := (\emph{id} \emph{expression}*)}
+\newline
+
+Wywołanie funkcji jest reprezentowane przez podanie jej nazwy w nawiasach okrągłych, po której podane jest
+zero lub więcej wyrażeń, których wartości zostaną przypisane do odpowiednich parametrów formalnych.
+
+Funkcje, których definicje znajdują się w innych modułach niż aktualnie przetwarzany muszą być poprzedzone
+pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix.Network.socket}).
+
+\subsection{Wywołanie ''tailcall''}
+
+\texttt{(tailcall \emph{name} \emph{expression}*)}
+
+\subsection{Wywołanie odroczone}
+
+\texttt{(defer \emph{name} \emph{expression}*)}
+
+\subsection{Wywołanie aktora}
+
+\texttt{(actor \emph{name} \emph{expression}*)}
+
+\subsection{Wywołanie operatora}
+
+\texttt{(\emph{operator} \emph{lhs} \emph{rhs})}
+
+\subsection{Przypisanie do pola struktury}
+
+\texttt{(:= \emph{field} \emph{expression})}
+
+\subsection{Konstrukcja warunkowa}
+
+\texttt{(if \emph{condition-expression} \emph{true-arm} \emph{false-arm})}
+
+\subsection{Obsługa wyjątków}
+
+\texttt{(try \emph{expression} (catch \emph{exception-tag} \emph{name} \emph{expression})+)}
+
+\newpage
+\section{Słownik}
+
+\begin{labeling}{model aktorów}
+    \item [model aktorów] model przetwarzania współbieżnego, opierający się na
+        podstawowych strukturach, nazywanych „aktorami”, posiadających swój
+        własny prywatny stan i porozumiewających się pomiędzy sobą za pomocą
+        komunikatów
+    \item [ViuAct] język wysokiego poziomu, oparty o modelu aktorów, kompilowany
+        do języka asemblera Viua VM
+    \item [Viua VM] maszyna wirtualna, umożliwiająca uruchamianie programów
+        wykorzystujących współbieżność
+    \item[runtime] ''\emph{środowisko uruchomieniowe}'' maszyna wirtualna bądź realna, na której
+        wykonywany jest program
+    \item[\emph{run-time}] ''\emph{czas wykonywania}'' czas, w którym program jest wykonywany przez VM;
+        przeciwieństwo \emph{compile-time}
+    \item[\emph{compile-time}] ''\emph{czas kompilacji}'' czas, w którym program jest kompilowany
+\end{labeling}
+
+\end{document}
