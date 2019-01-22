@@ -48,18 +48,26 @@
 }
 
 \section{Wprowadzenie}
+
+\subsection{Cel dokumentu}
+Celem dokumentu jest dostarczenie informacji do utworzenia rejestru zaległości produktu oraz zaplanowania rejestrów
+zaległości kolejnych sprintów, co stanowi kolejny etap procesu wytwórczego.
+
+\subsection{Zakres dokumentu}
 Niniejszy dokument jest produktem pierwszego etapu procesu wytwórczego czatu ViuaChat, na który składają się:
 \begin{itemize}
 	\item wyszczególnienie i uporządkowanie zasad biznesowych, jakie zostały założone w stosunku do aplikacji;
 	\item opracowanie historyjek na podstawie ustalonych zasad biznesowych.
 \end{itemize}
 
-Celem dokumentu jest dostarczenie informacji do utworzenia rejestru zaległości produktu oraz zaplanowania rejestrów
-zaległości kolejnych sprintów, co stanowi kolejny etap procesu wytwórczego.
-
 \textbf{Uwaga:} Niniejszy dokument nie dotyczy języka ViuAct ani jego kompilatora.
 
 Praca wygenerowana w systemie \LaTeX.
+
+\section{Czat w kontekście}
+
+\subsection{Kontekst biznesowy}
+\textit{Tu zostaną umieszczone grafiki z osobnego PDF}
 
 \section{Wymagania biznesowe}
 
@@ -317,33 +325,37 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 	\hline
 \end{tabular}
 
+\textit{Tu muszą zostać przeklejone karty z Trello}
+
+\subsection{Wymagania niefunkcjonalne}
+
 \begin{tabular}{ | l | l | }
 	\hline
 		\textbf{Identyfikator} & 
-		HF-1
+		HN-1
 		\\
 		
 	\hline
 		\textbf{Treść} & \parbox[t]{13cm}{
-			Jako użytkownik serwera czatu, chcę móc się do niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
+			Długość nazwy użytkownika jest ograniczona od 2 do 32 znaków alfanumerycznych, w celu uniknięcia problemów z identyfikacją użytkownika na serwerze.
 		}\\
 		 
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
-			U-2 Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika.
+			U-3 Nazwa użytkownika to ciąg od 3 do 32 alfanumerycznych znaków.
 		}\\
 		
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
 			\begin{enumerate}
-				\item Po wejściu na czat bez rozpoczętej sesji, pokazuje się monit o podanie nazwy użytkownika.
-				\item Po wpisaniu nazwy użytkownika i zatwierdzeniu, użytkownik rozpocznie sesję na serwerze czatu.
-				\item Tuż po rozpoczęciu sesji czatu, użytkownik zobaczy listę pokojów.
+				\item Po wpisaniu do pola użytkownika nazwy krótszej niż 2 znaki, dłużej niż 32 znaki lub zawierającej inne znaki niż alfanumeryczne, zwracany jest błąd.
 			\end{enumerate}
 			}
 		\\
 
 	\hline
 \end{tabular}
+
+\textit{Tu muszą zostać przeklejone karty z Trello}
 
 \end{document}
