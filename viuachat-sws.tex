@@ -81,8 +81,6 @@ Kolejną grupą adresatów niniejszego dokumentu są pracownicy uczelni, odpowie
 \begin{description}
   \item[Pokój] Współdzielony czat, do którego dostęp ma równocześnie wielu uczestników, widzących nawzajem wysyłane przez siebie wiadomości
   \item[Wpięcie użytkownika w pokój] Rodzaj relacji, polegający na tym, że dany użytkownik ma możliwość nadawania i odbierania wiadomości w ramach określonego pokoju
-  \item[Użytkownik tymczasowy] Typ użytkownika, którego konto jest tworzone podczas połączenia z serwerem czatu oraz niszczone po jego zakończeniu
-  \item[Użytkownik stały] Typ użytkownika, którego konto jest utrzymywane przez serwer pomiędzy połączeniami do czatu
   \item[Wiadomości prywatne] Wiadomości, które są wysyłane konkretnemu użytkownikowi i są widoczne wyłącznie dla nadawcy i odbiorcy takiej wiadomości
   \item[ViuAct] Język programowania wysokiego poziomu, oparty o model aktorów, powstały na potrzeby niniejszego projektu inżynierskiego
 \end{description}
@@ -109,63 +107,280 @@ zrozumieć intencje stojące za rozwiązaniami zastosowanymi w ViuaChat oraz prz
 w tym środowisku.
 
 \subsection{Udziałowcy}
-\textit{Udziałowiec to każdy podmiot, ożywiony bądź nie (osoba, system, urządzenie, regulacje prawne, społeczeństwo itp), który bierze udział w projekcie, lub na którego projekt może wpływać.
-Dla projektów, które powstają w oparciu o istniejącą infrastrukturę techniczną, należy pamiętać o włączeniu tej infrastruktury jako udziałowca nieożywionego, którego istnienie narzuca pewne rozwiązania i wymagania}
 
-  \begin{tabular}{ | l | l | }
+Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
+
+\begin{tabular}{ | l | l | }
   
 	\hline
 	\multicolumn{2}{ | l | }{\textbf{Karta udziałowca}}  \\
   
 	\hline
-    \parbox[t]{4cm}{
+    \parbox[t]{3cm}{
     	\textbf{Identyfikator}
     } & UN-01 \\  
     
     \hline
-    \parbox[t]{4cm}{
+    \parbox[t]{3cm}{
     	\textbf{Nazwa}
     } & ViuaVM \\  
     
     \hline
-    \parbox[t]{4cm}{
+    \parbox[t]{3cm}{
     	\textbf{Opis}
-    } & Środowisko, o które opiera się projekt... \\ 
+    } & \parbox[t]{12cm}{
+    	Maszyna wirtualna, oparta o przechowywanie danych w rejestrach zamiast \textit{płaskich} tablic pamięci. Stanowi ona 
+    	platformę, na której musi zostać uruchomiony serwer czatu. Ponieważ jej największym atutem jest zorientowanie na kod
+    	wykonywany współbieżnie, sam serwer czatu powinien tę cechę wykorzystywać w maksymalnym stopniu. 
+    	} \\ 
     
     \hline
-    \parbox[t]{4cm}{
+    \parbox[t]{3cm}{
     	\textbf{Typ}
     } & Nieożywiony, bezpośredni \\  
     
     \hline
-    \parbox[t]{4cm}{
+    \parbox[t]{3cm}{
     	\textbf{Punkt widzenia}
-    } & Punkt widzenia... \\ 
+    } & \parbox[t]{12cm}{
+    	ViuaVM jest absolutnie nieodzownym elementem projektu, a serwer czatu stanowi przede wszystkim dowód jej użyteczności.
+    	O ile jądro maszyny nie ma być poddawane już żadnym zmianom i być wykorzystane takie, jakie było na inicjalnym etapie
+    	pracy inżynierskiej, o tyle dopuszcza się poszerzanie jej funkcjonalności o dodatkowe biblioteki zewnętrzne.
+    	} \\ 
     
     \hline
-    \parbox[t]{4cm}{
+    \parbox[t]{3cm}{
     	\textbf{Ograniczenia}
-    } & Ograniczenia... \\ 
+    } & \parbox[t]{12cm}{
+    	Maszyna wirtualna, jakkolwiek stanowi istotny czynnik dla decyzji w zakresie architektury czy konstrukcji oprogramowania,
+    	nie powinna mieć wpływu na wymagania stricte biznesowe, jest powiem jedynie środowiskiem do uruchamiania współbieżnych
+    	programów, \textit{przezroczystym} dla końcowego użytkownika czy zleceniodawcy zrealizowanego oprogramowania.
+    	} \\ 
     
     \hline
-    \parbox[t]{4cm}{
+    \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & O-1... \\ 
+    } & \colorbox{yellow}{...} \\ 
   
     \hline
-  \end{tabular}
+\end{tabular}
 
-\subsection{Klienci}
+\vspace{2em} 
 
-\textit{Klienci wewnętrzni są to klienci, którzy występują w ramach naszej organizacji np. nasz szef, dział finansowy, konstruktorzy, instalatorzy itp. specyfikujemy ich charakterystykę i potrzeby w odniesieniu do naszego projektu.
-Klienci zewnętrzni - przedstawiciele zleceniodawcy, którzy mogą mieć bardzo różne potrzeby np. dyrektor i administrator sieci, za klientów zewnętrznych uważa się także podwykonawców i dostawców.}
+\begin{tabular}{ | l | l | }
+
+	\hline
+	\multicolumn{2}{ | l | }{\textbf{Karta udziałowca}}  \\
+  
+	\hline
+    \parbox[t]{3cm}{
+    	\textbf{Identyfikator}
+    } & UO-01 \\  
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Nazwa}
+    } & Opiekun pracy inżynierskiej \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Opis}
+    } & \parbox[t]{12cm}{
+    	Pracownik uczelni, wyznaczony do opieki nad całym projektem inżynierskim - nadzorowania jego postępów, wskazywania problemów
+    	oraz sugerowania decyzji podwyższających walor pracy oraz szanse na jej skuteczne obronienie. Ma również zasadniczy wpływ na 
+    	decyzję o dopuszczeniu pracy do recenzji.
+    } \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Typ}
+    } & Ożywiony, bezpośredni \\  
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Punkt widzenia}
+    } & \parbox[t]{12cm}{
+    	Opiekun pracy patrzy na czat przede wszystkim przez pryzmat jego użyteczności jako efektownego przykładu implementacji modelu
+    	aktora w praktycznym, programistycznym ujęciu. Stąd, jego uwaga skupia się przede wszystkim na konstrukcjach językowych,
+    	strukturach oraz rozwiązaniach od strony kodu źródłowego. Czat stanowi jedynie pretekst do przeniesienia teoretycznych, akademickich
+    	rozważań na praktyczny grunt. 
+    	} \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Ograniczenia}
+    } & \parbox[t]{12cm}{
+    	Opiekun pracy, pomimo bycia jej nadzorcą i posiadania istotnych uprawnień decyzyjnych w stosunku do jej dalszego rozwoju, 
+    	nie ma możliwości bieżącego śledzenia prac oraz
+    	podejmowania decyzji w przypadku konkretnych problemów. Powinien zachować dystans, pozwalający na samodzielną realizację projektu
+    	przez zespół. Stąd, jego faktyczny udział ogranicza się do udzielania porad w przypadku strategicznych kierunków, w jakich
+    	będzie podążała grupa, a także doraźnego recenzowania ograniczonej puli zagadnień, wyłapanych w trakcie wspólnych spotkań.
+    	} \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Wymagania}
+    } & \colorbox{yellow}{...} \\ 
+  
+    \hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+
+	\hline
+	\multicolumn{2}{ | l | }{\textbf{Karta udziałowca}}  \\
+  
+	\hline
+    \parbox[t]{3cm}{
+    	\textbf{Identyfikator}
+    } & UO-02 \\  
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Nazwa}
+    } & \parbox[t]{12cm}{
+    Członek zespołu ds. ViuAct
+    } \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Opis}
+    } & \parbox[t]{12cm}{
+    	Student i członek zespołu, skupiający się w pierwszej kolejności nad rozwojem języka programowania ViuAct, jego kompilatora oraz
+    	ewentualnego rozbudowania maszyny ViuaVM o kolejne, zewnętrzne biblioteki.
+    } \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Typ}
+    } & Ożywiony, bezpośredni \\  
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Punkt widzenia}
+    } & \parbox[t]{12cm}{
+    	Przede wszystkim, postrzega czat jako produkt, realizowany na końcowej platformie. Stąd, musi brać udział w formułowaniu
+    	wymagań związanych z ViuaVM oraz językiem ViuAct. Jego zadaniem jest doprowadzenia do zaprojektowania czatu w sposób, 
+    	który ukaże możliwości ViuAct jako solidnego, kompletnego rozwiązania. Przy tym, musi trzymać rękę na pulsie i reagować,
+    	gdyby pojawiały się przeszkody w zaprogramowaniu czatu, wynikające z niedoskonałości środowiska wytwórczego.
+    	
+    	Podczas współudziału w definiowaniu wymagań, istotny jest dla niego zakres pracy, wiążący się z 
+    	urzeczywistnianiem poszczególnych, proponowanych wymagań. Zbyt rozbudowany czat może opóźnić prace nad całym projektem,
+    	a w efekcie - zniweczyć trud włożony w rozwój języka programowania i dedykowanego mu kompilatora.
+    	} \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Ograniczenia}
+    } & \parbox[t]{12cm}{
+    	Jego udział w pracach nad czatem jest z gruntu nieograniczony. Jednakże, decydując się na podział odpowiedzialności 
+    	podyktowany zespołowym charakterem projektu oraz własnymi ograniczeniami czasowymi, zrezygnował z decydowania o biznesowej 
+    	części wymagań, faktycznie pozostając w roli konsultanta.
+    	
+    	} \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Wymagania}
+    } & \colorbox{yellow}{...} \\ 
+  
+    \hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+
+	\hline
+	\multicolumn{2}{ | l | }{\textbf{Karta udziałowca}}  \\
+  
+	\hline
+    \parbox[t]{3cm}{
+    	\textbf{Identyfikator}
+    } & UO-03 \\  
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Nazwa}
+    } & \parbox[t]{12cm}{
+    Członek zespołu ds. Czatu
+    } \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Opis}
+    } & \parbox[t]{12cm}{
+    	Student i członek zespołu, odpowiedzialny za prace nad czatem
+    } \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Typ}
+    } & Ożywiony, bezpośredni \\  
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Punkt widzenia}
+    } & \parbox[t]{12cm}{
+    	Czat stanowi dla niego, obok dokumentacji, najistotniejszą część przedsięwzięcia. Musi z jednej strony nauczyć się poruszać
+    	w nowym, dynamicznie zmieniającym się środowisku programistycznym, a z drugiej strony - zrealizować przy jego użyciu serwer
+    	czatu, który pokaże jego możliwości i zastosowania innym nowicjuszom.
+    	
+    	Podczas współudziału w definiowaniu wymagań, istotny jest dla niego zakres końcowych funkcjonalności czatu. Nie może być zbyt 
+    	wąski. Z drugiej strony, konstrukcja programu powinna pozostać prosta i przejrzysta. Przykładowy kod nie powinien odstraszać
+    	potencjalnego programisty, dla którego cała koncepcja ViuaVM oraz modelu aktorów może wydawać się na pierwszy rzut oka nieco egzotyczna.
+    	} \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Ograniczenia}
+    } & \parbox[t]{12cm}{
+    	Nie ma w zasadzie organizacyjnych czy kompetencyjnych ograniczeń dla formułowania wymagań. Nie oznacza to jednak, że może
+    	definiować wymagań w oderwaniu od pozostałych udziałowców (ich role i punkty widzenia opisano wcześniej).
+    	} \\ 
+    
+    \hline
+    \parbox[t]{3cm}{
+    	\textbf{Wymagania}
+    } & \colorbox{yellow}{...} \\ 
+  
+    \hline
+\end{tabular}
 
 \subsection{Charakterystyka użytkowników}
 
-\textit{Użytkownicy, ich kategorie, uprawnienia dostępu do funkcji i danych w poszczególnych trybach pracy systemu; zakładana liczebność użytkowników poszczególnych kategorii}
+Na etapie analizy kontekstu, w którym ma zostać zaprojektowany i zrealizowany czat, zadecydowano o zaprojektowaniu następujących,
+modelowych użytkowników docelowego oprogramowania:
+
+\begin{enumerate}
+
+	\item \textbf{Użytkownik tymczasowy.} Typ użytkownika, którego konto jest tworzone podczas połączenia z serwerem czatu oraz 
+		niszczone po jego zakończeniu. Podczas łączenia z czatem, nie będzie musiał się autoryzować przy użyciu hasła, a deklarować
+		tylko unikalną nazwę, nie powtarzającą się z nazwą innego użytkownika, posiadającego konto na danym serwerze czatu. Ten typ
+		konta jest przeznaczony dla osób, zainteresowanych dołączeniem do dyskusji na czacie bez dodatkowych zobowiązań.
+		
+	\item \textbf{Użytkownik stały.} Typ użytkownika, którego konto jest utrzymywane przez serwer pomiędzy połączeniami do czatu. W
+		zamierzeniu, adresatami takiego rozwiązania mają być stali bywalcy serwera, którzy chcą mieć zarezerwowaną określoną nazwę
+		dla siebie i uniknąć ewentualnego podszywania się. Stąd każdorazowo, przed rozpoczęciem sesji połączenia z serwerem, muszą się
+		dodatkowo autoryzować przy użyciu hasła. Równocześnie, ich nazwa jest zarezerwowana wyłącznie do jego użytku oraz niedostępna
+		dla użytkowników tymczasowych.
+		
+	\item \textbf{Administrator.} To użytkownik stały, który jest dodatkowo wyróżniony i posiada uprawienia do szeroko pojętego 
+		zarządzania serwerem (w tym - pozostałymi użytkownikami). Nie wyróżnia się wśród administratorów żadnych dodatkowych, szczególnych
+		ról (np. superadministrator, właściciel).
+		
+\end{enumerate}
+
+Poza wspomnianymi różnicami, wszyscy użytkownicy po rozpoczęciu sesji połączenia mają prawo do dołączania do pokojów oraz wysyłania sobie
+nawzajem wiadomości prywatnych. Łącznie, pula użytkowników przebywających na serwerze czatu w jednym momencie nie powinna przekraczać 320,
+zaś w jednym pokoju - nie więcej niż 32. W związku z tym można przyjąć, że czat jest przeznaczony dla niewielkich społeczności, np.
+szkolnych, uczelnianych czy hobbystycznych.
 
 \subsection{Istniejąca infrastruktura}
 
+Dotychczas, do dyspozycji 
 \textit{Inwentaryzacja istniejącej infrastruktury z zaznaczeniem, co należy zastąpić, a co należy wykorzystać w systemie, o ile użytkownik nie zostawia tego do decyzji projektanta rozwiązania technicznego. Może być przedstawiona w tabeli lub punktach.}
 
 \section{Wymagania}
