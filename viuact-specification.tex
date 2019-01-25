@@ -310,6 +310,54 @@ Podmiana ramki jest niedostrzegalna dla wywołującego oryginalną funkcję.
 \subsection{Wywołanie odroczone}
 
 \texttt{(defer \emph{name} \emph{expression}*)}
+\newline
+
+Wywołania odroczone nie są wywoływane od razu (jak zwykłe wywołania funkcji, bądź wywołania \emph{tailcall}),
+ale dopiero w momencie, w którym ramka, w której zostały zarejestrowane jest zdejmowana ze stosu, niezależnie
+od powodu dla którego jest ona zdejmowana -- czy będzie to zwykły powrót, odwinięcie stosu wywołane przez
+wyjątek, czy wywołanie \emph{tailcall}.
+
+Wywołania odroczone są wykonywane w odwrotnej kolejności rejestracji. Jeśli odroczone wywołanie \texttt{f()}
+zostanie zarejestrowane przed odroczonym wywołaniem \texttt{g()}, to zostanie wykonane po nim. Dla przykładu:
+
+\begin{lstlisting}
+(let f () (print "from f()"))
+(let g () (print "from g()"))
+(let h () {
+    (defer f)
+    (defer g)
+    (print "from h()")
+    0
+})
+\end{lstlisting}
+
+Wywołując funkcję \texttt{h()} na standardowym wyjściu pojawi się następujący tekst:
+
+\begin{verbatim}
+from h()
+from g()
+from f()
+\end{verbatim}
+
+Funkcja uruchomiona w wywołaniu odroczonym może zarejestrować swoje wywołania odroczone; takie wywołania
+mogą być zagnieżdżane bez ograniczeń.
+
+Wywołania odroczone są uruchamiane po zakończeniu działania funkcji, w której zostały zarejestrowane, ale
+przed zniszczeniem wartości, które były umieszczone w jej zmiennych lokalnych. Ten fakt może zostać
+wykorzystany do implementacji zarządzania zasobami -- jeśli wywołanie odroczone ma jakikolwiek uchwyt (np.
+wskaźnik) do zasobu to może wykonać dla niego jakąś logikę finalizacji. W takim celu po utworzeniu zasobu
+najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ''finalizacji''.
+
+\begin{lstlisting}
+(let f () {
+    ; ...
+
+    (let x (Some_module.reserve_resource))
+    (defer Some_module.free_resource (Std.pointer x))
+
+    ; ...
+})
+\end{lstlisting}
 
 \subsection{Wywołanie aktora}
 
