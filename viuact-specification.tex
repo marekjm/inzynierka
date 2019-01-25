@@ -389,6 +389,64 @@ z biblioteki standardowej (opisanej na stronie \pageref{Std_Actor_join}).
 \texttt{(try \emph{expression} (catch \emph{exception-tag} \emph{name} \emph{expression})+)}
 
 \newpage
+\section{Biblioteka standardowa}
+
+Biblioteka standardowa języka Viuact składa się z modułów implementujących wybrane algorytmy (np. sortowanie)
+i funkcjonalności (np. konwersje między typami danych), oraz umożliwia interakcję ze środowiskiem zewnętrznym
+gdyż Viuact nie posiada wbudowanych w język mechanizmów takiej interakcji.
+
+Część funkcji udostępnianych przez bibliotekę standardową jest niemożliwa do zaimplementowania w języku
+Viuact. Takie funkcje są napisane albo w języku assemblera Viua VM, albo w języku C++.
+
+Nie wszystkie funkcje biblioteki standardowej są ''normalnymi'' funkcjami, możliwymi do uruchomienia jako
+aktor ponieważ niektóre z nich kompilują się do pojedynczych instrukcji maszyny (funkcje ''wbudowane'') albo
+są napisane w języku C++, który jest niemożliwy do wywłaszczenia przez Viua VM (funkcje ''obce'').
+
+Dla takich funkcji programista musi napisać \emph{wrappery} jeśli chce użyć ich jak w niektórych kontekstach.
+Jednak w typowym programie nie będzie to potrzebne, gdyż funkcje biblioteki standardowej zazwyczaj
+implementują atomowe zadania, których sens uruchamiania w osobnych aktorach jest ograniczony.
+
+\subsection{\texttt{Std.Actor}}
+
+\subsubsection{\texttt{Std.Actor.join()}}
+\label{Std_Actor_join}
+
+\subsubsection{\texttt{Std.Actor.self()}}
+\subsubsection{\texttt{Std.Actor.receive()}}
+
+\subsection{\texttt{Std.Io}}
+
+Moduł udostępniający mechanizmy I/O (\emph{wejścia-wyjścia}). Umożliwia on prowadzenie I/O na plikach, oraz
+interakcji z konsolą użytkownika (\texttt{tty}).
+
+\subsubsection{\texttt{Std.Io.stdinxgetline}}
+
+Umożliwia odczytanie pojedynczej linii ze strumienia standardowego wejścia (\emph{\texttt{stdin}}).
+
+\subsection{\texttt{Std.Posix.Network}}
+
+Moduł udostępniający implementację ''POSIX sockets''. Jest to cienka abstrakcja nad API dostarczanym przez
+system operacyjny; w przypadku braków w tym dokumencie ich dokumentację można wydedukować ze stron manuala
+sekcji 3 dostarczanych przez program \texttt{man(1)} (np. dokumentację dla funkcji
+\texttt{Std.Posix.Network.socket} można uzyskać wykonując polecenie \texttt{man 3 socket}).
+
+\subsubsection{\texttt{Std.Posix.Network.socket()}}
+\subsubsection{\texttt{Std.Posix.Network.connect()}}
+\subsubsection{\texttt{Std.Posix.Network.bind()}}
+\subsubsection{\texttt{Std.Posix.Network.listen()}}
+\subsubsection{\texttt{Std.Posix.Network.accept()}}
+\subsubsection{\texttt{Std.Posix.Network.write()}}
+\subsubsection{\texttt{Std.Posix.Network.read()}}
+\subsubsection{\texttt{Std.Posix.Network.recv()}}
+\subsubsection{\texttt{Std.Posix.Network.shutdown()}}
+\subsubsection{\texttt{Std.Posix.Network.close()}}
+
+\subsection{\texttt{Std.Random}}
+
+Moduł udostępniający dostęp do liczb losowych ogólnego przeznaczenia (\texttt{/dev/urandom}) oraz zdatnych do
+zastosowań kryptograficznych (\texttt{/dev/random}).
+
+\newpage
 \section{Słownik}
 
 \begin{labeling}{model aktorów}
