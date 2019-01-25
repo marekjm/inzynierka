@@ -363,6 +363,15 @@ najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ''fina
 
 \texttt{(actor \emph{name} \emph{expression}*)}
 
+\subsubsection{Fork-join}
+
+Metoda \emph{fork-join} może być zrealizowana w Viuact za pomocą aktorów. Jeśli wynik wywołania aktora jest
+przypisywany do zmiennej, to aktor będzie działał jako ''\emph{aktor potomny}'' aktora, który go wywołał. Taki
+aktor potomny może być włączony (\emph{join}) za pomocą wywołania funkcji wbudowanej \texttt{Std.Actor.join()}
+z biblioteki standardowej (opisanej na stronie \pageref{Std_Actor_join}).
+
+\subsubsection{Wolne aktory}
+
 \subsection{Wywołanie operatora}
 
 \texttt{(\emph{operator} \emph{lhs} \emph{rhs})}
