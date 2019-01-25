@@ -447,6 +447,31 @@ Moduł udostępniający dostęp do liczb losowych ogólnego przeznaczenia (\text
 zastosowań kryptograficznych (\texttt{/dev/random}).
 
 \newpage
+\section{Interakcja z platformą}
+
+''Platformą'' w przypadku Viuact jest Viua VM. Narzuca to pewne ograniczenia związane ze środowiskiem, w
+którym programy napisane w języku Viuact można skompilować i uruchomić. Wynika to z faktu, że Viua VM sama w
+sobie ma pewną platformę i wymagania.
+
+\subsection{Platforma kompilacji}
+
+Do kompilacji programów napisanych w Viuact potrzebny jest interpreter języka Python 3 w wersji co najmniej
+3.6. Jest to jedyne ograniczenie, ponieważ na etapie kompilacji Viuact nie odwołuje się do żadnego elementu
+Viua VM.
+
+\subsection{Platforma asemblacji i linkowania}
+
+Asemblacja i linkowanie odbywa się z użyciem narzędzi dostarczanych przez Viua VM.
+Oprócz interpretera języka Python 3 potrzebny jest assembler dostarczany przez Viua VM. Oznacza to, że etap
+asemblacji i linkowania może odbywać się jedynie na platformie zgodnej z POSIX-2008, wyposażonej w kompilator
+obsługujący standard C++17 (są to wymagania Viua VM).
+
+\subsection{Platforma uruchomieniowa}
+
+Uruchomienie odbywa się w całości przy użyciu narzędzi dostarczanych przez Viua VM.
+Ograniczenia i zależności są na tym etapie całkowicie zależne od wymagań narzucanych przez Viua VM.
+
+\newpage
 \section{Słownik}
 
 \begin{labeling}{model aktorów}
