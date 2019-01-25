@@ -281,6 +281,31 @@ pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix
 \subsection{Wywołanie ''tailcall''}
 
 \texttt{(tailcall \emph{name} \emph{expression}*)}
+\newline
+
+Wywołania \emph{tailcall} powodują wywołanie funkcji nowej funkcje ''wykorzystując'' ramkę obecnej funkcji.
+W praktyce powodują natychmiastowe zdjęcie obecnej ramki ze stosu (co powoduje destrukcję wszystkich wartości
+w rejestrach lokalnych obecnej ramki, oraz uruchomienie wszelkich wywołań odroczonych) i wepchnięcie na szczyt
+stosu ramki dla funkcji wywołanej \emph{tailcall}.
+
+Wywołanie \emph{tailcall} nie ma bezpośredniej wartości zwracanej, ponieważ nie da się jej zaobserwować.
+Wywołanie \emph{tailcall} ''porywa'' (ang. ''hijacks'') punkt, do którego powinna zwrócić wartość funkcja,
+która wykonała takie wywołanie -- i dopiero ten punkt zaobserwuje de facto wartość zwróconą przez wywołanie
+\emph{tailcall}, ale z jego punktu widzenia wygląda to tak jakby tą wartość zwróciła funkcja, którą on
+bezpośrednio wywołał.
+
+\begin{lstlisting}
+(let g (x) (+ x 1))
+
+(let f (x) (tailcall g x))  ; call frame of f() is replaced by g()
+
+(let main () {
+    (let i (f 41))  ; here, i will be bound to value returned by g()
+    0
+})
+\end{lstlisting}
+
+Podmiana ramki jest niedostrzegalna dla wywołującego oryginalną funkcję.
 
 \subsection{Wywołanie odroczone}
 
