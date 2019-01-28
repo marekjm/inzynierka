@@ -18,6 +18,9 @@
 \geometry{a4paper, portrait, margin=2cm}
 \graphicspath{ {./fig/} }
 
+\newenvironment{enumreq}
+{ \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
+{ \end{enumerate}                  } 
 
 
 \setcounter{secnumdepth}{4}
@@ -50,7 +53,7 @@
 \section{Wprowadzenie}
 
 \subsection{Cel dokumentu}
-Celem dokumentu jest zdefiniowanie wymagań na podstawie analizy otoczenia aplikacji oraz analizy potrzeb projektu w stosunku do niej.
+Celem dokumentu jest zdefiniowanie wymagań dla czatu ViuaChat na podstawie analizy otoczenia aplikacji oraz analizy potrzeb projektu w stosunku do niej.
 
 \subsection{Zakres dokumentu}
 Niniejszy dokument jest produktem pierwszego etapu procesu wytwórczego czatu ViuaChat, na który składają się:
@@ -404,9 +407,7 @@ szkolnych, uczelnianych czy hobbystycznych.
 
 \end{itemize}
 
-\section{Wymagania}
-
-\subsection{Zasady biznesowe}
+\section{Zasady biznesowe}
 
 Zidentyfikowane zasady pogrupowano w 3 kategorie, biorąc pod uwagę podstawowe bloki funkcjonalności. Przydzielenie
 do kategorii jest sygnalizowanie literą alfabetu, będącą prefiksem identyfikatora danej zasady. Dokonano
@@ -421,7 +422,7 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 	\item \textbf{,,W''} (z ang. \textit{won't}) - takie wymagania, po dyskusji, zostały wycofane dalszej realizacji.
 \end{itemize}
 
-\subsubsection{System użytkowników [U]}
+\subsection{System użytkowników [ZU]}
   \begin{tabular}{ | l | l | l | }
 	\hline
     \textbf{ID} & \parbox[t]{14cm}{
@@ -429,103 +430,103 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     } & \textbf{Priorytet} \\  
   
     \hline
-    U-1 & \parbox[t]{14cm}{
+    ZU-01 & \parbox[t]{14cm}{
       Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika. 
     } & M \\
 
     \hline
-    U-2 & \parbox[t]{14cm}{
+    ZU-02 & \parbox[t]{14cm}{
       Użytkownicy bez stałego konta podczas logowania podają tylko nazwę użytkownika, pole hasła pozostaje puste .
     } & M \\
 
     \hline
-    U-3 & \parbox[t]{14cm}{
+    ZU-03 & \parbox[t]{14cm}{
       Nazwa użytkownika to ciąg od 3 do 32 alfanumerycznych znaków.
     } & M \\
 
     \hline
-    U-4 & \parbox[t]{14cm}{
+    ZU-04 & \parbox[t]{14cm}{
       Można rozpocząć sesję jako użytkownik, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami już zalogowanych użytkowników. 
     } & M \\
 
     \hline
-    U-5 & \parbox[t]{14cm}{
+    ZU-05 & \parbox[t]{14cm}{
       Monit podczas wejścia na czat jest wyposażony w pole do wpisania hasła (nieobowiązkowe). 
     } & S \\
 
     \hline
-    U-6 & \parbox[t]{14cm}{
+    ZU-06 & \parbox[t]{14cm}{
       Użytkownicy czatu ze stałym kontem, podczas logowania podają nazwę i odpowiadające mu hasło.
     } & S \\
 
     \hline
-    U-7 & \parbox[t]{14cm}{
+    ZU-07 & \parbox[t]{14cm}{
       Stałe konta użytkowników są utrzymywane na serwerze w postaci trójek wartości: nazwa użytkownika, hasło (md5), czy jest administratorem. 
     } & S \\
 
     \hline
-    U-8 & \parbox[t]{14cm}{
+    ZU-08 & \parbox[t]{14cm}{
       Nie można rozpocząć sesji użytkownika o nazwie, która pasuje do istniejącego konta, jeżeli nie zostanie podane prawidłowe hasło (nie można podszywać się pod nazwy użytkowników ze stałym kontem).
     } & S \\
 
     \hline
-    U-9 & \parbox[t]{14cm}{
+    ZU-09 & \parbox[t]{14cm}{
       Można rozpocząć sesję jako użytkownik bez podawania hasła, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami stałych kont użytkowników.
     } & S \\
 
     \hline
-    U-10 & \parbox[t]{14cm}{
+    ZU-10 & \parbox[t]{14cm}{
       W okienkach czatu, loginy użytkowników ze stałym kontem są pogrubione i pokolorowane: Administratorzy na czerwono,
       Pozostali na zielono. 
       } & S \\
 
     \hline
-    U-11 & \parbox[t]{14cm}{
+    ZU-11 & \parbox[t]{14cm}{
       Administratorzy mają prawo przeglądać nazwy pokojów na serwerze. 
     } & M \\
 
     \hline
-    U-12 & \parbox[t]{14cm}{
+    ZU-12 & \parbox[t]{14cm}{
       Administratorzy mają prawo tworzyć i usuwać pokoje. 
     } & S \\
 
     \hline
-    U-13 & \parbox[t]{14cm}{
+    ZU-13 & \parbox[t]{14cm}{
       Administratorzy mają prawo ustanawiać, zmieniać i usuwać hasła do pokojów. 
     } & C \\
 
     \hline
-    U-14 & \parbox[t]{14cm}{
+    ZU-14 & \parbox[t]{14cm}{
       Administratorzy mają prawo wyrzucać użytkowników z pokojów. 
     } & C \\
 
     \hline
-    U-15 & \parbox[t]{14cm}{
+    ZU-15 & \parbox[t]{14cm}{
       Administratorzy mają prawo wyrzucać użytkowników z serwera. 
     } & C \\
 
     \hline
-    U-16 & \parbox[t]{14cm}{
+    ZU-16 & \parbox[t]{14cm}{
       Administratorzy mają prawo przeglądać nazwy i poziomy uprawnień kont stałych użytkowników. 
     } & M \\
 
     \hline
-    U-17 & \parbox[t]{14cm}{
+    ZU-17 & \parbox[t]{14cm}{
       Administratorzy mają prawo tworzyć i usuwać użytkowników. 
     } & S \\
 
     \hline
-    U-18 & \parbox[t]{14cm}{
+    ZU-18 & \parbox[t]{14cm}{
       Administratorzy mają prawo zmieniać hasła użytkowników. 
     } & C \\
 
     \hline
-    U-19 & \parbox[t]{14cm}{
+    ZU-19 & \parbox[t]{14cm}{
       Administratorzy mają prawo zmieniać uprawnienia stałych kont użytkowników. 
     } & C \\
 
     \hline
-    U-20 & \parbox[t]{14cm}{
+    ZU-20 & \parbox[t]{14cm}{
       Użytkownicy ze stałymi kontami mogą zmieniać swoje hasło.
     } & W \\
 
@@ -533,7 +534,7 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     \hline
   \end{tabular}
 
-\subsubsection{Pokoje [P]}
+\subsection{Pokoje [ZP]}
   \begin{tabular}{ | l | l | l | }
 	\hline
     \textbf{ID} & \parbox[t]{14cm}{
@@ -541,45 +542,88 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     } & \textbf{Priorytet} \\  
     
     \hline
-    P-1 & \parbox[t]{14cm}{
+    ZP-01 & \parbox[t]{14cm}{
       Pokoje to właściwe czaty – tam użytkownicy mogą wejść i pisać do siebie nazwajem
     } & M \\
 
     \hline
-    P-2 & \parbox[t]{14cm}{
+    ZP-02 & \parbox[t]{14cm}{
       Każdy pokój ma unikalną nazwę będącą ciągiem alfanumerycznym od 3 do 32 znaków
     } & M \\
 
     \hline
-    P-3 & \parbox[t]{14cm}{
+    ZP-03 & \parbox[t]{14cm}{
       Lista pokojów jest widoczna dla każdego użytkownika po zalogowaniu się do serwera czatu
     } & M \\
 
     \hline
-    P-4 & \parbox[t]{14cm}{
+    ZP-04 & \parbox[t]{14cm}{
       Użytkownik może być równocześnie wpięty do jednego pokoju
     } & M \\
 
     \hline
-    P-5 & \parbox[t]{14cm}{
+    ZP-05 & \parbox[t]{14cm}{
       Wiadomość wysłana w pokoju jest widoczna w oknie pokoju dla wszystkich użytkowników podpiętych do tego pokoju
     } & M \\
 
     \hline
-    P-6 & \parbox[t]{14cm}{
+    ZP-06 & \parbox[t]{14cm}{
       Użytkownik może się samodzielnie wypiąć z pokoju, do którego jest wpięty
     } & S \\
 
     \hline
-    P-7 & \parbox[t]{14cm}{
+    ZP-07 & \parbox[t]{14cm}{
       Pokój może mieć ustanowione hasło, które użytkownik musi wpisać przed podpięciem się do niego
     } & C \\
+    
+    \hline
+    ZP-08 & \parbox[t]{14cm}{
+      Nowo wpięty użytkownik widzi 10 najnowszych wiadomości, 
+      które zostały wysłane do pokoju tuż przed wpięciem
+    } & S \\
+    
+    \hline
+    ZP-09 & \parbox[t]{14cm}{
+      Serwer czatu automatycznie wysyła do pokoju wiadomości, 
+      zawierające powiadomienia o wydarzeniach związanych z
+      pokojem, tzw. wiadomości systemowe
+    } & S \\
+    
+    \hline
+    ZP-10 & \parbox[t]{14cm}{
+      Wiadomości systemowe są niepodpisane przez
+      żadnego użytkownika i zapisane kursywą
+   	} & C \\
+   	
+   	\hline
+    ZP-11 & \parbox[t]{14cm}{
+      Wiadomość systemowa zostaje wysłana podczas wpięcia się
+      nowego użytkownika do pokoju
+   	} & S \\
+   	
+   	\hline
+    ZP-12 & \parbox[t]{14cm}{
+      Wiadomość systemowa zostaje wysłana podczas wypięcia
+      użytkownika z pokoju
+   	} & S \\
+   	
+   	\hline
+    ZP-13 & \parbox[t]{14cm}{
+      Wiadomość systemowa zostaje wysłana, gdy użytkownik
+      wpięty do pokoju traci połączenie z serwerem czatu
+   	} & S \\
+   	
+   	\hline
+    ZP-14 & \parbox[t]{14cm}{
+      Wiadomość systemowa zostaje wysłana, gdy użytkownik
+      zostaje wyrzucony z pokoju
+   	} & S \\	
     
     \hline
     
   \end{tabular}
 
-\subsubsection{Prywatne wiadomości [W]}
+\subsection{Prywatne wiadomości [ZW]}
   \begin{tabular}{ | l | l | l | }
   	\hline
     \textbf{ID} & \parbox[t]{14cm}{
@@ -588,32 +632,32 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     
     
     \hline
-    W-1 & \parbox[t]{14cm}{
+    ZW-01 & \parbox[t]{14cm}{
       Oprócz okien czatu dla każdego z wpiętych pokojów, użytkownik dysponuje dodatkowym oknem, na którym widzi wiadomości prywatne. 
     } & M \\
 
     \hline
-    W-2 & \parbox[t]{14cm}{
+    ZW-02 & \parbox[t]{14cm}{
       Aby wysłać wiadomość prywatną, należy poprzedzić ją znakiem \# i nazwą użytkownika, do którego jest kierowana wiadomość, oddzielona spacją od komunikatu, np.: „\#user Tajna wiadomość”. Trafia ona wówczas do okna wiadomości prywatnych. 
     } & M \\
 
     \hline
-    W-3 & \parbox[t]{14cm}{
+    ZW-03 & \parbox[t]{14cm}{
       Wiadomość prywatna może być wysłana z okna czatu pokoju –wiadomości prywatne nie są pokazywane wszystkim uczestnikom czatu, a jedynie użytkownikowi, do którego jest adresowana. 
     } & C \\
 
     \hline
-    W-4 & \parbox[t]{14cm}{
+    ZW-04 & \parbox[t]{14cm}{
       W oknie czatu pokoju dopuszczalne jest wysyłanie wiadomości prywatnych do dowolnych użytkowników, nawet tych, którzy nie są w danym momencie podpięci do tego pokoju. 
     } & C \\
 
     \hline
-    W-5 & \parbox[t]{14cm}{
+    ZW-05 & \parbox[t]{14cm}{
       Z okna wiadomości prywatnych można wysyłać wyłącznie wiadomości prywatne. 
     } & M \\
 
     \hline
-    W-6 & \parbox[t]{14cm}{
+    ZW-06 & \parbox[t]{14cm}{
       Próba wysłania wiadomości prywatnej powinna zostać odrzucona przez serwer i zwrócić błąd w przypadku gdy:
       \begin{itemize}
       	\item Po znaku „\#” pojawi się od razu znak spacji lub nie będzie żadnych znaków (nie zostanie podana 
@@ -628,39 +672,303 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     
   \end{tabular}
 
+\section{Wymagania}
 
-\subsection{Historyjki (\textit{user stories})}
+\subsection{Wymagania funkcjonalne}
+
+Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, należący do kategorii metodyk zwinnych, wymagania funkcjonalne ujęto w formie historyjek (\textit{user stories}).
+
+\vspace{2em} 
 
 \begin{tabular}{ | l | l | }
 	\hline
 		\textbf{Identyfikator} & 
-		HF-1
+		WF-01
 		\\
 		
 	\hline
-		\textbf{Treść} & \parbox[t]{13cm}{
-			Jako użytkownik serwera czatu, chcę móc się do niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę się do niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
 		}\\
 		 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
-			U-1 Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika.
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZU-01 Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika. \\
+			ZP-03 Lista pokojów jest widoczna dla każdego użytkownika
+			po zalogowaniu się do serwera czatu
 		}\\
 		
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
-			\begin{enumerate}
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
 				\item Po wejściu na czat bez rozpoczętej sesji, pokazuje się monit o podanie nazwy użytkownika.
 				\item Po wpisaniu nazwy użytkownika i zatwierdzeniu, użytkownik rozpocznie sesję na serwerze czatu.
 				\item Tuż po rozpoczęciu sesji czatu, użytkownik zobaczy listę pokojów.
-			\end{enumerate}
+			\end{enumreq}
 			}
 		\\
 
 	\hline
 \end{tabular}
 
-\textit{Tu muszą zostać przeklejone karty z Trello}
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-02
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę wpiąć się do pokoju,
+			aby wziąć udział w dyskusji.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZP-01 Pokoje to właściwe czaty - tam użytkownicy mogą
+			wejść i pisać do siebie nawzajem
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Użytkownik, który ma otwartą sesję 
+				połączenia z serwerem czatu i nie jest wpięty
+				do żadnego pokoju, zobaczy listę pokojów.
+				\item Użytkownik, po kilknięciu w liście pokojów
+				na nazwę pokoju, zostanie do niego podpięty
+				\item Użytkownik po wpięciu się do pokoju zobaczy
+				okno pokoju
+				\item Użytkownik, który ma otwartą sesję
+				połączenia z serwerem i jest wpięty do pokoju,
+				po odświeżeniu przeglądarki zobaczy okno pokoju, 
+				do którego jest wpięty
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-03
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę po wpięciu
+			do pokoju zobaczyć ostatnie wiadomości wysłane
+			przed moim dołączeniem, aby dowiedzieć się, co
+			tam się obecnie dzieje.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZP-08 Nowo wpięty użytkownik widzi 10 najnowszych
+			wiadomości, które zostały wysłane do pokoju tuż
+			przed wpięciem
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Użytkownik po wpięciu się do pokoju zobaczy
+				10 najnowszych wiadomości wysłanych do pokoju
+				przed jego dołączeniem (lub mniej, jeżeli
+				dotychczas nie wysłano do pokoju co najmniej
+				10 wiadomości)
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-04
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę chcę wysłać
+			wiadomość do pokoju w który jestem wpięty, aby
+			zobaczyli ją inni uczestnicy dyskusji.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZP-01 Pokoje to właściwe czaty - tam użytkownicy mogą
+			wejść i pisać do siebie nawzajem
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Użytkownik wpisze tekst wiadomości w polu
+				tekstowym u dołu czatu
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po wciśnięciu klawisza ,,Enter'', gdy aktywne
+				będzie pole tekstowe
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po naciśnięciu przycisku ,,Wyślij'',
+				widocznego obok pola tekstowego
+				\item Po wysłaniu wiadomości, pole tekstowe zostanie
+				wyczyszczone (niezależnie od tego czy wiadomość
+				zostanie doręczona)
+				\item Wiadomość wysłana do pokoju jest pokazywana
+				wszystkim użytkownikom podpiętym do czatu u dołu
+				strony
+				\item Nowa wiadomość jest pokazywana wraz z nazwą
+				użytkownika wysyłającego u dołu konwersacji
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-05
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę wiedzieć czy
+			moja wiadomość została doręczona innym dyskutantom,
+			aby spróbować wysłać ją w razie potrzeby jeszcze raz.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Po wysłaniu wiadomości, pole tekstowe wraz 
+				z przyciskiem ,,Wyślij'' zostaje zablokowane (ale
+				nie wyczyszczone)
+				\item Dopiero po otrzymaniu od serwera potwierdzenia
+				odebrania wiadomości, pole tekstowe jest czyszczone
+				i odblokowywane
+				\item Jeżeli serwer nie potwierdzi odebrania
+				wiadomości po upływie 5 sekund lub zwróci błąd,
+				pole tekstowe i przycisk ,,Wyślij'' zostanie 
+				odblokowane, ale nie wyczyszczone
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-06
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę chcę zobaczyć
+			powiadomienie o wpięciu się nowego użytkownika do
+			pokoju w którym sam jestem obecnie wpięty, aby powitać
+			nowego dyskutanta
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZP-09 Serwer czatu automatycznie wysyła do pokoju
+			wiadomości, zawierające powiadomienia o wydarzeniach
+			związanych z pokojem, tzw. wiadomości systemowe \\
+			ZP-11 Wiadomość systemowa zostaje wysłana podczas
+			wpięcia się nowego użytkownika do pokoju
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Niezwłocznie po wpięciu się użytkownika do
+				pokoju, serwer wyśle wiadomość systemową o treści
+				,,Użytkownik ... dołączył do pokoju'', widoczną
+				dla wszystkich użytkowników wpiętych do tego pokoju
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-07
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę zobaczyć
+			powiadomienie o opuszczeniu pokoju przez użytkownika,
+			aby łatwo zorientować się, że nie bierze już udziału 
+			w dyskusji.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZP-09 Serwer czatu automatycznie wysyła do pokoju
+			wiadomości, zawierające powiadomienia o wydarzeniach
+			związanych z pokojem, tzw. wiadomości systemowe \\
+			ZP-12 Wiadomość systemowa zostaje wysłana podczas
+			wpięcia wypięcia użytkownika z pokoju \\
+			ZP-13 Wiadomość systemowa zostaje wysłana, gdy użytkownik
+			wpięty do pokoju traci połączenie z serwerem \\
+			ZP-14 Wiadomość systemowa zostaje wysłana, gdy użytkownik
+			zostaje wyrzucony z pokoju
+			
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Niezwłocznie po wypięciu się użytkownika z
+				pokoju, serwer wyśle wiadomość systemową, widoczną
+				dla wszystkich użytkowników wpiętych do tego pokoju,
+				o treści:
+				\begin{enumerate}
+					\item ,,Użytkownik ... opuścił pokój'', gdy
+					użytkownik samodzielnie wypiął się z pokoju
+					\item ,,Użytkownik ... stracił połączenie'',
+					gdy użytkownik został wypięty z pokoju na skutek
+					przerwania sesji z uwagi na zerwanie połączenia
+					\item ,,Użytkownik ... został wyrzucony'', gdy
+					użytkownik został wypięty wskutek interwencji
+					administratora
+				\end{enumerate}
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
 
 \subsection{Wymagania niefunkcjonalne}
 
@@ -682,16 +990,15 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 		
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
-			\begin{enumerate}
+			\begin{enumreq}
 				\item Po wpisaniu do pola użytkownika nazwy krótszej niż 2 znaki, dłużej niż 32 znaki lub zawierającej inne znaki niż alfanumeryczne, zwracany jest błąd.
-			\end{enumerate}
+			\end{enumreq}
 			}
 		\\
 
 	\hline
 \end{tabular}
 
-\textit{Tu muszą zostać przeklejone karty z Trello}
 
 \subsection{Wymagania na środowisko docelowe}
 
