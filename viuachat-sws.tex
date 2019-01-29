@@ -638,7 +638,7 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 
     \hline
     ZW-02 & \parbox[t]{14cm}{
-      Aby wysłać wiadomość prywatną, należy poprzedzić ją znakiem \# i nazwą użytkownika, do którego jest kierowana wiadomość, oddzielona spacją od komunikatu, np.: „\#user Tajna wiadomość”. Trafia ona wówczas do okna wiadomości prywatnych. 
+      Aby wysłać wiadomość prywatną w oknie pokoju, należy poprzedzić ją znakiem \# i nazwą użytkownika, do którego jest kierowana wiadomość, oddzielona spacją od komunikatu, np.: „\#user Tajna wiadomość”. Trafia ona wówczas do okna wiadomości prywatnych. 
     } & M \\
 
     \hline
@@ -653,7 +653,8 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 
     \hline
     ZW-05 & \parbox[t]{14cm}{
-      Z okna wiadomości prywatnych można wysyłać wyłącznie wiadomości prywatne. 
+      Z okna wiadomości prywatnych można odbierać i wysyłać wyłącznie
+      wiadomości prywatne. 
     } & M \\
 
     \hline
@@ -670,6 +671,44 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     } & M \\
     \hline
     
+    \hline
+    ZW-07 & \parbox[t]{14cm}{
+      W oknie wiadomości prywatnych można podglądać równocześnie
+      wiadomości, których nadawcą lub odbiorcą jest jeden, wskazany
+      użytkownik
+      
+    } & S \\
+    
+    \hline
+    ZW-08 & \parbox[t]{14cm}{
+      W oknie wiadomości prywatnych można wysyłać wiadomości
+      wyłącznie do nadawcy, którego wiadomości są w danym momencie
+      pokazywane.
+    } & S \\
+    
+    \hline
+    ZW-10 & \parbox[t]{14cm}{
+      Czas istnienia wiadomości prywatnych zależy od typu użytkownika
+      który jest jej nadawcą i odbiorcą:
+      \begin{itemize}
+      	\item Jeżeli obie strony komunikacji są użytkownikami
+      	tymczasowymi, wiadomość jest utrzymywana dopóki obie
+      	strony konwersacji nie zakończą sesji połączenia z serwerem
+      	\item Jeżeli jedna strona komunikacji jest użytkownikiem
+      	tymczasowym, a druga stałym, to wiadomość jest utrzymywana
+      	dopóki użytkownik tymczasowy skończy sesję połączenia z
+      	serwerem
+      	\item Jeżeli obie strony są użytkownikami stałymi, to
+      	wiadomość jest trzymana bezterminowo
+      \end{itemize}
+    } & S \\
+    
+    \hline
+    ZW-11 & \parbox[t]{14cm}{
+      Dla każdej pary użytkowników, na serwerze jest gromadzone co
+      najwyżej 100 wiadomości prywatnych.
+    } & S \\
+    \hline
   \end{tabular}
 
 \section{Wymagania}
@@ -970,6 +1009,130 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-08
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę odpiąć się od pokoju,
+			aby wpiąć się do innego pokoju.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZP-06 Użytkownik może się samodzielnie wypiąć z pokoju,
+			do którego jest wpięty
+			
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item W oknie pokoju użytkownik zobaczy przycisk
+				lub link ,,Opuść pokój''.
+				\item Po kliknięciu w ,,Opuść pokój'', użytkownik
+				zobaczy listę pokojów.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-09
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę zobaczyć
+			okno wiadomości prywatnych, aby odczytać wiadomości,
+			które wysłano specjalnie do mnie.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZW-01 Oprócz okien czatu dla każdego z wpiętych pokojów,
+			użytkownik dysponuje dodatkowym oknem, w którym widzi
+			wiadomości prywatne
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Nad listą pokojów, użytkownik zobaczy link
+				,,Wiadomości prywatne''.
+				\item Po kliknięciu w link ,,Wiadomości prywatne'',
+				użytkownik zobaczy okno wiadomości prywatnych.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-07
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę odfiltrować
+			wiadomości prywatne od jednego użytkownika, aby
+			prowadzić z nim ciągłą konwersację.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			ZP-09 Serwer czatu automatycznie wysyła do pokoju
+			wiadomości, zawierające powiadomienia o wydarzeniach
+			związanych z pokojem, tzw. wiadomości systemowe \\
+			ZP-12 Wiadomość systemowa zostaje wysłana podczas
+			wpięcia wypięcia użytkownika z pokoju \\
+			ZP-13 Wiadomość systemowa zostaje wysłana, gdy użytkownik
+			wpięty do pokoju traci połączenie z serwerem \\
+			ZP-14 Wiadomość systemowa zostaje wysłana, gdy użytkownik
+			zostaje wyrzucony z pokoju
+			
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Niezwłocznie po wypięciu się użytkownika z
+				pokoju, serwer wyśle wiadomość systemową, widoczną
+				dla wszystkich użytkowników wpiętych do tego pokoju,
+				o treści:
+				\begin{enumerate}
+					\item ,,Użytkownik ... opuścił pokój'', gdy
+					użytkownik samodzielnie wypiął się z pokoju
+					\item ,,Użytkownik ... stracił połączenie'',
+					gdy użytkownik został wypięty z pokoju na skutek
+					przerwania sesji z uwagi na zerwanie połączenia
+					\item ,,Użytkownik ... został wyrzucony'', gdy
+					użytkownik został wypięty wskutek interwencji
+					administratora
+				\end{enumerate}
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
 \subsection{Wymagania niefunkcjonalne}
 
 \begin{tabular}{ | l | l | }
@@ -998,6 +1161,8 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 	\hline
 \end{tabular}
+
+
 
 
 \subsection{Wymagania na środowisko docelowe}
