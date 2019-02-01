@@ -223,6 +223,102 @@ W tej sekcji opisane są wymagania dotyczące kompilatora języka ViuAct.
     \hline
 \end{tabular}
 
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-02} \\
+    \hline
+    \textbf{Priorytet} & W \\
+    \hline
+    \textbf{Nazwa} & Obsługa błędów \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator nie będzie w żaden sposób obsługiwał błędów ani ich raportował. \\
+        Strategią obsługi błędów będzie rzucenie wyjątku, ewentualnie dodając do niego informacje o tym
+        co konkretnie się wydarzyło, i pozwolenie mu na zabicie procesu kompilatora.
+        Na podstawie zrzutu stosu i treści wyjątku użytkownik będzie musiał się domyślić co wywołało błąd.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-03} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Emisja plików pomocniczych \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator podczas przetwarzania kodu źródłowego musi zebrać informacje jakie funkcje zawiera dany
+        moduł, jakie moduły są w nim zagnieżdżone, i jakie moduły są przez niego importowane.
+        Te informacje są potrzebne programowi łączącemu moduły do automatycznego wykonania swojej pracy. \\
+        Pliki pomocnicze to:
+
+        \begin{enumerate}
+            \item \texttt{.i} pliki opisujące interfejs modułu (eksportowane funkcje)
+            \item \texttt{.d} pliki opisujące zależności modułu (importowane moduły)
+        \end{enumerate}
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-04} \\
+    \hline
+    \textbf{Priorytet} & C \\
+    \hline
+    \textbf{Nazwa} & Optymalizacja zużycia rejestrów \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Z uwagi na prostą budowę kompilatora generuje on kod, który alokuje duże ilości rejestrów.
+        Optymalizacja polegająca na analizie dostępu do rejestrów (odczytach i zapisach) i wyszuaniu
+        momentów, po których rejestr \texttt{x} nie jest już więcej używany mogłaby zredukować rozmiar
+        alokacji dzięki recyklingowi rejestrów (ponownym użyciu po udowodnieniu, że po danej instrukcji
+        żadna inna nie będzie korzystać z wartości w danym rejestrze).
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-05} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Kompletność implementacji \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator musi implementować wszystkie konstrukcje językowe opisane w specyfikaji języka
+        ViuAct.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
 \subsubsection{Interfejs z otoczeniem}
 
 Punkty styku projektowanego języka i kompilatora z innymi podsystemami (np. assembler dostarczany jako
@@ -275,11 +371,66 @@ część Viua VM), sieciami (np. Internet), i operatorami (np. programista).
 
 \subsection{Wymagania niefunkcjonalne}
 
+Brak.
+
 \subsection{Wymagania na środowisko docelowe}
+
+Brak.
 
 \subsection{Wymagania dotyczące procesu wytwarzania}
 
+W tej sekcji opisane są wymagania dotyczące kompilatora języka ViuAct.
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{PW-01} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Testy kompilatora \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator musi być dostarczony wraz z zestawem prostych do uruchomienia testów werfikujących
+        poprawność jego pracy.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{PW-01} \\
+    \hline
+    \textbf{Priorytet} & S \\
+    \hline
+    \textbf{Nazwa} & Kompletność testów kompilatora \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Testy kompilatora powinny obejmować jak największe spektrum możliwych konstrukcji językowych i
+        ich kombinacji. W uwagi na to, że jest niemożliwym przetestowanie kompilatora na wszystkich
+        możliwych do napisania programach ''kompletność'' jest względna, a to wymaganie zakłada jedynie, że
+        nie powinna istnieć konstrukcja językowa, która nie będzie przetestowana. \\
+        \textbf{Uwaga}: Ostatecznym testem kompilatora pozostaje kompilacja czatu ViuaChat, który jest
+        wymagany do poprawnego zaliczenia projektu.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
 \section{Kryteria akceptacji rozwiązania}
+
+Podstawowym kryterium akceptacji dla języka jest ''\emph{Da się w nim napisać czat}'', a
+dla komilatora ''\emph{Da się nim skompilować czat}''.
 
 \section{Odwołania do literatury}
 
