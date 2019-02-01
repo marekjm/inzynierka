@@ -194,60 +194,84 @@ Część wymagań funkcjonalnych języka ViuAct jest opisana w osobnym dokumenci
 Poniżej opisane są wymagania, które nie mogły być zawarte bezpośrednio w specyfikacji języka (np. sposób
 obsługi i raportowania błędów przez kompilator).
 
-\subsubsection{Funkcjonalności}
+\subsubsection{Funkcjonalności kompilatora}
 
-% \begin{tabular}{ | l | l | }
-% 	\hline
-% 		\textbf{Identyfikator} &
-% 		WF-07
-% 		\\
+W tej sekcji opisane są wymagania dotyczące kompilatora języka ViuAct.
 
-% 	\hline
-% 		\textbf{Treść} & \parbox[t]{11cm}{
-% 			Jako użytkownik serwera czatu, chcę odfiltrować
-% 			wiadomości prywatne od jednego użytkownika, aby
-% 			prowadzić z nim ciągłą konwersację.
-% 		}\\
+\vspace{1em}
 
-% 	\hline
-% 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
-% 			ZP-09 Serwer czatu automatycznie wysyła do pokoju
-% 			wiadomości, zawierające powiadomienia o wydarzeniach
-% 			związanych z pokojem, tzw. wiadomości systemowe \\
-% 			ZP-12 Wiadomość systemowa zostaje wysłana podczas
-% 			wpięcia wypięcia użytkownika z pokoju \\
-% 			ZP-13 Wiadomość systemowa zostaje wysłana, gdy użytkownik
-% 			wpięty do pokoju traci połączenie z serwerem \\
-% 			ZP-14 Wiadomość systemowa zostaje wysłana, gdy użytkownik
-% 			zostaje wyrzucony z pokoju
-
-% 		}\\
-
-% 	\hline
-% 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
-% 			\begin{enumreq}
-% 				\item Niezwłocznie po wypięciu się użytkownika z
-% 				pokoju, serwer wyśle wiadomość systemową, widoczną
-% 				dla wszystkich użytkowników wpiętych do tego pokoju,
-% 				o treści:
-% 				\begin{enumerate}
-% 					\item ,,Użytkownik ... opuścił pokój'', gdy
-% 					użytkownik samodzielnie wypiął się z pokoju
-% 					\item ,,Użytkownik ... stracił połączenie'',
-% 					gdy użytkownik został wypięty z pokoju na skutek
-% 					przerwania sesji z uwagi na zerwanie połączenia
-% 					\item ,,Użytkownik ... został wyrzucony'', gdy
-% 					użytkownik został wypięty wskutek interwencji
-% 					administratora
-% 				\end{enumerate}
-% 			\end{enumreq}
-% 			}
-% 		\\
-
-% 	\hline
-% \end{tabular}
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-01} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Zachowanie znaczenia programu podczas kompilacji \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator musi wygenerować kod wynikowy implementujący dokładnie taki sam program jak oryginalny
+        kod źródłowy. Niedopuszczalne jest aby po skompilowaniu program miał inne zachowanie niż to, które
+        zostało opisane przez oryginalny kod źródłowy w języku wyższego poziomu.
+        \\
+        Całkowite zachowanie znaczenia oznacza również, że jeśli oryginalny kod źródłowy zawiera błąd
+        logiczny to program wynikowy również będzie go zawierać.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
 
 \subsubsection{Interfejs z otoczeniem}
+
+Punkty styku projektowanego języka i kompilatora z innymi podsystemami (np. assembler dostarczany jako
+część Viua VM), sieciami (np. Internet), i operatorami (np. programista).
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{IZO-01} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Poprawność emitowanego kodu \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator musi generować poprawny kod źródłowy w języku assemblera Viua VM.
+        Niedopuszczalne jest aby kompilator generował kod, który będzie zawierał błędy składniowe bądź
+        nieznane lub niedozwolone instrukcje.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{IZO-02} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Biblioteki implementujące operacji I/O \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Muszą być dostarczone biblioteki umożliwiające przeprowadzanie operacji I/O (\emph{wejścia-wyjścia}).
+        Takie biblioteki mogą być napisane w języku ViuAct, języku assemblera Viua VM, lub języku C++.
+        W przypadku implementacji w języku assemblera Viua VM lub języku C++ muszą zostać dostarczone pliki
+        umożliwiające kompilatorowi ViuAct wczytanie listy funkcji oferowanych przez taką bibliotekę.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
 
 \subsection{Wymagania niefunkcjonalne}
 
