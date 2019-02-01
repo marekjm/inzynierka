@@ -100,9 +100,152 @@ Wśród nich, szczególną rolę odgrywa JE Dziekan ZWI, prof. Marek Bednarczyk,
 
 \subsection{Wymagania ogólne i dziedzinowe}
 
+Doprecyzowanie celów projektu, prezentacja przedsięwzięć zdefiniowanych przez Kartę Projektu i
+Dokument Założeń Wstępnych.
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WD-01} \\
+    \hline
+    \textbf{Priorytet} & S \\
+    \hline
+    \textbf{Nazwa} & Udowodnienie przydatności (ang. \emph{viability}) Viua VM \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Udowodnienie, że maszyna wirtualna Viua może być celem kompilacji dla
+        języków wyższego poziomu oraz jest możliwe uruchomienie na niej nietrywialnego
+        oprogramowania (w przypadku tego projektu będzie to ViuaChat).} \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WD-02} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Projekt języka ViuAct \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Wymagane jest zaprojektowanie języka programowania wyższego poziomu oraz przygotowanie
+        jego specyfikacji.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & WD-01 \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WD-03} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Implementacja komilatora \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Wymagana jest implementacja kompilatora przetwarzającego kod źródłowy napisany w języku
+        wyższego poziomu (zaprojektowanym w punkcie WD-02) na kod w języku assemblera Viua VM.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & WD-02 \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WD-04} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Chat \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Musi powstać implementacja czatu napisana w języku zaprojektowanym w punkcie WD-02.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & \phantom{} \\
+    \hline
+    \textbf{Wymagania powiązane} & \parbox[t]{11cm}{
+        WD-03 (\emph{do wykonania tego wymagania niezbędny jest kompilator})
+    } \\
+    \hline
+\end{tabular}
+
 \subsection{Wymagania funkcjonalne}
 
+Część wymagań funkcjonalnych języka ViuAct jest opisana w osobnym dokumencie: ''Specyfikacja języka ViuAct''.
+Poniżej opisane są wymagania, które nie mogły być zawarte bezpośrednio w specyfikacji języka (np. sposób
+obsługi i raportowania błędów przez kompilator).
+
 \subsubsection{Funkcjonalności}
+
+% \begin{tabular}{ | l | l | }
+% 	\hline
+% 		\textbf{Identyfikator} &
+% 		WF-07
+% 		\\
+
+% 	\hline
+% 		\textbf{Treść} & \parbox[t]{11cm}{
+% 			Jako użytkownik serwera czatu, chcę odfiltrować
+% 			wiadomości prywatne od jednego użytkownika, aby
+% 			prowadzić z nim ciągłą konwersację.
+% 		}\\
+
+% 	\hline
+% 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+% 			ZP-09 Serwer czatu automatycznie wysyła do pokoju
+% 			wiadomości, zawierające powiadomienia o wydarzeniach
+% 			związanych z pokojem, tzw. wiadomości systemowe \\
+% 			ZP-12 Wiadomość systemowa zostaje wysłana podczas
+% 			wpięcia wypięcia użytkownika z pokoju \\
+% 			ZP-13 Wiadomość systemowa zostaje wysłana, gdy użytkownik
+% 			wpięty do pokoju traci połączenie z serwerem \\
+% 			ZP-14 Wiadomość systemowa zostaje wysłana, gdy użytkownik
+% 			zostaje wyrzucony z pokoju
+
+% 		}\\
+
+% 	\hline
+% 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+% 			\begin{enumreq}
+% 				\item Niezwłocznie po wypięciu się użytkownika z
+% 				pokoju, serwer wyśle wiadomość systemową, widoczną
+% 				dla wszystkich użytkowników wpiętych do tego pokoju,
+% 				o treści:
+% 				\begin{enumerate}
+% 					\item ,,Użytkownik ... opuścił pokój'', gdy
+% 					użytkownik samodzielnie wypiął się z pokoju
+% 					\item ,,Użytkownik ... stracił połączenie'',
+% 					gdy użytkownik został wypięty z pokoju na skutek
+% 					przerwania sesji z uwagi na zerwanie połączenia
+% 					\item ,,Użytkownik ... został wyrzucony'', gdy
+% 					użytkownik został wypięty wskutek interwencji
+% 					administratora
+% 				\end{enumerate}
+% 			\end{enumreq}
+% 			}
+% 		\\
+
+% 	\hline
+% \end{tabular}
 
 \subsubsection{Interfejs z otoczeniem}
 
