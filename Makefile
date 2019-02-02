@@ -5,6 +5,14 @@ all: viuavm-dzw.pdf viuavm-wpp.pdf viuact-specification.pdf viuact-sws.pdf viuac
 %.pdf: %.tex
 	pdflatex $^
 
+%.png: %.dot
+	dot -Tpng $^ > $@
+
+viuact-ps.pdf: \
+	fig/viuact-pipeline.png \
+	fig/viuact-ogolny-schemat-kompilatora.png \
+	fig/basic-compiler-flow.png
+
 # Sprytyny target, który najpierw zmieni timestamp szablonu, a
 # potem wywoła Make żeby ponownie zbudować PDF.
 # To jest przydatne jeśli TeX mówi, że nie umiał znaleźć referencji i
