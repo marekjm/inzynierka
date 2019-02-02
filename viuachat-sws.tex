@@ -630,10 +630,11 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     	\textbf{Zasada biznesowa}
     } & \textbf{Priorytet} \\  
     
-    
     \hline
     ZW-01 & \parbox[t]{14cm}{
-      Oprócz okien czatu dla każdego z wpiętych pokojów, użytkownik dysponuje dodatkowym oknem, na którym widzi wiadomości prywatne. 
+      Wiadomości prywatne to wiadomości, które są wysyłane do
+      konkretnego odbiorcy, innego niż nadawca. Są one widoczne
+      wyłącznie dla nadawcy i odbiorcy takiej wiadomości
     } & M \\
 
     \hline
@@ -648,39 +649,46 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 
     \hline
     ZW-04 & \parbox[t]{14cm}{
-      W oknie czatu pokoju dopuszczalne jest wysyłanie wiadomości prywatnych do dowolnych użytkowników, nawet tych, którzy nie są w danym momencie podpięci do tego pokoju. 
+      W oknie czatu pokoju dopuszczalne jest wysyłanie wiadomości prywatnych tylko tych użytkowników, którzy są do niego w danym momencie podpięci
     } & C \\
 
     \hline
     ZW-05 & \parbox[t]{14cm}{
-      Z okna wiadomości prywatnych można odbierać i wysyłać wyłącznie
-      wiadomości prywatne. 
-    } & M \\
-
-    \hline
-    ZW-06 & \parbox[t]{14cm}{
-      Próba wysłania wiadomości prywatnej powinna zostać odrzucona przez serwer i zwrócić błąd w przypadku gdy:
+      Próba wysłania wiadomości prywatnej w pokoju powinna zostać
+      odrzucona przez serwer i zwrócić błąd w przypadku gdy:
       \begin{itemize}
-      	\item Po znaku „\#” pojawi się od razu znak spacji lub nie będzie żadnych znaków (nie zostanie podana 
+      	\item Po znaku „\#” pojawi się od razu znak spacji lub nie
+      	będzie żadnych znaków (nie zostanie podana 
 		nazwa użytkownika który jest adresatem)
 		\item Nazwa adresata jest dłuższa niż 32 znaki
-		\item Na serwerze nie istnieje użytkownik z nazwą użytą jako nazwa adresata
-		\item Adresat wiadomości ma swoje konto na serwerze, ale nie jest zalogowany 
+		\item Wysyłamy wiadomość prywatną w pokoju czatu do
+		użytkownika, który nie jest podpięty do tego pokoju
       \end{itemize}
 		
     } & M \\
+    
     \hline
+    ZW-06 & \parbox[t]{14cm}{
+      Oprócz okien czatu dla każdego z wpiętych pokojów, użytkownik dysponuje dodatkowym oknem, na którym widzi wiadomości prywatne. 
+    } & M \\
     
     \hline
     ZW-07 & \parbox[t]{14cm}{
+      Z okna wiadomości prywatnych można odbierać i wysyłać wyłącznie
+      wiadomości prywatne, których nadawcą/odbiorcą jest wybrany
+      użytkownik
+    } & M \\    
+    
+    \hline
+    ZW-08 & \parbox[t]{14cm}{
       W oknie wiadomości prywatnych można podglądać równocześnie
-      wiadomości, których nadawcą lub odbiorcą jest jeden, wskazany
+      wiadomości, których nadawcą lub odbiorcą jest jeden, wybrany
       użytkownik
       
     } & S \\
     
     \hline
-    ZW-08 & \parbox[t]{14cm}{
+    ZW-09 & \parbox[t]{14cm}{
       W oknie wiadomości prywatnych można wysyłać wiadomości
       wyłącznie do nadawcy, którego wiadomości są w danym momencie
       pokazywane.
@@ -886,46 +894,6 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
-			Jako użytkownik serwera czatu, chcę wiedzieć czy
-			moja wiadomość została doręczona innym dyskutantom,
-			aby spróbować wysłać ją w razie potrzeby jeszcze raz.
-		}\\
-		 
-	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
-
-		}\\
-		
-	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
-			\begin{enumreq}
-				\item Po wysłaniu wiadomości, pole tekstowe wraz 
-				z przyciskiem ,,Wyślij'' zostaje zablokowane (ale
-				nie wyczyszczone)
-				\item Dopiero po otrzymaniu od serwera potwierdzenia
-				odebrania wiadomości, pole tekstowe jest czyszczone
-				i odblokowywane
-				\item Jeżeli serwer nie potwierdzi odebrania
-				wiadomości po upływie 5 sekund lub zwróci błąd,
-				pole tekstowe i przycisk ,,Wyślij'' zostanie 
-				odblokowane, ale nie wyczyszczone
-			\end{enumreq}
-			}
-		\\
-
-	\hline
-\end{tabular}
-
-\vspace{2em} 
-
-\begin{tabular}{ | l | l | }
-	\hline
-		\textbf{Identyfikator} & 
-		WF-06
-		\\
-		
-	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę chcę zobaczyć
 			powiadomienie o wpięciu się nowego użytkownika do
 			pokoju w którym sam jestem obecnie wpięty, aby powitać
@@ -960,7 +928,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 \begin{tabular}{ | l | l | }
 	\hline
 		\textbf{Identyfikator} & 
-		WF-07
+		WF-06
 		\\
 		
 	\hline
@@ -1014,7 +982,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 \begin{tabular}{ | l | l | }
 	\hline
 		\textbf{Identyfikator} & 
-		WF-08
+		WF-07
 		\\
 		
 	\hline
@@ -1049,7 +1017,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 \begin{tabular}{ | l | l | }
 	\hline
 		\textbf{Identyfikator} & 
-		WF-09
+		WF-08
 		\\
 		
 	\hline
@@ -1085,7 +1053,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 \begin{tabular}{ | l | l | }
 	\hline
 		\textbf{Identyfikator} & 
-		WF-07
+		WF-09
 		\\
 		
 	\hline
