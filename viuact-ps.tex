@@ -379,7 +379,14 @@ Brak diagramu klas, ponieważ program nie jest pisany w stylu obiektowym.
 
 \subsection{Środowisko docelowe}
 
+Środowiskiem docelowym, na którym będą uruchamiane programy napisane w języku ViuAct jest maszyna wirtualna
+Viua VM. Środowisko docelowa musi spełniać wymagania jakie ma Viua VM (m.in. musi to być system zgodny ze
+standardem POSIX).
+
 \subsection{Środowisko implementacji}
+
+Środowiskiem implmentacji jest Linux z dostępnymi standardowymi narzędziami GNU, językiem Python 3, i
+umożliwiającym uruchomienie assemblera dostarczanego przez Viua VM.
 
 \subsection{Priorytety implementacyjne}
 
@@ -397,12 +404,19 @@ Brak w tym projekcie. Jest on wyłącznie softwareowy.
 
 \subsection{Interfejs użytkownika}
 
+Interfejs użytkownika opisany jest w osobnym dokumencie -- podręczniku użytkownika kompilatora ViuAct (plik
+''viuact-manual.pdf'').
+
 \subsubsection{Założenia konstrukcji interfejsu}
 
 \subsection{Interfejs kompilatora}
 
 Kompilator składa się z dwóch programów: \texttt{viuact-cc} (kompilatora właściwego) i \texttt{viuact-opt}
-(programu łączącego).
+(programu łączącego). Programy te są konfigurowane za pomocą zmiennych środowiskowych, które kontrolują poziom
+''głośności'' logów, położenie assemblera Viua VM, a także włączają bądź wyłączają serializację formy
+pośredniej.
+
+Interfejs kompilatora opisany jest w osobnym dokumencie.
 
 \subsection{Interfejs języka}
 
