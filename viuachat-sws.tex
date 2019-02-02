@@ -639,12 +639,12 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 
     \hline
     ZW-02 & \parbox[t]{14cm}{
-      Aby wysłać wiadomość prywatną w oknie pokoju, należy poprzedzić ją znakiem \# i nazwą użytkownika, do którego jest kierowana wiadomość, oddzielona spacją od komunikatu, np.: „\#user Tajna wiadomość”. Trafia ona wówczas do okna wiadomości prywatnych. 
+      Wiadomość prywatna może być wysłana z okna czatu pokoju – wiadomości prywatne nie są pokazywane wszystkim uczestnikom czatu, a jedynie użytkownikowi, do którego jest adresowana. 
     } & M \\
 
     \hline
     ZW-03 & \parbox[t]{14cm}{
-      Wiadomość prywatna może być wysłana z okna czatu pokoju –wiadomości prywatne nie są pokazywane wszystkim uczestnikom czatu, a jedynie użytkownikowi, do którego jest adresowana. 
+      Aby wysłać wiadomość prywatną w oknie pokoju, należy poprzedzić ją znakiem \# i nazwą użytkownika, do którego jest kierowana wiadomość, oddzielona spacją od komunikatu, np.: „\#user Tajna wiadomość”.
     } & C \\
 
     \hline
@@ -669,7 +669,7 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     
     \hline
     ZW-06 & \parbox[t]{14cm}{
-      Oprócz okien czatu dla każdego z wpiętych pokojów, użytkownik dysponuje dodatkowym oknem, na którym widzi wiadomości prywatne. 
+      Użytkownik dysponuje dedykowanym oknem, w którym widzi wiadomości prywatne. 
     } & M \\
     
     \hline
@@ -681,9 +681,7 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     
     \hline
     ZW-08 & \parbox[t]{14cm}{
-      W oknie wiadomości prywatnych można podglądać równocześnie
-      wiadomości, których nadawcą lub odbiorcą jest jeden, wybrany
-      użytkownik
+      W oknie wiadomości prywatnych można przeglądać wiadomości wysłane do i odebrane od jednego, wybranego użytkownika.
       
     } & S \\
     
@@ -699,10 +697,12 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
       Czas istnienia wiadomości prywatnych zależy od typu użytkownika
       który jest jej nadawcą i odbiorcą:
       \begin{itemize}
-      	\item Jeżeli obie strony komunikacji są użytkownikami
-      	tymczasowymi, wiadomość jest utrzymywana dopóki obie
-      	strony konwersacji nie zakończą sesji połączenia z serwerem
-      	\item Jeżeli jedna strona komunikacji jest użytkownikiem
+      	\item Jeżeli co najmniej jedna strona komunikacji
+      	 jest użytkownikiem tymczasowym, wiadomości są
+      	 utrzymywane dopóki nadawca i odbiorca nie skończą
+      	 sesji na serwerze
+      	\item Jeżeli jedna strona komunikacji jest
+      	użytkownikiem
       	tymczasowym, a druga stałym, to wiadomość jest utrzymywana
       	dopóki użytkownik tymczasowy skończy sesję połączenia z
       	serwerem
@@ -713,8 +713,8 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     
     \hline
     ZW-11 & \parbox[t]{14cm}{
-      Dla każdej pary użytkowników, na serwerze jest gromadzone co
-      najwyżej 100 wiadomości prywatnych.
+      Dla każdej pary użytkowników, na serwerze jest
+      gromadzone co najwyżej 100 wiadomości prywatnych.
     } & S \\
     \hline
   \end{tabular}
@@ -1029,18 +1029,27 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		 
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
-			ZW-01 Oprócz okien czatu dla każdego z wpiętych pokojów,
-			użytkownik dysponuje dodatkowym oknem, w którym widzi
-			wiadomości prywatne
+			ZW-01 Wiadomości prywatne to wiadomości, które są
+			wysyłane do konkretnego odbiorcy, innego niż
+			nadawca... \\
+			ZW-06 Użytkownik dysponuje dodatkowym oknem, na którym
+			widzi wiadomości prywatne. \\
+			ZW-07 Z okna wiadomości prywatnych można odbierać i
+			wysyłać wyłącznie wiadomości prywatne, których
+			nadawcą / odbiorcą jest wybrany użytkownik. \\
 		}\\
 		
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
-				\item Nad listą pokojów, użytkownik zobaczy link
-				,,Wiadomości prywatne''.
-				\item Po kliknięciu w link ,,Wiadomości prywatne'',
-				użytkownik zobaczy okno wiadomości prywatnych.
+				\item Po kliknięciu w link ,,PW'', użytkownik
+				zobaczy okno prywatnych wiadomości
+				\item W oknie wiadomości prywatnych, użytkownik
+				zobaczy listę użytkowników, od których otrzymał
+				wiadomości prywatne.
+				\item Po kliknięciu w link z nazwą użytkownika,
+				użytkownik zobaczy prywatne wiadomości, których
+				nadawcą i odbiorcą jest wskazana osoba.
 			\end{enumreq}
 			}
 		\\
@@ -1058,43 +1067,133 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
-			Jako użytkownik serwera czatu, chcę odfiltrować
-			wiadomości prywatne od jednego użytkownika, aby
+			Jako użytkownik serwera czatu, chcę wysłać
+			wiadomość prywatną do jednego użytkownika, aby
 			prowadzić z nim ciągłą konwersację.
 		}\\
 		 
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
-			ZP-09 Serwer czatu automatycznie wysyła do pokoju
-			wiadomości, zawierające powiadomienia o wydarzeniach
-			związanych z pokojem, tzw. wiadomości systemowe \\
-			ZP-12 Wiadomość systemowa zostaje wysłana podczas
-			wpięcia wypięcia użytkownika z pokoju \\
-			ZP-13 Wiadomość systemowa zostaje wysłana, gdy użytkownik
-			wpięty do pokoju traci połączenie z serwerem \\
-			ZP-14 Wiadomość systemowa zostaje wysłana, gdy użytkownik
-			zostaje wyrzucony z pokoju
+			
 			
 		}\\
 		
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
-				\item Niezwłocznie po wypięciu się użytkownika z
-				pokoju, serwer wyśle wiadomość systemową, widoczną
-				dla wszystkich użytkowników wpiętych do tego pokoju,
-				o treści:
-				\begin{enumerate}
-					\item ,,Użytkownik ... opuścił pokój'', gdy
-					użytkownik samodzielnie wypiął się z pokoju
-					\item ,,Użytkownik ... stracił połączenie'',
-					gdy użytkownik został wypięty z pokoju na skutek
-					przerwania sesji z uwagi na zerwanie połączenia
-					\item ,,Użytkownik ... został wyrzucony'', gdy
-					użytkownik został wypięty wskutek interwencji
-					administratora
-				\end{enumerate}
-			\end{enumreq}
+				\item Użytkownik wpisze tekst wiadomości w polu
+				tekstowym u dołu okna wiadomości prywatnych
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po wciśnięciu klawisza ,,Enter'', gdy
+				aktywne
+				będzie pole tekstowe
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po naciśnięciu przycisku ,,Wyślij'',
+				widocznego obok pola tekstowego
+				\item Po wysłaniu wiadomości, pole tekstowe zostanie
+				wyczyszczone (niezależnie od tego czy wiadomość
+				zostanie doręczona)
+				\item Wiadomość wysłana w oknie zostanie pokazana
+				tylko użytkownikowi, z którym trwa otwarta
+				konwersacja
+				\item Nowa wiadomość jest pokazywana wraz z nazwą
+				użytkownika wysyłającego u dołu konwersacji
+			\end{enumreq}`								
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-10
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użbytkownik czatu, chcę wysłać wiadomość
+			prywatną w oknie czatu, aby zobaczył ją tylko jej
+			odbiorca
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			
+			
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Użytkownik wpisze w oknie pokoju 
+				wiadomość zapoczątkowaną znakiem kratki \# i nazwą 
+				użytkownika obecnego na czacie, oddzieloną spacją 
+				od treści wiadomości
+				tekstowym u dołu okna wiadomości prywatnych
+				\item Wiadomość wysłana w oknie zostanie pokazana
+				tylko użytkownikowi, do którego została skierowana
+				a także u tego użytkownika, który ją nadał
+				\item Wiadomości prywatna w oknie pokoju jest
+				podświetlona na żółto.
+			\end{enumreq}`								
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+
+\vspace{2em} 
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+		WF-11
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako użytkownik serwera czatu, chcę wysłać wiadomość 
+			prywatną do innego użytkownika, z którym wcześniej nie
+			wymieniałem takich wiadomości, aby rozpocząć z nim
+			prywatną konwersację.
+		}\\
+		 
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+			
+			
+		}\\
+		
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Użytkownik kliknie w oknie wiadomości
+				prywatnych w przyciski ,,Nowy''.
+				\item Użytkownik zobaczy monit o podanie nazwy
+				użytkownika, z którym chce rozpocząć rozmowę
+				\item Jeżeli użytkownik jest aktywny, wówczas 
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po wciśnięciu klawisza ,,Enter'', gdy
+				aktywne
+				będzie pole tekstowe
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po naciśnięciu przycisku ,,Wyślij'',
+				widocznego obok pola tekstowego
+				\item Po wysłaniu wiadomości, pole tekstowe zostanie
+				wyczyszczone (niezależnie od tego czy wiadomość
+				zostanie doręczona)
+				\item Wiadomość wysłana w oknie zostanie pokazana
+				tylko użytkownikowi, z którym trwa otwarta
+				konwersacja
+				\item Nowa wiadomość jest pokazywana wraz z nazwą
+				użytkownika wysyłającego u dołu konwersacji
+			\end{enumreq}`								
 			}
 		\\
 
@@ -1130,23 +1229,68 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-
-
-
 \subsection{Wymagania na środowisko docelowe}
 
-\textit{W jakim środowisku będzie pracować system – o ile jest istotne, np. system operacyjny, rodzaje i wersje przeglądarek internetowych, itp. Może się zdarzyć, że na tym etapie użytkownicy i inni udziałowcy nie wyspecyfikują środowiska docelowego.}
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+	WS-01
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			W rozwiązaniu należy wykorzystać środowisko ViuaVM i
+			język Viuact
+		}\\
+
+	\hline
+\end{tabular}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+	WS-02
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Czat będzie użytkowany jako aplikacja webowa typu
+			\textit{single page application}
+		}\\
+
+	\hline
+\end{tabular}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+	WS-03
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Aplikacja czatu będzie dostosowana przede wszystkim
+			do obsługi z wykorzystaniem urządzeń mobilnych.
+		}\\
+
+	\hline
+\end{tabular}
 
 \subsection{Wymagania dotyczące procesu wytwarzania}
 
-\textit{Jaki ma być proces powstawania rozwiązania projektowego np. ile czasu ma trwać, czy ma być wykonany zgodnie z jakąś metodologią lub też jakie mają być cechy tego procesu np. tajny}
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} & 
+	WW-01
+		\\
+		
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			W procesie wytwórczym należy korzystać z metodologii
+			mini-Scrum
+		}\\
 
-\section{Kryteria akceptacja rozwiązania}
-
-\textit{Specyfikacja kryteriów akceptacji gotowego produktu przez klienta – mogą to być wybrane kluczowe wymagania funkcjonalne lub niefunkcjonalne. Chodzi o zdefiniowanie priorytetów: czas, budżet, wydajność, bezpieczeństwo, itp. Pod koniec procesu realizacji wraca się do kryteriów akceptacji zdefiniowanych na początku projektu i weryfikuje poprawność rozwiązania. }
-
-\section{Odwołania do literatury}
-
-\textit{Lista przywoływanych pozycji literowych, ponumerowanych lub z przydzielonymi identyfikatorami; w treści właściwej dokumentu posługujemy się wyłącznie numerami/ identyfikatorami do wskazania źródła treści. Usunąć jeśli nie dotyczy.}
+	\hline
+\end{tabular}
 
 \end{document}
