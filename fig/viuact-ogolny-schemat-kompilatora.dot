@@ -1,0 +1,19 @@
+digraph {
+    subgraph cluster_1 {
+        label="Kompilator ViuAct";
+        lexer; parser; lowerer; emitter;
+    }
+
+    "hello_world.lisp" -> lexer;
+
+    lexer -> parser -> lowerer -> emitter;
+
+    emitter -> "hello_world.asm";
+    emitter -> "hello_world.d";
+    emitter -> "hello_world.i";
+
+    "hello_world.lisp" [fontname="DejaVuSansMono"];
+    "hello_world.asm" [fontname="DejaVuSansMono"];
+    "hello_world.d" [fontname="DejaVuSansMono"];
+    "hello_world.i" [fontname="DejaVuSansMono"];
+}

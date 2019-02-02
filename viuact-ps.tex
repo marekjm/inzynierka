@@ -84,17 +84,14 @@ Omówienie interakcji kompilatora języka ViuAct z narzędziami dostarczanymi pr
 się w rozdziale \ref{architektura_systemu} (\nameref{architektura_systemu}) na stronie
 \pageref{architektura_systemu}.
 
+Oprócz kompilatora (rozdział \ref{opis_kompilatora} na stronie \pageref{opis_kompilatora}) dostarczany jest
+również ''program łączący'' (rozdział \ref{opis_linkera} na stronie \pageref{opis_linkera}) dokonujący
+automatycznego połączenia wymaganych modułów w gotowy plik wykonywalny.
+
 \newpage
 
 \subsection{Architektura systemu}
 \label{architektura_systemu}
-
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=10cm]{viuact-pipeline}
-    \caption{Interakcje: od pliku źródłowego do działającego programu}
-    \label{schemat_interakcji_viuact_z_viuavm}
-\end{figure}
 
 Rysunek \ref{schemat_interakcji_viuact_z_viuavm} (''\nameref{schemat_interakcji_viuact_z_viuavm}'') prezentuje
 schemat interakcji jakie zachodzą w całym systemie od momentu wczytania pliku źródłowego przez kompilator do
@@ -105,20 +102,76 @@ emisja kodu (''Assembly code emission''), której wynikiem jest plik z kodem źr
 VM (''\texttt{hello\_world.asm}'' na rysunku). Rozdział \ref{architektura_kompilatora_viuact}
 (\nameref{architektura_kompilatora_viuact}) dokładniej opisuje działanie samego kompilatora.
 
-Zakres tej pracy inżynierskiej kończy się na wygenerowaniu pliku zawierającego poprawny kod w języku
-assemblera Viua VM oraz plików pomocniczych (dokładniej opisanych w rozdziałach
-''\nameref{pliki_interfejsow_modulow}'' na stronie \pageref{pliki_interfejsow_modulow} i
-''\nameref{pliki_zaleznosci_modulow}'' na stronie \pageref{pliki_zaleznosci_modulow}).
+\begin{figure}[!htp]
+    \centering
+    \includegraphics[width=9cm]{viuact-pipeline}
+    \caption{Interakcje: od pliku źródłowego do działającego programu}
+    \label{schemat_interakcji_viuact_z_viuavm}
+\end{figure}
+
+Zakres pracy inżynierskiej obejmuje wygenerowanie pliku zawierającego poprawny kod w języku
+assemblera Viua VM oraz plików pomocniczych (zadanie kompilatora), oraz takim pokierowaniu
+narzędziami dostarczanymi przez platformę, żeby wyemitowały one plik wykonywalny bądź bibliotekę (zadanie
+''programu łączącego''). Zakładamy, że narzędzia dostarczane przez platformę działają poprawnie.
+
 Pliki pomocnicze są wymagane przez ''program łączący'' (opisany w rozdziale \ref{opis_linkera} na stronie
-\pageref{opis_linkera}).
+\pageref{opis_linkera}). Ich dokładniejsze opisy znajdują się w rozdziałach
+''\nameref{pliki_interfejsow_modulow}'' na stronie \pageref{pliki_interfejsow_modulow} i
+''\nameref{pliki_zaleznosci_modulow}'' na stronie \pageref{pliki_zaleznosci_modulow}
 
 \subsection{Dekompozycja systemu na podsystemy}
 \label{architektura_kompilatora_viuact}
 
+Język ViuAct jest implementowany przez dwa programy:
+
+\begin{enumerate}
+    \item \textbf{kompilator} - który przetwarza kod źródłowy w języku ViuAct na kod źródłowy w języku
+        assemblera Viua VM
+    \item \textbf{linker} - który na podstawie wyników pracy kompilatora tworzy pliki wykonywalne, które
+        mogą być uruchomione na jądrze Viua VM
+\end{enumerate}
+
+Większość pracy w tym układzie wykonuje kompilator, opisany w rozdziale \ref{opis_kompilatora} na stronie
+\pageref{opis_kompilatora}. Generuje on pliki zawierające kod źródłowy w języku assemblera gotowe do
+przetworzenia przez assembler Viua VM na formę binarną, oraz pliki pomocnicze.
+
+Z plików pomocniczych korzysta zarówno sam kompilator (do określenia interfejsów modułów importowanych przez
+aktualnie kompilowany moduł), ale też linker -- do określenia jakie moduły powinny być dołączone do aktualnie
+emitowanego pliku wykonywalnego, aby zapewnić dostępność wszystkich wymaganych funkcji. Linker jest dokładniej
+opisany w rozdziale \ref{opis_linkera} na stronie \pageref{opis_linkera}.
+
 \subsubsection{Kompilator -- \texttt{viuact-cc}}
 \label{opis_kompilatora}
 
-lexer -> parser -> lowerer -> emitter
+Kompilator składa się z kilku podsystemów, zgodnie z
+przedstawieniem na rysunku \ref{ogolny_schemat_kompilatora_viuact}.
+
+\begin{figure}[!htp]
+    \centering
+    \includegraphics[width=10cm]{viuact-ogolny-schemat-kompilatora}
+    \caption{Podział kompilatora na podsystemy}
+    \label{ogolny_schemat_kompilatora_viuact}
+\end{figure}
+
+Każdy podsystem implementuje jedną z faz kompilacji:
+
+\begin{enumerate}
+    \item \textbf{lexer} dokonuje analizy leksykalnej wczytanego pliku źródłowego, dzieląc go na listę tokenów
+    \item \textbf{parser} dokonuje analizy składniowej łącząc tokeny w grupy reprezentujące większe
+        konstrukcje językowe
+    \item \textbf{lowerer} mapuje grupy wyprodukowane przez \emph{parser} do odpowiednich funkcji
+        \emph{emittera}; jest to dość banalny etap, ale upraszcza budowę kompilatora
+    \item \textbf{emitter} tłumaczy konstrukcje językowe ViuAct na równoznaczne konstrukcje w języku
+        assemblera Viua VM
+\end{enumerate}
+
+Różnica między podsystemami \emph{lowerer} i \emph{emitter} może być niejasna. Oba biorą udział w emisji
+kodu wynikowego, ale \emph{lowerer} bezpośrednio zajmuje się tylko modułami i funkcjami, natomiast
+\emph{emitter} implementuje emisję pojedynczych wyrażeń języka ViuAct -- przypisań \texttt{let}, konstrukcji
+warunkowych \texttt{if}, wywołań funkcji, itd.
+
+Proces kompilacji dokłaniej opisany jest w rozdziale \ref{opis_etapow_kompilacji}
+(\nameref{opis_etapow_kompilacji}) na stronie \pageref{opis_etapow_kompilacji}.
 
 \subsubsection{Program łączący -- \texttt{viuact-opt}}
 \label{opis_linkera}
@@ -191,6 +244,22 @@ Brak bazy danych w projekcie.
 
 Krótka dyskusja jak przyjęte rozwiązania projektowe spełniają wymagania, szczególnie jakościowe, np.
 bezpieczeństwo.
+
+\section{Słownik pojęć}
+
+\begin{description}
+    \item[kompilator] program tłumaczący kod w jednym języku (zazwyczaj wysokiego poziomu) na kod o takim
+        samym znaczeniu w innym języku (zazwyczaj niższego poziomu)
+    \item[jednostka translacji] w przypadku języka ViuAct jest to pojedynczy moduł
+    \item[linker] program łączący wiele modułów w plik wykonywalny
+    \item[plik wykonywalny] plik zawierający bytecode w formacie, który może zostać wykonany przez jądro Viua
+        VM
+    \item[moduł] w załeżności od kontekstu: \emph{1/} kod źródłowy modułu w języku ViuAct, lub \emph{2/} plik
+        zawierający bytecode w formacie, który może zostać wykorzystany przez linker bądź jądro Viua VM do
+        dołączenia
+    \item[biblioteka] zbiór modułów bytecode'u
+    \item[jądro] podsystem Viua VM odpowiadający za uruchamianie programów (tzw. ''\emph{kernel}'')
+\end{description}
 
 \section{Załączniki}
 

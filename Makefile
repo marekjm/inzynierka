@@ -10,6 +10,7 @@ all: viuavm-dzw.pdf viuavm-wpp.pdf viuact-specification.pdf viuact-sws.pdf viuac
 
 viuact-ps.pdf: \
 	fig/viuact-pipeline.png \
+	fig/viuact-ogolny-schemat-kompilatora.png \
 	fig/basic-compiler-flow.png
 
 # Sprytyny target, który najpierw zmieni timestamp szablonu, a
