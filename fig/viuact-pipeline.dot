@@ -31,4 +31,8 @@ digraph {
     assembler -> "hello_world.bc";
     "hello_world.bc" -> "VM kernel";
     "VM kernel" -> "\"Hello World!\"";
+
+    "hello_world.lisp" [fontname="DejaVuSansMono"];
+    "hello_world.asm" [fontname="DejaVuSansMono"];
+    "hello_world.bc" [fontname="DejaVuSansMono"];
 }
