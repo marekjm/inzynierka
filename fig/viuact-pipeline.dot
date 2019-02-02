@@ -10,7 +10,7 @@ digraph {
     }
 
     subgraph cluster_3 {
-        label="Bytecode emission";
+        label="Assembly code emission";
         lowerer;
         emitter;
     }

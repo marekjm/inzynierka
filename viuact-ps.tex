@@ -84,15 +84,44 @@ Omówienie interakcji kompilatora języka ViuAct z narzędziami dostarczanymi pr
 się w rozdziale \ref{architektura_systemu} (\nameref{architektura_systemu}) na stronie
 \pageref{architektura_systemu}.
 
+\newpage
+
 \subsection{Architektura systemu}
 \label{architektura_systemu}
 
-\includegraphics[width=10cm]{viuact-pipeline}
+\begin{figure}[!htp]
+    \centering
+    \includegraphics[width=10cm]{viuact-pipeline}
+    \caption{Interakcje: od pliku źródłowego do działającego programu}
+    \label{schemat_interakcji_viuact_z_viuavm}
+\end{figure}
+
+Rysunek \ref{schemat_interakcji_viuact_z_viuavm} (''\nameref{schemat_interakcji_viuact_z_viuavm}'') prezentuje
+schemat interakcji jakie zachodzą w całym systemie od momentu wczytania pliku źródłowego przez kompilator do
+uruchomienia programu przez jądro Viua VM.
+
+Ostatnią fazą jaką zajmuje się kompilator języka ViuAct dostarczany jako element tej pracy inżynierskiej jest
+emisja kodu (''Assembly code emission''), której wynikiem jest plik z kodem źródłowym w języku assemblera Viua
+VM (''\texttt{hello\_world.asm}'' na rysunku). Rozdział \ref{architektura_kompilatora_viuact}
+(\nameref{architektura_kompilatora_viuact}) dokładniej opisuje działanie samego kompilatora.
+
+Zakres tej pracy inżynierskiej kończy się na wygenerowaniu pliku zawierającego poprawny kod w języku
+assemblera Viua VM oraz plików pomocniczych (dokładniej opisanych w rozdziałach
+''\nameref{pliki_interfejsow_modulow}'' na stronie \pageref{pliki_interfejsow_modulow} i
+''\nameref{pliki_zaleznosci_modulow}'' na stronie \pageref{pliki_zaleznosci_modulow}).
+Pliki pomocnicze są wymagane przez ''program łączący'' (opisany w rozdziale \ref{opis_linkera} na stronie
+\pageref{opis_linkera}).
 
 \subsection{Dekompozycja systemu na podsystemy}
 \label{architektura_kompilatora_viuact}
 
+\subsubsection{Kompilator -- \texttt{viuact-cc}}
+\label{opis_kompilatora}
+
 lexer -> parser -> lowerer -> emitter
+
+\subsubsection{Program łączący -- \texttt{viuact-opt}}
+\label{opis_linkera}
 
 \subsection{Przepieg procesu kompilacji}
 \label{opis_etapow_kompilacji}
@@ -149,8 +178,10 @@ Jest ona opisana w specyfikacji języka.
 \subsection{Inne interfejsy}
 
 \subsubsection{Pliki interfejsów modułów (\texttt{.i})}
+\label{pliki_interfejsow_modulow}
 
 \subsubsection{Pliki zależności modułów (\texttt{.d})}
+\label{pliki_zaleznosci_modulow}
 
 \section{Projekt bazy danych}
 
