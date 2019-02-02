@@ -57,17 +57,45 @@
 
 \subsection{Użyte wzorce projektowe -- Sposób konstrukcji kompilatora}
 
-\emph{Ogólny sposób konstrukcji kompilatora. Prosty diagram.}
+\begin{figure}[!htp]
+    \centering
+    \includegraphics[width=5cm]{basic-compiler-flow}
+    \caption{Podstawowy schemat budowy kompilatora}
+    \label{basic_compiler_flow}
+\end{figure}
+
+Na rysunku \ref{basic_compiler_flow} przedstawiony jest uproszczony schemat budowy kompilatora.
+W kompilatorach ''produkcyjnych'' (np. GCC, Clang, czy ICC) tych faz jest więcej -- przede wszystkim etap
+emisji kodu jest dużo bardziej rozbudowany, oraz dochodzą etapy analizy semantycznej (czy program ma sens) czy
+optymalizacji (prób takiego przekształcenia kodu programu żeby przy zachowaniu znaczenia działał wydajniej).
+
+Kompilator języka ViuAct dostarczany jako element tej pracy inżynierskiej jest pozbawiony etapów
+analizy semantycznej oraz optymalizacji. Analiza semantyczna (oraz weryfikacja typów i wykrywanie błędów na
+etapie kompilacji) jest oddelegowana do assemblera dostarczanego przez platformę. Optymalizacja jest
+całkowicie pominięta gdyż jest to temat niezwykle rozległy; implementacja i doszlifowanie algorytmów
+optymalizujących kod jest sama w sobie materiałem wystarczającym na napisanie osobnej pracy inżynierskiej.
+
+Architektura kompilatora języka ViuAct jest dokładniej opisana w rozdziale
+\ref{architektura_kompilatora_viuact} (\nameref{architektura_kompilatora_viuact}) na
+stronie \pageref{architektura_kompilatora_viuact}.
+Sposób działania kompilatora jest opisany w rozdziale \ref{opis_etapow_kompilacji}
+(\nameref{opis_etapow_kompilacji}) na stronie \pageref{opis_etapow_kompilacji}.
+Omówienie interakcji kompilatora języka ViuAct z narzędziami dostarczanymi przez platformę Viua VM znajduje
+się w rozdziale \ref{architektura_systemu} (\nameref{architektura_systemu}) na stronie
+\pageref{architektura_systemu}.
 
 \subsection{Architektura systemu}
+\label{architektura_systemu}
 
-Kompilator -> assembler -> VM
+\includegraphics[width=10cm]{viuact-pipeline}
 
 \subsection{Dekompozycja systemu na podsystemy}
+\label{architektura_kompilatora_viuact}
 
 lexer -> parser -> lowerer -> emitter
 
-\subsection{Opis interakcji pomiędzy systemami}
+\subsection{Przepieg procesu kompilacji}
+\label{opis_etapow_kompilacji}
 
 Co po kolei robi kompilator.
 Od wczytania pliku z kodem źródłowym do wyemitowania kodu wynikowego w języku assemblera.
