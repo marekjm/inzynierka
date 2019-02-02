@@ -1,0 +1,140 @@
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+\graphicspath{ {./fig/} }
+
+\newenvironment{enumreq}
+{ \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
+{ \end{enumerate}                  } 
+
+
+\setcounter{secnumdepth}{4}
+
+%% Author and title
+\author{Marek Marecki \and Krzysztof Franek}
+\title{%
+    Proving viability of Viua VM \\
+    \large Implementation of high-level language on Viua VM\\
+    and deployment of simple application \\
+    ~\\
+    Projekt Systemu\\
+    dla języka Viuact}
+
+\begin{document}
+
+\maketitle
+{\footnotesize
+\begin{center}
+  \begin{tabular}{ | l | l | l | }
+    \hline
+    \parbox[t]{6.5cm}{\textbf{Temat pracy i akronim projektu:}\\Proving viablity of Viua VM (VVIA)} & \parbox[t]{4.5cm}{\textbf{Zleceniodawca:}\\\colorbox{yellow}{Nieznany}} & \parbox[t]{4.5cm}{\textbf{Konsultant:}\\\colorbox{yellow}{Nieznany}} \\ \hline
+    \parbox[t]{6.5cm}{\textbf{Zespół projektowy:}\\Krzysztof Franek, Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Opiekun projektu:}\\dr hab. Marek A. Bednarczyk, prof. PJWSTK} \\ \hline
+    \parbox[t]{3.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} &
+      \multicolumn{2}{|l|}{\parbox[t]{9cm}{\textbf{Odpowiedzialny za dokument:}\\Marek Marecki}} \\ 
+    \hline
+  \end{tabular}
+\end{center}
+}
+
+\tableofcontents
+\newpage
+
+\section{Architektura}
+
+\subsection{Użyte wzorce projektowe -- Sposób konstrukcji kompilatora}
+
+\emph{Ogólny sposób konstrukcji kompilatora. Prosty diagram.}
+
+\subsection{Architektura systemu}
+
+Kompilator -> assembler -> VM
+
+\subsection{Dekompozycja systemu na podsystemy}
+
+lexer -> parser -> lowerer -> emitter
+
+\subsection{Opis interakcji pomiędzy systemami}
+
+Co po kolei robi kompilator.
+Od wczytania pliku z kodem źródłowym do wyemitowania kodu wynikowego w języku assemblera.
+
+\section{Projekt struktury}
+
+\subsection{Diagram klas}
+
+Brak diagramu klas, ponieważ jest zbędny (program nie jest pisany w stylu obiektowym).
+
+\subsection{Opis zmian i uszczegółowień w stosunku do diagramu analitycznego}
+
+\section{Wykorzystane elementy}
+
+\emph{Wykorzystane komponenty, programy, itp.}
+
+\section{Decyzje projektowe}
+
+\subsection{Środowisko docelowe}
+
+\subsection{Środowisko implementacji}
+
+\subsection{Priorytety implementacyjne}
+
+Maksymalizacja prostoty budowy kompilatora i języka.
+Marginalizacja obsługi błędów w kompilatorze z uwagi na brak czasu.
+Marginalizacja optymalizacji z uwagi na brak czasu.
+
+\section{Projekt algorytmów i przyjętych protokołów}
+
+\section{Projekt rozwiązań sprzętowych}
+
+Brak w tym projekcie. Jest on wyłącznie softwareowy.
+
+\section{Projekt interfejsu}
+
+\subsection{Interfejs użytkownika}
+
+\subsubsection{Założenia konstrukcji interfejsu}
+
+\subsection{Interfejs kompilatora}
+
+Kompilator składa się z dwóch programów: \texttt{viuact-cc} (kompilatora właściwego) i \texttt{viuact-opt}
+(programu łączącego).
+
+\subsection{Interfejs języka}
+
+Interfejsem języka jest jego składnia.
+Jest ona opisana w specyfikacji języka.
+
+\subsection{Inne interfejsy}
+
+\subsubsection{Pliki interfejsów modułów (\texttt{.i})}
+
+\subsubsection{Pliki zależności modułów (\texttt{.d})}
+
+\section{Projekt bazy danych}
+
+Brak bazy danych w projekcie.
+
+\section{Opis implementacji}
+
+Krótka dyskusja jak przyjęte rozwiązania projektowe spełniają wymagania, szczególnie jakościowe, np.
+bezpieczeństwo.
+
+\section{Załączniki}
+
+Specyfikacja języka ViuAct -- ''\emph{viuact-specification.pdf}''.
+
+\end{document}
