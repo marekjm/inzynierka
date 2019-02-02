@@ -16,6 +16,7 @@
 \usepackage{geometry}
 \geometry{a4paper, portrait, margin=2cm}
 \graphicspath{ {./fig/} }
+\usepackage{listings}
 
 \newenvironment{enumreq}
 { \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
@@ -35,6 +36,9 @@
     dla języka Viuact}
 
 \begin{document}
+
+\lstset{basicstyle=\ttfamily,
+columns=fixed}
 
 \maketitle
 {\footnotesize
@@ -175,6 +179,36 @@ Proces kompilacji dokłaniej opisany jest w rozdziale \ref{opis_etapow_kompilacj
 
 \subsubsection{Program łączący -- \texttt{viuact-opt}}
 \label{opis_linkera}
+
+Program łączący (tzw. ''\emph{linker}'') zajmuje się finalną fazę ''kompilacji''.
+Jest to stwierdzenie o tyle trafne, co niepoprawne. Zazwyczaj jednak nie ma to znaczenia, ponieważ zarówno
+linker jak i kompilator jest ukrywany przed programistą. Popularne ''kompilatory'' jak np \emph{\texttt{g++}}
+z GCC to tak naprawdę ''drivery''; wywołanie polecenia \emph{\texttt{g++}} powoduje wywołanie zarówno
+kompilatora (\emph{\texttt{cc1}}), assemblera (\emph{\texttt{as}}), jak i linkera (\emph{\texttt{ld}}) w taki
+sposób aby na wyjściu uzyskać oczekiwany wynik, czyli na przykład plik wykonywalny w formacie
+ELF \emph{\texttt{a.out}}.
+
+W przypadku kompilatora ViuAct proces ten wygląda podobnie, ale nie jest aż tak zautomatyzowany.
+Rolę ''drivera'' pełni programista, który jest odpowiedzialny za wywołanie zarówno kompilatora jak i linkera.
+Przykładowo:
+
+\begin{lstlisting}
+viuact-cc --mode exec ./hello_world.lisp
+viuact-opt ./build/_default/hello_world.asm
+\end{lstlisting}
+
+Program łączący przeprowadzi proces asemblacji pliku podanego na wejściu, oraz dołączy do niego wszelkie
+wymagane moduły. Zarówno asemblacja jak i łączenie będa przeprowadzone przez narzędzie dostarczane przez
+platformę Viua VM -- \texttt{viuact-opt} zajmuje się jedynie wygenerowaniem odpowiednich poleceń dla tego
+narzędzia.
+
+Informacja o tym jakie moduły muszą zostać dołączone jest tworzona w oparciu o pliki zależności (opisane w
+rozdziale \nameref{pliki_zaleznosci_modulow} na stronie \pageref{pliki_zaleznosci_modulow}).
+Dla uproszczenia projektu program łączący nie zbiera informacji o zależnościach rekurencyjnie.
+
+Po zebraniu informacji o zależnościach program łączący dokonuje asemblacji wszystkich modułów, od których
+zależy kompilowany moduł główny. Następnie asembluje moduł główny i łączy wszystkie wyemitowane modułu
+bytecode'u w gotowy plik wykonywalny.
 
 \subsection{Przepieg procesu kompilacji}
 \label{opis_etapow_kompilacji}
