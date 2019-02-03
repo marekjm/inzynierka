@@ -38,7 +38,10 @@
 \begin{document}
 
 \lstset{basicstyle=\ttfamily,
-columns=fixed}
+columns=fixed,
+escapeinside={\%*}{*)},
+inputencoding=utf8,
+extendedchars=true}
 
 \maketitle
 {\footnotesize
@@ -674,8 +677,61 @@ Dane przetwarzane przez kompilator są trzymane w plikach, których struktura op
 
 \section{Opis implementacji}
 
-Krótka dyskusja jak przyjęte rozwiązania projektowe spełniają wymagania, szczególnie jakościowe, np.
-bezpieczeństwo.
+Implementacja kompilatora jest bardzo prosta, jak na standardy tego typu projektów.
+Rysunek \ref{basic_compiler_flow} na stronie \pageref{basic_compiler_flow} bardzo dobrze oddaje strukturę
+kompilatora dostarczonego jako wynik tej pracy.
+
+W fazie przygotowania tekstu programu ''do obróbki'' najpierw przeprowadzana jest analiza leksykalna (podział
+tekstu na tokeny), później analiza składniowa -- która w dużej mierze polega na uporządkowaniu ''płaskiej''
+listy tokenów w grupy ograniczone nawiasami. Algorytm dokonujący analizy składniowej jest trywialny:
+
+\begin{enumerate}
+    \item utwórz pustą listę przetworzoną
+    \item rozważ token pierwszy nieprzenalizowany token
+    \item jeśli ten token to \texttt{(} lub \texttt{\{}, rozpocznij rekurencyjnie przetwarzanie strumienia
+        tokenów od następnego tokenu, a wynik analizy dodaj jako pojedynczy element do listy przetworzonej
+    \item w innym przypadku dodaj token do listy przetworzonej
+    \item jeśli na strumień tokenów jest pusty, zakończ algorytm
+    \item w innym przypadku kontynuuj od punktu 2.
+\end{enumerate}
+
+Na pierwszy rzut oka widać, że ten algorytm nie analizuje wiele -- jego jedynym zadaniem jest pogrupowanie
+płaskiego, jednowymiarowego strumienia tokenów w grupy reprezentujące konkretne konstrukcje językowe. Prostota
+algorytmu sprawia, że jest on też bardzo szybki w działaniu.
+
+Faktycznie, na tym etapie łączone są również rozbudowane identyfikatory (np. \texttt{foo.bar.baz}), ale nie
+wpływa to znacząco na skomplikowanie kodu.
+
+Po tym etapie ''wstępnej'' analizy następuje klasyfikacja grup. W tym przypadku algorytm również jest bardzo
+prosty. Klasyfikator rekurencyjnie sprawdza wszystkie listy i nadaje im typ oznaczający jaką konstrukcję
+językową reprezentują. W tym celu musi jedynie sprawdzić typ pierwszego tokenu, i ewentualnie (w przypadku
+dowiązań \emph{\texttt{let}} i definicji funkcji) długość listy.
+
+Wykorzystanie algorytmu o tak niskim poziomie złożoności jest możliwe dzięki uważnemu zaprojektowaniu składni
+języka. Każda konstrukcja językowa jest grupowana nawiasami -- klamrowymi bądź okrągłymi -- lub ma stałe
+miejsce w grupie. Poniżej, dla przykładu, zaprezentowane są wzorce odpowiadające wybranym konstrukcjom
+językowym:
+\begin{lstlisting}
+(let   %*\emph{name}*) %*\emph{expression}*))
+(if    %*\emph{condition-expr}*) %*\emph{true-expr}*) %*\emph{false-expr}*))
+(try   %*\emph{guarded-expr}*) ...)
+(actor %*\emph{id}*) %*\emph{expr}*)*)
+(+     %*\emph{lhs-expr}*) %*\emph{rhs-expr}*))
+\end{lstlisting}
+
+Jeśli całość oprócz pierwszego tokenu zostanie ''ukryta'' to dalej oczywistym jest z jaką konstrukcją mamy do
+czynienia:
+\begin{lstlisting}
+(let   ...)
+(if    ...)
+(try   ...)
+(actor ...)
+(+     ...)
+\end{lstlisting}
+
+Wykorzystanie notacji polskiej (notacji prefiksowej) i takie zaprojektowanie składni, że każda konstrukcja ma
+stałą ''szerokość'' pozwala na zastosowanie chwytu ''\emph{pierwszy token decyduje}''. Sprawia to też, że
+język ma rozpoznawalne tempo i styl, a konsekwencja układu nadaje mu elegancji.
 
 \newpage
 \section{Słownik pojęć}
