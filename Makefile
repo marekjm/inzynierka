@@ -1,4 +1,10 @@
-all: viuavm-dzw.pdf viuavm-wpp.pdf viuact-specification.pdf viuact-sws.pdf viuact-ps.pdf
+all: \
+	viuavm-dzw.pdf \
+	viuavm-wpp.pdf \
+	viuact-specification.pdf \
+	viuact-sws.pdf \
+	viuact-ps.pdf \
+	viuact-manual.pdf
 
 .PHONY: watch
 
