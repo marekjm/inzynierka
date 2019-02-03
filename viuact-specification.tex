@@ -58,8 +58,60 @@ extendedchars=true}
 
 \section{Specyfikacja języka Viuact}
 
-\emph{Ogólny opis języka.}
+ViuAct jest językiem kładącym silny nacisk na funkcjonalność związaną z współbieżnością opartą na modelu
+aktorów. Większość konstrukcji językowych jest wyrażeniami (\emph{expressions}) zamiast ''stwierdzeniami''
+(\emph{statements}). Składnia języka przypomina składnię Lispa.
 
+Najciekawsze funkcjonalności języka ViuAct to:
+
+\begin{enumerate}
+    \item aktory
+    \item przekazywanie wiadomości
+    \item system modułów
+    \item funkcje zagnieżdżone i niemutowalne domknięcia
+    \item dowiązania \emph{\texttt{let}}
+\end{enumerate}
+
+\subsection{Aktory}
+
+Aktory są \emph{wewnętrznie sekwencyjnymi} (każdy aktor wykonuje sekwencyjny strumień instrukcji bez
+jakiejkolwiek współbieżności), izolowanymi od siebie procesami, które komunikują się za pomocą
+\emph{przekazywania wiadomości}.
+
+\subsection{Przekazywanie wiadomości}
+
+Przekazywanie wiadomości w ViuAct jest \emph{bezpośrednie} (wiadomości są przekazywane bezpośrednio między
+dwoma aktorami, bez użycia jakiegokolwiek kanału pośredniczącego), \emph{asynchroniczne} (wiadomość jest
+wysyłana, a kontrola natychmiast wraca do aktora nadawcy bez oczekiwania na odpowiedź od odbiorcy).
+Przekazywanie wiadomości nie daje gwarancji dostarczenia ani kolejności -- implementacja protokołu
+zapewniającego poprawność komunikacji leży po stronie ''przestrzeni użytkownika''.
+
+\subsection{System modułów}
+
+ViuAct zapewnia programiście system modułów. Moduły są automatycznie kompilowane i linkowane, w większości z
+poziomu języka, co redukuje poziom skomplikowania konfiguracji systemów budowania projektu.
+
+\subsection{Funkcje zagnieżdżone i niemutowane domknięcia}
+
+Funkcje w ViuAct mogą być zagnieżdżane, i tworzyć niemutowalne domknięcia (ang. \emph{closures}) -- funkcje,
+które odwołują się do zmiennych zdefiniowanych w otaczającej je przestrzeni leksykalnej.
+
+\subsection{Dowiązania \emph{\texttt{let}}}
+
+Zmienne w ViuAct są typowane dynamicznie (czyli zmienna może być dowiązana do wartości wielu typów wewnątrz
+jednej funkcji), a wartości statycznie (każda wartość ma konkretny typ, który jest śledzony w czasie
+kompilacji). Dowiązania \emph{\texttt{let}} do jednej nazwy mogą być tworzone wiele razy, na przykład:
+
+\begin{lstlisting}
+(let conf (Config.from_file "/etc/some.config"))
+(let conf (Config.load_section conf "daemon"))
+\end{lstlisting}
+
+Po ponownym dowiązaniu nie jest możliwe dotarcie do poprzednio dowiązanej wartości, ale użycia zmiennej
+''przed'' ponownym dowiązaniem zachowują swoje znaczenie (\emph{prior art}: na takiej samej zasadzie działają
+dowiązania \emph{\texttt{let}} w językach OCaml i Rust).
+
+\newpage
 \section{Model programowania}
 
 \subsection{Podział programu}
