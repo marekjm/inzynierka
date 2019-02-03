@@ -35,7 +35,10 @@
 
 \lstset{language=Lisp,
 basicstyle=\ttfamily,
-columns=fixed}
+columns=fixed,
+escapeinside={\%*}{*)},
+inputencoding=utf8,
+extendedchars=true}
 
 \maketitle
 {\footnotesize
@@ -54,6 +57,8 @@ columns=fixed}
 \newpage
 
 \section{Specyfikacja języka Viuact}
+
+\emph{Ogólny opis języka.}
 
 \section{Model programowania}
 
@@ -144,13 +149,13 @@ typ nieprzezroczysty.
 
 \subsection{Wyrażenia}
 
-\texttt{expression := \emph{literal}
-| \emph{name}
-| \emph{fn-call}
-| \emph{actor-call}
-| \emph{operator-call}
-| \emph{try-expr}
-| \emph{if-expr}}
+\texttt{expression := \emph{literal} \\
+\phantom{expression :}| \emph{name} \\
+\phantom{expression :}| \emph{fn-call} \\
+\phantom{expression :}| \emph{actor-call} \\
+\phantom{expression :}| \emph{operator-call} \\
+\phantom{expression :}| \emph{try-expr} \\
+\phantom{expression :}| \emph{if-expr}}
 \\
 \texttt{expression := \{ \emph{expression}+ \}}
 
@@ -165,7 +170,11 @@ x
 (+ x 1)
 
 ; compound expression
-{ (let x 42) (print (+ x 1)) x }
+{
+    (let x 42)
+    (print (+ x 1))
+    x
+}
 \end{lstlisting}
 
 Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
@@ -187,7 +196,7 @@ Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \t
 {
     (let x 42)
     (print x)
-    x
+    x   ; %*wartość zwracana z tego wyrażenia jest wartością przechowywaną pod nazwą x*)
 }
 \end{lstlisting}
 
@@ -215,6 +224,83 @@ języka wymaga użycia pojedynczego wyrażenia:
 
 Definicje zmiennych przypisują wartości wyrażeń do nazw.
 
+\subsection{Wywołanie operatora}
+
+\texttt{(\emph{operator} \emph{lhs} \emph{rhs})}
+
+\begin{lstlisting}
+(+ x 1)
+(* a b)
+\end{lstlisting}
+
+Operatory są zapisywane w konwencji prefiksowej (tj. najpierw operator, potem operandy).
+
+\subsubsection{Operatory binarne (dwuargumentowe) logiczne}
+
+Binarne operatory logiczne pobierają dwie wartości, i produkują wartość logiczną.
+
+\begin{description}
+    \item[\texttt{or}] pobiera dwie dowolne wartości; \texttt{(or a b)}
+    \item[\texttt{and}] pobiera dwie dowolne wartości; \texttt{(and a b)}
+    \item[\texttt{=}] pobiera dwie wartości liczbowe; \texttt{(= a b)}
+    \item[\texttt{!=}] pobiera dwie wartości liczbowe; \texttt{(!= a b)}
+    \item[\texttt{<}] pobiera dwie wartości liczbowe; \texttt{(< a b)}
+    \item[\texttt{<=}] pobiera dwie wartości liczbowe; \texttt{(<= a b)}
+    \item[\texttt{>}] pobiera dwie wartości liczbowe; \texttt{(> a b)}
+    \item[\texttt{>=}] pobiera dwie wartości liczbowe; \texttt{(>= a b)}
+\end{description}
+
+\subsubsection{Operatory binarne (dwuargumentowe) arytmetyczne}
+
+Operatory arytmetyczne pobierają dwie wartości liczbowe i produkują wartość liczbową zgodną z typem operandu
+lewej strony (\emph{left-hand side}).
+
+\begin{lstlisting}
+let op : Ta -> Tb -> Ta
+\end{lstlisting}
+
+\begin{description}
+    \item[\texttt{+}] dodaje dwie wartości liczbowe
+    \item[\texttt{-}] odejmuje dwie wartości liczbowe, \emph{\texttt{rhs}} jest odejmowany od
+        \emph{\texttt{lhs}}
+    \item[\texttt{*}] mnoży dwie wartości liczbowe
+    \item[\texttt{/}] dzieli dwie wartości liczbowe, \emph{\texttt{lhs}} jest dzielony przez
+        \emph{\texttt{rhs}}
+\end{description}
+
+\subsubsection{Operator dostępu}
+
+\texttt{id := \emph{name}} \\
+\texttt{id := \emph{id} . \emph{name}}
+
+\begin{lstlisting}
+(let x a_struct.some_field)
+(let sock (Std.Posix.Network.socket))
+\end{lstlisting}
+
+\begin{description}
+    \item[\texttt{.}] operator dostępu do składowych modułów i pól struktur, w zależności od kontekstu
+\end{description}
+
+\subsubsection{Operatory unarne (jednoargumentowe)}
+
+\begin{description}
+    \item[\texttt{not}] negacja logiczna, pobiera dowolną wartość i produkuje jej odwrotność logiczną
+    \item[\texttt{\^}] dereferencja wskaźnika
+\end{description}
+
+\subsection{Przypisanie do pola struktury}
+
+\texttt{(:= \emph{field} \emph{expression})}
+
+\begin{lstlisting}
+(let x (struct))
+(:= x.field 42)
+\end{lstlisting}
+
+Operator przypisania do pola struktury powoduje utworzenie żądanego pola w strukturze (jeśli wcześniej nie
+istniało) lub aktualizację wartości przechowywanej w tym polu (jeśli wcześniej istniało).
+
 \subsection{Definicje funkcji}
 
 \texttt{function-definition := (let \emph{name} (\emph{formal-parameters}) \emph{expression})}
@@ -239,6 +325,7 @@ wykonania przez wywołującego.
 \subsubsection{Ciało funkcji}
 
 Ciało funkcji jest reprezentowane jednym wyrażeniem (może to być wyrażenie złożone).
+O funkcjach można myśleć jako o parametryzowanych wyrażeniach.
 
 \subsubsection{Wartość zwracana}
 
@@ -256,7 +343,8 @@ Funkcje w Viuact to parametryzowane wyrażenia.
 \phantom{inline-module-definition := ~ }\emph{function-definition}+
 ))}
 \newline
-\texttt{module-definition := (module \emph{module-name}) | \emph{inline-module-definition}}
+\texttt{module-definition := (module \emph{module-name}) \\
+\phantom{module-definition :}| \emph{inline-module-definition}}
 \newline
 
 Moduł jest zbiorem definicji modułów, deklaracji import, i definicji funkcji.
@@ -265,10 +353,6 @@ składające się na definicję modułu.
 
 \subsection{Wywołanie funkcji}
 
-\texttt{mod-prefix := \emph{module-name} "."}
-\newline
-\texttt{id := \emph{mod-prefix}*~\emph{name}}
-\newline
 \texttt{fn-call := (\emph{id} \emph{expression}*)}
 \newline
 
@@ -276,11 +360,12 @@ Wywołanie funkcji jest reprezentowane przez podanie jej nazwy w nawiasach okrą
 zero lub więcej wyrażeń, których wartości zostaną przypisane do odpowiednich parametrów formalnych.
 
 Funkcje, których definicje znajdują się w innych modułach niż aktualnie przetwarzany muszą być poprzedzone
-pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix.Network.socket}).
+pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix.Network.socket}). Jedynie funkcje
+znajdujące się w tym samym module mogą być wywoływane bez pełnej ścieżki.
 
 \subsection{Wywołanie ''tailcall''}
 
-\texttt{(tailcall \emph{name} \emph{expression}*)}
+\texttt{(tailcall \emph{id} \emph{expression}*)}
 \newline
 
 Wywołania \emph{tailcall} powodują wywołanie funkcji nowej funkcje ''wykorzystując'' ramkę obecnej funkcji.
@@ -370,23 +455,69 @@ przypisywany do zmiennej, to aktor będzie działał jako ''\emph{aktor potomny}
 aktor potomny może być włączony (\emph{join}) za pomocą wywołania funkcji wbudowanej \texttt{Std.Actor.join()}
 z biblioteki standardowej (opisanej na stronie \pageref{Std_Actor_join}).
 
+\begin{lstlisting}
+(let p (actor foo x))           ; %*aktor stworzony z funkcji foo*)
+                                ; %*wykonuje się równolegle*)
+(let result (Std.Actor.join p)) ; %*wynik pracy aktora będzie dostępny*)
+                                ; %*w zmiennej result*)
+\end{lstlisting}
+
+Funkcja \texttt{Std.Actor.join()} zwraca wartość, którą zwróciła funkcja uruchomiona jako aktor lub wyjątek,
+który tego aktora zabił. Aktor pochodny nie utworzy zrzutu stosu -- w razie awarii jego wyjątek jest
+zachowywyany i czeka na włączenie.
+
 \subsubsection{Wolne aktory}
 
-\subsection{Wywołanie operatora}
+Wolne aktory to aktory, których adres nie był przypisany do zmiennej w momencie ich utworzenia. Są one
+niezwiązane w żaden sposób z aktorem, który je utworzył. W przeciwieństwie do aktorów potomnych aktorów
+wolnych nie można włączyć za pomocą funkcji \texttt{Std.Actor.join()}.
 
-\texttt{(\emph{operator} \emph{lhs} \emph{rhs})}
+Aktory wolne w razie awarii tworzą zrzuty stosu.
 
-\subsection{Przypisanie do pola struktury}
+Typowym sposobem na uzyskanie adresu aktora wolnego jest takie zaprojektowanie programu żeby aktor wolny jako
+jeden z parametrów przyjmował PID, na który powinien wysłać \emph{swój} PID po wystartowaniu. Dla przykładu:
 
-\texttt{(:= \emph{field} \emph{expression})}
+\begin{lstlisting}
+(actor Some_module.free_actor (Std.Actor.self))
+(let p (Std.Actor.receive))
+\end{lstlisting}
+
+Funkcja \texttt{Std.Actor.self()} pozwala aktoromi uzyskać swój własny PID.
 
 \subsection{Konstrukcja warunkowa}
 
 \texttt{(if \emph{condition-expression} \emph{true-arm} \emph{false-arm})}
+\newline
+
+Konstrukcja warunkowa składa się z trzech wyrażeń:
+
+\begin{description}
+    \item[\texttt{condition-expression}] wyrażenie, które po obliczeniu warunkuje, które wyrażenie będzie
+        obliczane w następnym kroku
+    \item[\texttt{true-arm}] wyrażenie będzie obliczone jeśli \texttt{condition-expression} ewaluuje do prawdy
+    \item[\texttt{false-arm}] wyrażenie będzie obliczone jeśli \texttt{condition-expression} ewaluuje do
+        fałszu
+\end{description}
+
+\begin{lstlisting}
+(if (= x 42)
+    (print "%*Odpowiedź na sens życia, Wszechświata, i w ogóle wszystkiego.*)")
+    (print "Nie bardzo.")
+)
+\end{lstlisting}
 
 \subsection{Obsługa wyjątków}
 
-\texttt{(try \emph{expression} (catch \emph{exception-tag} \emph{name} \emph{expression})+)}
+\texttt{(try \emph{expression} ((catch \emph{exception-tag} \emph{name} \emph{expression})+))}
+
+\begin{lstlisting}
+(let x (try (Std.Actor.receive 1s)) (
+    (catch Exception _ {
+        (print "Did not receive a message in time.")
+        0   ; return a default value
+    })
+))
+\end{lstlisting}
 
 \newpage
 \section{Biblioteka standardowa}
