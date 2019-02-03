@@ -428,6 +428,75 @@ Jest ona opisana w specyfikacji języka.
 \subsubsection{Pliki interfejsów modułów (\texttt{.i})}
 \label{pliki_interfejsow_modulow}
 
+Pliki interfejsów modułów wyliczają funkcje eksportowane przez dany moduł, oraz prezentują metadane wymagane
+do połączenia plików w sposób, który będzie mógł działać na Viua VM. Pliki interfejsu dla modułów ''własnych''
+nie różnią się zasadniczą strukturą od plików interfejsu dla modułów ''obcych'', ale pliki interfejsu dla
+modułów ''obcych'' muszą być uzupełnione o kilka dodatkowych pól. Jest to dokładniej opisane w rozdziale
+\ref{pliki_interfejsow_modulow_obcych} na stronie \pageref{pliki_interfejsow_modulow_obcych}.
+
+\paragraph{Plik interfejsu dla modułów ''własnych''}
+
+Moduły ''własne'' języka ViuAct to moduły napisane w języku ViuAct.
+
+\begin{lstlisting}
+{
+    "foreign": false,
+    "real_name": "A_module",
+    "fns": [
+        {
+            "arity": 1,
+            "name": "f",
+            "real_name": "A_module::f",
+            "from_module": "A_module"
+        }
+    ]
+}
+\end{lstlisting}
+
+Atrybut \texttt{foreign} określa czy moduł jest ''obcy'' (\texttt{true}) czy ''własny'' (\texttt{false}).
+Atrybut \texttt{real\_name} określa nazwę modułu tak jak będzie prezentowana na poziomie bytecode'u.
+Atrybut \texttt{fns} jest listą funkcji, które są przez dany moduł eksportowane.
+
+W elementach listy \texttt{fns} atrybuty mają następujące znaczenie:
+
+\begin{enumerate}
+    \item \texttt{arity} określa ''moc'' funkcji
+    \item \texttt{name} określa nazwę funkcji widoczną z poziomu języka ViuAct
+    \item \texttt{real\_name} określa pełną nazwę funkcji widoczną z poziomu bytecode'u
+    \item \texttt{from\_module} określa pełną nazwę modułu, z którego pochodzi dana funkcja
+\end{enumerate}
+
+\paragraph{Plik interfejsu dla modułów ''obcych''}
+\label{pliki_interfejsow_modulow_obcych}
+
+Moduły ''obce'' języka ViuAct to moduły napisane w języku assemblera Viua VM lub w C++.
+
+\begin{lstlisting}
+{
+    "foreign": true,
+    "real_name": "std::posix::network",
+    "fns": [
+        {
+            "arity": 0,
+            "name": "socket",
+            "real_name": "Std::Posix::Network::socket",
+            "bytecode_name": "std::posix::network::socket",
+            "from_module": "Std::Posix::Network"
+        }
+    ]
+}
+\end{lstlisting}
+
+Różnicą w stosunku do plików interfejsu dla modułow ''własnych'' jest dodatkowy atrybut w deklaracji
+eksportowanej funkcji -- \texttt{bytecode\_name} określający nazwę funkcji na poziomie bytecode'u. Nazwa ta
+nie musi pokrywać się z nazwą w atrybucie \texttt{real\_name}, który określa pełną nazwę funkcji widoczną na
+poziomie języka ViuAct.
+
+Dwa atrybuty są potrzebne ponieważ na tym poziomie następuje łączenie dwóch ''światów''; języka ViuAct, który
+narzuca reguły tego jak muszą wyglądać nazwy modułów i funkcji, oraz języka assemblera Viua VM, który takich
+reguł nie narzuca. Dla modułów ''własnych'' atrybuty \texttt{bytecode\_name} jest zbędny ponieważ dla nich
+nazwa widoczna na poziomie ViuAct i języka assemblera Viua VM jest taka sama.
+
 \subsubsection{Pliki zależności modułów (\texttt{.d})}
 \label{pliki_zaleznosci_modulow}
 
@@ -454,6 +523,8 @@ bezpieczeństwo.
         dołączenia
     \item[biblioteka] zbiór modułów bytecode'u
     \item[jądro] podsystem Viua VM odpowiadający za uruchamianie programów (tzw. ''\emph{kernel}'')
+    \item[moc funkcji] ilość parametrów formalnych przyjmowanych przez funkcję (pojęcie ściągnięte z pojęcia
+        mocy zbioru)
 \end{description}
 
 \section{Załączniki}
