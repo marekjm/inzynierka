@@ -434,6 +434,8 @@ nie różnią się zasadniczą strukturą od plików interfejsu dla modułów ''
 modułów ''obcych'' muszą być uzupełnione o kilka dodatkowych pól. Jest to dokładniej opisane w rozdziale
 \ref{pliki_interfejsow_modulow_obcych} na stronie \pageref{pliki_interfejsow_modulow_obcych}.
 
+Pliki interfejsów są kodowane w formacie JSON.
+
 \paragraph{Plik interfejsu dla modułów ''własnych''}
 
 Moduły ''własne'' języka ViuAct to moduły napisane w języku ViuAct.
@@ -499,6 +501,31 @@ nazwa widoczna na poziomie ViuAct i języka assemblera Viua VM jest taka sama.
 
 \subsubsection{Pliki zależności modułów (\texttt{.d})}
 \label{pliki_zaleznosci_modulow}
+
+Pliki zależności są kodowane w formacie JSON.
+
+\begin{lstlisting}
+{
+    "imports": [
+        {
+            "module_name": "Std::Random",
+            "real_name": "std::random",
+            "foreign": true
+        }
+    ]
+}
+\end{lstlisting}
+
+Atrybut \texttt{imports} przechowuje listę modułów importowanych przez moduł, którego zależności definiuje
+dany plik (co jest określane na podstawie nazwy pliku).
+
+W elementach listy \texttt{imports} atrybuty mają następujące znaczenie:
+
+\begin{enumerate}
+    \item \texttt{module\_name} określa pełną nazwę modułu z punktu widzenia języka ViuAct
+    \item \texttt{real\_name} określa pełną nazwę modułu widoczną z poziomu bytecode'u
+    \item \texttt{foreign} określa czy moduł jest ''własny'' (\texttt{false}) czy ''obcy'' (\texttt{true})
+\end{enumerate}
 
 \section{Projekt bazy danych}
 
