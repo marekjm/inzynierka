@@ -324,6 +324,7 @@ Kolejnym krokiem jest analiza modułów importowanych przez aktualnie kompilowan
 interfejsów.
 
 \subsubsection{Emisja kodu wynikowego}
+\label{opis_etapow_kompilacji_emisja_kodu_wynikowego}
 
 Na końcu następuje emisja kodu wynikowego w języku assemblera Viua VM. Ten etap jest wykonywany osobno dla
 każdej funkcji zdefiniowanej w kompilowanym module.
@@ -436,6 +437,17 @@ type Ctor = {
 }
 \end{lstlisting}
 
+Konstruktor reprezentuje instrukcję bezpośrednio tworzącą wartość w rejestrze. Przykładowo, aby wyemitować
+instrukcję \texttt{integer \%1 local 42} utworzony zostanie:
+
+\begin{lstlisting}
+{
+    of_type = "integer" ;
+    slot = { name = "x"; index = 1 ; Register_set.Local } ;
+    value = "42"
+}
+\end{lstlisting}
+
 \subsubsection{Przeniesienie}
 \label{diagram_klas_przeniesienie}
 
@@ -451,6 +463,9 @@ type Move = {
 }
 \end{lstlisting}
 
+Przeniesienie opisuje przesunięcie (instrukcja \emph{\texttt{move}}) lub kopię wartości (instrukcja
+\emph{\texttt{copy}}).
+
 \subsubsection{Wywołanie}
 \label{diagram_klas_wywolanie}
 
@@ -463,10 +478,15 @@ enum Call_kind =
 
 type Call = {
     kind : Call_kind ;
-    slot : Slot ;
+    slot : Slot option ;
     to   : string ;
 }
 \end{lstlisting}
+
+Wywołanie opisuje wywołanie funkcji w każdy sposób dostępny w języku ViuAct: zwykłe wywołanie funkcji,
+wywołanie tworzące aktora, wywołąnie \emph{tail call}, i wywołanie ''odroczone''.
+
+Typy wywołań opisane są w specyfikacji języka.
 
 \subsubsection{Linia ''\emph{verbatim}''}
 \label{diagram_klas_linia_verbatim}
@@ -476,6 +496,15 @@ type Verbatim = {
     text : string ;
 }
 \end{lstlisting}
+
+Linia \emph{verbatim} opisuje dowolną linię języka assemblera (m.in. dyrektywy \texttt{.import:} czy
+\texttt{.function:}).
+
+\emph{Emitter} (rozdział \ref{opis_etapow_kompilacji_emisja_kodu_wynikowego} na stronie
+\pageref{opis_etapow_kompilacji_emisja_kodu_wynikowego}) większość instrukcji tworzy za pomocą linii
+\emph{verbatim}. Jest to zabieg o tyle ''brzydki'' co efektywny; na etapie prototypowania bardzo szybko
+można w ten sposób wyemitować spory zakres instrukcji bez potrzeby projektowania struktury dla każdego typu
+instrukcji.
 
 \newpage
 \section{Decyzje projektowe}
