@@ -243,6 +243,7 @@ Wzorce są uszeregowane w taki sposób żeby nie była możliwa pomyłka i
 na przykład przypasowanie początku nazwy zmiennej \texttt{letter} jako słowa kluczowego \texttt{let}.
 
 \subsubsection{Analiza składniowa}
+\label{opis_etapow_kompilacji_analiza_skladniowa}
 
 Składnia języka została zaprojektowana w taki sposób aby analiza składniowa mogła być uproszczona do maksimum
 i prosta w implementaji.
@@ -394,7 +395,12 @@ Maksymalizacja prostoty budowy kompilatora i języka.
 Marginalizacja obsługi błędów w kompilatorze z uwagi na brak czasu.
 Marginalizacja optymalizacji z uwagi na brak czasu.
 
+\newpage
 \section{Projekt algorytmów i przyjętych protokołów}
+
+Dyskusja na temat algorytmów i sposobu implementacji jest częściowo przeprowadzona w rozdziale
+\ref{opis_etapow_kompilacji} na stronie \pageref{opis_etapow_kompilacji}, szczególnie w rozdziale
+\ref{opis_etapow_kompilacji_analiza_skladniowa}.
 
 \section{Projekt rozwiązań sprzętowych}
 
@@ -527,6 +533,7 @@ W elementach listy \texttt{imports} atrybuty mają następujące znaczenie:
     \item \texttt{foreign} określa czy moduł jest ''własny'' (\texttt{false}) czy ''obcy'' (\texttt{true})
 \end{enumerate}
 
+\newpage
 \section{Projekt bazy danych}
 
 Brak bazy danych jako takiej w projekcie.
