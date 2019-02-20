@@ -85,18 +85,38 @@ Wśród nich, szczególną rolę odgrywa JE Dziekan ZWI, prof. Marek Bednarczyk,
   \item[ViuAct] Język programowania wysokiego poziomu, oparty o model aktorów, powstały na potrzeby niniejszego projektu inżynierskiego
 \end{description}
 
+\newpage
 \section{Język ViuAct i jego kompilator w kontekście}
 
 \subsection{Kontekst biznesowy}
 
-\subsection{Udziałowcy}
-
-\subsection{Klienci}
+Docelowym środowiskiem języka ViuAct są urządzenia i programy, których zachowanie ma charakteryzować się wysoką
+niezawodnością i stabilnością (np. urządzenia telekomunikacyjne, oprogramowanie monitorujące i diagnostyczne).
 
 \subsection{Charakterystyka użytkowników}
 
+Użytkownikiem języka i kompilatora ViuAct jest \textbf{programista}. Oczekuje on od języka narzędzi
+pozwalających na tworzenie programów odpornych na awarie, poprawnych, i prostych w utrzymaniu.
+
+Użytkownikiem platformy, na której wdrażane są programy napisane w języku ViuAct (czyli platformy
+prezentowanej przez Viua VM) jest \textbf{administrator}. Oczekuje on od platformy przejrzystego modelu
+wdrożenia i konserwacji instalacji, oraz możliwości monitorowania zachowania wdrożonego oprogramowania.
+
 \subsection{Istniejąca infrastruktura}
 
+Język ViuAct wchodzi w interakcje z istniejącą infrastrukturą poprzez narzędzia, kanały, i protokoły prezentowane
+przez platformę Viua VM. Przez ''\emph{interakcje}'' rozumie się wykorzystanie zasobów sprzętowych, operacje
+I/O, oraz wszelkie efekty uboczne będące wynikiem działania programu.
+
+Zakłada się, że ''istniejąca infrastruktura'' w miejscu wdrożenia działającego programu napisanego w języku
+ViuAct jest zgodna z wymaganiami i pozwala na działanie platformy Viua VM. Wymagania te są szczegółowo opisane
+w osobnym dokumencie (DZW).
+
+Zakłada się, że ''istniejąca infrastruktura'' w miejscu wytwarzania programu w języku ViuAct jest zgodna z
+wymaganiami i pozwala na działanie platformy Viua VM, oraz jest zgodna z wymaganiami kompilatora języka
+ViuAct.
+
+\newpage
 \section{Wymagania}
 
 \subsection{Wymagania ogólne i dziedzinowe}
@@ -370,14 +390,6 @@ część Viua VM), sieciami (np. Internet), i operatorami (np. programista).
     \hline
 \end{tabular}
 
-\subsection{Wymagania niefunkcjonalne}
-
-Brak.
-
-\subsection{Wymagania na środowisko docelowe}
-
-Brak.
-
 \subsection{Wymagania dotyczące procesu wytwarzania}
 
 W tej sekcji opisane są wymagania dotyczące kompilatora języka ViuAct.
@@ -433,7 +445,7 @@ W tej sekcji opisane są wymagania dotyczące kompilatora języka ViuAct.
 Podstawowym kryterium akceptacji dla języka jest ''\emph{Da się w nim napisać czat}'', a
 dla komilatora ''\emph{Da się nim skompilować czat}''.
 
-\section{Odwołania do literatury}
+% \section{Odwołania do literatury}
 
 \section{Załączniki}
 
