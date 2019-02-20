@@ -595,42 +595,190 @@ Dla takich funkcji programista musi napisać \emph{wrappery} jeśli chce użyć 
 Jednak w typowym programie nie będzie to potrzebne, gdyż funkcje biblioteki standardowej zazwyczaj
 implementują atomowe zadania, których sens uruchamiania w osobnych aktorach jest ograniczony.
 
-\subsection{\texttt{Std.Actor}}
+\begin{center}
+\emph{Należy pamiętać, że opis biblioteki standardowej \textbf{nie} jest ostateczny i może ulec zmianie w
+trakcie trwania projektu. Z tego powodu funkcje są opisane skrótowo, a dokumentacja nie jest wyczerpująca.}
+\end{center}
 
-\subsubsection{\texttt{Std.Actor.join()}}
+Moduł \texttt{Std.Actor} jest opisany na stronie \pageref{stdlib_Std_Actor}.
+Moduł \texttt{Std.Io} jest opisany na stronie \pageref{stdlib_Std_Io}.
+Moduł \texttt{Std.Posix.Network} jest opisany na stronie \pageref{stdlib_Std_Posix_Network}.
+Moduł \texttt{Std.Random} jest opisany na stronie \pageref{stdlib_Std_Random}.
+
+\newpage
+
+\subsection{\texttt{Std.Actor}}
+\label{stdlib_Std_Actor}
+
+Moduł udostępniający funkcjonalność związaną z wymianą wiadomości i modelem aktorów.
+
+\subsubsection{\texttt{Std.Actor.join(Pid) -> Value}}
 \label{Std_Actor_join}
 
-\subsubsection{\texttt{Std.Actor.self()}}
-\subsubsection{\texttt{Std.Actor.receive()}}
+Oczekuje na zakończenie wykonywania przez aktora o podanym PID, po czym zwraca wynik jego pracy.
+Może powodować zgłoszenie wyjątku jeśli aktor o podanym PID zakończył wykonywanie z powodu błędu, lub jeśli aktor
+o podanym PID nie istnieje.
+
+\subsubsection{\texttt{Std.Actor.self() -> Pid}}
+
+Zwraca PID obecnego aktora.
+
+\subsubsection{\texttt{Std.Actor.receive() -> Value}}
+
+Oczekuje na nadejście wiadomości.
 
 \subsection{\texttt{Std.Io}}
+\label{stdlib_Std_Io}
 
 Moduł udostępniający mechanizmy I/O (\emph{wejścia-wyjścia}). Umożliwia on prowadzenie I/O na plikach, oraz
 interakcji z konsolą użytkownika (\texttt{tty}).
 
-\subsubsection{\texttt{Std.Io.stdinxgetline}}
+\subsubsection{\texttt{Std.Io.stdin\_getline() -> String}}
 
 Umożliwia odczytanie pojedynczej linii ze strumienia standardowego wejścia (\emph{\texttt{stdin}}).
 
 \subsection{\texttt{Std.Posix.Network}}
+\label{stdlib_Std_Posix_Network}
 
 Moduł udostępniający implementację ''POSIX sockets''. Jest to cienka abstrakcja nad API dostarczanym przez
 system operacyjny; w przypadku braków w tym dokumencie ich dokumentację można wydedukować ze stron manuala
 sekcji 3 dostarczanych przez program \texttt{man(1)} (np. dokumentację dla funkcji
 \texttt{Std.Posix.Network.socket} można uzyskać wykonując polecenie \texttt{man 3 socket}).
 
+\begin{center}
+\emph{Wszystkie funkcje w tym module są blokujące i nie mają timeoutu. Może to spowodować zagłodzenie
+schedulerów I/O w Viua VM. Na późniejszym etapie projektu ten błąd zostanie wyeliminowany.}
+\end{center}
+
 \subsubsection{\texttt{Std.Posix.Network.socket()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.socket() -> Integer
+\end{lstlisting}
+\end{small}
+
+Tworzy socket za pomocą wywołania funkcji \texttt{socket(3)}.
+Socket jest w rodzinie \texttt{AF\_INET}, rodzaju \texttt{SOCK\_STREAM}, i jest tworzony bez flag.
+
 \subsubsection{\texttt{Std.Posix.Network.connect()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.connect(
+      socket : Integer
+    , addr   : Text
+    , port   : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{connect(3)}.
+
 \subsubsection{\texttt{Std.Posix.Network.bind()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.bind(
+      socket : Integer
+    , addr   : Text
+    , port   : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{bind(3)}.
+
 \subsubsection{\texttt{Std.Posix.Network.listen()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+      socket  : Integer
+    , backlog : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{listen(3)}.
+
 \subsubsection{\texttt{Std.Posix.Network.accept()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.accept(socket : Integer) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{accept(3)}.
+
 \subsubsection{\texttt{Std.Posix.Network.write()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.write(
+      socket : Integer
+    , value  : Value
+) -> Int
+\end{lstlisting}
+\end{small}
+
+Niezależnie od tego jaka wartość jest przekazana do funkcji, będzie najpierw przekonwertowana na
+\texttt{String}, a potem wpisana do socketu.
+
 \subsubsection{\texttt{Std.Posix.Network.read()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.read(
+    socket  : Integer
+) -> String
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{read(3)}. Odczytuje z socketu maksymalnie 1024 bajty.
+
 \subsubsection{\texttt{Std.Posix.Network.recv()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.recv(
+      socket        : Integer
+    , buffer_length : Integer
+) -> String
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{recv(3)}. Odczytuje z socketu maksymalnie \texttt{buffer\_length} bajtów.
+
 \subsubsection{\texttt{Std.Posix.Network.shutdown()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+    socket  : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{shutdown(3)}.
+Wyłącza socket z flagą \texttt{SHUT\_RDWR}.
+
 \subsubsection{\texttt{Std.Posix.Network.close()}}
 
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+      socket  : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{close(3)}.
+
+
 \subsection{\texttt{Std.Random}}
+\label{stdlib_Std_Random}
 
 Moduł udostępniający dostęp do liczb losowych ogólnego przeznaczenia (\texttt{/dev/urandom}) oraz zdatnych do
 zastosowań kryptograficznych (\texttt{/dev/random}).
