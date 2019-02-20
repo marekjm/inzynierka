@@ -91,7 +91,7 @@ zapewniającego poprawność komunikacji leży po stronie ''przestrzeni użytkow
 ViuAct zapewnia programiście system modułów. Moduły są automatycznie kompilowane i linkowane, w większości z
 poziomu języka, co redukuje poziom skomplikowania konfiguracji systemów budowania projektu.
 
-\subsection{Funkcje zagnieżdżone i niemutowane domknięcia}
+\subsection{Funkcje zagnieżdżone i niemutowalne domknięcia}
 
 Funkcje w ViuAct mogą być zagnieżdżane, i tworzyć niemutowalne domknięcia (ang. \emph{closures}) -- funkcje,
 które odwołują się do zmiennych zdefiniowanych w otaczającej je przestrzeni leksykalnej.
@@ -117,16 +117,17 @@ dowiązania \emph{\texttt{let}} w językach OCaml i Rust).
 \subsection{Podział programu}
 
 Najmniejszym elementem możliwym do wykonania jest wyrażenie.
-Wyrażenia są grupowane w funkcje.
+Wyrażenia proste (\emph{simple expression}) są grupowane w wyrażenia złożone (\emph{compound expression}).
+Funkcje parametryzują wyrażenia.
 Funkcje są zebrane w modułach.
 
 \subsection{Wykonywanie programu}
 
 Program składa się z jednego lub większej ilości ''aktorów'' (procesów).
 Aktory są izolowane od siebie nawzajem i działają równolegle (wszystkie naraz).
-
 Wewnętrznie, każdy z aktorów wykonywany jest sekwencyjnie, bez jakiejkolwiek
 współbieżności.
+Wykonanie programu rozpoczyna się od funkcji \texttt{main}.
 
 \subsection{Komunikacja między aktorami}
 
@@ -200,6 +201,7 @@ typ nieprzezroczysty.
 \section{Konstrukcje języka}
 
 \subsection{Wyrażenia}
+\label{language_expressions}
 
 \texttt{expression := \emph{literal} \\
 \phantom{expression :}| \emph{name} \\
@@ -254,7 +256,9 @@ Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \t
 
 Wyrażenia złożone mogą być dowolnie zagnieżdżane. Mimo iż składają się z potencjalnie wielu wyrażeń
 wyrażenia złożone są traktowane jako jedno wyrażenie -- mogą być wykorzystywane wszędzie tam gdzie składnia
-języka wymaga użycia pojedynczego wyrażenia:
+języka wymaga użycia pojedynczego wyrażenia (definicje funkcji, wyrażenia kontrolne w konstrukcji warunkowej,
+wyrażenia obsługi w konstrukcji \texttt{try}, itp.). Na przykładzie poniżej prezentowane jest dowiązanie
+\emph{\texttt{let}} do wartości wyrażenia złożonego:
 
 \begin{lstlisting}
 (let x {
@@ -291,7 +295,7 @@ Operatory są zapisywane w konwencji prefiksowej (tj. najpierw operator, potem o
 
 Binarne operatory logiczne pobierają dwie wartości, i produkują wartość logiczną.
 
-\begin{description}
+\begin{labeling}{and}
     \item[\texttt{or}] pobiera dwie dowolne wartości; \texttt{(or a b)}
     \item[\texttt{and}] pobiera dwie dowolne wartości; \texttt{(and a b)}
     \item[\texttt{=}] pobiera dwie wartości liczbowe; \texttt{(= a b)}
@@ -300,7 +304,7 @@ Binarne operatory logiczne pobierają dwie wartości, i produkują wartość log
     \item[\texttt{<=}] pobiera dwie wartości liczbowe; \texttt{(<= a b)}
     \item[\texttt{>}] pobiera dwie wartości liczbowe; \texttt{(> a b)}
     \item[\texttt{>=}] pobiera dwie wartości liczbowe; \texttt{(>= a b)}
-\end{description}
+\end{labeling}
 
 \subsubsection{Operatory binarne (dwuargumentowe) arytmetyczne}
 
@@ -311,14 +315,14 @@ lewej strony (\emph{left-hand side}).
 let op : Ta -> Tb -> Ta
 \end{lstlisting}
 
-\begin{description}
+\begin{labeling}{+}
     \item[\texttt{+}] dodaje dwie wartości liczbowe
     \item[\texttt{-}] odejmuje dwie wartości liczbowe, \emph{\texttt{rhs}} jest odejmowany od
         \emph{\texttt{lhs}}
     \item[\texttt{*}] mnoży dwie wartości liczbowe
     \item[\texttt{/}] dzieli dwie wartości liczbowe, \emph{\texttt{lhs}} jest dzielony przez
         \emph{\texttt{rhs}}
-\end{description}
+\end{labeling}
 
 \subsubsection{Operator dostępu}
 
@@ -365,6 +369,8 @@ istniało) lub aktualizację wartości przechowywanej w tym polu (jeśli wcześn
 })
 \end{lstlisting}
 
+O funkcjach w Viuact można myśleć jak o parametryzowanych wyrażeniach.
+
 \subsubsection{Parametry formalne}
 
 \texttt{formal-parameters := \emph{name}*}
@@ -377,12 +383,12 @@ wykonania przez wywołującego.
 \subsubsection{Ciało funkcji}
 
 Ciało funkcji jest reprezentowane jednym wyrażeniem (może to być wyrażenie złożone).
-O funkcjach można myśleć jako o parametryzowanych wyrażeniach.
+Wyrażenia są opisane w rozdziale
+\ref{language_expressions} na stronie \pageref{language_expressions}.
 
 \subsubsection{Wartość zwracana}
 
 Wartość zwracana z funkcji jest wartością, do której ewaluuje wyrażenie będące jej ciałem.
-Funkcje w Viuact to parametryzowane wyrażenia.
 
 \subsection{Definicje modułów}
 
