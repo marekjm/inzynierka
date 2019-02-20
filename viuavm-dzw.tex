@@ -232,9 +232,10 @@ aktorów.
 \section{Wymagania jakościowe i inne}
 
 Implementacja Viua VM musi charakteryzować się wysoką jakością wykonania jeśli ma być wykorzystywana jako
-stablina podstawa do tworzenia innych systemów. Nie może w niej być miejsca na podejście typu ``laissez
-faire''; implementacja powinna być konserwatywna i zachowawcza, stawiając na pierszym miejscu poprawność i
-niezwodność.
+stablina podstawa do tworzenia innych systemów. Nie może w niej być miejsca na podejście typu
+``\emph{laissez faire}''; implementacja powinna być konserwatywna i zachowawcza, stawiając na pierszym miejscu
+poprawność i niezwodność. Wydajność rozwiązania jest stawiana na drugim miejscu i może być poświęcona na rzecz
+poprawności i niezawodności.
 
 \subsection{Wymagania jakościowe}
 
@@ -251,6 +252,11 @@ niezwodność.
 Wymagania dotyczące uniemożliwienia naruszenia stabilności i zawłaszczenia maszyny dotyczą jedynie programów
 pisanych w języku assemblera Viua VM tj. skompilowanych do bytecodu VM i nie wykorzystujących zewnętrznych
 (pochodzących spoza biblioteki standardowej) modułów rozszerzeń.
+
+Uniemożliwienie zawłaszczenia maszyny może być zrealizowane jedynie dla programów składających się w całości z
+bytecode'u Viua VM. Gwarancje dla programów składających się jedynie w jakiejś części z bytecode'u będą
+mniejsze ponieważ Viua VM nie jest w stanie wywłaszczyć fragmentów programu działających bezpośrednio na
+procesorze (tj. na tym samym poziomie co jądro Viua VM).
 
 \subsection{Wymagania wydajnościowe}
 
@@ -325,6 +331,7 @@ Czasowe. Na wykonanie pracy inżynierskiej jest rok.
 \item [aktor] Jednostka przetwarzania logiki w programie działająca niezależnie od innych, komunikująca się z
     innymi aktorami za pomocą wymiany komunikatów.
 \item [proces] Implementacja ``aktora'' wewnątrz Viua VM.
+\item[bytecode] \emph{kod bajtowy}; binarna forma kodu programu, gotowa do uruchomienia na Viua VM
 \end{labeling}
 
 \end{document}
