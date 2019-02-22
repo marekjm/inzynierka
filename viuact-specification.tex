@@ -605,25 +605,41 @@ Moduł \texttt{Std.Io} jest opisany na stronie \pageref{stdlib_Std_Io}.
 Moduł \texttt{Std.Posix.Network} jest opisany na stronie \pageref{stdlib_Std_Posix_Network}.
 Moduł \texttt{Std.Random} jest opisany na stronie \pageref{stdlib_Std_Random}.
 
-\newpage
-
 \subsection{\texttt{Std.Actor}}
 \label{stdlib_Std_Actor}
 
 Moduł udostępniający funkcjonalność związaną z wymianą wiadomości i modelem aktorów.
 
-\subsubsection{\texttt{Std.Actor.join(Pid) -> Value}}
+\subsubsection{\texttt{Std.Actor.join()}}
 \label{Std_Actor_join}
+
+\begin{small}
+\begin{lstlisting}
+Std.Actor.join(Pid) -> Value
+\end{lstlisting}
+\end{small}
 
 Oczekuje na zakończenie wykonywania przez aktora o podanym PID, po czym zwraca wynik jego pracy.
 Może powodować zgłoszenie wyjątku jeśli aktor o podanym PID zakończył wykonywanie z powodu błędu, lub jeśli aktor
 o podanym PID nie istnieje.
 
-\subsubsection{\texttt{Std.Actor.self() -> Pid}}
+\subsubsection{\texttt{Std.Actor.self()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Actor.self() -> Pid
+\end{lstlisting}
+\end{small}
 
 Zwraca PID obecnego aktora.
 
-\subsubsection{\texttt{Std.Actor.receive() -> Value}}
+\subsubsection{\texttt{Std.Actor.receive()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Actor.receive() -> Value
+\end{lstlisting}
+\end{small}
 
 Oczekuje na nadejście wiadomości.
 
@@ -634,6 +650,12 @@ Moduł udostępniający mechanizmy I/O (\emph{wejścia-wyjścia}). Umożliwia on
 interakcji z konsolą użytkownika (\texttt{tty}).
 
 \subsubsection{\texttt{Std.Io.stdin\_getline() -> String}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.socket() -> Integer
+\end{lstlisting}
+\end{small}
 
 Umożliwia odczytanie pojedynczej linii ze strumienia standardowego wejścia (\emph{\texttt{stdin}}).
 
