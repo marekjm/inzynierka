@@ -1,0 +1,103 @@
+Opis jest od momentu, w którym przychodzi socket.
+
+* żyjące aktory: ChatListener, UsernameLessor, WebSocketConnector
+000.    nawiązanie handshake WebSocket
+* żyjące aktory: ChatListener, UsernameLessor, WebSocketConnector, AuthConnector
+001.    oczekuj na wiadomość z nazwą użytkownika: {"user":"johndoe"}
+* żyjące aktory: ChatListener, UsernameLessor, WebSocketConnector, AuthConnector
+002.    wyślij: {"result": "username_ok" | "username_taken" | "username_invalid"}
+* user nie jest w żadnym pokoju na start
+* żyjące aktory: ChatListener, UsernameLessor, WebSocketConnector, AuthConnector -> UserSession
+003.    user wysyła: {"fn":"get_room_list"}
+004.    czat odpowiada: {"result": ["foo", "bar", "baz"]}
+005.    user wysyła: {"fn": "join_room": "args": ["foo"]}
+006.    UserSession pyta RoomActor czy jest taki pokój; zakładamy, że jest; UserSession dostaje
+        adres aktora tego pokoju i wysyła mu
+        komunikat: {"event": "user_joined", "args": {"user": "johndoe", "pid": ...}}
+007.    czat odpowiada: {"result": "room_joined"}
+008.    czat wysyła:
+        {"event": "message_arrived", "args": {"room": "foo", "from": "alice", "text": "Hello World!"}}
+        {"event": "message_arrived", "args": {"room": "@alice/johndoe", "from": "alice", "text": "Hello World!"}}
+009.    frontend wysyła:
+        {"fn": "push", "args": {"room": "foo", "text": "Hello too!"}}
+
+
+fn:     czyli zlecenie wykonania jakiejś akcji (np. pobranie listy pokojów) z żądaniem odpowiedzi
+result: czyli odpowiedź na zlecenie wykonania akcji
+event:  czyli coś na co trzeba zareagować
+req:    czyli zlecenie wykonania jakiejś akcji (np. wysłanie wiadomości) bez żądania odpowiedzi
+
+"fn" zawsze leci od klienta do serwera.
+
+```
+{
+    "fn": ...
+    "seq": xxx
+    "args": ...
+}
+```
+
+"result" zawsze leci od serwera do klienta.
+
+```
+{
+    "result": ...
+    "seq": xxx
+    "args": ...
+}
+```
+
+"event" zawsze leci od serwera do klienta.
+
+```
+{
+    "event": ...
+    "args": ...
+}
+```
+
+----------------------------------------------------------------------------------------------------
+
+Chat_listener
+
+Nasłuchuje na połączenia z WebSocket, i po accept(3) tworzy Web_socket_connector
+do obsługi tego konkretnego połączenia WebSocket.
+
+Username_lessor
+
+Ma informacje o zajętych nazwach użytkownika (DHCP).
+
+Web_socket_connector
+
+Odczytuje wiadomości JSON z surowego połączenia WebSocket, dekoduje je i wysyła dalej.
+Odbiera wiadomości z systemu, koduje je do JSON, i wysyła do frontendu. Jeśli Web_socket_connector
+zginie z powodu błędu to jego watchdog ma za zadanie wysłać wiadomość o tym fakcie do Room_manager.
+
+Auth_connector
+
+Łączy się z Username_lessor żeby sprawdzić czy username jest wolny i go zarezerwować. Jeśli jest
+wolny to odpowiada OK do Web_socket_connector i wykonuje tailcall do User_session.
+
+User_session
+
+Odbiera wiadomości z Web_socket_connector i przekazuje do odpowiedniego Room.
+
+Room
+
+Trzyma listę użytkowników, którzy "w" nim są i routuje wiadomości pomiędzy nimi. Odpowiada też za
+propagację eventów typu "username zalogowany", "username stracił połączenie", "username wylogowany"
+i tak dalej.
+
+Room_manager
+
+Zarządca pokojów, który ma listę wszystkich istniejących pokojów. Obsługuje wiadomości "do wszyskich
+pokojów", np. odłączenie Web_socket_connector z powodu błędu bądź wylogowania.
+
+----------------------------------------------------------------------------------------------------
+
+ZADANIA UBERWAŻNE:
+
+- linijka, w której jest błąd
+- czas kompilacji
+- wyłączenie analizatora (--no-sa), albo -Wunused-value (żeby nie wymuszał użycia wszystkich
+  rejestrów i wartości na wszystkich ścieżkach)
