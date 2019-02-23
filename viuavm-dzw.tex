@@ -16,12 +16,12 @@
 \setcounter{secnumdepth}{4}
 
 %% Author and title
-% \author{Marek Marecki \and Gr.52c \and Kod: 95 \and 2017\slash2018-2019}
-\author{Marek Marecki \and Krzysztof Franek}
+% \author{Marek Marecki \and Gr.52c \and Krzysztof Franek}
+\author{Marek Marecki i Krzysztof Franek}
 \title{%
-    Proving viability of Viua VM \\
-    \large Implementation of high-level language on Viua VM and\\
-    deployment of a simple application \\
+    Potwierdzenie przydatności Viua VM \\
+    \large Implementacja języka wysokiego poziomu dla Viua VM \\
+    i realizacja prostej aplikacji \\
     ~\\
     Dokument założeń wstępnych}
 
@@ -38,6 +38,10 @@ Wykorzystana wersja \LaTeX~pochodzi z pakietu: \emph{TeX 3.14159265 (TeX Live 20
 
 \section{Opis problemu}
 \label{opis_problemu}
+
+Oryginalny tytuł pracy to ''\emph{Proving viability of Viua VM}''. Definicja \emph{viability} z Cambridge to
+''\emph{ability to work as intended or to succeed}''. Polski odpowiednik tego słowa najlepiej, chociaż
+niedokładnie, oddający sens oryginalnego tytułu to ''\emph{przydatność}''.
 
 \subsection{Problem niezawodności}
 
@@ -228,9 +232,10 @@ aktorów.
 \section{Wymagania jakościowe i inne}
 
 Implementacja Viua VM musi charakteryzować się wysoką jakością wykonania jeśli ma być wykorzystywana jako
-stablina podstawa do tworzenia innych systemów. Nie może w niej być miejsca na podejście typu ``laissez
-faire''; implementacja powinna być konserwatywna i zachowawcza, stawiając na pierszym miejscu poprawność i
-niezwodność.
+stablina podstawa do tworzenia innych systemów. Nie może w niej być miejsca na podejście typu
+``\emph{laissez faire}''; implementacja powinna być konserwatywna i zachowawcza, stawiając na pierszym miejscu
+poprawność i niezwodność. Wydajność rozwiązania jest stawiana na drugim miejscu i może być poświęcona na rzecz
+poprawności i niezawodności.
 
 \subsection{Wymagania jakościowe}
 
@@ -247,6 +252,11 @@ niezwodność.
 Wymagania dotyczące uniemożliwienia naruszenia stabilności i zawłaszczenia maszyny dotyczą jedynie programów
 pisanych w języku assemblera Viua VM tj. skompilowanych do bytecodu VM i nie wykorzystujących zewnętrznych
 (pochodzących spoza biblioteki standardowej) modułów rozszerzeń.
+
+Uniemożliwienie zawłaszczenia maszyny może być zrealizowane jedynie dla programów składających się w całości z
+bytecode'u Viua VM. Gwarancje dla programów składających się jedynie w jakiejś części z bytecode'u będą
+mniejsze ponieważ Viua VM nie jest w stanie wywłaszczyć fragmentów programu działających bezpośrednio na
+procesorze (tj. na tym samym poziomie co jądro Viua VM).
 
 \subsection{Wymagania wydajnościowe}
 
@@ -321,6 +331,7 @@ Czasowe. Na wykonanie pracy inżynierskiej jest rok.
 \item [aktor] Jednostka przetwarzania logiki w programie działająca niezależnie od innych, komunikująca się z
     innymi aktorami za pomocą wymiany komunikatów.
 \item [proces] Implementacja ``aktora'' wewnątrz Viua VM.
+\item[bytecode] \emph{kod bajtowy}; binarna forma kodu programu, gotowa do uruchomienia na Viua VM
 \end{labeling}
 
 \end{document}

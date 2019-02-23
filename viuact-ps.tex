@@ -26,11 +26,12 @@
 \setcounter{secnumdepth}{4}
 
 %% Author and title
-\author{Marek Marecki \and Krzysztof Franek}
+% \author{Marek Marecki \and Gr.52c \and Krzysztof Franek}
+\author{Marek Marecki i Krzysztof Franek}
 \title{%
-    Proving viability of Viua VM \\
-    \large Implementation of high-level language on Viua VM\\
-    and deployment of simple application \\
+    Potwierdzenie przydatności Viua VM \\
+    \large Implementacja języka wysokiego poziomu dla Viua VM \\
+    i realizacja prostej aplikacji \\
     ~\\
     Projekt Systemu\\
     dla języka Viuact}
@@ -213,12 +214,12 @@ Po zebraniu informacji o zależnościach program łączący dokonuje asemblacji 
 zależy kompilowany moduł główny. Następnie asembluje moduł główny i łączy wszystkie wyemitowane modułu
 bytecode'u w gotowy plik wykonywalny.
 
-\subsection{Przepieg procesu kompilacji}
+\subsection{Przebieg procesu kompilacji}
 \label{opis_etapow_kompilacji}
 
 Ten rozdział zawiera dokładny opis procesu kompilacji, od momentu wczytania pliku z kodem źródłowym w języku
 ViuAct do momentu wyemitowania kodu wynikowego w języku assemblera Viua VM. Kompilator jest wywoływany
-poleceniem \texttt{viuact-cc} z opcją \texttt{--mode} określającą czy kompilowany jest moduł wykonywalny
+poleceniem \texttt{viuact-cc} z opcją \texttt{-}\texttt{-mode} określającą czy kompilowany jest moduł wykonywalny
 (\texttt{exec}) czy moduł biblioteki (\texttt{module}):
 
 \begin{lstlisting}
@@ -232,7 +233,7 @@ Kompilator wczytuje do pamięci cały plik źródłowy jako pojedynczy string.
 \subsubsection{Analiza leksykalna}
 
 Lexer patrzy na wczytany kod źródłowy i do pierwszego nieprzeanalizowanego znaku (czyli na początku analizy do
-znaku na indeksie 0) próbuje przypasować wzorzec określający jako token znajduje się na tej pozycji. Po udanym
+znaku na indeksie 0) próbuje przypasować wzorzec określający jaki token znajduje się na tej pozycji. Po udanym
 przypasowaniu pozycja, która będzie rozpatrywana przez lexer jest przesuwana o tyle znaków ile wynosi długość
 wygenerowanego tokenu i lexer rozpoczyna pracę od nowa. Ten proces trwa do momentu aż cały string wejściowy
 nie zostanie przeanalizowany, albo odrzucony jako nieprawidłowy.
@@ -310,7 +311,7 @@ Dla przykładu:
 [ Compound_expression_marker; ... ] -> compound-call
 \end{lstlisting}
 
-Różnica między definicją zmiennej (\texttt{let-binding}), a definicją funkcji (\texttt{function-definition})
+Różnicą między definicją zmiennej (\texttt{let-binding}), a definicją funkcji (\texttt{function-definition})
 jest długość listy - definicja zmiennej zawiera trzy elementy (słowo kluczowe \texttt{let}, nazwę, i
 wyrażenie), a definicja funkcji cztery elementy (słowo kluczowe \texttt{let}, nazwę, listę parametrów
 formalnych, i wyrażenie).
@@ -467,7 +468,8 @@ type Move = {
 \end{lstlisting}
 
 Przeniesienie opisuje przesunięcie (instrukcja \emph{\texttt{move}}) lub kopię wartości (instrukcja
-\emph{\texttt{copy}}).
+\emph{\texttt{copy}}). Slot docelowy nie musi być obecny - np. wtedy wartość jest przenoszona do slotu
+\texttt{void}.
 
 \subsubsection{Wywołanie}
 \label{diagram_klas_wywolanie}

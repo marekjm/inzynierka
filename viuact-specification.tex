@@ -22,12 +22,12 @@
 \setcounter{secnumdepth}{4}
 
 %% Author and title
-% \author{Marek Marecki \and Gr.52c \and Kod: 95 \and 2017\slash2018-2019}
-\author{Marek Marecki \and Krzysztof Franek}
+% \author{Marek Marecki \and Gr.52c \and Krzysztof Franek}
+\author{Marek Marecki i Krzysztof Franek}
 \title{%
-    Proving viability of Viua VM \\
-    \large Implementation of high-level language on Viua VM and\\
-    deployment of a simple application \\
+    Potwierdzenie przydatności Viua VM \\
+    \large Implementacja języka wysokiego poziomu dla Viua VM \\
+    i realizacja prostej aplikacji \\
     ~\\
     Specyfikacja języka ViuAct}
 
@@ -91,7 +91,7 @@ zapewniającego poprawność komunikacji leży po stronie ''przestrzeni użytkow
 ViuAct zapewnia programiście system modułów. Moduły są automatycznie kompilowane i linkowane, w większości z
 poziomu języka, co redukuje poziom skomplikowania konfiguracji systemów budowania projektu.
 
-\subsection{Funkcje zagnieżdżone i niemutowane domknięcia}
+\subsection{Funkcje zagnieżdżone i niemutowalne domknięcia}
 
 Funkcje w ViuAct mogą być zagnieżdżane, i tworzyć niemutowalne domknięcia (ang. \emph{closures}) -- funkcje,
 które odwołują się do zmiennych zdefiniowanych w otaczającej je przestrzeni leksykalnej.
@@ -117,16 +117,17 @@ dowiązania \emph{\texttt{let}} w językach OCaml i Rust).
 \subsection{Podział programu}
 
 Najmniejszym elementem możliwym do wykonania jest wyrażenie.
-Wyrażenia są grupowane w funkcje.
+Wyrażenia proste (\emph{simple expression}) są grupowane w wyrażenia złożone (\emph{compound expression}).
+Funkcje parametryzują wyrażenia.
 Funkcje są zebrane w modułach.
 
 \subsection{Wykonywanie programu}
 
 Program składa się z jednego lub większej ilości ''aktorów'' (procesów).
 Aktory są izolowane od siebie nawzajem i działają równolegle (wszystkie naraz).
-
 Wewnętrznie, każdy z aktorów wykonywany jest sekwencyjnie, bez jakiejkolwiek
 współbieżności.
+Wykonanie programu rozpoczyna się od funkcji \texttt{main}.
 
 \subsection{Komunikacja między aktorami}
 
@@ -200,6 +201,7 @@ typ nieprzezroczysty.
 \section{Konstrukcje języka}
 
 \subsection{Wyrażenia}
+\label{language_expressions}
 
 \texttt{expression := \emph{literal} \\
 \phantom{expression :}| \emph{name} \\
@@ -254,7 +256,9 @@ Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \t
 
 Wyrażenia złożone mogą być dowolnie zagnieżdżane. Mimo iż składają się z potencjalnie wielu wyrażeń
 wyrażenia złożone są traktowane jako jedno wyrażenie -- mogą być wykorzystywane wszędzie tam gdzie składnia
-języka wymaga użycia pojedynczego wyrażenia:
+języka wymaga użycia pojedynczego wyrażenia (definicje funkcji, wyrażenia kontrolne w konstrukcji warunkowej,
+wyrażenia obsługi w konstrukcji \texttt{try}, itp.). Na przykładzie poniżej prezentowane jest dowiązanie
+\emph{\texttt{let}} do wartości wyrażenia złożonego:
 
 \begin{lstlisting}
 (let x {
@@ -291,7 +295,7 @@ Operatory są zapisywane w konwencji prefiksowej (tj. najpierw operator, potem o
 
 Binarne operatory logiczne pobierają dwie wartości, i produkują wartość logiczną.
 
-\begin{description}
+\begin{labeling}{and}
     \item[\texttt{or}] pobiera dwie dowolne wartości; \texttt{(or a b)}
     \item[\texttt{and}] pobiera dwie dowolne wartości; \texttt{(and a b)}
     \item[\texttt{=}] pobiera dwie wartości liczbowe; \texttt{(= a b)}
@@ -300,7 +304,7 @@ Binarne operatory logiczne pobierają dwie wartości, i produkują wartość log
     \item[\texttt{<=}] pobiera dwie wartości liczbowe; \texttt{(<= a b)}
     \item[\texttt{>}] pobiera dwie wartości liczbowe; \texttt{(> a b)}
     \item[\texttt{>=}] pobiera dwie wartości liczbowe; \texttt{(>= a b)}
-\end{description}
+\end{labeling}
 
 \subsubsection{Operatory binarne (dwuargumentowe) arytmetyczne}
 
@@ -311,14 +315,14 @@ lewej strony (\emph{left-hand side}).
 let op : Ta -> Tb -> Ta
 \end{lstlisting}
 
-\begin{description}
+\begin{labeling}{+}
     \item[\texttt{+}] dodaje dwie wartości liczbowe
     \item[\texttt{-}] odejmuje dwie wartości liczbowe, \emph{\texttt{rhs}} jest odejmowany od
         \emph{\texttt{lhs}}
     \item[\texttt{*}] mnoży dwie wartości liczbowe
     \item[\texttt{/}] dzieli dwie wartości liczbowe, \emph{\texttt{lhs}} jest dzielony przez
         \emph{\texttt{rhs}}
-\end{description}
+\end{labeling}
 
 \subsubsection{Operator dostępu}
 
@@ -365,6 +369,8 @@ istniało) lub aktualizację wartości przechowywanej w tym polu (jeśli wcześn
 })
 \end{lstlisting}
 
+O funkcjach w Viuact można myśleć jak o parametryzowanych wyrażeniach.
+
 \subsubsection{Parametry formalne}
 
 \texttt{formal-parameters := \emph{name}*}
@@ -377,12 +383,12 @@ wykonania przez wywołującego.
 \subsubsection{Ciało funkcji}
 
 Ciało funkcji jest reprezentowane jednym wyrażeniem (może to być wyrażenie złożone).
-O funkcjach można myśleć jako o parametryzowanych wyrażeniach.
+Wyrażenia są opisane w rozdziale
+\ref{language_expressions} na stronie \pageref{language_expressions}.
 
 \subsubsection{Wartość zwracana}
 
 Wartość zwracana z funkcji jest wartością, do której ewaluuje wyrażenie będące jej ciałem.
-Funkcje w Viuact to parametryzowane wyrażenia.
 
 \subsection{Definicje modułów}
 
@@ -589,42 +595,212 @@ Dla takich funkcji programista musi napisać \emph{wrappery} jeśli chce użyć 
 Jednak w typowym programie nie będzie to potrzebne, gdyż funkcje biblioteki standardowej zazwyczaj
 implementują atomowe zadania, których sens uruchamiania w osobnych aktorach jest ograniczony.
 
+\begin{center}
+\emph{Należy pamiętać, że opis biblioteki standardowej \textbf{nie} jest ostateczny i może ulec zmianie w
+trakcie trwania projektu. Z tego powodu funkcje są opisane skrótowo, a dokumentacja nie jest wyczerpująca.}
+\end{center}
+
+Moduł \texttt{Std.Actor} jest opisany na stronie \pageref{stdlib_Std_Actor}.
+Moduł \texttt{Std.Io} jest opisany na stronie \pageref{stdlib_Std_Io}.
+Moduł \texttt{Std.Posix.Network} jest opisany na stronie \pageref{stdlib_Std_Posix_Network}.
+Moduł \texttt{Std.Random} jest opisany na stronie \pageref{stdlib_Std_Random}.
+
 \subsection{\texttt{Std.Actor}}
+\label{stdlib_Std_Actor}
+
+Moduł udostępniający funkcjonalność związaną z wymianą wiadomości i modelem aktorów.
 
 \subsubsection{\texttt{Std.Actor.join()}}
 \label{Std_Actor_join}
 
+\begin{small}
+\begin{lstlisting}
+Std.Actor.join(Pid) -> Value
+\end{lstlisting}
+\end{small}
+
+Oczekuje na zakończenie wykonywania przez aktora o podanym PID, po czym zwraca wynik jego pracy.
+Może powodować zgłoszenie wyjątku jeśli aktor o podanym PID zakończył wykonywanie z powodu błędu, lub jeśli aktor
+o podanym PID nie istnieje.
+
 \subsubsection{\texttt{Std.Actor.self()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Actor.self() -> Pid
+\end{lstlisting}
+\end{small}
+
+Zwraca PID obecnego aktora.
+
 \subsubsection{\texttt{Std.Actor.receive()}}
 
+\begin{small}
+\begin{lstlisting}
+Std.Actor.receive() -> Value
+\end{lstlisting}
+\end{small}
+
+Oczekuje na nadejście wiadomości.
+
 \subsection{\texttt{Std.Io}}
+\label{stdlib_Std_Io}
 
 Moduł udostępniający mechanizmy I/O (\emph{wejścia-wyjścia}). Umożliwia on prowadzenie I/O na plikach, oraz
 interakcji z konsolą użytkownika (\texttt{tty}).
 
-\subsubsection{\texttt{Std.Io.stdinxgetline}}
+\subsubsection{\texttt{Std.Io.stdin\_getline() -> String}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.socket() -> Integer
+\end{lstlisting}
+\end{small}
 
 Umożliwia odczytanie pojedynczej linii ze strumienia standardowego wejścia (\emph{\texttt{stdin}}).
 
 \subsection{\texttt{Std.Posix.Network}}
+\label{stdlib_Std_Posix_Network}
 
 Moduł udostępniający implementację ''POSIX sockets''. Jest to cienka abstrakcja nad API dostarczanym przez
 system operacyjny; w przypadku braków w tym dokumencie ich dokumentację można wydedukować ze stron manuala
 sekcji 3 dostarczanych przez program \texttt{man(1)} (np. dokumentację dla funkcji
 \texttt{Std.Posix.Network.socket} można uzyskać wykonując polecenie \texttt{man 3 socket}).
 
+\begin{center}
+\emph{Wszystkie funkcje w tym module są blokujące i nie mają timeoutu. Może to spowodować zagłodzenie
+schedulerów I/O w Viua VM. Na późniejszym etapie projektu ten błąd zostanie wyeliminowany.}
+\end{center}
+
 \subsubsection{\texttt{Std.Posix.Network.socket()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.socket() -> Integer
+\end{lstlisting}
+\end{small}
+
+Tworzy socket za pomocą wywołania funkcji \texttt{socket(3)}.
+Socket jest w rodzinie \texttt{AF\_INET}, rodzaju \texttt{SOCK\_STREAM}, i jest tworzony bez flag.
+
 \subsubsection{\texttt{Std.Posix.Network.connect()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.connect(
+      socket : Integer
+    , addr   : Text
+    , port   : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{connect(3)}.
+
 \subsubsection{\texttt{Std.Posix.Network.bind()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.bind(
+      socket : Integer
+    , addr   : Text
+    , port   : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{bind(3)}.
+
 \subsubsection{\texttt{Std.Posix.Network.listen()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+      socket  : Integer
+    , backlog : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{listen(3)}.
+
 \subsubsection{\texttt{Std.Posix.Network.accept()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.accept(socket : Integer) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{accept(3)}.
+
 \subsubsection{\texttt{Std.Posix.Network.write()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.write(
+      socket : Integer
+    , value  : Value
+) -> Int
+\end{lstlisting}
+\end{small}
+
+Niezależnie od tego jaka wartość jest przekazana do funkcji, będzie najpierw przekonwertowana na
+\texttt{String}, a potem wpisana do socketu.
+
 \subsubsection{\texttt{Std.Posix.Network.read()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.read(
+    socket  : Integer
+) -> String
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{read(3)}. Odczytuje z socketu maksymalnie 1024 bajty.
+
 \subsubsection{\texttt{Std.Posix.Network.recv()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.recv(
+      socket        : Integer
+    , buffer_length : Integer
+) -> String
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{recv(3)}. Odczytuje z socketu maksymalnie \texttt{buffer\_length} bajtów.
+
 \subsubsection{\texttt{Std.Posix.Network.shutdown()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+    socket  : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{shutdown(3)}.
+Wyłącza socket z flagą \texttt{SHUT\_RDWR}.
+
 \subsubsection{\texttt{Std.Posix.Network.close()}}
 
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+      socket  : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{close(3)}.
+
+
 \subsection{\texttt{Std.Random}}
+\label{stdlib_Std_Random}
 
 Moduł udostępniający dostęp do liczb losowych ogólnego przeznaczenia (\texttt{/dev/urandom}) oraz zdatnych do
 zastosowań kryptograficznych (\texttt{/dev/random}).
