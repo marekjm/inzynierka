@@ -1,0 +1,79 @@
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+
+
+
+\setcounter{secnumdepth}{4}
+
+%% Author and title
+% \author{Marek Marecki \and Gr.52c \and Kod: 95 \and 2017\slash2018-2019}
+\author{Marek Marecki \and Krzysztof Franek}
+\title{%
+     Potwierdzenie przydatności Viua VM \\
+    \large Implementacja języka wysokiego poziomu dla Viua VM \\
+    i realizacja prostej aplikacji \\
+    ~\\
+    Wstępna analiza kategorii ryzyka}
+
+\begin{document}
+
+\maketitle
+{\footnotesize
+\begin{center}
+  \begin{tabular}{ | l | l | l | }
+    \hline
+    \parbox[t]{6.5cm}{\textbf{Temat pracy i akronim projektu:}\\ Potwierdzenie przydatności Viua VM. Implementacja języka wysokiego poziomu dla Viua VM i realizacja prostej aplikacji} & \parbox[t]{4.5cm}{\textbf{Zleceniodawca:}\\\colorbox{yellow}{Nieznany}} & \parbox[t]{4.5cm}{\textbf{Konsultant:}\\\colorbox{yellow}{Nieznany}} \\ \hline
+    \parbox[t]{6.5cm}{\textbf{Zespół projektowy:}\\Krzysztof Franek, Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Opiekun projektu:}\\dr hab. Marek A. Bednarczyk, prof. PJWSTK} \\ \hline
+    \parbox[t]{3.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \multicolumn{2}{|l|}{\parbox[t]{9cm}{\textbf{Odpowiedzialny za dokument:}\\Krzysztof Franek}} \\ 
+    \hline
+  \end{tabular}
+\end{center}
+}
+
+\section{Otoczenie projektu}
+
+\subsection{Kontektst projektu}
+
+\textbf{Czy wybrano metodologię rozwoju projektu?} Tak, wybrano dwie metodologie: (a) prototypowanie dla
+kompilatora oraz (b) Mini-Scrum, tj. uproszczona wersja Scrum dostosowana do jednoosobowej pracy. Są one opisane szczegółowo we Wstępnym Planie Projektu (WPP).
+
+\textbf{Czy istnieje zarys struktury projektu (lub Work Breakdown Structure)?} Tak, projekt został podzielony na dwie części, jedną poświęconą językowi programowania wysokiego poziomu ViuAct wraz z jego kompilatorem, a drugą - przykładowej aplikacji czatu. Zadania są podzielone według tych części. Podział opisano szczegółowo w ramach WPP.
+
+\textbf{Czy produkty projektu zostały zdefiniowane, uzgodnione i zapisane?} Tak, zdefinionwano je w jasny i przejrzysty sposób, w dokumentacji uzgodnionej w zespole i merytorycznie uzgadnianej z opiekunem projektu.
+
+\textbf{Czy ustanowiono środki finansowego nadzoru projektu?} Pytanie to nie dotyczy projektu, z uwagi na jego charakter non-profit.
+
+\textbf{Czy każde z zadań posiada przejrzystą dokumentację?} Tak, jednakże brakuje na obecnym etapie szczegółowej dokumentacji wykonawczej dla niektórych z modułów czatu, pozostając na etapie dokumentacji koncepcyjnej.
+
+\textbf{Czy zidentyfikowano istotnych udziałowców?} Tak, przy czym w przypadku języka programowania i środowiska wytwarzania oprogramowania ViuAct są to realni udziałowcy: programista używający środowiska, użytkownik korzystający z programów wytworzonych w środowisku, zespół deweloperski, opiekun projektu, recenzent. Tymczasem, w przypadku czatu, dochodzą fikcyjni udziałowcy, utworzeni wyłącznie na cele przykładowe, toteż nie będziemy rozpatrywali ich w dalszeym toku.
+
+\textbf{Czy projekt dysponuje utrwalonym, stablinym i powtarzalym środowiskiem deweloperskim?} Tak, przy czym poziom ryzyka niestabiności jest wyższa w projekcie dotyczącym przygotowania aplikacji czatu. Wszakże samo środowisko, w którym jest tworzona, jest przedmiotem pracy dyplomowej i może ulegać dynamicznym zmianom.
+
+\textbf{Czy istnieje proces zarządzania zmianą?} Tak, opiera się on o: (a) bieżące spotkania zespołu i dyskusję nad zmianami, dokumentowane w formie notatek (b) wariantowanie i przygotowywanie różnych alternatywnych dróg realizacji poszczególnych etapów, zanim będzie niezbędne podjęcie samej decyzji w zakresie zmiany.
+
+\subsection{Plan projektu}
+
+\textbf{Czy referencje deweloperów zostały sprawdzone i uznane za godne akceptacji?} Tak, obu z deweloperów miało wcześniej związek z programowaniem w wielu językach programowania, ponadto programista odpowiedzialny za język programowania i kompilator ma szeroką wiedzę na temat budowy kompilatorów i konstrukcji maszyn wirtualnych.
+
+\textbf{Czy doszło to uformowania zespołu deweloperskiego?} Tak, obu czonków zespołu ustaliło kanały komunikacji, zasady współpracy, podział odpowiedzialoności oraz na bieżąco współdziała w zakresie realizacji projektu.
+
+\textbf{Czy członkowie zespołu deweloperskiego posiadają istotne doświadczenia w podobnych projektach?} Tak, członek odpowiedziany za nowy język programowania i kompilator ma doświadczenie w podobnych projektach realizowanych samodzielnie.
+
+\textbf{Czy plan testów, rozmieszczenia, szkolenia i utrzymywania są przejrzyście udokumentowane?} Nie,zaniechano sporządzenia ww. dokumentacji.
+
+\end{document}
