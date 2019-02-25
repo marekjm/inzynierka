@@ -75,8 +75,7 @@ odwołania do skryptów w języku JavaScript (JS) oraz pozostałej, statycznej t
 odsyłał te pliki do przeglądarki w odpowiedzi na kolejne żądania HTTP GET, wysyłane w miarę dalszego renderowania pliku HTML. W ten sposób, 
 po stronie klienta zostanie pobrana i uruchomiona aplikacja internetowa typu Single Page Application, której interfejs będzie reagował z 
 użytkownikiem oraz ulegał zmianom wskutek działania skryptów JS, załadowanych na pierwszym etapie uruchomienia. Po stronie serwera, 
-dostarczaniem treści statycznych będzie zajmował się wyspecjalizowany aktor „StaticContent”, stale nasłuchujący żądań protokołu http, 
-właśnie na porcie 80.
+dostarczaniem treści statycznych będzie zajmował się daemon HTTP - Nginx.
 
 Gdy tylko skrypty JS wykryją pobranie wszystkich plików składowych aplikacji z serwera, podjęta zostanie próba nawiązania połączenia 
 z tym serwerem przy użyciu protokołu WebSocket. Będzie on od tego momentu podstawowym kanałem komunikacji pomiędzy klientem a serwerem. 
