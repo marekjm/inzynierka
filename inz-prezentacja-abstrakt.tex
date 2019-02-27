@@ -1,0 +1,259 @@
+\documentclass[11pt,oneside,a4paper,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+\graphicspath{ {./fig/} }
+\usepackage{listings}
+
+\setcounter{secnumdepth}{4}
+\title{Abstrakt prezentacji inżynierskiej ViuaVM}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+	\item Wprowadzenie
+	\begin{enumerate}
+		\item Akademicki kontekst projektu
+		\item Skład zespołu
+	\end{enumerate}
+	
+	\item Przedstawienie problemu
+	\begin{enumerate}
+		\item Problem niezawodności
+		\item Wykrywanie błędów
+		\item Obsługa błędów
+		\item Izolacja części systemu
+		\item Problem równoległości
+		\item Wielowątkowość we współczesnym sprzęcie
+		\item Podsumowanie problemu
+	\end{enumerate}
+	
+	\item Rozwiązania
+	\begin{enumerate}
+		\item Communicating Sequential Processes (CSP)
+		\item Calculus of Communicating Systems (CCS)
+		\item $\pi$-caluculus
+		\item Actor model
+		\item Podsumowanie propozycji
+		\item Actor model - uzasadnienie decyzji
+	\end{enumerate}		
+	
+	\item ViuaVM
+	\begin{enumerate}
+		\item Czym jest ViuaVM
+		\item Czym się wyróżnia ViuaVM
+		\item Rejestry vs Klasyczna pamięć
+		\item Model programowania -- wielowątkowość ,,by design''
+		\item Język asemblera ViuaVM
+		\item Trudność języka asemblera z perspektywy programisty
+	\end{enumerate}
+	
+	\item Produkt pracy - Środowisko ViuaVM
+	\begin{enumerate}
+		\item Przedstawienie środowiska
+		\item Cele
+		\item Kontekst
+		\item Minimalny zakres funkcjonalności
+		\item Wymagania jakościowe
+		\item Wymagania wydajnościowe
+		\item Wymagania narzędziowe
+	\end{enumerate}
+	
+	\item Język ViuAct
+	\begin{enumerate}
+		\item Zakres pracy na tle modelu kompilacji
+		\item ViuAct jako język wysokiego poziomu
+		\item Założenia do składni języka
+		\item Składnia ,,lispopodobna''
+		\item Idea wyrażeń
+		\item Typy danych
+		\begin{enumerate}
+			\item Typy proste
+			\item Typy złożone i typy platformy
+			\item Konstrukcje języka
+			\item Dowiązania \texttt{let}
+		\end{enumerate}				
+		\item Operatory
+		\item Zmienne
+		\item Funkcje
+		\begin{enumerate}
+			\item Funkcje
+			\item Wywołania funkcji
+			\item Gdzie są pętle - czyli wywołania ogonowe (\texttt{tailcall})
+			\item Wywołania odroczone (\texttt{defer})
+		\end{enumerate}
+		\item Aktorzy
+		\begin{enumerate}
+			\item Pojęcie aktora w ViuAct
+			\item Tworzenie aktora
+			\item Włączanie aktorów (\texttt{fork-join})
+			\item Wolni aktorzy
+		\end{enumerate}
+		\item Konstrukcje warunkowe
+		\item Wyjątki
+		\item Moduły
+		\item Biblioteki
+		\begin{enumerate}
+			\item Rozszerzanie zakresu funkcjonalności
+			\item Biblioteka standardowa \texttt{Std}
+			\item Moduł \texttt{Std.Actor}
+			\item Moduł \texttt{Std.Posix}
+			\item Moduł \texttt{Std.Random}
+		\end{enumerate}
+		
+		\item Hello World!
+		\item Ciąg Fibonacciego
+		\item Prosty czat
+		\begin{enumerate}
+			\item Serwer
+			\item Klient
+			\item Działający przykład
+		\end{enumerate}
+	\end{enumerate}
+	
+	\item Kompilator ViuAct
+	\begin{enumerate}
+		\item Umiejscowienie kompilatora w środowisku
+		
+		\item Ogólny schemat procesu kompilacji
+		\begin{enumerate}
+			\item Analiza leksykalna
+			\item Analiza składniowa
+			\item Emisja kodu
+		\end{enumerate}
+		
+		\item Architektura kompilatora ViuAct
+		\begin{enumerate}
+			\item Schemat procesu kompilacji
+			\item Analiza leksykalna (\texttt{Lexer})
+			\item Grupowanie nawiasów
+			\item Kategoryzacja grup
+			\item Emisja modułów
+			\item Redukcja poziomu wyrażeń (\texttt{Lowerer})
+			\item Emisja instrukcji języka asemblera (\texttt{Emitter})
+		\end{enumerate}
+		
+		\item Pliki wynikowe
+		\begin{enumerate}
+			\item Pliki \texttt{.asm}
+			\item Pliki \texttt{.i}
+			\item Pliki \texttt{.d}
+\end{enumerate}				
+		
+		\item Cechy charakterystyczne kompilatora ViuAct [na tle innych kompilatorów]
+		\item Interakcja z platformą
+		\begin{enumerate}
+			\item Platforma kompilacji
+			\item Platforma asemblacji i linkowania
+			\item Platforma uruchomieniowa
+		\end{enumerate}
+	\end{enumerate}
+
+\item ViuaChat jako aplikacja demonstracyjna
+\begin{enumerate}
+	\item Kontekst biznesowy 
+	\item Udziałowcy
+	\begin{enumerate}
+		\item ViuaVM
+		\item Opiekun pracy inżynierskiej
+		\item Członek zespołu odpowiedzialny za kompilator ViuAct
+		\item Członek zespołu odpowiedzialny za ViuaChat
+	\end{enumerate}
+	\item Charakterystyka użytkowników
+	\item Istniejąca infrastruktura
+	\item Zarys funkcjonalności
+	\begin{enumerate}
+		\item Logowanie
+		\item System użytkowników
+		\item Pokoje
+		\item Prywatne wiadomości
+	\end{enumerate}
+	\item Metodologia wytwarzania -- mini-Scrum
+	\begin{enumerate}
+		\item Przyczyny wyboru
+		\item Różnice w stosunku do ,,klasycznego'' Scrum
+		\item Sprint
+		\item Zasady biznesowe jako \textit{user stories}
+		\item Przebieg sprintu
+	\end{enumerate}
+	\item Schemat przypadków użycia
+	\item Projekt systemu
+	\begin{enumerate}
+		\item ViuaChat jako aplikacja webowa
+		\item Podział frontend -- backend
+		\item Frontend jako \textit{Single Page Application}
+		\item Backend
+		\item WebSocket
+	\end{enumerate}
+
+	\item Aktorzy ViuAct
+	\begin{enumerate}
+		
+		\item Podstawowi aktorzy serwera
+		\item Aktor inicjujący \texttt{Architect}
+		\item Aktor nasłuchujący \texttt{Listener}
+		\item Aktorzy pośredniczący z WebSocketem \texttt{WSConnector}
+		\item Aktor uwierzytelniający \texttt{Authorizer}
+		\item Aktor zarządzający nazwami użytkowników \texttt{UsernameLessor}
+		\item Aktorzy sesji użytkowników \texttt{UserSession}
+		\item Aktorzy (typowych) pokojów \texttt{Room}
+		\item Aktorzy pokojów wiadomości prywatnych \texttt{PMRoom}
+		\item Aktorzy bufora najnowszych wiadomości w pokojach \texttt{MessageBuffer}
+		\item Aktor zarządzający pokojami \texttt{Landlord}
+	\end{enumerate}
+	\item Pliki konfiguracyjne
+	\item Przykładowe procesy w diagramach przepływu
+	\begin{enumerate}
+		\item Nawiązywanie połączenia z serwerem
+		\item Autoryzacja
+		\item Podpinanie użytkownika do pokoju
+		\item Wysyłanie i odbiór wiadomości w (typowym) pokoju
+		\item Odpinanie użytkownika od pokoju
+		\item Wysyłanie wiadomości prywatnej
+		\item Opuszczanie serwera
+	\end{enumerate}
+	
+	\item Projekty interfejsu - wybrane przykłady
+	\begin{enumerate}
+		\item Założenia interfejsu
+		\item Okno logowania
+		\item Błąd zajętości nazwy użytkownika
+		\item Okno z listą pokojów
+		\item Okno z wiadomościami z (typowego) pokoju
+		\item Redagowanie wiadomości w (typowym) pokoju
+		\item Okno tworzenia nowego pokoju		
+		\item Okno z listą aktywnych użytkowników
+		\item Okno wiadomości prywatnych
+	\end{enumerate}
+\end{enumerate}
+
+\end{enumerate}
+
+Czego zapomniałem:
+	
+\begin{enumerate}
+	\item Kompilator: Infrastrutktura, metodologia wytwarzania,  prototypowanie, issue,  zasady, jezyk w którym zostanie/został napisany (Python, OCaml), testy, sposób użycia (komendy CLI)
+	\item Cały projekt: harmonogram, ocena ryzyka, zasoby sprzętowe
+	\item ViuaVM: wpływ projektu na kształt maszyny, biblioteki		
+	\item Pogrubienie nagłówków sekcji prezentacji
+\end{enumerate}
+
+
+\end{document}
+
+
