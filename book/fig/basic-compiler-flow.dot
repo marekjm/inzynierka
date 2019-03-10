@@ -1,0 +1,3 @@
+digraph {
+    "kod źródłowy" -> "analiza leksykalna" -> "analiza składniowa" -> "emisja kodu" -> "kod wynikowy";
+}

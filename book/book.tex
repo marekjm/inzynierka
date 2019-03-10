@@ -1,0 +1,127 @@
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+\graphicspath{ {./fig/} }
+\usepackage{listings}
+
+\newenvironment{enumreq}
+{ \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
+{ \end{enumerate}                  } 
+
+
+\setcounter{secnumdepth}{4}
+
+%% Author and title
+% \author{Marek Marecki \and Gr.52c \and Krzysztof Franek}
+\author{Zespół: Marek Marecki i Krzysztof Franek\\Promotor: dr hab. Marek A. Bednarczyk, prof. PJWSTK}
+\title{%
+    Implementacja języka wysokiego poziomu i \\
+    realizacja prostej aplikacji \\
+    \large Viua VM w akcji}
+
+\begin{document}
+
+\lstset{basicstyle=\ttfamily,
+columns=fixed,
+escapeinside={\%*}{*)},
+inputencoding=utf8,
+extendedchars=true}
+
+\maketitle
+
+\tableofcontents
+% \listoftables
+\listoffigures
+
+Praca została złożona za pomocą systemu \LaTeX.
+
+\newpage
+
+\chapter{Wprowadzenie}
+
+We wprowadzeniu chcielibyśmy poruszyć ogólne tematy związane z naszą pracą, oraz przedstawić Czytelnikowi
+spójny wstęp zapewniający solidne podstawy do dalszej lektury. Zakładamy, że Czytelnik ma doświadczenie z
+językami programowania i umie biegle posługiwać się co najmniej jednym ''\emph{mainstreamowym}'' językiem, np.
+C++, Java, czy Python.
+
+Wprowadzenie jest dla nas miejscem, w którym przedstawimy problemy dręczące popularne obecnie języki
+programowania oraz powiemy skąd się te problemy biorą i dlaczego w miarę postępu technologii są one coraz
+trudniejsze do zignorowania.
+
+Po krótce przedstawiona zostanie również maszyna wirtualna Viua, która jest platformą, na której nasza praca
+się opiera.
+
+\section{Układ pracy inżynierskiej}
+
+W rozdziale \ref{jezyk_viuact_i_jego_kompilator}.~\nameref{jezyk_viuact_i_jego_kompilator} (na stronie
+\pageref{jezyk_viuact_i_jego_kompilator}) przedstawiamy język Viuact oraz jego implementację - kompilator.
+Są to narzędzia wykorzystywane do stworzenia aplikacji użytkowej przedstawionej w rozdziale
+\ref{program_viuachat}.~\nameref{program_viuachat} (na stronie \pageref{program_viuachat}).
+
+Wkład własny członków zespołu przedstawiony jest w rozdziale \ref{wklad_wlasny_czlonkow_zespolu} na stronie
+\pageref{wklad_wlasny_czlonkow_zespolu}.
+
+W rozdziale \ref{slownik_pojec}.~\nameref{slownik_pojec} na stronie \pageref{slownik_pojec} prezentujemy listę
+pojęć i terminów używanych w pracy, które mogą wymagać doprecyzowania lub definicji. Dla wygody Czytelnika są
+one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językiem i kompilatorem
+(rozdział~\ref{slownik_pojec_jezyka}) i związane z chatem (rozdział~\ref{slownik_pojec_chatu}).
+
+\chapter{Język ViuAct i jego kompilator}
+\label{jezyk_viuact_i_jego_kompilator}
+
+Pierwszą częścią naszej pracy jest zaprojektowanie wysokopoziomowego języka programowania i opracowanie jego
+implementacji. Z uwagi na to, że platforma uruchomieniowa, którą wykorzystujemy (czyli Viua VM) jest maszyną
+wirtualną wykonującą programy w postaci \emph{bytecode} wybranym sposobem implementacji języka jest
+kompilator - program tłumaczący kod źródłowy w jednym języku na kod źródłowy w innym języku przy jednoczesnym
+zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym jest język Viuact (dokładniej
+opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
+\pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
+
+\include{viuact/sws}
+
+\include{viuact/ps}
+
+\include{viuact/manual}
+
+\include{viuact/language_specification}
+
+\chapter{Program ViuaChat}
+\label{program_viuachat}
+
+Drugą częścią naszej pracy jest program ViuaChat - chat internetowy o funkcjonalności podobnej do IRC.
+Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematycznych do rozmów, oraz rozmowy
+''prywatne'' (tj. wyłączne dla dwóch użytkowników).
+
+\include{chat/sws}
+
+\include{chat/ps}
+
+\include{chat/spu}
+
+\chapter{Wkład własny członków zespołu}
+\label{wklad_wlasny_czlonkow_zespolu}
+
+\section{Krzysztof Franek}
+
+\section{Marek Marecki}
+
+\include{common/glossary}
+
+\chapter{Bibliografia}
+
+\end{document}
