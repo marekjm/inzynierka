@@ -1,0 +1,125 @@
+Prawdopodobne negatywne aspekty społeczne.
+
+Jeśli kompilator będzie generował kiepski, mało wydajny kod wynikowy to zwiększy
+ogólne zużycie energii elektrycznej. Oprócz tego może sprawić, że użytkownicy
+nie będą zadowoleni z używanego oprogramowania ponieważ będzie ono zbyt mało
+wydajne (będzie "działać wolno") nawet jeśli będzie dawało duże (w porównaniu z
+innymi technologiami) gwarancje niezawodności, poprawności, i bezpieczeństwa.
+
+--------------------------------------------------------------------------------
+
+PROJECT ENVIRONMENT (PROJECT CONTEXT)
+
+1. Yes. (methodology)
+2. Yes. (outline of the project structure)
+3. Yes. (deliverables defined)
+4. Yes. (financial controls)
+5. Yes, somewhat. (spec for every task)
+6. Yes. (stakeholders identified)
+7. Yes. (development environment)
+8. Yes. (change management process)
+
+PROJECT ENVIRONMENT (PROJECT PLAN)
+
+1. Yes, kind of. (developers' competences)
+2. Yes. (development team formed)
+3. Yes. (developers have at least some relevant experience)
+4. No. (deployment, training, and maintenance plans are not defined; deployment
+   is simple as there is just one compiler binary; training is not needed;
+   maintenance plan is not truly relevant because after whole language spec is
+   implemented the compiler becomes finished software)
+5. No. (rigorous developer selection process; we were semi-randomly matched to
+   create a team)
+6. No. (written agreement between PJATK and the developers)
+7. Yes and no. (the project *is* creating a new development platform so the team
+   has experience in it by virtue of having created it, but it is a *new*
+   development so by definition this experience has to be limited)
+
+TASKS: ANALYSE PROJECT TASK (5 tasks specific for the project)
+
+TASK 0: Create language specification
+
+1. Yes. (clearly defined deliverables)
+2. No. (there is no binding agreement)
+3. No. (there is no risk analysis)
+4. Yes. (Marek Marecki is the main author of the specification)
+5. Yes, somewhat. (developer has experience implementing languages, but not writing
+   language specification documents)
+6. Yes, somewhat. (the developer has implemented programming languages before)
+7. Yes. (the other parts of the project - compiler and chat application - will test
+   implementability and sufficiency of the language specification)
+8. No. (the task is *creating* the specification)
+
+TASK 1: Implement parser for the language
+
+1. Yes. (clearly defined deliverables)
+2. Yes. (language specification is the binding agreement)
+3. No. (there is no risk analysis)
+4. Yes. (Marek Marecki is the sole author)
+5. Yes. (developer has required technical knowledge)
+6. Yes. (the developer has implemented programming languages before)
+7. Yes. (the other parts of the project - compiler and chat application - will test
+   correctness of the parser)
+8. Yes. (the language specification)
+
+TASK 2: Implement code emission subsystem
+
+1. Yes. (clearly defined deliverables)
+2. Yes. (there is language specification and Viua VM ISA)
+3. No. (there is no risk analysis)
+4. Yes. (Marek Marecki is the sole author)
+5. Yes. (developer has required technical knowledge)
+6. Yes. (the developer has implemented programming languages before)
+7. Yes. (Viua VM assembler and kernel will test whether the code is emitted
+   correctly, chat application will test whether required language construct
+   combinations can be correctly emitted)
+2. Yes. (there is language specification and Viua VM ISA)
+
+TASK 3: Implement infrastructure for the module system
+
+1. Yes. (clearly defined deliverables)
+2. Yes. (there is language specification)
+3. No. (there is no risk analysis)
+4. Yes. (Marek Marecki is the sole author)
+5. Yes. (developer has relevant technical knowledge)
+6. Yes. (the developer has implemented programming languages before)
+7. Yes. (chat application will test whether the module system is sufficient, Viua VM
+   will test whether it can be compiled down to what it allows)
+2. Yes. (there is language specification)
+
+TASK 4: Implement compiler driver
+
+1. Yes. (clearly defined deliverables)
+2. No. (there is no binding agreement as to what the driver should look like)
+3. No. (there is no risk analysis)
+4. Yes. (Marek Marecki is the sole author)
+5. Yes. (developer has relevant technical knowledge)
+6. Yes. (the developer has implemented programming languages before)
+7. Yes. (there are numerous examples, and the chat application will test whether the
+   provided compiler tooling is sufficient)
+8. Yes. (there is documentation and user manual)
+
+
+STAKEHOLDERS: ANALYSE STAKEHOLDERS (PRELIMINARY ANALYSIS)
+
+1. Yes. (product lifecycle understood by stakeholder)
+2. Yes. (project plan acceptable to stakeholder)
+3. Yes. (project completion standard understood by stakeholder)
+4. Yes. (project needs and requirements are "enshrined" in language spec)
+5. Yes. (user acceptance test plan works for stakeholder)
+6. Yes. (stakeholder understands project's impact and implications)
+7. No. (the stakeholder does not need additional training)
+8. Yes. (the plan it to abandon the software, or to rewrite it to cut ties to
+   the PJATK)
+
+STAKEHOLDER 0: Marek Marecki (implementor)
+STAKEHOLDER 0: Krzysztof Franek (user-programmer)
+STAKEHOLDER 1: Marek Bednarczyk (dziekan)
+
+TASKS/STAKEHOLDERS ANALYSIS (PRELIMINARY ANALYSIS)
+
+1. Yes. (task budget is acceptable to stakeholder)
+2. Yes. (task time line is acceptable to stakeholder)
+3. Yes. (task will integrate; we have everything coded from scratch to suit the
+   project)
+4. Yes. (stakeholder accpts task implementation, maintenance, and training plan)
