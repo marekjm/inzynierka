@@ -671,26 +671,3 @@ czynienia:
 Wykorzystanie notacji polskiej (notacji prefiksowej) i takie zaprojektowanie składni, że każda konstrukcja ma
 stałą ''szerokość'' pozwala na zastosowanie chwytu ''\emph{pierwszy token decyduje}''. Sprawia to też, że
 język ma rozpoznawalne tempo i styl, a konsekwencja układu nadaje mu elegancji.
-
-\newpage
-\section{Słownik pojęć}
-
-\begin{description}
-    \item[kompilator] program tłumaczący kod w jednym języku (zazwyczaj wysokiego poziomu) na kod o takim
-        samym znaczeniu w innym języku (zazwyczaj niższego poziomu)
-    \item[jednostka translacji] w przypadku języka ViuAct jest to pojedynczy moduł
-    \item[linker] program łączący wiele modułów w plik wykonywalny
-    \item[plik wykonywalny] plik zawierający bytecode w formacie, który może zostać wykonany przez jądro Viua
-        VM
-    \item[moduł] w załeżności od kontekstu: \emph{1/} kod źródłowy modułu w języku ViuAct, lub \emph{2/} plik
-        zawierający bytecode w formacie, który może zostać wykorzystany przez linker bądź jądro Viua VM do
-        dołączenia
-    \item[biblioteka] zbiór modułów bytecode'u
-    \item[jądro] podsystem Viua VM odpowiadający za uruchamianie programów (tzw. ''\emph{kernel}'')
-    \item[moc funkcji] ilość parametrów formalnych przyjmowanych przez funkcję (pojęcie ściągnięte z pojęcia
-        mocy zbioru)
-    \item[leksem] ciąg znaków odpowiadający wzorcowi określającemu możliwe wartości tokenu
-    \item[token] abstrakcyjna reprezentacja konkretnego elementu leksykalnego, np. słowa kluczowego lub
-        identyfikatora, składająca się z nazwy typu tokenu i leksemu, który dana instancja tokenu zawiera
-    \item[wzorze] wyrażenie regularne określające jaką formę mogą przyjąć leksemy danego typu tokenu
-\end{description}
