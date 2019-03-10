@@ -1,0 +1,84 @@
+\documentclass[11pt,oneside,a4paper,onecolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+\graphicspath{ {./fig/} }
+\usepackage{listings}
+
+\setcounter{secnumdepth}{4}
+\title{Notatki ze spotkań}
+
+\begin{document}
+
+\maketitle
+
+\section{Spotkanie 19.12.2018}
+Prototyp zostanie jako wersja docelowa, bo wazniejsze jest dokończenie projektu niż popisywanie się !!! 19.12.2018 r.
+
+issue:
+
+\begin{itemize}
+\item Ma zagnieżdżanie - nie da się zamknąć glównego zadania bez zamknięcia podzadań
+\item Workflow: Open -> Closed
+\item Są opisy issues
+\item Są komentarze, pokazują się jeden pod drugim
+\item Jest to system rozproszony, tak jak Git.
+\item Można współpracować, widzieć wzajemne komentarze
+\item Mozna pracować offline
+\item Pokazuje statystyki ilość zgłoszeń otwartych i zamkniętych, a także statystyki czasu życia zgłoszeń
+\end{itemize}
+
+Narzędzie jest sprawdzone w projekach open source Marka, było używane w praktyce w jednej z firm w której pracował, jest od 3 lat sprawdzone. Jest to software skończony i gotowy.
+Biblioteka dodatkowa: RedCLAP (Redesigned Command Line Arguments Parser), też wyprobowana
+
+\begin{enumerate}
+\item Zassać RedCLAP (/clap)
+\item make local-install
+\item Zssać Issue (/issue)
+\item make install
+	\begin{enumerate}
+	\item apt sudo install python3-pip
+	\item apt sudo install python3-distutils
+	\item pip3 install unidecode
+	\end{enumerate}
+\item cd projekt
+\item issue index
+\end{enumerate}
+
+
+\section{Spotkanie 10.09.2019}
+Python 3.x + maszyna
+
+Ułożenie tokenów według istotności - chodzi o to, w jakiej kolejności są dopasowywane i na ile są do siebie podobne, np. podobieństwo do siebie, do nazw zmiennych
+
+Etapy:
+\begin{enumerate}
+\item Budowanie listy tokenów z usuwaniem whitespace/nowych linii
+\item Usuwanie komentarzy
+\item Grupowanie tokenów
+\begin{enumerate}
+ \item Rozpatrywanie skomplikowanych identyfikatorów
+ \item Wyciąganie nazw z modułów i structów (kropki)
+ \item Grupowanie po nawiasach: 
+ \begin{enumerate}
+ 	\item Gdy odnajdzie nazwias otwierający, wywołuje rekurencyjnie samego siebie na następnym tokenie
+ 	\item Gdy odnajdę token nawiasu zamykającego, tworzę grupę i zwraca ją "wyżej" - >>dziel i rządź<<
+ \end{enumerate}
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
