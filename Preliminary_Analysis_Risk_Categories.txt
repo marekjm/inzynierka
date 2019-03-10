@@ -1,0 +1,48 @@
+Prawdopodobne negatywne aspekty społeczne.
+
+Jeśli kompilator będzie generował kiepski, mało wydajny kod wynikowy to zwiększy
+ogólne zużycie energii elektrycznej. Oprócz tego może sprawić, że użytkownicy
+nie będą zadowoleni z używanego oprogramowania ponieważ będzie ono zbyt mało
+wydajne (będzie "działać wolno") nawet jeśli będzie dawało duże (w porównaniu z
+innymi technologiami) gwarancje niezawodności, poprawności, i bezpieczeństwa.
+
+--------------------------------------------------------------------------------
+
+PROJECT ENVIRONMENT (PROJECT CONTEXT)
+
+1. Yes. (methodology)
+2. Yes. (outline of the project structure)
+3. Yes. (deliverables defined)
+4. Yes. (financial controls)
+5. Yes, somewhat. (spec for every task)
+6. Yes. (stakeholders identified)
+7. Yes. (development environment)
+8. Yes. (change management process)
+
+PROJECT ENVIRONMENT (PROJECT PLAN)
+
+1. Yes, kind of. (developers' competences)
+2. Yes. (development team formed)
+3. Yes. (developers have at least some relevant experience)
+4. No. (deployment, training, and maintenance plans are not defined; deployment
+   is simple as there is just one compiler binary; training is not needed;
+   maintenance plan is not truly relevant because after whole language spec is
+   implemented the compiler becomes finished software)
+5. No. (rigorous developer selection process; we were semi-randomly matched to
+   create a team)
+6. No. (written agreement between PJATK and the developers)
+7. Yes and no. (the project *is* creating a new development platform)
+
+TASKS: ANALYSE PROJECT TASK (5 tasks specific for the project)
+
+TASK 0: Implement compiler driver
+TASK 1: Implement 
+TASK 2: Implement compiler driver
+TASK 3: Implement compiler driver
+TASK 4: Implement compiler driver
+
+STAKEHOLDERS: ANALYSE STAKEHOLDERS (PRELIMINARY ANALYSIS)
+
+STAKEHOLDER 0:
+
+TASKS/STAKEHOLDERS ANALYSIS (PRELIMINARY ANALYSIS)
