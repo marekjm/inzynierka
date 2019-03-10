@@ -1,0 +1,65 @@
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+\graphicspath{ {./fig/} }
+\usepackage{listings}
+
+\newenvironment{enumreq}
+{ \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
+{ \end{enumerate}                  } 
+
+
+\setcounter{secnumdepth}{4}
+
+%% Author and title
+% \author{Marek Marecki \and Gr.52c \and Krzysztof Franek}
+\author{Marek Marecki i Krzysztof Franek}
+\title{%
+    Potwierdzenie przydatności Viua VM \\
+    \large Implementacja języka wysokiego poziomu dla Viua VM \\
+    i realizacja prostej aplikacji \\
+    ~\\
+    Projekt Systemu\\
+    dla języka Viuact}
+
+\begin{document}
+
+\lstset{basicstyle=\ttfamily,
+columns=fixed,
+escapeinside={\%*}{*)},
+inputencoding=utf8,
+extendedchars=true}
+
+\maketitle
+{\footnotesize
+\begin{center}
+  \begin{tabular}{ | l | l | l | }
+    \hline
+    \parbox[t]{6.5cm}{\textbf{Temat pracy i akronim projektu:}\\Proving viablity of Viua VM (VVIA)} & \parbox[t]{4.5cm}{\textbf{Zleceniodawca:}\\\colorbox{yellow}{Nieznany}} & \parbox[t]{4.5cm}{\textbf{Konsultant:}\\\colorbox{yellow}{Nieznany}} \\ \hline
+    \parbox[t]{6.5cm}{\textbf{Zespół projektowy:}\\Krzysztof Franek, Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Opiekun projektu:}\\dr hab. Marek A. Bednarczyk, prof. PJWSTK} \\ \hline
+    \parbox[t]{3.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} &
+      \multicolumn{2}{|l|}{\parbox[t]{9cm}{\textbf{Odpowiedzialny za dokument:}\\Marek Marecki}} \\ 
+    \hline
+  \end{tabular}
+\end{center}
+}
+
+\tableofcontents
+\newpage
+
+
+\end{document}
