@@ -1,4 +1,4 @@
-\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{article}
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage{textcomp}
@@ -10,6 +10,7 @@
 \usepackage{scrextend}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{enumitem}
 % \usepackage{nameref}
 % \usepackage{showlabels}
 % \usepackage{titlesec}
@@ -44,7 +45,71 @@ extendedchars=true}
 \maketitle
 
 \tableofcontents
+% \listoftables
+\listoffigures
+
 \newpage
+
+\chapter{Wprowadzenie}
+
+We wprowadzeniu chcielibyśmy poruszyć ogólne tematy związane z naszą pracą, oraz przedstawić Czytelnikowi
+spójny wstęp zapewniający solidne podstawy do dalszej lektury. Zakładamy, że Czytelnik ma doświadczenie z
+językami programowania i umie biegle posługiwać się co najmniej jednym ''\emph{mainstreamowym}'' językiem, np.
+C++, Java, czy Python.
+
+Wprowadzenie jest dla nas miejscem, w którym przedstawimy problemy dręczące popularne obecnie języki
+programowania oraz powiemy skąd się te problemy biorą i dlaczego w miarę postępu technologii są one coraz
+trudniejsze do zignorowania.
+
+Po krótce przedstawiona zostanie również maszyna wirtualna Viua, która jest platformą, na której nasza praca
+się opiera.
+
+W rozdziale \ref{jezyk_viuact_i_jego_kompilator}.~\nameref{jezyk_viuact_i_jego_kompilator} (na stronie
+\pageref{jezyk_viuact_i_jego_kompilator}) przedstawiamy język Viuact oraz jego implementację - kompilator.
+Są to narzędzia wykorzystywane do stworzenia aplikacji użytkowej przedstawionej w rozdziale
+\ref{program_viuachat}.~\nameref{program_viuachat} (na stronie \pageref{program_viuachat}).
+
+Wkład własny członków zespołu przedstawiony jest w rozdziale \ref{wklad_wlasny_czlonkow_zespolu} na stronie
+\pageref{wklad_wlasny_czlonkow_zespolu}.
+
+\chapter{Język ViuAct i jego kompilator}
+\label{jezyk_viuact_i_jego_kompilator}
+
+Pierwszą częścią naszej pracy jest zaprojektowanie wysokopoziomowego języka programowania i opracowanie jego
+implementacji. Z uwagi na to, że platforma uruchomieniowa, którą wykorzystujemy (czyli Viua VM) jest maszyną
+wirtualną wykonującą programy w postaci \emph{bytecode} wybranym sposobem implementacji języka jest
+kompilator - program tłumaczący kod źródłowy w jednym języku na kod źródłowy w innym języku przy jednoczesnym
+zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym jest język Viuact (dokładniej
+opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
+\pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
+
+\include{viuact/sws}
+
+\include{viuact/ps}
+
+\include{viuact/language_specification}
+
+\include{viuact/manual}
+
+\chapter{Program ViuaChat}
+\label{program_viuachat}
+
+Drugą częścią naszej pracy jest program ViuaChat - chat internetowy o funkcjonalności podobnej do IRC.
+Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematycznych do rozmów, oraz rozmowy
+''prywatne'' (tj. wyłączne dla dwóch użytkowników).
+
+\include{chat/sws}
+
+\include{chat/ps}
+
+\include{chat/spu}
+
+\chapter{Wkład własny członków zespołu}
+\label{wklad_wlasny_czlonkow_zespolu}
+
+\section{Krzysztof Franek}
+
+\section{Marek Marecki}
 
 
 \end{document}

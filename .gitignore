@@ -2,9 +2,12 @@
 !.gitignore
 
 *.aux
+*.lof
 *.log
+*.lot
 *.out
 *.pdf
-*.toc
 *.synctex.gz
+*.toc
+
 desktop.ini

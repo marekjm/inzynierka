@@ -1,0 +1,110 @@
+\section{Architektura}
+
+\subsection{Użyte wzorce projektowe}
+
+\subsection{Architektura systemu}
+\label{chat_architektura_systemu}
+
+Architektura systemu opiera się na klasycznym modelu klient-serwer.
+ 
+Klienci będą uzyskiwali dostęp do usługi czatu za pośrednictwem przeglądarki internetowej. Łącząc się z podanym adresem (IP lub domeny), 
+na którym połączeń nasłuchuje serwer, w pierwszej kolejności przeglądarka będzie próbować połączyć się z nim przy użyciu protokołu http 
+i standardowego portu 80, wysyłając do niego żądanie metodą GET. Wówczas, serwer będzie zawsze odpowiadał statycznym plikiem HTML, zawierającym 
+odwołania do skryptów w języku JavaScript (JS) oraz pozostałej, statycznej treści (np. grafiki czy arkusze stylów CSS). Serwer będzie 
+odsyłał te pliki do przeglądarki w odpowiedzi na kolejne żądania HTTP GET, wysyłane w miarę dalszego renderowania pliku HTML. W ten sposób, 
+po stronie klienta zostanie pobrana i uruchomiona aplikacja internetowa typu Single Page Application, której interfejs będzie reagował z 
+użytkownikiem oraz ulegał zmianom wskutek działania skryptów JS, załadowanych na pierwszym etapie uruchomienia. Po stronie serwera, 
+dostarczaniem treści statycznych będzie zajmował się daemon HTTP - Nginx.
+
+Gdy tylko skrypty JS wykryją pobranie wszystkich plików składowych aplikacji z serwera, podjęta zostanie próba nawiązania połączenia 
+z tym serwerem przy użyciu protokołu WebSocket. Będzie on od tego momentu podstawowym kanałem komunikacji pomiędzy klientem a serwerem. 
+
+Zgodnie ze standardem WebSocketu, zanim zostanie nawiązane właściwe połączenie, powinno dojść do „uścisku dłoni” (ang. \textit{handshake}) pomiędzy 
+klientem a serwerem. W związku z tym, pierwsza próba połączenia również zostanie podjęta przy użyciu protokołu http, jednakże tym razem pod
+innym, dedykowanym portem (w naszym przypadku będzie to port 8000), a także zawierać nagłówki wskazujące na żądanie zmiany używanego protokołu 
+na WebSocket, jego wersję oraz klucz („Sec-WebSocketKey”). Serwer udzieli wówczas odpowiedzi ze swoim własnym kluczem, informując o zmianie 
+stosowanego protokołu na WebSocket.
+
+Za nasłuchiwanie na porcie 8000 po stronie serwera będzie odpowiadał aktor ,,ChatListener'', który przy pierwszej próbie połączenia 
+utworzy kolejnego, niezależnego aktora ,,WebSocketConnector'', odpowiadającego za realizację ,,uścisku dłoni'' i formułowanie odpowiedzi zwrotnej 
+po stronie serwera w odniesieniu do połącznia na konkretnym gnieździe. W razie prawidłowego nawiązania połączenia, aktor ten będzie odpowiadał 
+za dalszą, bezpośrednią obsługę przydzielonego gniazda. Jego rolą będzie również kodowanie i dekodowanie wiadomości (ang.
+,,messages''), czyli podstawowych logicznych jednostek informacji, które są używane przy połączeniach z użyciem protokołu WebSocket.
+
+W momencie, gdy ,,uścisk dłoni'' zostanie pozytywnie ukończony, aktor ,,WebSocketConnector'' utworzy kolejnego, niezależnego aktora o nazwie
+\,,AuthConnector''. Będzie on od tego momentu odbierał wiadomości od ,,WebSocketConnector'', który go uruchomił, i odpowiadał za należytą
+autentykację i/lub autoryzację użytkownika w usłudze czatu.
+
+W chwili prawidłowego rozpoczęcia połączenia WebSocket, aplikacja po stronie klienta wyświetli użytkownikowi formularz autoryzacyjny. Wpisane
+tam dane zostaną następnie przesłane do serwera. Po jego stronie, komunikat zostanie zdekodowany przez aktora ,,WebSocketConnector'' i
+przekazany powiązanemu aktorowi ,,AuthConnector''. Jego zadaniem będzie weryfikacja przedstawionych informacji oraz podjęcie decyzji o autoryzacji
+lub jej odmowie. Decyzja ta jest odsyłana do ,,WebSocketConnector'' i następnie przekazywana do aplikacji po stonie klienta.
+
+Za gromadzenie informacji związanych z autentykacją odpowiada dwóch, na stałe uruchomionych aktorów:
+\begin{itemize}
+	\item \textbf{TemporaryUsernameLessor} - jego zadaniem jest zarządzanie informacjami na temat tymczasowych nazw użytkowników, należących do
+	użytkowników bez stałych kont (ich gromadzenie, udzielanie, weryfikacja)
+	\item \textbf{UserAccountKeeper} - służy do zarządzania informacjami na temat stałych kont użytkowników (tworzenia, usuwania, gromadzenia,
+	utrwalania, weryfikacji)
+\end{itemize}
+W zależności od tego, czy w trakcie autoryzacji podano w formularzu hasło użytkownika, czy też nie, zostanie odpytany odpowiedni aktor. Warto tu
+zwrócić uwagę, że ,,TemporaryUsernameLessor'' oraz ,,UserAccountKeeper'' utrzymują komunikację, dzięki czemu np. nie jest możliwe podszywanie się
+użytkownika tymczasowego pod nazwę użytkownika ze stałym kontem.
+
+Jezeli autentykacja przebiegnie pomyślnie, aktor ,,AuthConnector'' przestaje istnieć wraz z utworzeniem aktora ,,UserSession''. Od tego momentu
+przejmuje on komunikację z użyciem ,,WebSocketConnector'', pozwalając na zwyczajne użytkowanie czatu. Aktor ,,UserSession'' gromadzi informacje
+na temat nazwy, rodzaju konta oraz poziomu uprawnień użytkownika. 
+
+\subsection{Dekompozycja systemu na podsystemy}
+\label{architektura_kompilatora}
+
+
+\section{Projekt struktury}
+
+\subsection{Diagram klas}
+
+
+\section{Decyzje projektowe}
+
+\subsection{Środowisko docelowe}
+
+
+
+\subsection{Środowisko implementacji}
+
+
+\subsection{Priorytety implementacyjne}
+
+
+\section{Projekt algorytmów i przyjętych protokołów}
+
+\section{Projekt rozwiązań sprzętowych}
+
+
+
+\section{Projekt interfejsu}
+
+\subsection{Interfejs użytkownika}
+
+
+\subsubsection{Założenia konstrukcji interfejsu}
+
+
+
+
+\section{Projekt bazy danych}
+
+
+
+\section{Opis implementacji}
+
+
+\section{Słownik pojęć}
+
+\begin{description}
+    \item[kompilator] program tłumaczący kod w jednym języku (zazwyczaj wysokiego poziomu) na kod o takim
+        samym znaczeniu w innym języku (zazwyczaj niższego poziomu)
+   
+\end{description}
+
+\section{Załączniki}
