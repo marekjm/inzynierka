@@ -1,4 +1,4 @@
-\section{Specyfikacja języka Viuact}
+\chapter{Specyfikacja języka Viuact}
 \label{specyfikacja_jezyka_viuact}
 
 ViuAct jest językiem kładącym silny nacisk na funkcjonalność związaną z współbieżnością opartą na modelu
@@ -15,13 +15,13 @@ Najciekawsze funkcjonalności języka ViuAct to:
     \item dowiązania \emph{\texttt{let}}
 \end{enumerate}
 
-\subsection{Aktory}
+\paragraph*{Aktory}
 
 Aktory są \emph{wewnętrznie sekwencyjnymi} (każdy aktor wykonuje sekwencyjny strumień instrukcji bez
 jakiejkolwiek współbieżności), izolowanymi od siebie procesami, które komunikują się za pomocą
 \emph{przekazywania wiadomości}.
 
-\subsection{Przekazywanie wiadomości}
+\paragraph*{Przekazywanie wiadomości}
 
 Przekazywanie wiadomości w ViuAct jest \emph{bezpośrednie} (wiadomości są przekazywane bezpośrednio między
 dwoma aktorami, bez użycia jakiegokolwiek kanału pośredniczącego), \emph{asynchroniczne} (wiadomość jest
@@ -29,17 +29,17 @@ wysyłana, a kontrola natychmiast wraca do aktora nadawcy bez oczekiwania na odp
 Przekazywanie wiadomości nie daje gwarancji dostarczenia ani kolejności -- implementacja protokołu
 zapewniającego poprawność komunikacji leży po stronie ''przestrzeni użytkownika''.
 
-\subsection{System modułów}
+\paragraph*{System modułów}
 
 ViuAct zapewnia programiście system modułów. Moduły są automatycznie kompilowane i linkowane, w większości z
 poziomu języka, co redukuje poziom skomplikowania konfiguracji systemów budowania projektu.
 
-\subsection{Funkcje zagnieżdżone i niemutowalne domknięcia}
+\paragraph*{Funkcje zagnieżdżone i niemutowalne domknięcia}
 
 Funkcje w ViuAct mogą być zagnieżdżane, i tworzyć niemutowalne domknięcia (ang. \emph{closures}) -- funkcje,
 które odwołują się do zmiennych zdefiniowanych w otaczającej je przestrzeni leksykalnej.
 
-\subsection{Dowiązania \emph{\texttt{let}}}
+\paragraph*{Dowiązania \emph{\texttt{let}}}
 
 Zmienne w ViuAct są typowane dynamicznie (czyli zmienna może być dowiązana do wartości wielu typów wewnątrz
 jednej funkcji), a wartości statycznie (każda wartość ma konkretny typ, który jest śledzony w czasie
@@ -54,7 +54,6 @@ Po ponownym dowiązaniu nie jest możliwe dotarcie do poprzednio dowiązanej war
 ''przed'' ponownym dowiązaniem zachowują swoje znaczenie (\emph{prior art}: na takiej samej zasadzie działają
 dowiązania \emph{\texttt{let}} w językach OCaml i Rust).
 
-\newpage
 \section{Model programowania}
 
 \subsection{Podział programu}
@@ -95,6 +94,7 @@ Obsługa błędów jest realizowana za pomocą wyjątków. Viuact oferuje typow�
 składnię \texttt{try-catch}.
 
 \newpage
+
 \section{Typy danych}
 
 \subsection{Typy proste}
@@ -141,6 +141,7 @@ Jest to typ dostarczany przez Viua VM. Dla programów pisanych w Viuact jest to
 typ nieprzezroczysty.
 
 \newpage
+
 \section{Konstrukcje języka}
 
 \subsection{Wyrażenia}
@@ -774,6 +775,7 @@ Uruchomienie odbywa się w całości przy użyciu narzędzi dostarczanych przez 
 Ograniczenia i zależności są na tym etapie całkowicie zależne od wymagań narzucanych przez Viua VM.
 
 \newpage
+
 \section{Słownik}
 
 \begin{labeling}{model aktorów}
