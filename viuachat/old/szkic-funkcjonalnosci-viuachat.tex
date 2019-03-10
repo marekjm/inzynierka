@@ -1,0 +1,79 @@
+\documentclass[11pt,oneside,a4paper,onecolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+\graphicspath{ {./fig/} }
+\usepackage{listings}
+
+\setcounter{secnumdepth}{4}
+\title{Szkic funkcjonalności Viua Chat}
+
+\begin{document}
+
+
+\maketitle
+
+System użytkowników
+\begin{enumerate}
+\item Podczas wejścia na czat, użytkownikowi pokazuje się monit z polami do wpisania nazwy użytkownika i hasła
+\item Użytkowników dzielimy na
+  \begin{enumerate}
+  \item Użytkowników z kontem – podczas logowania podają nazwę i odpowiadające mu hasło
+  \item Użytkowników bez konta – podczas logowania podają tylko nazwę użytkownika, pole hasła pozostaje puste
+  \end{enumerate}
+\item Konta użytkowników są gromadzone na serwerze w postaci trójek: login, hasło (md5), admin/nieadmin (bool)
+\item Login to ciąg od 3 do 32 alfanumerycznych znaków a-zA-Z0-9
+\item Nie można rozpocząć sesji użytkownika o nazwie, która pasuje do istniejącego konta, jeżeli nie zostanie podane prawidłowe hasło (nie można podszywać się pod nazwy użytkowników z istniejącym kontem)
+\item Można rozpocząć sesję jako użytkownik bez konta, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami kont użytkowników ani z już zalogowanymi użytkownikami bez konta
+\item W okienkach czatu, loginy użytkowników z kontem są pogrubione i pokolorowane: nieadmini na zielono, admini na czerwono
+\item Admini mają prawo
+\begin{enumerate}
+\item Tworzyć i usuwać pokoje
+\item Ustanawiać, zmieniać i usuwać hasła do pokojów
+\item Wyrzucać użytkowników z pokoi i z serwera
+\item Tworzyć, usuwać, zmieniać hasła, zmieniać uprawnienia kont
+\end{enumerate}
+\item Użytkownicy z kontami mają prawo zmieniać swoje hasło
+\end{enumerate}
+
+Pokoje
+\begin{enumerate}
+\item Pokoje to właściwe czaty – tam użytkownicy mogą wejść i pisać do siebie nazwajem
+\item Każdy pokój ma unikalną nazwę będącą ciągiem alfanumerycznym a-zA-Z0-9\_ od 3 do 32 znaków, oraz (opcjonalnie) hasło dostępu
+\item Lista pokojów jest widoczna po zalogowaniu się do serwera czatu
+\item Użytkownik może być równocześnie wpięty do jednego pokoju
+\item Pokój może mieć ustanowione hasło, które użytkownik musi wpisać przed podpięciem się do niego
+\item Wiadomość wysłana w pokoju jest widoczna w oknie pokoju dla wszystkich użytkowników podpiętych do tego pokoju
+\item Użytkownik może się samodzielnie wypiąć z pokoju, do którego jest wpięty, lub może to zrobić admin
+\end{enumerate}
+
+Prywatne wiadomości
+\begin{enumerate}
+\item Oprócz okien czatu dla każdego z wpiętych pokojów, użytkownik dysponuje dodatkowym oknem, na którym widzi wiadomości prywatne.
+\item Aby wysłać wiadomość prywatną, należy poprzedzić ją znakiem \# i nazwą użytkownika, do którego jest kierowana wiadomość, oddzielona spacją od komunikatu, np.: „\#user Tajna wiadomość”. Trafia ona wówczas do okna wiadomości prywatnych.
+\item Wiadomość prywatna może być wysłana z okna czatu pokoju –wiadomości prywatne nie są pokazywane wszystkim uczestnikom czatu, a jedynie użytkownikowi, do którego jest adresowana.
+\item W oknie czatu pokoju dopuszczalne jest wysyłanie wiadomości prywatnych do dowolnych użytkowników, nawet tych, którzy nie są w danym momencie podpięci do tego pokoju.
+\item Z okna wiadomości prywatnych można wysyłać wyłącznie wiadomości prywatne.
+\item Próba wysłania wiadomości prywatnej powinna zostać odrzucona przez serwer i zwrócić błąd w przypadku gdy
+\begin{enumerate}
+\item Po znaku „\#” pojawi się od razu znak spacji lub nie będzie żadnych znaków (nie zostanie podana nazwa użytkownika który jest adresatem)
+\item Nazwa adresata jest dłuższa niż 32 znaki
+\item Na serwerze nie istnieje użytkownik z nazwą użytą jako nazwa adresata
+\item Adresat wiadomości ma swoje konto na serwerze, ale nie jest zalogowany
+\end{enumerate}
+\end{enumerate}
+
+\end{document}

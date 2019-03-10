@@ -59,7 +59,7 @@ Biblioteka dodatkowa: RedCLAP (Redesigned Command Line Arguments Parser), też w
 \end{enumerate}
 
 
-\section{Spotkanie 10.09.2019}
+\section{Spotkanie 10.09.2018}
 Python 3.x + maszyna
 
 Ułożenie tokenów według istotności - chodzi o to, w jakiej kolejności są dopasowywane i na ile są do siebie podobne, np. podobieństwo do siebie, do nazw zmiennych
@@ -79,6 +79,60 @@ Etapy:
  \end{enumerate}
 \end{enumerate}
 
+\end{enumerate}
+
+\section{Spotkanie 04.11.2018}
+
+\subsection{Syntax}
+
+\begin{enumerate}
+\item Syntax
+\item	Najprostszy: Lispopodobny 
+\item	Ciąg poleceń z założenia sekwencyjny
+\item	Równoległość powinna być uruchamiana eksplicytnie, np. par () () () …
+\item	Polecenia
+\begin{enumerate}
+	\item (let x 24)
+	\item Lambdy – parametry formalne, ciało:
+	\item let f (x y z) (…)
+	\item Jak najmniej słów kluczowych!
+\end{enumerate}
+\item Wywołania funkcji:
+\begin{enumerate}
+	\item (f 1 2 3)
+\end{enumerate}
+\item (If condition true false)
+\item	Pętle – nie, zamiast tego rekurencje i tailcalle jak w haskellu
+\item	Moduły z kropką albo czymś innym: std. Posix.read 0
+\item	(let s (std.posix read. 0)
+\item	Proces
+\begin{enumerate}
+	\item	1 parametr funkcja, a jako drugi parametr jako lista argumentów do tej funkcji, przekazanej jako pierwsza
+	\item Proces to funkcja implementowana przez kompilator
+\end{enumerate}
+\item	Proces= aktor w modelu aktora
+\item	Moduły:	
+\begin{enumerate}
+	\item	Module nazwa (lista funkcji)
+	\item	aa
+\end{enumerate}
+\end{enumerate}
+
+
+Żeby zaimportować do Viua:
+\begin{enumerate}
+\item	Należy utworzyć osobny projekt w c/c++
+\item	Piszemy jako osobną bibliotekę
+\item	Tworzymy funkcje statyczne src/stdlib
+\item	Kompilujemy makefilem
+\end{enumerate}
+
+
+Uwagi ze spotkania 04.11.2018
+\begin{enumerate}
+\item	Współdzielenie wartości przez aktorów w jwp powinno być realizowane jako operacja atomowa?
+\item	Viua zapobiega wyciekom pamięci poprzez przerzucenie deycjzi projektowych na twórcę oprogramowania
+\item	Oczekiwania dz: Viua powinna być jak akka, tj. aktor działa w ten sposób: jestem gotów na przerobienie komunikatów, przerabiam je i znowu czekam
 \end{enumerate}
 
 \end{document}
