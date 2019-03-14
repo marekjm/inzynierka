@@ -1,0 +1,77 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usetheme{default}
+\usecolortheme{seahorse}
+
+\title{Viua VM w akcji}
+\subtitle{Implementacja wysokopoziomowego języka programowania i realizacja prostej aplikacji}
+\author{Marek Marecki \and Krzysztof Franek}
+
+\begin{document}
+\lstset{basicstyle=\ttfamily\color{black},
+columns=fixed,
+escapeinside={\%*}{*)},
+inputencoding=utf8,
+extendedchars=true,
+moredelim=**[is][\color{red}]{@}{@}}
+
+\frame{\titlepage}
+
+\begin{frame}
+    \frametitle{This is the first slide}
+
+    Hello World!
+\end{frame}
+
+\begin{frame}
+    \frametitle{This is the second slide}
+    \framesubtitle{A bit more information about this}
+
+    And some content
+\end{frame}
+
+\begin{frame}
+    \frametitle{Lubię placki}
+    \framesubtitle{Najbardziej ziemniaczane}
+
+    Ze śmietanką
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Trochę kodu}
+
+    \begin{lstlisting}
+    (@let main@ () {
+        (print "Hello World!")
+        0
+    })
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{ViuaChat}
+    \framesubtitle{Chat w Viua}
+
+    ViuaChat czyli chat w Viua
+
+    \begin{enumerate}
+        \item ViuaChat
+        \item ViuAct
+        \item ???
+        \item Tytuł inżyniera (Profit!)
+    \end{enumerate}
+\end{frame}
+
+\end{document}
