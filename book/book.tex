@@ -81,6 +81,15 @@ pojęć i terminów używanych w pracy, które mogą wymagać doprecyzowania lub
 one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językiem i kompilatorem
 (rozdział~\ref{slownik_pojec_jezyka}) i związane z chatem (rozdział~\ref{slownik_pojec_chatu}).
 
+\chapter{Język ViuAct i jego kompilator -- formalności}
+
+W tym rozdziale prezentujemy wszelkie ''formalności'' związane z pierwszą częścią naszej pracy, czyli
+dokumenty takie jak DZW\footnote{Dokument Założeń Wstępnych} czy SWS\footnote{Spis Wymagań Systemowych}.
+Opis projektu języka i jego implementacji prezentujemy w rozdziale \nameref{jezyk_viuact_i_jego_kompilator} na
+stronie~\pageref{jezyk_viuact_i_jego_kompilator}.
+
+\include{viuact/sws}
+
 \chapter{Język ViuAct i jego kompilator}
 \label{jezyk_viuact_i_jego_kompilator}
 
@@ -92,13 +101,15 @@ zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym 
 opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
 \pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
 
-\include{viuact/sws}
-
 \include{viuact/ps}
 
 \include{viuact/manual}
 
 \include{viuact/language_specification}
+
+\chapter{Program ViuaChat -- formalności}
+
+\include{chat/sws}
 
 \chapter{Program ViuaChat}
 \label{program_viuachat}
@@ -106,8 +117,6 @@ opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezy
 Drugą częścią naszej pracy jest program ViuaChat - chat internetowy o funkcjonalności podobnej do IRC.
 Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematycznych do rozmów, oraz rozmowy
 ''prywatne'' (tj. wyłączne dla dwóch użytkowników).
-
-\include{chat/sws}
 
 \include{chat/ps}
 
