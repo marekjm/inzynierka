@@ -30,6 +30,7 @@ clean:
 	find . -name '*.pdf' | xargs -n 1 --no-run-if-empty rm
 	find . -name '*.dvi' | xargs -n 1 --no-run-if-empty rm
 	find . -name '*.log' | xargs -n 1 --no-run-if-empty rm
+	find . -name '*.lof' | xargs -n 1 --no-run-if-empty rm
 	find . -name '*.aux' | xargs -n 1 --no-run-if-empty rm
 	find . -name '*.toc' | xargs -n 1 --no-run-if-empty rm
 	find . -name '*.out' | xargs -n 1 --no-run-if-empty rm
