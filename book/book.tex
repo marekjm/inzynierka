@@ -81,6 +81,59 @@ pojęć i terminów używanych w pracy, które mogą wymagać doprecyzowania lub
 one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językiem i kompilatorem
 (rozdział~\ref{slownik_pojec_jezyka}) i związane z chatem (rozdział~\ref{slownik_pojec_chatu}).
 
+\section{Motywacja}
+
+\subsection{Ogląd sytuacji}
+
+Współczesny \emph{hardware} zmierza coraz bardziej w stronę współbieżności oraz przetwarzania równoległego.
+Firma AMD w roku 2018 wprowadziła na rynek konsumencki procesory wielordzeniowe z serii
+Threadripper\footnote{https://amd.com} prezentujące nawet 32 rdzenie logiczne.
+
+Współczesny \emph{software} stoi w miejscu. Poza oprogramowaniem specjalistycznym (np.
+Blender\footnote{https://blender.org}) mało który program jest w stanie wykorzystać więcej niż kilka wątków.
+Współbieżności szuka się nieco ''na siłę''; np. przeglądarki internetowe uruchamiają współbieżnie obsługę
+wielu kart.
+
+Mainstreamowe języki w większości korzystają z wątków (np. Java, C++) lub są stricte jednowątkowe i
+niedostosowane do przetwarzania współbieżnego i równoległego (np. Python).
+
+Dla takich języków tworzone są biblioteki ułatwiające wykorzystanie mechanizmów systemu operacyjnego
+(np.~wieloprocesowość dla języka Python) lub cała infrastruktura umożliwiająca rozproszenie pracy,
+np.~sewery pracy (np. Gearman, Celery) czy kolejki wiadomości (np. RabbitMQ, ZeroMQ).
+To wszystko są jednak jedynie ''łatki'' mające za zadanie dodać do istniejących języków mechanizmy, z którymi
+pierwotnie nie były one projektowane. Istnieje dla takiego działania angielski termin bardzo dobrze oddający
+jego postać: \emph{retrofitting}.
+
+Istnieją środowiska i języki zaprojektowane od zera z myślą o współbieżności i przetwarzaniu równoległym, a
+nawet rozproszonym.
+Najbardziej znanym przykładem takiego środowiska jest BEAM\footnote{https://erlang.com} -- maszyna wirtualna
+języka Erlang\footnote{https://erlang.com}. To środowisko wraz z językiem jest z powodzeniem wykorzystywane w
+sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których działanie obejmuje
+niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach komunikatora
+Discord\footnote{https://discordapp.com}.
+
+\subsection{Sedno sprawy}
+
+Ta praca inżynierska motywowana jest chęcią stworzenia bazy programistycznej (środowiska uruchomieniowego i
+języka programowania) umożliwiającej programistom pisanie oprogramowania od początku uwzględniającego
+przetwarzanie współbieżne na pierwszym miejscu, oraz charakteryzującego się wysokim poziomem niezawodności i
+stabliności działania.
+
+Osiągniemy to dzięki zbudowaniu języka wyposażonego w łatwo dostępne konstrukcje umożliwiające wprowadzenie
+współbieżności do programu, oraz uruchamianiu programów wynikowych w środowisku zdolnym do rozłożenia pracy na
+całość dostępnych zasobów sprzętowych.
+
+\subsection{Problemy i ryzyko}
+
+Postawienie współbieżności na pierwszym miejscu powoduje, że problemy związane z pisaniem poprawnych programów
+są bardziej liczne niż w innych (niewspółbieżnych) językach -- oprócz zapewnienia poprawności pojedynczego
+procesu, programista musi zadbać o poprawność interakcji między procesami, oraz o stabilność działania
+oprogramowania w momencie awarii któregoś z procesów składowych programu.
+
+Zminimalizujemy ryzyko płynące z wprowadzenia współbieżności do warsztatu programistów udostępniając im
+mechanizmy umożliwiające opanowanie awarii, propagowanie informacji o błędach, oraz izolację poszczególnych
+procesów składowych.
+
 \chapter{Język ViuAct i jego kompilator -- formalności}
 
 W tym rozdziale prezentujemy wszelkie ''formalności'' związane z pierwszą częścią naszej pracy, czyli
