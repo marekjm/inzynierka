@@ -50,14 +50,377 @@ moredelim=**[is][\color{red}]{@}{@}}
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Trochę kodu}
+    \frametitle{Przykład kodu}
+    \framesubtitle{Wszystkie konstrukcje w ViuAct}
 
+    \begin{small}
     \begin{lstlisting}
-    (@let main@ () {
-        (print "Hello World!")
-        0
-    })
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
     \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Nazwa i parametry formalne}
+
+    \begin{small}
+    \begin{lstlisting}
+(let @countdown@ (@n@) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Ciało funkcji}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) @{
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+}@)
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Odebranie wiadomości (wywołanie funkcji z modułu)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (@Std.Actor.receive 1s@) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Obsługa wyjątków (słowa kluczowe)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (@try@ (Std.Actor.receive 1s) (
+        (@catch@ Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Obsługa wyjątków (wyrażenie chronione)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (@Std.Actor.receive 1s@) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Obsługa wyjątków (wyłapanie wyjątku)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        @(catch Exception _@
+            (tailcall countdown n)@)@)))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Obsługa wyjątków (wyrażenia obsługi)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (@tailcall countdown n@)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{\emph{let-binding} (dowiązanie zmiennej)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (@let wrapped (struct)@)
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Konstruktor \emph{\texttt{struct}}}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (@struct@))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Przypisanie do pola struktury}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (@:= wrapped.value x@)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Wywołanie aktora}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (@actor@ f wrapped)
+
+    (if (= n 0) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Konstrukcja warunkowa}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (@if (= n 0) 0 (tailcall countdown (- n 1))@)
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Konstrukcja warunkowa (wyrażenie sprawdzane; wywołanie operatora)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (@= n 0@) 0 (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Konstrukcja warunkowa (...jeśli prawda)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) @0@ (tailcall countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Konstrukcja warunkowa (...jeśli fałsz)}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (@tailcall countdown (- n 1)@))
+})
+    \end{lstlisting}
+    \end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Przykład kodu}
+    \framesubtitle{Wywołanie \emph{tailcall}}
+
+    \begin{small}
+    \begin{lstlisting}
+(let countdown (n) {
+    (let x (try (Std.Actor.receive 1s) (
+        (catch Exception _
+            (tailcall countdown n)))))
+
+    (let wrapped (struct))
+    (:= wrapped.value x)
+    (:= wrapped.sequence (Std.copy n))
+    (actor f wrapped)
+
+    (if (= n 0) 0 (@tailcall@ countdown (- n 1)))
+})
+    \end{lstlisting}
+    \end{small}
 \end{frame}
 
 \begin{frame}
