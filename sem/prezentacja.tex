@@ -30,23 +30,54 @@ moredelim=**[is][\color{red}]{@}{@}}
 \frame{\titlepage}
 
 \begin{frame}
-    \frametitle{This is the first slide}
+    \frametitle{Viua VM -- tytułem wstępu}
 
-    Hello World!
+    Viua VM to projekt rozpoczęty w połowie grudnia 2014.
+
+    ~\\
+
+    Jest to maszyna wirtualna wykorzystująca model aktorów jako główny model przetwarzania.
+    Możliwe jest jej programowanie w języku assemblera, a programy są sekwencjami instrukcji modyfikujących
+    stan zestawu rejestrów oferowanego przez ISA maszyny.
+
+    ~\\
+
+    Projekt jest udostępniany na licencji GNU GPL v3.
 \end{frame}
 
 \begin{frame}
-    \frametitle{This is the second slide}
-    \framesubtitle{A bit more information about this}
+    \frametitle{Zakres pracy inżynierskiej}
+    \framesubtitle{Podział zadań}
 
-    And some content
+    Marek Marecki:
+    \begin{enumerate}
+        \item specyfikacja języka programowania ViuAct
+        \item implementacja kompilatora języka ViuAct
+    \end{enumerate}
+
+    ~\\
+
+    Krzysztof Franek:
+    \begin{enumerate}
+        \item specyfikacja wymagań dla programu ViuaChat
+        \item implementacja programu ViuaChat w języku ViuAct
+    \end{enumerate}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Lubię placki}
-    \framesubtitle{Najbardziej ziemniaczane}
+    \frametitle{ViuAct}
+    \framesubtitle{Krótko o języku}
 
-    Ze śmietanką
+    Język ViuAct zapewnia dostęp do większości mechanizmów oferowanych przez Viua VM.
+
+    ~\\
+
+    Jest językiem opartym na wyrażeniach (większość konstrukcji to wyrażenia), ze składnią podobną do Lispa.
+    Programy pisane w ViuAct składają się z funkcji porozmieszczanych w modułach.
+
+    ~\\
+
+    Model wykonywania programów jest wzorowany na modelu aktorów.
 \end{frame}
 
 \begin{frame}[fragile]
