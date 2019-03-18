@@ -20,7 +20,7 @@ book.pdf: \
 # żeby wywołać go jeszcze raz.
 # Wystarczy tylko zrobić 'make again' i hula.
 again:
-	find . -name '*.tex' | xargs -n 1 touch
+	touch book.tex
 	make
 
 watch:
