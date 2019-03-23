@@ -11,12 +11,16 @@
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{listings}
+\graphicspath{ {./fig/} }
 
 \usetheme{default}
 \usecolortheme{seahorse}
 
 \title{Viua VM w akcji}
-\subtitle{Implementacja wysokopoziomowego języka programowania i realizacja prostej aplikacji}
+%%\subtitle{Implementacja wysokopoziomowego języka programowania i realizacja prostej aplikacji}
+\subtitle{Implementacja wysokopoziomowego języka programowania i realizacja prostej aplikacji
+\\
+\emph{Viua VM in action. Implementation of a high-level programming language and a simple application}}
 \author{Marek Marecki \and Krzysztof Franek}
 
 \begin{document}
@@ -545,40 +549,78 @@ moredelim=**[is][\color{red}]{@}{@}}
 
 \begin{frame}
     \frametitle{ViuaChat}
-    \framesubtitle{Aktory - podstawowe}
-	Są tworzone wraz z inicjalizacją maszyny, występują zawsze w jednym egzemplarzu
-
-    \begin{enumerate}
-    	\item \texttt{Architect} - powstaje jako pierwszy, tworzy pozostałych 3 i pilnuje ich
-        \item \texttt{WSListener} - nasluchuje nowych połączeń od klientów
-        \item \texttt{Landlord} - zarządza pokojami i umożliwia łączenie się z nimi
-        \item \texttt{UsernameLessor} - zarządza nazwami użytkowników i pilnuje, czy nadal są używane
-    \end{enumerate}
+    \framesubtitle{Diagram komponentów}
+	\begin{figure}[!htp]
+		\centering
+		\includegraphics[width=\textwidth]{pckdiag}
+		\caption{Diagram komponentów}
+		\label{diagram_komponentow}
+	\end{figure}
 \end{frame}
 
 \begin{frame}
-    \frametitle{ViuaChat}
-    \framesubtitle{Aktory - odpowiedzialne za połączenie}
-	Występuje po jednym zestawie dla każdego otwartego połączenia
+    \frametitle{ViuaVM}
+    \framesubtitle{Harmonogram prac}
 
     \begin{enumerate}
-    	\item \texttt{WSInitializer} - tworzony natychmiast przez \texttt{WSLister}a; tworzy \texttt{WSConnector}a i \texttt{Authorizer}a po czym ulega samozniszczeniu
-    	\item \texttt{WSConnector} - pośredniczy pomiędzy warstwą WebSocket i wewnętrznym światem serwera (\texttt{Authorizer}em lub \texttt{UserSession})
-        \item \texttt{Authorizer} - próbuje uzyskać nazwę użytkownika, a w razie sukcesu - tworzy \texttt{UserSession} i ulega samozniszczeniu
-        \item \texttt{UserSession} - posiada przypisaną nazwę użytkownika i poziom uprawnień; wysyła/odbiera wiadomości i łączy/rozłącza się z pokojami
+        \item Do końca marca
+        \begin{enumerate}
+        	\item finalizacja kompilatora ViuAct i specyfikacji ViuaChat
+        	\item pierwsza wersja frontendu ViuaChat
+        \end{enumerate}         
+        \item Do końca kwietnia
+        \begin{enumerate}
+        	\item finalizacja pierwszej wersji backendu ViuaChat
+        	\item pierwsza integracja frontend-backend
+        	\item pierwsza wersja \textit{książki} do konsultacji z promotorem
+        \end{enumerate}
+        \item Do końca maja
+        \begin{enumerate}
+        	\item realizacja testów stabilności działania ViuaChat
+        	\item ukończenie prac nad stabilną wersją ViuaChat
+        	\item przygotowanie urządzeń testowych dla zaprezentowania projektu
+        	\item ukończenie \textit{książki}
+        \end{enumerate}
     \end{enumerate}
 \end{frame}
 
-\begin{frame}
-    \frametitle{ViuaChat}
-    \framesubtitle{Aktory - odpowiedzialne za wymianę wiadomości}
-	Występuje po jednym zestawie dla każdego otwartego pokoju
 
-    \begin{enumerate}
-    	\item \texttt{Room} - tworzeni i usuwani przez \texttt{Landlord}a; rozsyłają wiadomości pomiędzy podpięte sesje \texttt{UserSession}
-    	\item \texttt{MessageBuffer} - zapisują ostatnie kilkanaście wiadomości i umożliwiają ich odczytanie w razie potrzeby
-    \end{enumerate}
-\end{frame}
+%\begin{frame}
+%    \frametitle{ViuaChat}
+%    \framesubtitle{Aktory - podstawowe}
+%	Są tworzone wraz z inicjalizacją maszyny, występują zawsze w jednym egzemplarzu
+%
+%    \begin{enumerate}
+%    	\item \texttt{Architect} - powstaje jako pierwszy, tworzy pozostałych 3 i pilnuje ich
+%        \item \texttt{WSListener} - nasluchuje nowych połączeń od klientów
+%        \item \texttt{Landlord} - zarządza pokojami i umożliwia łączenie się z nimi
+%        \item \texttt{UsernameLessor} - zarządza nazwami użytkowników i pilnuje, czy nadal są używane
+%    \end{enumerate}
+%\end{frame}
+%
+%\begin{frame}
+%    \frametitle{ViuaChat}
+%    \framesubtitle{Aktory - odpowiedzialne za połączenie}
+%	Występuje po jednym zestawie dla każdego otwartego połączenia
+%
+%    \begin{enumerate}
+%    	\item \texttt{WSInitializer} - tworzony natychmiast przez \texttt{WSLister}a; tworzy \texttt{WSConnector}a i \texttt{Authorizer}a po czym ulega samozniszczeniu
+%    	\item \texttt{WSConnector} - pośredniczy pomiędzy warstwą WebSocket i wewnętrznym światem serwera (\texttt{Authorizer}em lub \texttt{UserSession})
+%        \item \texttt{Authorizer} - próbuje uzyskać nazwę użytkownika, a w razie sukcesu - tworzy \texttt{UserSession} i ulega samozniszczeniu
+%        \item \texttt{UserSession} - posiada przypisaną nazwę użytkownika i poziom uprawnień; wysyła/odbiera wiadomości i łączy/rozłącza się z pokojami
+%    \end{enumerate}
+%\end{frame}
+%
+%\begin{frame}
+%    \frametitle{ViuaChat}
+%    \framesubtitle{Aktory - odpowiedzialne za wymianę wiadomości}
+%	Występuje po jednym zestawie dla każdego otwartego pokoju
+%
+%    \begin{enumerate}
+%    	\item \texttt{Room} - tworzeni i usuwani przez \texttt{Landlord}a; rozsyłają wiadomości pomiędzy podpięte sesje \texttt{UserSession}
+%    	\item \texttt{MessageBuffer} - zapisują ostatnie kilkanaście wiadomości i umożliwiają ich odczytanie w razie potrzeby
+%    \end{enumerate}
+%\end{frame}
 
 
 \end{document}

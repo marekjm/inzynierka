@@ -9,5 +9,8 @@
 *.pdf
 *.synctex.gz
 *.toc
+*.nav
+*.snm
+*.vrb
 
 desktop.ini
