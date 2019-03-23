@@ -84,7 +84,9 @@ pojęć i terminów używanych w pracy, które mogą wymagać doprecyzowania lub
 one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językiem i kompilatorem
 (rozdział~\ref{slownik_pojec_jezyka}) i związane z chatem (rozdział~\ref{slownik_pojec_chatu}).
 
-\section{Motywacja}
+\section{Przedstawienie problemu}
+
+% Jaki problem będziemy rozwiązywać w naszej pracy.
 
 \subsection{Ogląd sytuacji}
 
@@ -110,12 +112,12 @@ jego postać: \emph{retrofitting}.
 Istnieją środowiska i języki zaprojektowane od zera z myślą o współbieżności i przetwarzaniu równoległym, a
 nawet rozproszonym.
 Najbardziej znanym przykładem takiego środowiska jest BEAM -- maszyna wirtualna
-języka Erlang\footnote{http://www.erlang.org/}. To środowisko wraz z językiem jest z powodzeniem wykorzystywane w
-sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których działanie obejmuje
-niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach komunikatora
-Discord\footnote{https://discordapp.com/}.
+języka Erlang\footnote{http://www.erlang.org/}. To środowisko wraz z językiem jest z powodzeniem
+wykorzystywane w sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których
+działanie obejmuje niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach
+komunikatora Discord\footnote{https://discordapp.com/}.
 
-\subsection{Sedno sprawy}
+\section{Cel}
 
 Ta praca inżynierska motywowana jest chęcią stworzenia bazy programistycznej (środowiska uruchomieniowego i
 języka programowania) umożliwiającej programistom pisanie oprogramowania od początku uwzględniającego
@@ -164,6 +166,25 @@ spodziewane wyniki.
 
 Mini-SCRUM.
 
+\subsection{Testowanie}
+
+Jak wygląda testowanie czatu.
+
+\chapter{Dokumentacja prac}
+
+\section{Specyfikacja języka ViuAct}
+
+Kaskadowo.
+
+\section{Implementacja kompilatora}
+
+Issue tracking. Zapis issue, daty rozpoczęcia i zakończenia, branche z Git. Trochę słowno-muzycznego opisu co
+się działo podczas prac.
+
+\section{Implementacja ViuaChat}
+
+Opis prac nad implementacją ViuaChat.
+
 \chapter{Język ViuAct i jego kompilator -- formalności}
 
 W tym rozdziale prezentujemy wszelkie ''formalności'' związane z pierwszą częścią naszej pracy, czyli
@@ -172,6 +193,8 @@ Opis projektu języka i jego implementacji prezentujemy w rozdziale \nameref{jez
 stronie~\pageref{jezyk_viuact_i_jego_kompilator}.
 
 \include{viuact/sws}
+
+\include{viuact/language_specification}
 
 \chapter{Język ViuAct i jego kompilator}
 \label{jezyk_viuact_i_jego_kompilator}
@@ -186,9 +209,26 @@ opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezy
 
 \include{viuact/ps}
 
-\include{viuact/manual}
+\section{Testowanie}
 
-\include{viuact/language_specification}
+Testy kompilatora.
+
+\subsection{Zestaw przypadków testowych}
+
+Jeden testowy program na każdą funkcjonalność języka.
+Kilka większych testowych programów sprawdzających integrację języka, np. wielomodułowych, wykorzystujących
+moduły obce.
+
+\subsection{Wykonanie testów}
+
+Opis tego jak wygląda uruchomienie testów, w jaki sposób został zbudowany framework, itp.
+
+\subsection{Trudności w testowaniu}
+
+Niedeterminizm wynikający z równoległego działania aktorów stwarza problemy w testach. Trzeba uciekać się do
+"sztuczek", np. sortowanie wyników programu testowego.
+
+\include{viuact/manual}
 
 \chapter{Program ViuaChat -- formalności}
 
@@ -215,5 +255,7 @@ Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematyczn
 \include{common/glossary}
 
 \chapter{Bibliografia}
+
+Książki. Internetowe materiały. Materiały wykładowe. Opracowania własne.
 
 \end{document}
