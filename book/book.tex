@@ -87,7 +87,24 @@ one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językie
 
 \section{Przedstawienie problemu}
 
-% Jaki problem będziemy rozwiązywać w naszej pracy.
+Tytułem pracy jest ,,\inzmaintitlePL''. Problemem, który poruszamy jest sprawdzenie czy Viua VM w stanie
+,,zastanym'' (tj. w takim w jakim znajdowała się jej implementacja na początku prac nad projektem
+inżynierskim) umożliwia pisanie niezawodnego, wysoce współbieżnego, nietrywialnego oprogramowania.
+
+W naszej pracy prezentujemy język programowania, który z założenia ma pozwalać na tworzenie oprogramowania
+niezawodnego i wykorzystującego potencjał współbieżności w stopniu wyższym niż powszechnie używane,
+,,mainstreamowe'' języki programowania.
+
+Aby udowodnić, że w wytworzonym języku możliwe jest tworzenie nietrywialnego oprogramowania prezenetujemy
+aplikację użytkową -- czat -- napisany w tym języku. Czat umożliwi komunikację (zorganizowaną kanałach) wielu
+użytkownikom naraz. Wybór rodzaju aplikacji (czat) jest warunkowany tym, że oprogramowanie komunikacyjne
+powinno charakteryzować się tymi cechami, które chcemy uzyskać:
+
+\begin{enumerate}
+    \item niezawodnością -- jeśli jedno połączenie ulegnie awarii to pozostałe powinny działać dalej
+    \item izolacją procesów -- każde połączenie powinno być izolowane od wszystkich innych
+    \item współbieżnością -- wiele połączeń musi być obsługiwanych w tym samym czasie
+\end{enumerate}
 
 \subsection{Ogląd sytuacji}
 
