@@ -23,6 +23,7 @@
 { \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
 { \end{enumerate}                  } 
 
+\newcommand{\inzmaintitlePL}{Viua VM w akcji}
 
 \setcounter{secnumdepth}{4}
 
@@ -30,12 +31,13 @@
 % \author{Marek Marecki \and Gr.52c \and Krzysztof Franek}
 \author{Zespół: Marek Marecki i Krzysztof Franek\\Promotor: dr hab. Marek A. Bednarczyk, prof. PJWSTK}
 \title{%
-    Viua VM w akcji \\
+    \inzmaintitlePL \\
     \large
     Implementacja języka wysokiego poziomu i \\
-    realizacja prostej aplikacji\\
+    prostej aplikacji\\
     ~\\
-    Viua VM in action. Implementation of a high-level programming language and\\ a simple application}
+    Viua VM in action.\\
+    Implementation of a high-level programming language and\\ a simple application}
 
 \begin{document}
 
@@ -86,7 +88,24 @@ one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językie
 
 \section{Przedstawienie problemu}
 
-% Jaki problem będziemy rozwiązywać w naszej pracy.
+Tytułem pracy jest ,,\inzmaintitlePL''. Problemem, który poruszamy jest sprawdzenie czy Viua VM w stanie
+,,zastanym'' (tj. w takim w jakim znajdowała się jej implementacja na początku prac nad projektem
+inżynierskim) umożliwia pisanie niezawodnego, wysoce współbieżnego, nietrywialnego oprogramowania.
+
+W naszej pracy prezentujemy język programowania, który z założenia ma pozwalać na tworzenie oprogramowania
+niezawodnego i wykorzystującego potencjał współbieżności w stopniu wyższym niż powszechnie używane,
+,,mainstreamowe'' języki programowania.
+
+Aby udowodnić, że w wytworzonym języku możliwe jest tworzenie nietrywialnego oprogramowania prezenetujemy
+aplikację użytkową -- czat -- napisany w tym języku. Czat umożliwi komunikację (zorganizowaną kanałach) wielu
+użytkownikom naraz. Wybór rodzaju aplikacji (czat) jest warunkowany tym, że oprogramowanie komunikacyjne
+powinno charakteryzować się tymi cechami, które chcemy uzyskać:
+
+\begin{enumerate}
+    \item niezawodnością -- jeśli jedno połączenie ulegnie awarii to pozostałe powinny działać dalej
+    \item izolacją procesów -- każde połączenie powinno być izolowane od wszystkich innych
+    \item współbieżnością -- wiele połączeń musi być obsługiwanych w tym samym czasie
+\end{enumerate}
 
 \subsection{Ogląd sytuacji}
 
@@ -207,6 +226,8 @@ zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym 
 opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
 \pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
 
+\include{viuact/ps/architektura}
+
 \include{viuact/ps}
 
 \section{Testowanie}
@@ -244,6 +265,21 @@ Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematyczn
 \include{chat/ps}
 
 \include{chat/spu}
+
+\chapter{Wpływ pracy na platformę Viua VM}
+
+W tym rozdziale omówiony jest wpływ naszej pracy inżynierskiej na platformę Viua VM; zarówno na implementację
+samej maszyny wirtualnej i dopracowanie jej mechanizmów (np. doprowadzenie systemu modułów do stanu
+używalności), ale też na ,,ekosystem'' dookoła niej -- nowe moduły biblioteki standardowej i zewnętrzne.
+
+\section{System modułów}
+
+Viua VM musiała zostać wyposażona w system modułów. Wymagane było przeprojektowanie i ,,ucywilizowanie''
+stanu, w którym system modułów Viua VM się znajdował przed rozpoczęciem prac nad projektem inżynierskim.
+
+\section{Moduł do obsługi protokołu WebSocket}
+
+Do wykonania czatu potrzebny był moduł do obsługi protokołu WebSocket.
 
 \chapter{Wkład własny członków zespołu}
 \label{wklad_wlasny_czlonkow_zespolu}
