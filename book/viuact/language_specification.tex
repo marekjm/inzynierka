@@ -508,6 +508,47 @@ Konstrukcja warunkowa składa się z trzech wyrażeń:
 )
 \end{lstlisting}
 
+\subsection{Wywołanie ,,watchdog''}
+
+\texttt{(watchdog \emph{name} \emph{expression}*)}
+\newline
+
+Watchdog jest ostatnią linią obrony danego aktora przed niekontrolowanym zamknięciem w wyniku błędu programu.
+Jeśli aktor nie obsłużył błędu (reprezentowanego przez wyjątek) i jego stos wywołań został całkowicie
+odwinięty, ale aktor ma ustawiony watchdog to VM ,,w miejscu'' podmieni odwinięty stos na wywołanie funkcji
+ustawionej jako watchdog.
+
+Oznacza to, że aktor zamiast zostać zabity zacznie wykonywać funkcję ustawioną jako watchdog -- jednocześnie
+zachowując PID, co może być bardzo przydatne.
+
+Watchdog jest normalną funkcją i może korzystać ze wszystkich dozwolonych konstrukcji językowych.
+Jedynym ograniczeniem jest to, że watchdog musi być napisany w języku ViuAct lub w języku assemblera Viua VM.
+
+\paragraph*{Argumenty funkcji watchdog}
+
+\begin{lstlisting}
+(let use_as_watchdog (error controller) {
+    (let report (struct))
+    (:= report.error error)
+    (:= report.pid (Std.Actor.self))
+    (Std.Actor.send controller error)
+})
+
+(let some_other_function (controller) {
+    (watchdog use_as_watchdog controller)
+})
+\end{lstlisting}
+
+Jako pierwszy argument watchdog zawsze otrzymuje \texttt{struct} zawierający informacje o błędzie, który
+spowodował awarię aktora. Jako pozostałe argumenty otrzymuje to co zostało przekazane w wywołaniu.
+Czyli ,,pierwszy'' argument użyty w wywołaniu będzie tak naprawdę drugi z punktu widzenia funkcji użytej jako
+watchdog.
+
+\paragraph*{Błędy wewnątrz watchdog}
+
+Jeśli podczas wykonywania funkcji ustawionej jako watchdog wystąpi kolejny nieobsłużony błąd aktor zostanie
+natychmiast zabity, a watchdog nie będzie uruchomiony przez VM ,,z powodu samego siebie''.
+
 \subsection{Obsługa wyjątków}
 
 \texttt{(try \emph{expression} ((catch \emph{exception-tag} \emph{name} \emph{expression})+))}
