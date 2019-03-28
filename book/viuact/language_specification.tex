@@ -562,6 +562,33 @@ natychmiast zabity, a watchdog nie będzie uruchomiony przez VM ,,z powodu sameg
 ))
 \end{lstlisting}
 
+\subsection{Wyliczenia}
+
+\texttt{(enum \emph{enum-name} (\emph{enum-member}+))}
+\newline
+
+Wyliczenia przydatne są do reprezentowania pewnego skończonego zbioru możliwych wartości. Ułatwiają one
+zachowanie porządku w programie dzięki umożliwieniu wyliczenia możliwych stanów pewnych zmiennych, oraz
+redukują możliwość popełnienia błędu dzięki utrzymaniu jednej definicji tych stanów.
+
+\begin{lstlisting}
+(enum Good_languages (
+    Cpp
+    OCaml
+    ViuAct
+))
+
+(enum Bad_languages (
+    Perl
+    Bash
+    JavaScript
+))
+\end{lstlisting}
+
+Wyliczenia mogą pojawić się jedynie na poziomie modułu, w tym na poziomie modułu anonimowego niejawnie
+dodawanego do plików z kodem źródłowym kompilowanym do plików wykonywalnych. Wyliczeń nie można tworzyć
+wewnątrz funkcji.
+
 \newpage
 \section{Biblioteka standardowa}
 
