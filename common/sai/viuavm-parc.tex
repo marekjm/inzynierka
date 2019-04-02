@@ -14,66 +14,561 @@
 % \usepackage{showlabels}
 % \usepackage{titlesec}
 \usepackage{geometry}
+\usepackage{tabularx}
 \geometry{a4paper, portrait, margin=2cm}
-
-
 
 \setcounter{secnumdepth}{4}
 
 %% Author and title
 % \author{Marek Marecki \and Gr.52c \and Kod: 95 \and 2017\slash2018-2019}
 \author{Marek Marecki \and Krzysztof Franek}
-\title{%
-     Potwierdzenie przydatności Viua VM \\
-    \large Implementacja języka wysokiego poziomu dla Viua VM \\
-    i realizacja prostej aplikacji \\
+\title{
+     Viua VM w akcji \\
+    \large Implementacja wysokopoziomowego języka programowania i
+    realizacja prostej aplikacji \\
     ~\\
-    Wstępna analiza kategorii ryzyka}
+    Wstępna analiza kategorii ryzyka wg SODiS SPA}
 
 \begin{document}
 
 \maketitle
-{\footnotesize
-\begin{center}
-  \begin{tabular}{ | l | l | l | }
-    \hline
-    \parbox[t]{6.5cm}{\textbf{Temat pracy i akronim projektu:}\\ Potwierdzenie przydatności Viua VM. Implementacja języka wysokiego poziomu dla Viua VM i realizacja prostej aplikacji} & \parbox[t]{4.5cm}{\textbf{Zleceniodawca:}\\\colorbox{yellow}{Nieznany}} & \parbox[t]{4.5cm}{\textbf{Konsultant:}\\\colorbox{yellow}{Nieznany}} \\ \hline
-    \parbox[t]{6.5cm}{\textbf{Zespół projektowy:}\\Krzysztof Franek, Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \parbox[t]{4.5cm}{\textbf{Opiekun projektu:}\\dr hab. Marek A. Bednarczyk, prof. PJWSTK} \\ \hline
-    \parbox[t]{3.5cm}{\textbf{Kierownik projektu:}\\Marek Marecki} & \multicolumn{2}{|l|}{\parbox[t]{9cm}{\textbf{Odpowiedzialny za dokument:}\\Krzysztof Franek}} \\ 
-    \hline
-  \end{tabular}
-\end{center}
-}
 
 \section{Otoczenie projektu}
 
-\subsection{Kontektst projektu}
+\subsection{Kontekst projektu}
 
-\textbf{Czy wybrano metodologię rozwoju projektu?} Tak, wybrano dwie metodologie: (a) prototypowanie dla
-kompilatora oraz (b) Mini-Scrum, tj. uproszczona wersja Scrum dostosowana do jednoosobowej pracy. Są one opisane szczegółowo we Wstępnym Planie Projektu (WPP).
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+    \hline
+    Lp. & Pytanie & Odpowiedź & Uwagi \\ \hline
+    
+    1
+    & \textbf{Czy wybrano metodologię rozwoju projektu?} 
+    & Tak 
+    & Wybrano dwie metodologie: (a) prototypowanie dla kompilatora oraz (b) Mini-Scrum, tj. uproszczona wersja 
+    Scrum dostosowana do jednoosobowej pracy. Są one opisane szczegółowo we Wstępnym Planie Projektu (WPP). 
+    \\\hline
+    
+    2
+    & \textbf{Czy istnieje zarys struktury projektu (lub Work Breakdown Structure)?}
+    & Tak
+    & Projekt został podzielony na dwie części, jedną poświęconą językowi programowania wysokiego poziomu ViuAct 
+    wraz z jego kompilatorem, a drugą - przykładowej aplikacji czatu. Zadania są podzielone według tych części. 
+    Podział opisano szczegółowo w ramach WPP.
+    \\\hline
+    
+    3
+    & \textbf{Czy produkty projektu zostały zdefiniowane, uzgodnione i zapisane?} 
+    & Tak
+    & Zdefiniowano je w jasny i przejrzysty sposób, w dokumentacji uzgodnionej w zespole i merytorycznie 
+    uzgadnianej z opiekunem projektu.
+    \\\hline
+    
+    4
+    & \textbf{Czy ustanowiono środki finansowego nadzoru projektu?} 
+    & --
+    & Pytanie to nie dotyczy projektu, z uwagi na jego charakter non-profit.
+    \\\hline
+    
+    5
+    & \textbf{Czy każde z zadań posiada przejrzystą dokumentację?}
+    & Tak
+    & Brakuje na obecnym etapie szczegółowej dokumentacji wykonawczej dla niektórych z modułów czatu, pozostając 
+    na etapie dokumentacji koncepcyjnej.
+    \\\hline
+    
+    6
+    & \textbf{Czy zidentyfikowano istotnych udziałowców?}
+    &  Tak
+    &  W przypadku języka programowania i środowiska wytwarzania oprogramowania ViuAct są to realni udziałowcy: 
+    programista używający środowiska, użytkownik korzystający z programów wytworzonych w środowisku, zespół 
+    deweloperski, opiekun projektu, recenzent. Tymczasem, w przypadku czatu, dochodzą fikcyjni udziałowcy, utworzeni 
+    wyłącznie na cele przykładowe.
+    \\\hline
+    
+    7
+    & \textbf{Czy projekt dysponuje utrwalonym, stabilnym i powtarzalnym środowiskiem deweloperskim?} 
+    &  Tak
+    & Poziom ryzyka niestabilności jest wyższy w projekcie dotyczącym przygotowania aplikacji czatu. Wszakże samo 
+    środowisko, w którym jest tworzona, jest przedmiotem pracy dyplomowej i może ulegać dynamicznym zmianom.
+    \\\hline
+    
+    8
+    & \textbf{Czy istnieje proces zarządzania zmianą?} 
+    & Tak
+    & Opiera się on o: (a) bieżące spotkania zespołu i dyskusję nad zmianami, dokumentowane w formie notatek 
+    (b) wariantowanie i przygotowywanie różnych alternatywnych dróg realizacji poszczególnych etapów, zanim będzie 
+    niezbędne podjęcie samej decyzji w zakresie zmiany.
+    \\\hline
 
-\textbf{Czy istnieje zarys struktury projektu (lub Work Breakdown Structure)?} Tak, projekt został podzielony na dwie części, jedną poświęconą językowi programowania wysokiego poziomu ViuAct wraz z jego kompilatorem, a drugą - przykładowej aplikacji czatu. Zadania są podzielone według tych części. Podział opisano szczegółowo w ramach WPP.
-
-\textbf{Czy produkty projektu zostały zdefiniowane, uzgodnione i zapisane?} Tak, zdefinionwano je w jasny i przejrzysty sposób, w dokumentacji uzgodnionej w zespole i merytorycznie uzgadnianej z opiekunem projektu.
-
-\textbf{Czy ustanowiono środki finansowego nadzoru projektu?} Pytanie to nie dotyczy projektu, z uwagi na jego charakter non-profit.
-
-\textbf{Czy każde z zadań posiada przejrzystą dokumentację?} Tak, jednakże brakuje na obecnym etapie szczegółowej dokumentacji wykonawczej dla niektórych z modułów czatu, pozostając na etapie dokumentacji koncepcyjnej.
-
-\textbf{Czy zidentyfikowano istotnych udziałowców?} Tak, przy czym w przypadku języka programowania i środowiska wytwarzania oprogramowania ViuAct są to realni udziałowcy: programista używający środowiska, użytkownik korzystający z programów wytworzonych w środowisku, zespół deweloperski, opiekun projektu, recenzent. Tymczasem, w przypadku czatu, dochodzą fikcyjni udziałowcy, utworzeni wyłącznie na cele przykładowe, toteż nie będziemy rozpatrywali ich w dalszeym toku.
-
-\textbf{Czy projekt dysponuje utrwalonym, stablinym i powtarzalym środowiskiem deweloperskim?} Tak, przy czym poziom ryzyka niestabiności jest wyższa w projekcie dotyczącym przygotowania aplikacji czatu. Wszakże samo środowisko, w którym jest tworzona, jest przedmiotem pracy dyplomowej i może ulegać dynamicznym zmianom.
-
-\textbf{Czy istnieje proces zarządzania zmianą?} Tak, opiera się on o: (a) bieżące spotkania zespołu i dyskusję nad zmianami, dokumentowane w formie notatek (b) wariantowanie i przygotowywanie różnych alternatywnych dróg realizacji poszczególnych etapów, zanim będzie niezbędne podjęcie samej decyzji w zakresie zmiany.
+\end{tabularx}
 
 \subsection{Plan projektu}
 
-\textbf{Czy referencje deweloperów zostały sprawdzone i uznane za godne akceptacji?} Tak, obu z deweloperów miało wcześniej związek z programowaniem w wielu językach programowania, ponadto programista odpowiedzialny za język programowania i kompilator ma szeroką wiedzę na temat budowy kompilatorów i konstrukcji maszyn wirtualnych.
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+    \hline
+    Lp. & Pytanie & Odpowiedź & Uwagi \\ \hline
+    
+    1
+    & \textbf{Czy referencje deweloperów zostały sprawdzone i uznane za godne akceptacji?} 
+    & Tak
+    & Obu z deweloperów miało wcześniej związek z programowaniem w wielu językach programowania, ponadto programista 
+    odpowiedzialny za język programowania i kompilator ma szeroką wiedzę na temat budowy kompilatorów i konstrukcji
+    maszyn wirtualnych.
+    \\\hline
 
-\textbf{Czy doszło to uformowania zespołu deweloperskiego?} Tak, obu czonków zespołu ustaliło kanały komunikacji, zasady współpracy, podział odpowiedzialoności oraz na bieżąco współdziała w zakresie realizacji projektu.
+	2
+	& \textbf{Czy doszło to uformowania zespołu deweloperskiego?}
+	& Tak
+	& Obu członków zespołu ustaliło kanały komunikacji, zasady współpracy, podział odpowiedzialności oraz na bieżąco 
+	współdziała w zakresie realizacji projektu.
+	\\\hline
 
-\textbf{Czy członkowie zespołu deweloperskiego posiadają istotne doświadczenia w podobnych projektach?} Tak, członek odpowiedziany za nowy język programowania i kompilator ma doświadczenie w podobnych projektach realizowanych samodzielnie.
+	3
+	& \textbf{Czy członkowie zespołu deweloperskiego posiadają istotne doświadczenia w podobnych projektach?}
+	& Tak
+	& Członek odpowiedziany za nowy język programowania i kompilator ma doświadczenie w podobnych projektach 
+	realizowanych samodzielnie.
+	\\\hline
+	
+	4
+	& \textbf{Czy plan testów, rozmieszczenia, szkolenia i utrzymywania są przejrzyście udokumentowane?} 
+	& Nie
+	& Zaniechano sporządzenia ww. dokumentacji.
+    
+    \\\hline
+\end{tabularx}
 
-\textbf{Czy plan testów, rozmieszczenia, szkolenia i utrzymywania są przejrzyście udokumentowane?} Nie,zaniechano sporządzenia ww. dokumentacji.
+\section{Analiza zadań związanych z projektem}
+
+\subsection{Zadanie \textit{Utworzenie specyfikacji języka}}
+
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+    \hline
+    Lp. & Pytanie & Odpowiedź & Uwagi \\ \hline
+    
+    1 
+    & Czy tworzenie języka programowania ma jasno określone 
+    rezultaty?
+    & Tak
+    & 
+    \\\hline
+    
+    2
+	& Czy tworzenie języka programowania zostało uregulowane
+	przez wiążące umowy pomiędzy udziałowcami?
+	& Nie 
+	& Nie ma żadnych wiążących umów
+	\\\hline
+	
+	3
+	& Czy tworzenie języka programowania poprzedzono wstępną analizą
+	ryzyka lub planem unikania ryzyka?
+	& Nie
+	& Przeprowadzono wstępną analizę ryzyka dla całego projektu, a
+	nie dla konkretnego zadania
+	\\\hline
+	
+	4
+	& Czy w tworzeniu języka programowania bierze udział 
+	zidentyfikowana, kompletna lista uczestników?
+	& Tak
+	& Jedynym autorem jest Marek Marecki
+	\\\hline
+	
+	5
+	& Czy w tworzenie języka programowania zaangażowano deweloperów 
+	z wymaganą wiedzą techniczną?
+	& Tak
+	& Marek Marecki dysponuje wymaganą wiedzą techniczną
+	\\\hline
+	
+	6
+	& Czy w tworzenie języka programowania zaangażowano deweloperów 
+	z doświadczeniem w zagadnieniach, których dotyczy to zadanie?
+	& Tak
+	& Marek Marecki już wcześniej implementował języki programowania
+	\\\hline
+	
+	7
+	& Czy tworzenie języka programowania ma adekwatny plan testów?
+	& Tak
+	& Pozostałe części projektu -- kompilator i aplikacja czatu --
+	mają za zadanie przetestować prawidłowość parsera
+	\\\hline	
+	
+	8
+	& Czy tworzenie języka programowania objęto udokumentowaną
+	specyfikacją?
+	& Tak
+	& Opracowano \textit{Specyfikację języka ViuAct} 
+	\\\hline
+
+\end{tabularx}
+
+\subsection{Zadanie \textit{Implementacja podsystemu emisji kodu}}
+
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+	\hline
+	
+	\hline
+    Lp. & Pytanie & Odpowiedź & Uwagi \\ \hline
+    
+    1 
+    & Czy implementacja podsystemu emisji kodu ma jasno określone 
+    rezultaty?
+    & Tak
+    & Produkt jest jasno określony
+    \\\hline
+
+    2
+	& Czy implementacja podsystemu emisji kodu została uregulowana
+	przez wiążące umowy pomiędzy udziałowcami?
+	& Tak
+	& Wytyczono przejrzystą specyfikację języka ViuAct oraz języka
+	asemblera Viua VM
+	\\\hline	
+	
+	3
+	& Czy implementację podsystemu emisji kodu poprzedzono wstępna
+	analizą	ryzyka lub planem unikania ryzyka?
+	& Nie
+	& Przeprowadzono wstępną analizę ryzyka dla całego projektu, a
+	nie dla konkretnego zadania
+	\\\hline
+	
+	4
+	& Czy w implementacji podsystemu emisji kodu bierze udział 
+	zidentyfikowana, kompletna lista uczestników?
+	& Tak
+	& Jedynym autorem jest Marek Marecki
+	\\\hline
+
+	5
+	& Czy w implementację podsystemu emisji kodu zaangażowano
+	deweloperów z wymaganą wiedzą techniczną?
+	& Tak
+	& Marek Marecki dysponuje wymaganą wiedzą techniczną
+	\\\hline
+	
+	6
+	& Czy w implementację podsystemu emisji kodu zaangażowano
+	deweloperów z doświadczeniem w zagadnieniach, których dotyczy 
+	to zadanie?
+	& Tak
+	& Marek Marecki już wcześniej implementował języki programowania
+	\\\hline
+
+	7
+	& Czy implementacja podsystemu emisji kodu ma adekwatny plan
+	testów?
+	& Tak
+	& Asembler i jądro Viua VM przetestują, czy kod jest emitowany
+	prawidłowo, aplikacja czatu przetestuje czy wymagane konstrukcje
+	języka mogą być prawidłowo wyemitowane
+	\\\hline	
+	
+	8
+	& Czy implementacja podsystemu emisji kodu objęto udokumentowaną
+	specyfikacją?
+	& Tak
+	& Opracowano \textit{Specyfikację języka ViuAct} oraz 
+	\textit{Viua VM ISA} (specyfikację języka asemblera Viua VM)
+	\\\hline
+	
+\end{tabularx}
+	
+\subsection{Zadanie \textit{Implementacja infrastruktury dla systemu modułów}}
+
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+	\hline
+	
+	\hline
+    Lp. & Pytanie & Odpowiedź & Uwagi \\ \hline
+    
+    1 
+    & Czy implementacja infrastruktury dla systemu modułów ma jasno 
+    określone rezultaty?
+    & Tak
+    & Produkt jest jasno określony
+    \\\hline
+
+    2
+	& Czy implementacja infrastruktury dla systemu modułów została
+	uregulowana	przez wiążące umowy pomiędzy udziałowcami?
+	& Tak
+	& Wytyczono przejrzystą specyfikację języka ViuAct
+	\\\hline	
+	
+	3
+	& Czy implementację infrastruktury dla systemu modułów
+	poprzedzono wstępna	analizą	ryzyka lub planem unikania ryzyka?
+	& Nie
+	& Przeprowadzono wstępną analizę ryzyka dla całego projektu, a
+	nie dla konkretnego zadania
+	\\\hline
+	
+	4
+	& Czy w implementacji infrastruktury dla systemu modułów bierze
+	udział zidentyfikowana, kompletna lista uczestników?
+	& Tak
+	& Jedynym autorem jest Marek Marecki
+	\\\hline
+
+	5
+	& Czy w implementację infrastruktury dla systemu modułów
+	zaangażowano deweloperów z wymaganą wiedzą techniczną?
+	& Tak
+	& Marek Marecki dysponuje wymaganą wiedzą techniczną
+	\\\hline
+	
+	6
+	& Czy w implementację infrastruktury dla systemu modułów
+	zaangażowano deweloperów z doświadczeniem w zagadnieniach,
+	których dotyczy to zadanie?
+	& Tak
+	& Marek Marecki już wcześniej implementował języki programowania
+	\\\hline
+   
+	7
+	& Czy implementacja infrastruktury dla systemu modułów ma
+	adekwatny plan testów?
+	& Tak
+	& Aplikacja czatu przetestuje, czy system modułów jest właściwy
+	a Viua VM przetestuje czy da się go skompilować w dopuszczalny
+	sposób.
+	\\\hline	
+	
+	8
+	& Czy implementacja infrastruktury dla systemu modułów objęto
+	udokumentowaną specyfikacją?
+	& Tak
+	& Opracowano \textit{Specyfikację języka ViuAct} oraz 
+	\textit{Viua VM ISA} (specyfikację języka asemblera Viua VM)
+	\\\hline
+	
+\end{tabularx}
+
+\subsection{Implementacja sterownika kompilatora}
+
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+	\hline
+	
+	\hline
+    Lp. & Pytanie & Odpowiedź & Uwagi \\ \hline
+    
+    1 
+    & Czy implementacja sterownika kompilatora ma jasno 
+    określone rezultaty?
+    & Tak
+    & Produkt jest jasno określony
+    \\\hline
+
+    2
+	& Czy implementacja sterownika kompilatora została
+	uregulowana	przez wiążące umowy pomiędzy udziałowcami?
+	& Nie
+	& Nie ustalono w szczegółowy sposób, jak ma wyglądać kompilator.
+	\\\hline	
+	
+	3
+	& Czy implementację sterownika kompilatora
+	poprzedzono wstępna	analizą	ryzyka lub planem unikania ryzyka?
+	& Nie
+	& Przeprowadzono wstępną analizę ryzyka dla całego projektu, a
+	nie dla konkretnego zadania
+	\\\hline
+	
+	4
+	& Czy w implementacji sterownika kompilatora bierze
+	udział zidentyfikowana, kompletna lista uczestników?
+	& Tak
+	& Jedynym autorem jest Marek Marecki
+	\\\hline
+
+	5
+	& Czy w implementację sterownika kompilatora
+	zaangażowano deweloperów z wymaganą wiedzą techniczną?
+	& Tak
+	& Marek Marecki dysponuje wymaganą wiedzą techniczną
+	\\\hline
+	
+	6
+	& Czy w implementację sterownika kompilatora
+	zaangażowano deweloperów z doświadczeniem w zagadnieniach,
+	których dotyczy to zadanie?
+	& Tak
+	& Marek Marecki już wcześniej implementował języki programowania
+	\\\hline
+   
+	7
+	& Czy implementacja sterownika kompilatora ma
+	adekwatny plan testów?
+	& Tak
+	& Przewidziano liczne przykładowe fragmenty kodu, zaś aplikacja
+	czatu przetestuje, czy dostarczone narzędzia kompilacji są
+	właściwe. 
+	\\\hline	
+
+	& Czy implementacja sterownika kompilatora objęto
+	udokumentowaną specyfikacją?
+	& Tak
+	& Opracowano dokumentację i manual użytkownika.
+	\\\hline
+\end{tabularx}
+    
+\section{Udziałowcy. Analiza udziałowców (wstępna analiza)}
+
+\subsection{Udziałowiec \textit{Członkowie zespołu projektowego}}
+
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+	\hline
+	
+	\hline
+    Lp. & Pytanie & Odpowiedź & Uwagi \\ \hline
+    
+    1
+    & Czy cykl życia projektu i produktu jest zrozumiały i
+    akceptowalny przez członków zespołu projektowego?
+    & Tak
+    & Członkowie wspólnie uzgodnili cykl życia produktu/projektu
+    \\\hline
+    
+    2
+    & Czy plan projektu jest akceptowalny dla członków zespołu
+    projektu?
+    & Tak
+    & Krzysztof Franek opracował Wstępny Plan Projektu (WPP), 
+    uzgodniony i zaakceptowany przez obu członków zespołu
+    \\\hline
+    
+    3
+    & Czy norma ukończenia projektu jest zrozumiała dla członków
+    zespołu projektowego?
+    & Tak
+    & Norma jest w równym stopniu zrozumiała dla obu członków zespołu
+    \\\hline
+    
+    4
+    & Czy potrzeby i wymagania zostały przejrzyście wyrażone
+    przez członków zespołu projektowego
+    & Tak
+    & Potrzeby i wymagania projektu są niejako ,,zapisane'' w
+    specyfikacji języka
+    \\\hline
+    
+    5
+    & Czy plan Testu Akceptacji Użytkowników (z ang. UAT) będzie
+    działał na rzecz członków zespołu projektowego?
+    & Tak
+    & Cały program testów został opracowany przez członków zespołu
+    i działa na ich rzecz
+    \\\hline
+    
+    6
+    & Czy członkowie zespołu projektowego rozumieją konsekwencje i
+    skutki projektu?
+    & Tak
+    & Członkowie zespołu projektowego doskonale znają wpływ projektu
+    na siebie i na innych udziałowców
+    \\\hline
+    
+    7
+    & Czy członkowie zespołu projektowego potrzebują dodatkowego
+    przeszkolenia?
+    & Nie
+    & Nie ma takiej potrzeby.
+    \\\hline
+    
+    8
+    & Czy istnieje plan dalszego utrzymywania po tym, gdy
+    potrzeby członków zespołu projektowego zostaną zaspokojone?
+    & Tak
+    & Zaplanowano rezygnację z oprogramowania lub przepisanie go 
+    w taki sposób, aby odciąć powiązania z PJATK
+    \\\hline
+    
+\end{tabularx}
+
+\subsection{Udziałowiec \textit{Promotor}}
+
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+	\hline
+	
+	\hline
+    Lp. & Pytanie & Odpowiedź & Uwagi \\ \hline
+    
+    1
+    & Czy cykl życia projektu i produktu jest zrozumiały i
+    akceptowalny przez promotora?
+    & Tak
+    & Promotor jest na bieżąco angażowany w prace nad
+    produktem/projektem.
+    \\\hline
+    
+    2
+    & Czy plan projektu jest akceptowalny dla promotora?
+    & Tak
+    & Promotor zapoznał się z WPP i zaakceptował jego brzmienie.
+    \\\hline
+    
+    3
+    & Czy norma ukończenia projektu jest zrozumiała dla członków
+    zespołu projektowego?
+    & Tak
+    & Promotor sam zaproponował rys normy ukończenia projektu i
+    aktywnie brał udział w jej dopracowaniu.
+    \\\hline
+    
+    4
+    & Czy potrzeby i wymagania zostały przejrzyście wyrażone
+    przez promotora?
+    & Tak
+    & Promotor od początku istnienia projektu proponował wymagania
+    i zadania do zrealizowania w ramach projektu. Zespół projektowy
+    zna również oczekiwania promotora w stosunku do nich oraz
+    projektu
+    \\\hline
+    
+    5
+    & Czy plan Testu Akceptacji Użytkowników (z ang. UAT) będzie
+    działał na rzecz promotora?
+    & Tak
+    & Bez akceptacji promotora, projekt nie zakończy się sukcesem.
+    \\\hline
+    
+    6
+    & Czy promotor rozumie konsekwencje i skutki projektu?
+    & Tak
+    & Promotor zaproponował rys projektu w oczekiwaniu na 
+    zaspokojenie luk i problemów, które miałby on rozwiązać i
+    w taki sposób postrzega on potencjalne skutki wynikające
+    z projektu.
+    \\\hline
+    
+    7
+    & Czy promotor potrzebują dodatkowego przeszkolenia?
+    & Tak
+    & Bieżąca prezentacja dokumentacja projektu oraz powstającego
+    kodu może zastąpić regularne szkolenie.
+    \\\hline
+    
+    8
+    & Czy istnieje plan dalszego utrzymywania po tym, gdy
+    potrzeby promotora zostaną zaspokojone?
+    & Nie
+    & Promotor nie wyartykułował, w jaki sposób chciałby sam
+    stosować wytworzone oprogramowanie po zaliczeniu projektu.
+    \\\hline
+    
+\end{tabularx}
+
+%TASKS/STAKEHOLDERS ANALYSIS (PRELIMINARY ANALYSIS)
+%
+%1. Yes. (task budget is acceptable to stakeholder)
+%2. Yes. (task time line is acceptable to stakeholder)
+%3. Yes. (task will integrate; we have everything coded from scratch to suit the
+%   project)
+%4. Yes. (stakeholder accpts task implementation, maintenance, and training plan)
+
 
 \end{document}
