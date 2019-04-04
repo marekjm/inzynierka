@@ -159,7 +159,7 @@ Zminimalizujemy ryzyko płynące z wprowadzenia współbieżności do warsztatu 
 mechanizmy umożliwiające opanowanie awarii, propagowanie informacji o błędach, oraz izolację poszczególnych
 procesów składowych.
 
-\chapter{Metodologia prac}
+\chapter{Strategia prowadzenia prac}
 
 W tym rozdziale opisujemy metodologię prac nad poszczególnymi częściami projektu. Każda z nich była rozwijana
 innym sposobem z dużych rozbieżności specyfiki konkretnych problemu -- zupełnie inaczej pracuje się nad
@@ -168,9 +168,26 @@ rozdzieleniu tych części i poprowadzeniu ich jako osobne, mniejsze projekty we
 
 \section{Język ViuAct}
 
-Specyfikacja. Analiza wymagań. Formalizm. Kaskada.
+% Specyfikacja. Analiza wymagań. Formalizm. Kaskada.
+
+Tworzenie specyfikacji języka odbywa się w modelu kaskadowo-prototypowym i przeplata się z implementacją
+prototypu kompilatora.
 
 \subsection{Określenie wymagań}
+
+Przed rozpoczęciem specyfikowania poszczególnych konstrukcji językowych należało podjąć decyzję co w języku
+powinno się znaleźć, a co nie powinno zostać włączone do specyfikacji.
+
+\subsection{Specyfikacja konkretnej konstrukcji języka}
+
+Każda konstrukcja językowa jest najpierw projektowana, następnie dokumentowana i omawiana (żeby wychwycić
+pewne oczywiste błędy ,,grube'' na wczesnym etapie prac). Potem proces specyfikacji zostaje zawieszony do
+momentu wytworzenia w kompilatorze prototypu danej konstrukcji, lub odrzucenia jej jako niewykonalnej w
+zakładanym czasie lub zakresie funkcjonalności.
+
+Wynik prac prototypowych (sukces bądź porażka) decyduje o tym czy prace specyfikacyjne są prowadzone dalej.
+Jeśli konstrukcja jest możliwa do zaimplementowania jej specyfikacja jest formalizowana oraz przygotowana dla
+niej zostaje dokumentacja (obejmująca m.in. przykłady użycia).
 
 \section{Kompilator języka ViuAct}
 
@@ -194,7 +211,10 @@ Jak wygląda testowanie czatu.
 
 \section{Specyfikacja języka ViuAct}
 
-Kaskadowo.
+Tworzenie formalnej specyfikacji języka ViuAct było, paradoksalnie, procesem mało sformalizowanym. Polegało
+na określeniu głównych założeń języka (opisanych w rozdziale
+\ref{specyfikacja_jezyka_viuact_model_programowania}
+\nameref{specyfikacja_jezyka_viuact_model_programowania}).
 
 \section{Implementacja kompilatora}
 
