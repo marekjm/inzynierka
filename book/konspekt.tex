@@ -1,0 +1,80 @@
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+\graphicspath{ {./fig/} }
+\usepackage{listings}
+
+\newenvironment{enumreq}
+{ \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
+{ \end{enumerate}                  } 
+
+\newcommand{\inzmaintitlePL}{Viua VM w akcji}
+
+%% Below code taken verbatim from:
+%% https://tex.stackexchange.com/questions/262977/inserting-external-table-of-content-into-another-document
+%%
+\makeatletter
+\newcommand{\usetocfromothersource}[1]{%
+    \begingroup
+    \makeatletter
+    \IfFileExists{#1}{%
+        \chapter*{\inzmaintitlePL~-- spis treści}
+        \@input{#1}
+        \@nobreakfalse
+    }{}%
+    \makeatother
+    \endgroup
+}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+
+\author{Zespół: Marek Marecki i Krzysztof Franek\\Promotor: dr hab. Marek A. Bednarczyk, prof. PJWSTK}
+\title{%
+    \inzmaintitlePL \\
+    \large
+    Implementacja języka wysokiego poziomu i \\
+    prostej aplikacji\\
+    ~\\
+    Viua VM in action.\\
+    Implementation of a high-level programming language and\\ a simple application}
+
+\begin{document}
+
+\maketitle
+
+\usetocfromothersource{book.toc}
+
+\newpage
+
+\chapter{Omówienie}
+
+Praca składa się z 10 rozdziałów, z których każdy zostanie po krótce omówiony i wyjaśnione zostanie jego
+znaczenie w całości pracy.
+
+\section{Wprowadzenie}
+\section{Strategia prowadzenia prac}
+\section{Dokumentacja prac}
+\section{Język ViuAct i jego kompilator -- formalności}
+\section{Specyfikacja języka ViuAct}
+\section{Język ViuAct i jego kompilator}
+\section{Program ViuaChat -- formalności}
+\section{Program ViuaChat}
+\section{Wpływ pracy na platformę Viua VM}
+\section{Wkład własny członków zespołu}
+\section{Słownik pojęć}
+\section{Bibliografia}
+
+\end{document}
