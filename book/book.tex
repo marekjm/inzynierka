@@ -58,174 +58,21 @@ Praca została złożona za pomocą systemu \LaTeX.
 
 \newpage
 
-\chapter{Wprowadzenie}
+\include{wprowadzenie}
 
-We wprowadzeniu chcielibyśmy poruszyć ogólne tematy związane z naszą pracą, oraz przedstawić Czytelnikowi
-spójny wstęp zapewniający solidne podstawy do dalszej lektury. Zakładamy, że Czytelnik ma doświadczenie z
-językami programowania i umie biegle posługiwać się co najmniej jednym ''\emph{mainstreamowym}'' językiem, np.
-C++, Java, czy Python.
+\input{common/glossary}
 
-Wprowadzenie jest dla nas miejscem, w którym przedstawimy problemy dręczące popularne obecnie języki
-programowania oraz powiemy skąd się te problemy biorą i dlaczego w miarę postępu technologii są one coraz
-trudniejsze do zignorowania.
+\include{strategia}
 
-Po krótce przedstawiona zostanie również maszyna wirtualna Viua, która jest platformą, na której nasza praca
-się opiera.
+\chapter{Przebieg prac}
 
-\section{Układ pracy inżynierskiej}
+\include{przebieg/specyfikacja_jezyka}
 
-W rozdziale \ref{jezyk_viuact_i_jego_kompilator}.~\nameref{jezyk_viuact_i_jego_kompilator} (na stronie
-\pageref{jezyk_viuact_i_jego_kompilator}) przedstawiamy język Viuact oraz jego implementację - kompilator.
-Są to narzędzia wykorzystywane do stworzenia aplikacji użytkowej przedstawionej w rozdziale
-\ref{program_viuachat}.~\nameref{program_viuachat} (na stronie \pageref{program_viuachat}).
+\include{przebieg/implementacja_kompilatora}
 
-Wkład własny członków zespołu przedstawiony jest w rozdziale \ref{wklad_wlasny_czlonkow_zespolu} na stronie
-\pageref{wklad_wlasny_czlonkow_zespolu}.
+\include{przebieg/implementacja_viuachat}
 
-W rozdziale \ref{slownik_pojec}.~\nameref{slownik_pojec} na stronie \pageref{slownik_pojec} prezentujemy listę
-pojęć i terminów używanych w pracy, które mogą wymagać doprecyzowania lub definicji. Dla wygody Czytelnika są
-one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językiem i kompilatorem
-(rozdział~\ref{slownik_pojec_jezyka}) i związane z chatem (rozdział~\ref{slownik_pojec_chatu}).
-
-\section{Przedstawienie problemu}
-
-Tytułem pracy jest ,,\inzmaintitlePL''. Problemem, który poruszamy jest sprawdzenie czy Viua VM w stanie
-,,zastanym'' (tj. w takim w jakim znajdowała się jej implementacja na początku prac nad projektem
-inżynierskim) umożliwia pisanie niezawodnego, wysoce współbieżnego, nietrywialnego oprogramowania.
-
-W naszej pracy prezentujemy język programowania, który z założenia ma pozwalać na tworzenie oprogramowania
-niezawodnego i wykorzystującego potencjał współbieżności w stopniu wyższym niż powszechnie używane,
-,,mainstreamowe'' języki programowania.
-
-Aby udowodnić, że w wytworzonym języku możliwe jest tworzenie nietrywialnego oprogramowania prezenetujemy
-aplikację użytkową -- czat -- napisany w tym języku. Czat umożliwi komunikację (zorganizowaną kanałach) wielu
-użytkownikom naraz. Wybór rodzaju aplikacji (czat) jest warunkowany tym, że oprogramowanie komunikacyjne
-powinno charakteryzować się tymi cechami, które chcemy uzyskać:
-
-\begin{enumerate}
-    \item niezawodnością -- jeśli jedno połączenie ulegnie awarii to pozostałe powinny działać dalej
-    \item izolacją procesów -- każde połączenie powinno być izolowane od wszystkich innych
-    \item współbieżnością -- wiele połączeń musi być obsługiwanych w tym samym czasie
-\end{enumerate}
-
-\subsection{Ogląd sytuacji}
-
-Współczesny \emph{hardware} zmierza coraz bardziej w stronę współbieżności oraz przetwarzania równoległego.
-Firma AMD w roku 2018 wprowadziła na rynek konsumencki procesory wielordzeniowe z serii
-Threadripper\footnote{https://www.amd.com/en/products/ryzen-threadripper} prezentujące nawet 32 rdzenie logiczne.
-
-Współczesny \emph{software} stoi w miejscu. Poza oprogramowaniem specjalistycznym (np.
-Blender\footnote{https://www.blender.org/}) mało który program jest w stanie wykorzystać więcej niż kilka wątków.
-Współbieżności szuka się nieco ''na siłę''; np. przeglądarki internetowe uruchamiają współbieżnie obsługę
-wielu kart.
-
-Mainstreamowe języki w większości korzystają z wątków (np. Java, C++) lub są stricte jednowątkowe i
-niedostosowane do przetwarzania współbieżnego i równoległego (np. Python).
-
-Dla takich języków tworzone są biblioteki ułatwiające wykorzystanie mechanizmów systemu operacyjnego
-(np.~wieloprocesowość dla języka Python) lub cała infrastruktura umożliwiająca rozproszenie pracy,
-np.~sewery pracy (np. Gearman, Celery) czy kolejki wiadomości (np. RabbitMQ, ZeroMQ).
-To wszystko są jednak jedynie ''łatki'' mające za zadanie dodać do istniejących języków mechanizmy, z którymi
-pierwotnie nie były one projektowane. Istnieje dla takiego działania angielski termin bardzo dobrze oddający
-jego postać: \emph{retrofitting}.
-
-Istnieją środowiska i języki zaprojektowane od zera z myślą o współbieżności i przetwarzaniu równoległym, a
-nawet rozproszonym.
-Najbardziej znanym przykładem takiego środowiska jest BEAM -- maszyna wirtualna
-języka Erlang\footnote{http://www.erlang.org/}. To środowisko wraz z językiem jest z powodzeniem
-wykorzystywane w sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których
-działanie obejmuje niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach
-komunikatora Discord\footnote{https://discordapp.com/}.
-
-\section{Cel}
-
-Ta praca inżynierska motywowana jest chęcią stworzenia bazy programistycznej (środowiska uruchomieniowego i
-języka programowania) umożliwiającej programistom pisanie oprogramowania od początku uwzględniającego
-przetwarzanie współbieżne na pierwszym miejscu, oraz charakteryzującego się wysokim poziomem niezawodności i
-stabliności działania.
-
-Osiągniemy to dzięki zbudowaniu języka wyposażonego w łatwo dostępne konstrukcje umożliwiające wprowadzenie
-współbieżności do programu, oraz uruchamianiu programów wynikowych w środowisku zdolnym do rozłożenia pracy na
-całość dostępnych zasobów sprzętowych.
-
-\subsection{Problemy i ryzyko}
-
-Postawienie współbieżności na pierwszym miejscu powoduje, że problemy związane z pisaniem poprawnych programów
-są bardziej liczne niż w innych (niewspółbieżnych) językach -- oprócz zapewnienia poprawności pojedynczego
-procesu, programista musi zadbać o poprawność interakcji między procesami, oraz o stabilność działania
-oprogramowania w momencie awarii któregoś z procesów składowych programu.
-
-Zminimalizujemy ryzyko płynące z wprowadzenia współbieżności do warsztatu programistów udostępniając im
-mechanizmy umożliwiające opanowanie awarii, propagowanie informacji o błędach, oraz izolację poszczególnych
-procesów składowych.
-
-\chapter{Strategia prowadzenia prac}
-
-W tym rozdziale opisujemy metodologię prac nad poszczególnymi częściami projektu. Każda z nich była rozwijana
-innym sposobem z dużych rozbieżności specyfiki konkretnych problemu -- zupełnie inaczej pracuje się nad
-semi-formalną specyfikacją języka programowania niż nad aplikacją użytkową, więc podjęliśmy decyzję o
-rozdzieleniu tych części i poprowadzeniu ich jako osobne, mniejsze projekty wewnątrz pracy inżynierskiej.
-
-\section{Język ViuAct}
-
-% Specyfikacja. Analiza wymagań. Formalizm. Kaskada.
-
-Tworzenie specyfikacji języka odbywa się w modelu kaskadowo-prototypowym i przeplata się z implementacją
-prototypu kompilatora.
-
-\subsection{Określenie wymagań}
-
-Przed rozpoczęciem specyfikowania poszczególnych konstrukcji językowych należało podjąć decyzję co w języku
-powinno się znaleźć, a co nie powinno zostać włączone do specyfikacji.
-
-\subsection{Specyfikacja konkretnej konstrukcji języka}
-
-Każda konstrukcja językowa jest najpierw projektowana, następnie dokumentowana i omawiana (żeby wychwycić
-pewne oczywiste błędy ,,grube'' na wczesnym etapie prac). Potem proces specyfikacji zostaje zawieszony do
-momentu wytworzenia w kompilatorze prototypu danej konstrukcji, lub odrzucenia jej jako niewykonalnej w
-zakładanym czasie lub zakresie funkcjonalności.
-
-Wynik prac prototypowych (sukces bądź porażka) decyduje o tym czy prace specyfikacyjne są prowadzone dalej.
-Jeśli konstrukcja jest możliwa do zaimplementowania jej specyfikacja jest formalizowana oraz przygotowana dla
-niej zostaje dokumentacja (obejmująca m.in. przykłady użycia).
-
-\section{Kompilator języka ViuAct}
-
-Issue tracking, open-source. Prototypowanie. Iteracja.
-Prace przeplatają się z pracami nad specyfikacją celem walidacji co jest możliwe.
-
-\subsection{Testowanie}
-
-Zestaw prostych programów testowych. Test sprawdza czy program się kompiluje i czy po uruchomieniu daje
-spodziewane wyniki.
-
-\section{Program ViuaChat}
-
-Mini-SCRUM.
-
-\subsection{Testowanie}
-
-Jak wygląda testowanie czatu.
-
-\chapter{Dokumentacja prac}
-
-\section{Specyfikacja języka ViuAct}
-
-Tworzenie formalnej specyfikacji języka ViuAct było, paradoksalnie, procesem mało sformalizowanym. Polegało
-na określeniu głównych założeń języka (opisanych w rozdziale
-\ref{specyfikacja_jezyka_viuact_model_programowania}
-\nameref{specyfikacja_jezyka_viuact_model_programowania}).
-
-\section{Implementacja kompilatora}
-
-Issue tracking. Zapis issue, daty rozpoczęcia i zakończenia, branche z Git. Trochę słowno-muzycznego opisu co
-się działo podczas prac.
-
-\section{Implementacja ViuaChat}
-
-Opis prac nad implementacją ViuaChat.
-
-\chapter{Język ViuAct i jego kompilator -- formalności}
+\chapter{Język ViuAct i jego kompilator -- założenia}
 
 W tym rozdziale prezentujemy wszelkie ''formalności'' związane z pierwszą częścią naszej pracy, czyli
 dokumenty takie jak DZW\footnote{Dokument Założeń Wstępnych} czy SWS\footnote{Spis Wymagań Systemowych}.
@@ -272,7 +119,7 @@ Niedeterminizm wynikający z równoległego działania aktorów stwarza problemy
 
 \include{viuact/manual}
 
-\chapter{Program ViuaChat -- formalności}
+\chapter{Program ViuaChat -- założenia}
 
 \include{chat/sws}
 
@@ -287,18 +134,29 @@ Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematyczn
 
 \include{chat/spu}
 
-\chapter{Wpływ pracy na platformę Viua VM}
+\chapter{Raport końcowy}
+
+\section{Sukcesy}
+
+Podsumowanie prac.
+Pochwalić się co się udało zrobić, jakie efekty osiągnęliśmy, co się sprawdziło.
+
+\section{Niepowodzenia} %% Jakąś lepszą nazwę dla tego rozdziału trzeba wymyślić.
+
+Opisać co się nie udało, z czym nie zdążyliśmy, z czego musieliśmy zrezygnować, co okazało się niemożliwe.
+
+\section{Wpływ pracy na platformę Viua VM}
 
 W tym rozdziale omówiony jest wpływ naszej pracy inżynierskiej na platformę Viua VM; zarówno na implementację
 samej maszyny wirtualnej i dopracowanie jej mechanizmów (np. doprowadzenie systemu modułów do stanu
 używalności), ale też na ,,ekosystem'' dookoła niej -- nowe moduły biblioteki standardowej i zewnętrzne.
 
-\section{System modułów}
+\subsection{System modułów}
 
 Viua VM musiała zostać wyposażona w system modułów. Wymagane było przeprojektowanie i ,,ucywilizowanie''
 stanu, w którym system modułów Viua VM się znajdował przed rozpoczęciem prac nad projektem inżynierskim.
 
-\section{Moduł do obsługi protokołu WebSocket}
+\subsection{Moduł do obsługi protokołu WebSocket}
 
 Do wykonania czatu potrzebny był moduł do obsługi protokołu WebSocket.
 
@@ -309,10 +167,10 @@ Do wykonania czatu potrzebny był moduł do obsługi protokołu WebSocket.
 
 \section{Marek Marecki}
 
-\include{common/glossary}
-
 \chapter{Bibliografia}
 
 Książki. Internetowe materiały. Materiały wykładowe. Opracowania własne.
+
+\chapter{Załączniki}
 
 \end{document}
