@@ -1,2 +1,36 @@
 \chapter{Język ViuAct i jego kompilator -- implementacja}
 \label{viuact_impl}
+\label{jezyk_viuact_i_jego_kompilator}
+
+Pierwszą częścią naszej pracy jest zaprojektowanie wysokopoziomowego języka programowania i opracowanie jego
+implementacji. Z uwagi na to, że platforma uruchomieniowa, którą wykorzystujemy (czyli Viua VM) jest maszyną
+wirtualną wykonującą programy w postaci \emph{bytecode} wybranym sposobem implementacji języka jest
+kompilator - program tłumaczący kod źródłowy w jednym języku na kod źródłowy w innym języku przy jednoczesnym
+zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym jest język Viuact (dokładniej
+opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
+\pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
+
+\input{viuact/ps/architektura}
+
+\input{viuact/ps}
+
+\section{Testowanie}
+
+Testy kompilatora.
+
+\subsection{Zestaw przypadków testowych}
+
+Jeden testowy program na każdą funkcjonalność języka.
+Kilka większych testowych programów sprawdzających integrację języka, np. wielomodułowych, wykorzystujących
+moduły obce.
+
+\subsection{Wykonanie testów}
+
+Opis tego jak wygląda uruchomienie testów, w jaki sposób został zbudowany framework, itp.
+
+\subsection{Trudności w testowaniu}
+
+Niedeterminizm wynikający z równoległego działania aktorów stwarza problemy w testach. Trzeba uciekać się do
+"sztuczek", np. sortowanie wyników programu testowego.
+
+\input{viuact/manual}
