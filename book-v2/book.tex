@@ -84,15 +84,13 @@ Praca została złożona za pomocą systemu \LaTeX.
 
 \newpage  %% Stara wersja
 
-\include{strategia}
-
 \chapter{Przebieg prac}
 
-\include{przebieg/specyfikacja_jezyka}
+\input{przebieg/specyfikacja_jezyka}
 
-\include{przebieg/implementacja_kompilatora}
+\input{przebieg/implementacja_kompilatora}
 
-\include{przebieg/implementacja_viuachat}
+\input{przebieg/implementacja_viuachat}
 
 \chapter{Język ViuAct i jego kompilator -- założenia}
 
@@ -101,9 +99,9 @@ dokumenty takie jak DZW\footnote{Dokument Założeń Wstępnych} czy SWS\footnot
 Opis projektu języka i jego implementacji prezentujemy w rozdziale \nameref{jezyk_viuact_i_jego_kompilator} na
 stronie~\pageref{jezyk_viuact_i_jego_kompilator}.
 
-\include{viuact/sws}
+\input{viuact/sws}
 
-\include{viuact/language_specification}
+\input{viuact/language_specification}
 
 \chapter{Język ViuAct i jego kompilator}
 \label{jezyk_viuact_i_jego_kompilator}
@@ -116,9 +114,9 @@ zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym 
 opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
 \pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
 
-\include{viuact/ps/architektura}
+\input{viuact/ps/architektura}
 
-\include{viuact/ps}
+\input{viuact/ps}
 
 \section{Testowanie}
 
@@ -139,11 +137,11 @@ Opis tego jak wygląda uruchomienie testów, w jaki sposób został zbudowany fr
 Niedeterminizm wynikający z równoległego działania aktorów stwarza problemy w testach. Trzeba uciekać się do
 "sztuczek", np. sortowanie wyników programu testowego.
 
-\include{viuact/manual}
+\input{viuact/manual}
 
 \chapter{Program ViuaChat -- założenia}
 
-\include{chat/sws}
+\input{chat/sws}
 
 \chapter{Program ViuaChat}
 \label{program_viuachat}
@@ -152,9 +150,9 @@ Drugą częścią naszej pracy jest program ViuaChat - chat internetowy o funkcj
 Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematycznych do rozmów, oraz rozmowy
 ''prywatne'' (tj. wyłączne dla dwóch użytkowników).
 
-\include{chat/ps}
+\input{chat/ps}
 
-\include{chat/spu}
+\input{chat/spu}
 
 \chapter{Raport końcowy}
 
