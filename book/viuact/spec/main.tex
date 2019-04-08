@@ -1,2 +1,839 @@
 \chapter{Specyfikacja języka ViuAct}
 \label{viuact_spec}
+\label{specyfikacja_jezyka_viuact}
+
+ViuAct jest językiem kładącym silny nacisk na funkcjonalność związaną z współbieżnością opartą na modelu
+aktorów. Większość konstrukcji językowych jest wyrażeniami (\emph{expressions}) zamiast ''stwierdzeniami''
+(\emph{statements}). Składnia języka przypomina składnię Lispa.
+
+Najciekawsze funkcjonalności języka ViuAct to:
+
+\begin{enumerate}
+    \item aktory
+    \item przekazywanie wiadomości
+    \item system modułów
+    \item funkcje zagnieżdżone i niemutowalne domknięcia
+    \item dowiązania \emph{\texttt{let}}
+\end{enumerate}
+
+\paragraph*{Aktory}
+
+Aktory są \emph{wewnętrznie sekwencyjnymi} (każdy aktor wykonuje sekwencyjny strumień instrukcji bez
+jakiejkolwiek współbieżności), izolowanymi od siebie procesami, które komunikują się za pomocą
+\emph{przekazywania wiadomości}.
+
+\paragraph*{Przekazywanie wiadomości}
+
+Przekazywanie wiadomości w ViuAct jest \emph{bezpośrednie} (wiadomości są przekazywane bezpośrednio między
+dwoma aktorami, bez użycia jakiegokolwiek kanału pośredniczącego), \emph{asynchroniczne} (wiadomość jest
+wysyłana, a kontrola natychmiast wraca do aktora nadawcy bez oczekiwania na odpowiedź od odbiorcy).
+Przekazywanie wiadomości nie daje gwarancji dostarczenia ani kolejności -- implementacja protokołu
+zapewniającego poprawność komunikacji leży po stronie ''przestrzeni użytkownika''.
+
+\paragraph*{System modułów}
+
+ViuAct zapewnia programiście system modułów. Moduły są automatycznie kompilowane i linkowane, w większości z
+poziomu języka, co redukuje poziom skomplikowania konfiguracji systemów budowania projektu.
+
+\paragraph*{Funkcje zagnieżdżone i niemutowalne domknięcia}
+
+Funkcje w ViuAct mogą być zagnieżdżane, i tworzyć niemutowalne domknięcia (ang. \emph{closures}) -- funkcje,
+które odwołują się do zmiennych zdefiniowanych w otaczającej je przestrzeni leksykalnej.
+
+\paragraph*{Dowiązania \emph{\texttt{let}}}
+
+Zmienne w ViuAct są typowane dynamicznie (czyli zmienna może być dowiązana do wartości wielu typów wewnątrz
+jednej funkcji), a wartości statycznie (każda wartość ma konkretny typ, który jest śledzony w czasie
+kompilacji). Dowiązania \emph{\texttt{let}} do jednej nazwy mogą być tworzone wiele razy, na przykład:
+
+\begin{lstlisting}
+(let conf (Config.from_file "/etc/some.config"))
+(let conf (Config.load_section conf "daemon"))
+\end{lstlisting}
+
+Po ponownym dowiązaniu nie jest możliwe dotarcie do poprzednio dowiązanej wartości, ale użycia zmiennej
+''przed'' ponownym dowiązaniem zachowują swoje znaczenie (\emph{prior art}: na takiej samej zasadzie działają
+dowiązania \emph{\texttt{let}} w językach OCaml i Rust).
+
+\section{Model programowania}
+\label{specyfikacja_jezyka_viuact_model_programowania}
+
+\subsection{Podział programu}
+
+Najmniejszym elementem możliwym do wykonania jest wyrażenie.
+Wyrażenia proste (\emph{simple expression}) są grupowane w wyrażenia złożone (\emph{compound expression}).
+Funkcje parametryzują wyrażenia.
+Funkcje są zebrane w modułach.
+
+\subsection{Wykonywanie programu}
+
+Program składa się z jednego lub większej ilości ''aktorów'' (procesów).
+Aktory są izolowane od siebie nawzajem i działają równolegle (wszystkie naraz).
+Wewnętrznie, każdy z aktorów wykonywany jest sekwencyjnie, bez jakiejkolwiek
+współbieżności.
+Wykonanie programu rozpoczyna się od funkcji \texttt{main}.
+
+\subsection{Komunikacja między aktorami}
+
+Aktory komunikują się ze sobą za pomocą ''wymiany wiadomości''.
+Wymiana wiadomości ma następujące cechy:
+
+\begin{enumerate}
+    \item jest asynchroniczna (nadawca nie jest blokowany do momentu aż odbiorca otrzyma
+        wiadomość)
+    \item nie daje gwarancji dostarczenia (nadawca nie ma gwarancji, że jego wiadomość
+        dotrze do odbiorcy)
+    \item nie daje gwarancji kolejności dostarczenia (nadawca nie ma gwarancji w jakiej
+        kolejności wysłane przez niego wiadomości dotrą do odbiorcy)
+\end{enumerate}
+
+Ten model wymiany wiadomości jest warunkowany faktem, że nie jest fizycznie
+możliwe zagwarantowanie poprawności komunikacji.
+
+\subsection{Obsługa błędów}
+
+Obsługa błędów jest realizowana za pomocą wyjątków. Viuact oferuje typową
+składnię \texttt{try-catch}.
+
+\section{Typy danych}
+
+\subsection{Typy proste}
+
+\subsubsection{Liczba całkowita}
+
+\emph{Liczba całkowita ze znakiem, o szerokości 64 bitów, kodowana z dopełnienem do
+dwóch}
+
+\subsubsection{Liczba zmiennoprzecinkowa}
+
+\emph{Liczba zmiennoprzecinkowa o szerokości 64 bitów kodowana w standardzie IEEE 754-2008}
+
+\subsubsection{Wartość boolowska}
+
+\emph{Wartość logiczna reprezentująca prawdę lub fałsz o szerokości 8 bitów}
+
+\subsubsection{Tekst}
+
+\emph{Ciąg znaków Unicode, kodowany w formacie UTF-8}
+
+\subsubsection{String}
+
+\emph{Ciąg 8-bitowych bajtów}
+
+\subsection{Typy złożone}
+
+\subsubsection{Wektor}
+
+\emph{Sekwencja wartości dowolnych typów danych, indeksowana od 0}
+
+\subsubsection{Struktura}
+
+\emph{Struktura agregująca wartości dowolnych typów danych, w której jedna
+wartość jest mapowana do jednego pola}
+
+\subsection{Typy platformy}
+
+\subsubsection{PID}
+
+\emph{Wartość identyfikująca aktora w programie}
+
+Jest to typ dostarczany przez Viua VM. Dla programów pisanych w Viuact jest to
+typ nieprzezroczysty.
+
+\section{Konstrukcje języka}
+
+\subsection{Wyrażenia}
+\label{language_expressions}
+
+\texttt{expression := \emph{literal} \\
+\phantom{expression :}| \emph{name} \\
+\phantom{expression :}| \emph{fn-call} \\
+\phantom{expression :}| \emph{actor-call} \\
+\phantom{expression :}| \emph{operator-call} \\
+\phantom{expression :}| \emph{try-expr} \\
+\phantom{expression :}| \emph{if-expr}}
+\\
+\texttt{expression := \{ \emph{expression}+ \}}
+
+\begin{lstlisting}
+42
+true
+3.14
+"Hello World!"
+x
+(print x)
+(actor server_loop sock)
+(+ x 1)
+
+; compound expression
+{
+    (let x 42)
+    (print (+ x 1))
+    x
+}
+\end{lstlisting}
+
+Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
+reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (''\emph{run-time}'')
+zależnie od wcześniejszego stanu programu.
+
+Większość konstrukcji jezykowych oferowanych przez Viuact może być użyta jako wyrażenie.
+Wyjątki to definicje zmiennych, definicje funkcji, definicje modułów, i przypisanie do pola struktury.
+
+\subsubsection{Wyrażenia złożone}
+
+Wyrażenia złożone są wyrażeniami składającymi się z kilku wyrażeń ograniczonych nawiasami klamrowymi.
+Wyrażenia składowe wyrażenia złożonego są wykonywane po kolei, a końcowa wartość wyrażenia złożonego jest
+wartością ostatniego wyrażenia składowego.
+
+Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \texttt{42}:
+
+\begin{lstlisting}
+{
+    (let x 42)
+    (print x)
+    x   ; %*wartość zwracana z tego wyrażenia jest wartością przechowywaną pod nazwą x*)
+}
+\end{lstlisting}
+
+Wyrażenia złożone mogą być dowolnie zagnieżdżane. Mimo iż składają się z potencjalnie wielu wyrażeń
+wyrażenia złożone są traktowane jako jedno wyrażenie -- mogą być wykorzystywane wszędzie tam gdzie składnia
+języka wymaga użycia pojedynczego wyrażenia (definicje funkcji, wyrażenia kontrolne w konstrukcji warunkowej,
+wyrażenia obsługi w konstrukcji \texttt{try}, itp.). Na przykładzie poniżej prezentowane jest dowiązanie
+\emph{\texttt{let}} do wartości wyrażenia złożonego:
+
+\begin{lstlisting}
+(let x {
+    (let z (do_stuff))
+    (print z)
+    z
+})
+\end{lstlisting}
+
+\subsection{Definicje zmiennych}
+
+\texttt{let-binding := (let \emph{name} \emph{expression})}
+
+\begin{lstlisting}
+(let i 42)
+(let f -3.14)
+(let t "Hello World!")
+\end{lstlisting}
+
+Definicje zmiennych przypisują wartości wyrażeń do nazw.
+
+\subsection{Wywołanie operatora}
+
+\texttt{(\emph{operator} \emph{lhs} \emph{rhs})}
+
+\begin{lstlisting}
+(+ x 1)
+(* a b)
+\end{lstlisting}
+
+Operatory są zapisywane w konwencji prefiksowej (tj. najpierw operator, potem operandy).
+
+\subsubsection{Operatory binarne (dwuargumentowe) logiczne}
+
+Binarne operatory logiczne pobierają dwie wartości, i produkują wartość logiczną.
+
+\begin{labeling}{and}
+    \item[\texttt{or}] pobiera dwie dowolne wartości; \texttt{(or a b)}
+    \item[\texttt{and}] pobiera dwie dowolne wartości; \texttt{(and a b)}
+    \item[\texttt{=}] pobiera dwie wartości liczbowe; \texttt{(= a b)}
+    \item[\texttt{!=}] pobiera dwie wartości liczbowe; \texttt{(!= a b)}
+    \item[\texttt{<}] pobiera dwie wartości liczbowe; \texttt{(< a b)}
+    \item[\texttt{<=}] pobiera dwie wartości liczbowe; \texttt{(<= a b)}
+    \item[\texttt{>}] pobiera dwie wartości liczbowe; \texttt{(> a b)}
+    \item[\texttt{>=}] pobiera dwie wartości liczbowe; \texttt{(>= a b)}
+\end{labeling}
+
+\subsubsection{Operatory binarne (dwuargumentowe) arytmetyczne}
+
+Operatory arytmetyczne pobierają dwie wartości liczbowe i produkują wartość liczbową zgodną z typem operandu
+lewej strony (\emph{left-hand side}).
+
+\begin{lstlisting}
+let op : Ta -> Tb -> Ta
+\end{lstlisting}
+
+\begin{labeling}{+}
+    \item[\texttt{+}] dodaje dwie wartości liczbowe
+    \item[\texttt{-}] odejmuje dwie wartości liczbowe, \emph{\texttt{rhs}} jest odejmowany od
+        \emph{\texttt{lhs}}
+    \item[\texttt{*}] mnoży dwie wartości liczbowe
+    \item[\texttt{/}] dzieli dwie wartości liczbowe, \emph{\texttt{lhs}} jest dzielony przez
+        \emph{\texttt{rhs}}
+\end{labeling}
+
+\subsubsection{Operator dostępu}
+
+\texttt{id := \emph{name}} \\
+\texttt{id := \emph{id} . \emph{name}}
+
+\begin{lstlisting}
+(let x a_struct.some_field)
+(let sock (Std.Posix.Network.socket))
+\end{lstlisting}
+
+\begin{description}
+    \item[\texttt{.}] operator dostępu do składowych modułów i pól struktur, w zależności od kontekstu
+\end{description}
+
+\subsubsection{Operatory unarne (jednoargumentowe)}
+
+\begin{description}
+    \item[\texttt{not}] negacja logiczna, pobiera dowolną wartość i produkuje jej odwrotność logiczną
+    \item[\texttt{\^}] dereferencja wskaźnika
+\end{description}
+
+\subsection{Przypisanie do pola struktury}
+
+\texttt{(:= \emph{field} \emph{expression})}
+
+\begin{lstlisting}
+(let x (struct))
+(:= x.field 42)
+\end{lstlisting}
+
+Operator przypisania do pola struktury powoduje utworzenie żądanego pola w strukturze (jeśli wcześniej nie
+istniało) lub aktualizację wartości przechowywanej w tym polu (jeśli wcześniej istniało).
+
+\subsection{Definicje funkcji}
+
+\texttt{function-definition := (let \emph{name} (\emph{formal-parameters}) \emph{expression})}
+
+\begin{lstlisting}
+(let f (x) (+ x 1))
+(let f_with_print (x) {
+    (print x)
+    (+ x 1)
+})
+\end{lstlisting}
+
+O funkcjach w Viuact można myśleć jak o parametryzowanych wyrażeniach.
+
+\subsubsection{Parametry formalne}
+
+\texttt{formal-parameters := \emph{name}*}
+\\
+
+Parametry formalne (\emph{formal parameters}) są nazwami zmiennych widocznymi wewnątrz funkcji.
+Parametry faktyczne (\emph{actual parameters}) są wartościami przypisywanymi parametrom formalnym na etapie
+wykonania przez wywołującego.
+
+\subsubsection{Ciało funkcji}
+
+Ciało funkcji jest reprezentowane jednym wyrażeniem (może to być wyrażenie złożone).
+Wyrażenia są opisane w rozdziale
+\ref{language_expressions} na stronie \pageref{language_expressions}.
+
+\subsubsection{Wartość zwracana}
+
+Wartość zwracana z funkcji jest wartością, do której ewaluuje wyrażenie będące jej ciałem.
+
+\subsection{Definicje modułów}
+
+\texttt{inline-module-definition := (module \emph{module-name} (
+\newline
+\phantom{inline-module-definition := ~ }\emph{module-definition}*
+\newline
+\phantom{inline-module-definition := ~ }\emph{import}*
+\newline
+\phantom{inline-module-definition := ~ }\emph{function-definition}+
+))}
+\newline
+\texttt{module-definition := (module \emph{module-name}) \\
+\phantom{module-definition :}| \emph{inline-module-definition}}
+\newline
+
+Moduł jest zbiorem definicji modułów, deklaracji import, i definicji funkcji.
+Taka kolejność w kodzie źródłowym nie jest wymagana, ale kompilator w takiej kolejności przetwarza konstrukcje
+składające się na definicję modułu.
+
+\subsection{Wywołanie funkcji}
+
+\texttt{fn-call := (\emph{id} \emph{expression}*)}
+\newline
+
+Wywołanie funkcji jest reprezentowane przez podanie jej nazwy w nawiasach okrągłych, po której podane jest
+zero lub więcej wyrażeń, których wartości zostaną przypisane do odpowiednich parametrów formalnych.
+
+Funkcje, których definicje znajdują się w innych modułach niż aktualnie przetwarzany muszą być poprzedzone
+pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix.Network.socket}). Jedynie funkcje
+znajdujące się w tym samym module mogą być wywoływane bez pełnej ścieżki.
+
+\subsection{Wywołanie ''tailcall''}
+
+\texttt{(tailcall \emph{id} \emph{expression}*)}
+\newline
+
+Wywołania \emph{tailcall} powodują wywołanie funkcji nowej funkcje ''wykorzystując'' ramkę obecnej funkcji.
+W praktyce powodują natychmiastowe zdjęcie obecnej ramki ze stosu (co powoduje destrukcję wszystkich wartości
+w rejestrach lokalnych obecnej ramki, oraz uruchomienie wszelkich wywołań odroczonych) i wepchnięcie na szczyt
+stosu ramki dla funkcji wywołanej \emph{tailcall}.
+
+Wywołanie \emph{tailcall} nie ma bezpośredniej wartości zwracanej, ponieważ nie da się jej zaobserwować.
+Wywołanie \emph{tailcall} ''porywa'' (ang. ''hijacks'') punkt, do którego powinna zwrócić wartość funkcja,
+która wykonała takie wywołanie -- i dopiero ten punkt zaobserwuje de facto wartość zwróconą przez wywołanie
+\emph{tailcall}, ale z jego punktu widzenia wygląda to tak jakby tą wartość zwróciła funkcja, którą on
+bezpośrednio wywołał.
+
+\begin{lstlisting}
+(let g (x) (+ x 1))
+
+(let f (x) (tailcall g x))  ; call frame of f() is replaced by g()
+
+(let main () {
+    (let i (f 41))  ; here, i will be bound to value returned by g()
+    0
+})
+\end{lstlisting}
+
+Podmiana ramki jest niedostrzegalna dla wywołującego oryginalną funkcję.
+
+\subsection{Wywołanie odroczone}
+
+\texttt{(defer \emph{name} \emph{expression}*)}
+\newline
+
+Wywołania odroczone nie są wywoływane od razu (jak zwykłe wywołania funkcji, bądź wywołania \emph{tailcall}),
+ale dopiero w momencie, w którym ramka, w której zostały zarejestrowane jest zdejmowana ze stosu, niezależnie
+od powodu dla którego jest ona zdejmowana -- czy będzie to zwykły powrót, odwinięcie stosu wywołane przez
+wyjątek, czy wywołanie \emph{tailcall}.
+
+Wywołania odroczone są wykonywane w odwrotnej kolejności rejestracji. Jeśli odroczone wywołanie \texttt{f()}
+zostanie zarejestrowane przed odroczonym wywołaniem \texttt{g()}, to zostanie wykonane po nim. Dla przykładu:
+
+\begin{lstlisting}
+(let f () (print "from f()"))
+(let g () (print "from g()"))
+(let h () {
+    (defer f)
+    (defer g)
+    (print "from h()")
+    0
+})
+\end{lstlisting}
+
+Wywołując funkcję \texttt{h()} na standardowym wyjściu pojawi się następujący tekst:
+
+\begin{verbatim}
+from h()
+from g()
+from f()
+\end{verbatim}
+
+Funkcja uruchomiona w wywołaniu odroczonym może zarejestrować swoje wywołania odroczone; takie wywołania
+mogą być zagnieżdżane bez ograniczeń.
+
+Wywołania odroczone są uruchamiane po zakończeniu działania funkcji, w której zostały zarejestrowane, ale
+przed zniszczeniem wartości, które były umieszczone w jej zmiennych lokalnych. Ten fakt może zostać
+wykorzystany do implementacji zarządzania zasobami -- jeśli wywołanie odroczone ma jakikolwiek uchwyt (np.
+wskaźnik) do zasobu to może wykonać dla niego jakąś logikę finalizacji. W takim celu po utworzeniu zasobu
+najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ''finalizacji''.
+
+\begin{lstlisting}
+(let f () {
+    ; ...
+
+    (let x (Some_module.reserve_resource))
+    (defer Some_module.free_resource (Std.pointer x))
+
+    ; ...
+})
+\end{lstlisting}
+
+\subsection{Wywołanie aktora}
+
+\texttt{(actor \emph{name} \emph{expression}*)}
+
+\subsubsection{Fork-join}
+
+Metoda \emph{fork-join} może być zrealizowana w Viuact za pomocą aktorów. Jeśli wynik wywołania aktora jest
+przypisywany do zmiennej, to aktor będzie działał jako ''\emph{aktor potomny}'' aktora, który go wywołał. Taki
+aktor potomny może być włączony (\emph{join}) za pomocą wywołania funkcji wbudowanej \texttt{Std.Actor.join()}
+z biblioteki standardowej (opisanej na stronie \pageref{Std_Actor_join}).
+
+\begin{lstlisting}
+(let p (actor foo x))           ; %*aktor stworzony z funkcji foo*)
+                                ; %*wykonuje się równolegle*)
+(let result (Std.Actor.join p)) ; %*wynik pracy aktora będzie dostępny*)
+                                ; %*w zmiennej result*)
+\end{lstlisting}
+
+Funkcja \texttt{Std.Actor.join()} zwraca wartość, którą zwróciła funkcja uruchomiona jako aktor lub wyjątek,
+który tego aktora zabił. Aktor pochodny nie utworzy zrzutu stosu -- w razie awarii jego wyjątek jest
+zachowywyany i czeka na włączenie.
+
+\subsubsection{Wolne aktory}
+
+Wolne aktory to aktory, których adres nie był przypisany do zmiennej w momencie ich utworzenia. Są one
+niezwiązane w żaden sposób z aktorem, który je utworzył. W przeciwieństwie do aktorów potomnych aktorów
+wolnych nie można włączyć za pomocą funkcji \texttt{Std.Actor.join()}.
+
+Aktory wolne w razie awarii tworzą zrzuty stosu.
+
+Typowym sposobem na uzyskanie adresu aktora wolnego jest takie zaprojektowanie programu żeby aktor wolny jako
+jeden z parametrów przyjmował PID, na który powinien wysłać \emph{swój} PID po wystartowaniu. Dla przykładu:
+
+\begin{lstlisting}
+(actor Some_module.free_actor (Std.Actor.self))
+(let p (Std.Actor.receive))
+\end{lstlisting}
+
+Funkcja \texttt{Std.Actor.self()} pozwala aktoromi uzyskać swój własny PID.
+
+\subsection{Konstrukcja warunkowa}
+
+\texttt{(if \emph{condition-expression} \emph{true-arm} \emph{false-arm})}
+\newline
+
+Konstrukcja warunkowa składa się z trzech wyrażeń:
+
+\begin{description}
+    \item[\texttt{condition-expression}] wyrażenie, które po obliczeniu warunkuje, które wyrażenie będzie
+        obliczane w następnym kroku
+    \item[\texttt{true-arm}] wyrażenie będzie obliczone jeśli \texttt{condition-expression} ewaluuje do prawdy
+    \item[\texttt{false-arm}] wyrażenie będzie obliczone jeśli \texttt{condition-expression} ewaluuje do
+        fałszu
+\end{description}
+
+\begin{lstlisting}
+(if (= x 42)
+    (print "%*Odpowiedź na sens życia, Wszechświata, i w ogóle wszystkiego.*)")
+    (print "Nie bardzo.")
+)
+\end{lstlisting}
+
+\subsection{Wywołanie ,,watchdog''}
+
+\texttt{(watchdog \emph{name} \emph{expression}*)}
+\newline
+
+Watchdog jest ostatnią linią obrony danego aktora przed niekontrolowanym zamknięciem w wyniku błędu programu.
+Jeśli aktor nie obsłużył błędu (reprezentowanego przez wyjątek) i jego stos wywołań został całkowicie
+odwinięty, ale aktor ma ustawiony watchdog to VM ,,w miejscu'' podmieni odwinięty stos na wywołanie funkcji
+ustawionej jako watchdog.
+
+Oznacza to, że aktor zamiast zostać zabity zacznie wykonywać funkcję ustawioną jako watchdog -- jednocześnie
+zachowując PID, co może być bardzo przydatne.
+
+Watchdog jest normalną funkcją i może korzystać ze wszystkich dozwolonych konstrukcji językowych.
+Jedynym ograniczeniem jest to, że watchdog musi być napisany w języku ViuAct lub w języku assemblera Viua VM.
+
+\paragraph*{Argumenty funkcji watchdog}
+
+\begin{lstlisting}
+(let use_as_watchdog (error controller) {
+    (let report (struct))
+    (:= report.error error)
+    (:= report.pid (Std.Actor.self))
+    (Std.Actor.send controller error)
+})
+
+(let some_other_function (controller) {
+    (watchdog use_as_watchdog controller)
+})
+\end{lstlisting}
+
+Jako pierwszy argument watchdog zawsze otrzymuje \texttt{struct} zawierający informacje o błędzie, który
+spowodował awarię aktora. Jako pozostałe argumenty otrzymuje to co zostało przekazane w wywołaniu.
+Czyli ,,pierwszy'' argument użyty w wywołaniu będzie tak naprawdę drugi z punktu widzenia funkcji użytej jako
+watchdog.
+
+\paragraph*{Błędy wewnątrz watchdog}
+
+Jeśli podczas wykonywania funkcji ustawionej jako watchdog wystąpi kolejny nieobsłużony błąd aktor zostanie
+natychmiast zabity, a watchdog nie będzie uruchomiony przez VM ,,z powodu samego siebie''.
+
+\subsection{Obsługa wyjątków}
+
+\texttt{(try \emph{expression} ((catch \emph{exception-tag} \emph{name} \emph{expression})+))}
+
+\begin{lstlisting}
+(let x (try (Std.Actor.receive 1s)) (
+    (catch Exception _ {
+        (print "Did not receive a message in time.")
+        0   ; return a default value
+    })
+))
+\end{lstlisting}
+
+\subsection{Wyliczenia}
+
+\texttt{(enum \emph{enum-name} (\emph{enum-member}+))}
+\newline
+
+Wyliczenia przydatne są do reprezentowania pewnego skończonego zbioru możliwych wartości. Ułatwiają one
+zachowanie porządku w programie dzięki umożliwieniu wyliczenia możliwych stanów pewnych zmiennych, oraz
+redukują możliwość popełnienia błędu dzięki utrzymaniu jednej definicji tych stanów.
+
+\begin{lstlisting}
+(enum Good_languages (
+    Cpp
+    OCaml
+    ViuAct
+))
+
+(enum Bad_languages (
+    Perl
+    Bash
+    JavaScript
+))
+\end{lstlisting}
+
+Wyliczenia mogą pojawić się jedynie na poziomie modułu, w tym na poziomie modułu anonimowego niejawnie
+dodawanego do plików z kodem źródłowym kompilowanym do plików wykonywalnych. Wyliczeń nie można tworzyć
+wewnątrz funkcji.
+
+\section{Biblioteka standardowa}
+
+Biblioteka standardowa języka Viuact składa się z modułów implementujących wybrane algorytmy (np. sortowanie)
+i funkcjonalności (np. konwersje między typami danych), oraz umożliwia interakcję ze środowiskiem zewnętrznym
+gdyż Viuact nie posiada wbudowanych w język mechanizmów takiej interakcji.
+
+Część funkcji udostępnianych przez bibliotekę standardową jest niemożliwa do zaimplementowania w języku
+Viuact. Takie funkcje są napisane albo w języku assemblera Viua VM, albo w języku C++.
+
+Nie wszystkie funkcje biblioteki standardowej są ''normalnymi'' funkcjami, możliwymi do uruchomienia jako
+aktor ponieważ niektóre z nich kompilują się do pojedynczych instrukcji maszyny (funkcje ''wbudowane'') albo
+są napisane w języku C++, który jest niemożliwy do wywłaszczenia przez Viua VM (funkcje ''obce'').
+
+Dla takich funkcji programista musi napisać \emph{wrappery} jeśli chce użyć ich jak w niektórych kontekstach.
+Jednak w typowym programie nie będzie to potrzebne, gdyż funkcje biblioteki standardowej zazwyczaj
+implementują atomowe zadania, których sens uruchamiania w osobnych aktorach jest ograniczony.
+
+\begin{center}
+\emph{Należy pamiętać, że opis biblioteki standardowej \textbf{nie} jest ostateczny i może ulec zmianie w
+trakcie trwania projektu. Z tego powodu funkcje są opisane skrótowo, a dokumentacja nie jest wyczerpująca.}
+\end{center}
+
+Moduł \texttt{Std.Actor} jest opisany na stronie \pageref{stdlib_Std_Actor}.
+Moduł \texttt{Std.Io} jest opisany na stronie \pageref{stdlib_Std_Io}.
+Moduł \texttt{Std.Posix.Network} jest opisany na stronie \pageref{stdlib_Std_Posix_Network}.
+Moduł \texttt{Std.Random} jest opisany na stronie \pageref{stdlib_Std_Random}.
+
+\subsection{\texttt{Std.Actor}}
+\label{stdlib_Std_Actor}
+
+Moduł udostępniający funkcjonalność związaną z wymianą wiadomości i modelem aktorów.
+
+\subsubsection{\texttt{Std.Actor.join()}}
+\label{Std_Actor_join}
+
+\begin{small}
+\begin{lstlisting}
+Std.Actor.join(Pid) -> Value
+\end{lstlisting}
+\end{small}
+
+Oczekuje na zakończenie wykonywania przez aktora o podanym PID, po czym zwraca wynik jego pracy.
+Może powodować zgłoszenie wyjątku jeśli aktor o podanym PID zakończył wykonywanie z powodu błędu, lub jeśli aktor
+o podanym PID nie istnieje.
+
+\subsubsection{\texttt{Std.Actor.self()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Actor.self() -> Pid
+\end{lstlisting}
+\end{small}
+
+Zwraca PID obecnego aktora.
+
+\subsubsection{\texttt{Std.Actor.receive()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Actor.receive() -> Value
+\end{lstlisting}
+\end{small}
+
+Oczekuje na nadejście wiadomości.
+
+\subsection{\texttt{Std.Io}}
+\label{stdlib_Std_Io}
+
+Moduł udostępniający mechanizmy I/O (\emph{wejścia-wyjścia}). Umożliwia on prowadzenie I/O na plikach, oraz
+interakcji z konsolą użytkownika (\texttt{tty}).
+
+\subsubsection{\texttt{Std.Io.stdin\_getline() -> String}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.socket() -> Integer
+\end{lstlisting}
+\end{small}
+
+Umożliwia odczytanie pojedynczej linii ze strumienia standardowego wejścia (\emph{\texttt{stdin}}).
+
+\subsection{\texttt{Std.Posix.Network}}
+\label{stdlib_Std_Posix_Network}
+
+Moduł udostępniający implementację ''POSIX sockets''. Jest to cienka abstrakcja nad API dostarczanym przez
+system operacyjny; w przypadku braków w tym dokumencie ich dokumentację można wydedukować ze stron manuala
+sekcji 3 dostarczanych przez program \texttt{man(1)} (np. dokumentację dla funkcji
+\texttt{Std.Posix.Network.socket} można uzyskać wykonując polecenie \texttt{man 3 socket}).
+
+\begin{center}
+\emph{Wszystkie funkcje w tym module są blokujące i nie mają timeoutu. Może to spowodować zagłodzenie
+schedulerów I/O w Viua VM. Na późniejszym etapie projektu ten błąd zostanie wyeliminowany.}
+\end{center}
+
+\subsubsection{\texttt{Std.Posix.Network.socket()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.socket() -> Integer
+\end{lstlisting}
+\end{small}
+
+Tworzy socket za pomocą wywołania funkcji \texttt{socket(3)}.
+Socket jest w rodzinie \texttt{AF\_INET}, rodzaju \texttt{SOCK\_STREAM}, i jest tworzony bez flag.
+
+\subsubsection{\texttt{Std.Posix.Network.connect()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.connect(
+      socket : Integer
+    , addr   : Text
+    , port   : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{connect(3)}.
+
+\subsubsection{\texttt{Std.Posix.Network.bind()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.bind(
+      socket : Integer
+    , addr   : Text
+    , port   : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{bind(3)}.
+
+\subsubsection{\texttt{Std.Posix.Network.listen()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+      socket  : Integer
+    , backlog : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{listen(3)}.
+
+\subsubsection{\texttt{Std.Posix.Network.accept()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.accept(socket : Integer) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{accept(3)}.
+
+\subsubsection{\texttt{Std.Posix.Network.write()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.write(
+      socket : Integer
+    , value  : Value
+) -> Int
+\end{lstlisting}
+\end{small}
+
+Niezależnie od tego jaka wartość jest przekazana do funkcji, będzie najpierw przekonwertowana na
+\texttt{String}, a potem wpisana do socketu.
+
+\subsubsection{\texttt{Std.Posix.Network.read()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.read(
+    socket  : Integer
+) -> String
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{read(3)}. Odczytuje z socketu maksymalnie 1024 bajty.
+
+\subsubsection{\texttt{Std.Posix.Network.recv()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.recv(
+      socket        : Integer
+    , buffer_length : Integer
+) -> String
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{recv(3)}. Odczytuje z socketu maksymalnie \texttt{buffer\_length} bajtów.
+
+\subsubsection{\texttt{Std.Posix.Network.shutdown()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+    socket  : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{shutdown(3)}.
+Wyłącza socket z flagą \texttt{SHUT\_RDWR}.
+
+\subsubsection{\texttt{Std.Posix.Network.close()}}
+
+\begin{small}
+\begin{lstlisting}
+Std.Posix.Network.listen(
+      socket  : Integer
+) -> Void
+\end{lstlisting}
+\end{small}
+
+Wrapper na funkcję \texttt{close(3)}.
+
+
+\subsection{\texttt{Std.Random}}
+\label{stdlib_Std_Random}
+
+Moduł udostępniający dostęp do liczb losowych ogólnego przeznaczenia (\texttt{/dev/urandom}) oraz zdatnych do
+zastosowań kryptograficznych (\texttt{/dev/random}).
+
+\section{Interakcja z platformą}
+
+''Platformą'' w przypadku Viuact jest Viua VM. Narzuca to pewne ograniczenia związane ze środowiskiem, w
+którym programy napisane w języku Viuact można skompilować i uruchomić. Wynika to z faktu, że Viua VM sama w
+sobie ma pewną platformę i wymagania.
+
+\subsection{Platforma kompilacji}
+
+Do kompilacji programów napisanych w Viuact potrzebny jest interpreter języka Python 3 w wersji co najmniej
+3.6. Jest to jedyne ograniczenie, ponieważ na etapie kompilacji Viuact nie odwołuje się do żadnego elementu
+Viua VM.
+
+\subsection{Platforma asemblacji i linkowania}
+
+Asemblacja i linkowanie odbywa się z użyciem narzędzi dostarczanych przez Viua VM.
+Oprócz interpretera języka Python 3 potrzebny jest assembler dostarczany przez Viua VM. Oznacza to, że etap
+asemblacji i linkowania może odbywać się jedynie na platformie zgodnej z POSIX-2008, wyposażonej w kompilator
+obsługujący standard C++17 (są to wymagania Viua VM).
+
+\subsection{Platforma uruchomieniowa}
+
+Uruchomienie odbywa się w całości przy użyciu narzędzi dostarczanych przez Viua VM.
+Ograniczenia i zależności są na tym etapie całkowicie zależne od wymagań narzucanych przez Viua VM.
