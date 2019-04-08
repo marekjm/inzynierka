@@ -1,0 +1,360 @@
+\section{Projekt struktury}
+
+\subsection{Wykorzystywane struktury danych}
+
+Brak jest rozbudowanego diagramu klas, ponieważ program nie jest pisany w stylu obiektowym.
+W programie istnieją dwie główne grupy struktur opisujące elementy języka -- typy tokenów i typy grup
+(reprezentujących konstrukcje językowe), struktura reprezentująca adres rejestru (abstrakcyjny ''slot'' na
+wartości), struktura reprezentująca stan kompilowanego programu, oraz cztery struktury reprezentujące
+niskopoziomowe abstrakcje linii programu w języku assemblera -- konstruktor, przeniesienie, wywołanie, i
+''\emph{verbatim}''.
+
+\subsubsection{Tokeny}
+\label{diagram_klas_tokeny}
+
+Każdy typ tokenu jest reprezentowany przez osobną strukturę. Tokeny, oprócz swojego typu mają atrybuty
+określające ich lokalizację w pliku (wiersz i kolumna), oraz pole z leksemem. Typy tokenów wymagane do
+reprezentacji języka ViuAct są opisane w specyfikacji języka.
+
+Definicje struktur reprezentujących tokeny są zawarte w pliku \texttt{src/token\_types.py}.
+
+\subsubsection{Grupy}
+\label{diagram_klas_grupy}
+
+Każda konstrukcja językowa jest reprezentowana przez osobną strukturę. Konstrukcje wymagane do reprezentacji
+języka ViuAct są opisane w specyfikacji języka.
+
+Definicje struktur reprezentujących grupy są zawarte w pliku \texttt{src/group\_types.py}.
+
+\subsubsection{Slot}
+\label{diagram_klas_slot}
+
+\begin{lstlisting}
+enum Register_set =
+    | Local
+    | Parameters
+    | Arguments
+    | Closure_local
+
+type Slot = {
+    name         : string ;
+    index        : int ;
+    register_set : register_set ;
+}
+\end{lstlisting}
+
+Struktura \texttt{Slot} reprezentuje adres rejestru. Z punktu widzenia języka ViuAct istotne jest pole
+\texttt{name} (określające nazwę slotu jaką posługuje się programista); z punktu widzenia emitera kodu istotne
+są pola \texttt{index} i \texttt{register\_set} określające adres rejestru jakim posługuje się Viua VM.
+
+\subsubsection{Stan programu}
+\label{diagram_klas_stan_programu}
+
+Stan programu (struktura \texttt{State}) zawiera pola śledzące ilość zaalokowanych rejestrów, widoczne
+funkcje, a w przypadkach śledzenia stanu funkcji zagnieżdżonej -- także wykorzystywane sloty z otaczającego
+zakresu leksykalnego.
+
+\subsubsection{Konstruktor}
+\label{diagram_klas_konstruktor}
+
+\begin{lstlisting}
+type Ctor = {
+    of_type : string ;
+    slot    : Slot ;
+    value   : string ;
+}
+\end{lstlisting}
+
+Konstruktor reprezentuje instrukcję bezpośrednio tworzącą wartość w rejestrze. Przykładowo, aby wyemitować
+instrukcję \texttt{integer \%1 local 42} utworzony zostanie:
+
+\begin{lstlisting}
+{
+    of_type = "integer" ;
+    slot = { name = "x"; index = 1 ; Register_set.Local } ;
+    value = "42"
+}
+\end{lstlisting}
+
+\subsubsection{Przeniesienie}
+\label{diagram_klas_przeniesienie}
+
+\begin{lstlisting}
+enum Move_kind =
+    | Move
+    | Copy
+
+type Move = {
+    kind   : Move_kind ;
+    source : Slot ;
+    dest   : Slot option ;
+}
+\end{lstlisting}
+
+Przeniesienie opisuje przesunięcie (instrukcja \emph{\texttt{move}}) lub kopię wartości (instrukcja
+\emph{\texttt{copy}}). Slot docelowy nie musi być obecny - np. wtedy wartość jest przenoszona do slotu
+\texttt{void}.
+
+\subsubsection{Wywołanie}
+\label{diagram_klas_wywolanie}
+
+\begin{lstlisting}
+enum Call_kind =
+    | Synchronous
+    | Actor
+    | Tail
+    | Deferred
+
+type Call = {
+    kind : Call_kind ;
+    slot : Slot option ;
+    to   : string ;
+}
+\end{lstlisting}
+
+Wywołanie opisuje wywołanie funkcji w każdy sposób dostępny w języku ViuAct: zwykłe wywołanie funkcji,
+wywołanie tworzące aktora, wywołąnie \emph{tail call}, i wywołanie ''odroczone''.
+
+Typy wywołań opisane są w specyfikacji języka.
+
+\subsubsection{Linia ''\emph{verbatim}''}
+\label{diagram_klas_linia_verbatim}
+
+\begin{lstlisting}
+type Verbatim = {
+    text : string ;
+}
+\end{lstlisting}
+
+Linia \emph{verbatim} opisuje dowolną linię języka assemblera (m.in. dyrektywy \texttt{.import:} czy
+\texttt{.function:}).
+
+\emph{Emitter} (rozdział \ref{opis_etapow_kompilacji_emisja_kodu_wynikowego} na stronie
+\pageref{opis_etapow_kompilacji_emisja_kodu_wynikowego}) większość instrukcji tworzy za pomocą linii
+\emph{verbatim}. Jest to zabieg o tyle ''brzydki'' co efektywny; na etapie prototypowania bardzo szybko
+można w ten sposób wyemitować spory zakres instrukcji bez potrzeby projektowania struktury dla każdego typu
+instrukcji.
+
+\newpage
+\section{Decyzje projektowe}
+
+\subsection{Środowisko docelowe}
+
+Środowiskiem docelowym, na którym będą uruchamiane programy napisane w języku ViuAct jest maszyna wirtualna
+Viua VM. Środowisko docelowa musi spełniać wymagania jakie ma Viua VM (m.in. musi to być system zgodny ze
+standardem POSIX).
+
+\subsection{Środowisko implementacji}
+
+Środowiskiem implmentacji jest Linux z dostępnymi standardowymi narzędziami GNU, językiem Python 3, i
+umożliwiającym uruchomienie assemblera dostarczanego przez Viua VM.
+
+\subsection{Priorytety implementacyjne}
+
+Maksymalizacja prostoty budowy kompilatora i języka.
+Marginalizacja obsługi błędów w kompilatorze z uwagi na brak czasu.
+Marginalizacja optymalizacji z uwagi na brak czasu.
+
+\newpage
+\section{Projekt algorytmów i przyjętych protokołów}
+
+Dyskusja na temat algorytmów i sposobu implementacji jest częściowo przeprowadzona w rozdziale
+\ref{opis_etapow_kompilacji} na stronie \pageref{opis_etapow_kompilacji}, szczególnie w rozdziale
+\ref{opis_etapow_kompilacji_analiza_skladniowa}.
+
+\section{Projekt rozwiązań sprzętowych}
+
+Brak w tym projekcie. Jest on wyłącznie softwareowy.
+
+\section{Projekt interfejsu}
+
+\subsection{Interfejs użytkownika}
+
+Interfejs użytkownika opisany jest w osobnym dokumencie -- podręczniku użytkownika kompilatora ViuAct (plik
+''viuact-manual.pdf'').
+
+\subsubsection{Założenia konstrukcji interfejsu}
+
+\subsection{Interfejs kompilatora}
+
+Kompilator składa się z dwóch programów: \texttt{viuact-cc} (kompilatora właściwego) i \texttt{viuact-opt}
+(programu łączącego). Programy te są konfigurowane za pomocą zmiennych środowiskowych, które kontrolują poziom
+''głośności'' logów, położenie assemblera Viua VM, a także włączają bądź wyłączają serializację formy
+pośredniej.
+
+Interfejs kompilatora opisany jest w osobnym dokumencie.
+
+\subsection{Interfejs języka}
+
+Interfejsem języka jest jego składnia.
+Jest ona opisana w specyfikacji języka.
+
+\subsection{Inne interfejsy}
+
+\subsubsection{Pliki interfejsów modułów (\texttt{.i})}
+\label{pliki_interfejsow_modulow}
+
+Pliki interfejsów modułów wyliczają funkcje eksportowane przez dany moduł, oraz prezentują metadane wymagane
+do połączenia plików w sposób, który będzie mógł działać na Viua VM. Pliki interfejsu dla modułów ''własnych''
+nie różnią się zasadniczą strukturą od plików interfejsu dla modułów ''obcych'', ale pliki interfejsu dla
+modułów ''obcych'' muszą być uzupełnione o kilka dodatkowych pól. Jest to dokładniej opisane w rozdziale
+\ref{pliki_interfejsow_modulow_obcych} na stronie \pageref{pliki_interfejsow_modulow_obcych}.
+
+Pliki interfejsów są kodowane w formacie JSON.
+
+\paragraph{Plik interfejsu dla modułów ''własnych''}
+
+Moduły ''własne'' języka ViuAct to moduły napisane w języku ViuAct.
+
+\begin{lstlisting}
+{
+    "foreign": false,
+    "real_name": "A_module",
+    "fns": [
+        {
+            "arity": 1,
+            "name": "f",
+            "real_name": "A_module::f",
+            "from_module": "A_module"
+        }
+    ]
+}
+\end{lstlisting}
+
+Atrybut \texttt{foreign} określa czy moduł jest ''obcy'' (\texttt{true}) czy ''własny'' (\texttt{false}).
+Atrybut \texttt{real\_name} określa nazwę modułu tak jak będzie prezentowana na poziomie bytecode'u.
+Atrybut \texttt{fns} jest listą funkcji, które są przez dany moduł eksportowane.
+
+W elementach listy \texttt{fns} atrybuty mają następujące znaczenie:
+
+\begin{enumerate}
+    \item \texttt{arity} określa ''moc'' funkcji
+    \item \texttt{name} określa nazwę funkcji widoczną z poziomu języka ViuAct
+    \item \texttt{real\_name} określa pełną nazwę funkcji widoczną z poziomu bytecode'u
+    \item \texttt{from\_module} określa pełną nazwę modułu, z którego pochodzi dana funkcja
+\end{enumerate}
+
+\paragraph{Plik interfejsu dla modułów ''obcych''}
+\label{pliki_interfejsow_modulow_obcych}
+
+Moduły ''obce'' języka ViuAct to moduły napisane w języku assemblera Viua VM lub w C++.
+
+\begin{lstlisting}
+{
+    "foreign": true,
+    "real_name": "std::posix::network",
+    "fns": [
+        {
+            "arity": 0,
+            "name": "socket",
+            "real_name": "Std::Posix::Network::socket",
+            "bytecode_name": "std::posix::network::socket",
+            "from_module": "Std::Posix::Network"
+        }
+    ]
+}
+\end{lstlisting}
+
+Różnicą w stosunku do plików interfejsu dla modułow ''własnych'' jest dodatkowy atrybut w deklaracji
+eksportowanej funkcji -- \texttt{bytecode\_name} określający nazwę funkcji na poziomie bytecode'u. Nazwa ta
+nie musi pokrywać się z nazwą w atrybucie \texttt{real\_name}, który określa pełną nazwę funkcji widoczną na
+poziomie języka ViuAct.
+
+Dwa atrybuty są potrzebne ponieważ na tym poziomie następuje łączenie dwóch ''światów''; języka ViuAct, który
+narzuca reguły tego jak muszą wyglądać nazwy modułów i funkcji, oraz języka assemblera Viua VM, który takich
+reguł nie narzuca. Dla modułów ''własnych'' atrybuty \texttt{bytecode\_name} jest zbędny ponieważ dla nich
+nazwa widoczna na poziomie ViuAct i języka assemblera Viua VM jest taka sama.
+
+\subsubsection{Pliki zależności modułów (\texttt{.d})}
+\label{pliki_zaleznosci_modulow}
+
+Pliki zależności są kodowane w formacie JSON.
+
+\begin{lstlisting}
+{
+    "imports": [
+        {
+            "module_name": "Std::Random",
+            "real_name": "std::random",
+            "foreign": true
+        }
+    ]
+}
+\end{lstlisting}
+
+Atrybut \texttt{imports} przechowuje listę modułów importowanych przez moduł, którego zależności definiuje
+dany plik (co jest określane na podstawie nazwy pliku).
+
+W elementach listy \texttt{imports} atrybuty mają następujące znaczenie:
+
+\begin{enumerate}
+    \item \texttt{module\_name} określa pełną nazwę modułu z punktu widzenia języka ViuAct
+    \item \texttt{real\_name} określa pełną nazwę modułu widoczną z poziomu bytecode'u
+    \item \texttt{foreign} określa czy moduł jest ''własny'' (\texttt{false}) czy ''obcy'' (\texttt{true})
+\end{enumerate}
+
+\newpage
+\section{Projekt bazy danych}
+
+Brak bazy danych jako takiej w projekcie.
+Dane przetwarzane przez kompilator są trzymane w plikach, których struktura opisana jest w rozdziałach
+\ref{pliki_interfejsow_modulow} na stronie \pageref{pliki_interfejsow_modulow} i
+\ref{pliki_zaleznosci_modulow} na stronie \pageref{pliki_zaleznosci_modulow}.
+
+\section{Opis implementacji}
+
+Implementacja kompilatora jest bardzo prosta, jak na standardy tego typu projektów.
+Rysunek \ref{basic_compiler_flow} na stronie \pageref{basic_compiler_flow} bardzo dobrze oddaje strukturę
+kompilatora dostarczonego jako wynik tej pracy.
+
+W fazie przygotowania tekstu programu ''do obróbki'' najpierw przeprowadzana jest analiza leksykalna (podział
+tekstu na tokeny), później analiza składniowa -- która w dużej mierze polega na uporządkowaniu ''płaskiej''
+listy tokenów w grupy ograniczone nawiasami. Algorytm dokonujący analizy składniowej jest trywialny:
+
+\begin{enumerate}
+    \item utwórz pustą listę przetworzoną
+    \item rozważ token pierwszy nieprzenalizowany token
+    \item jeśli ten token to \texttt{(} lub \texttt{\{}, rozpocznij rekurencyjnie przetwarzanie strumienia
+        tokenów od następnego tokenu, a wynik analizy dodaj jako pojedynczy element do listy przetworzonej
+    \item w innym przypadku dodaj token do listy przetworzonej
+    \item jeśli na strumień tokenów jest pusty, zakończ algorytm
+    \item w innym przypadku kontynuuj od punktu 2.
+\end{enumerate}
+
+Na pierwszy rzut oka widać, że ten algorytm nie analizuje wiele -- jego jedynym zadaniem jest pogrupowanie
+płaskiego, jednowymiarowego strumienia tokenów w grupy reprezentujące konkretne konstrukcje językowe. Prostota
+algorytmu sprawia, że jest on też bardzo szybki w działaniu.
+
+Faktycznie, na tym etapie łączone są również rozbudowane identyfikatory (np. \texttt{foo.bar.baz}), ale nie
+wpływa to znacząco na skomplikowanie kodu.
+
+Po tym etapie ''wstępnej'' analizy następuje klasyfikacja grup. W tym przypadku algorytm również jest bardzo
+prosty. Klasyfikator rekurencyjnie sprawdza wszystkie listy i nadaje im typ oznaczający jaką konstrukcję
+językową reprezentują. W tym celu musi jedynie sprawdzić typ pierwszego tokenu, i ewentualnie (w przypadku
+dowiązań \emph{\texttt{let}} i definicji funkcji) długość listy.
+
+Wykorzystanie algorytmu o tak niskim poziomie złożoności jest możliwe dzięki uważnemu zaprojektowaniu składni
+języka. Każda konstrukcja językowa jest grupowana nawiasami -- klamrowymi bądź okrągłymi -- lub ma stałe
+miejsce w grupie. Poniżej, dla przykładu, zaprezentowane są wzorce odpowiadające wybranym konstrukcjom
+językowym:
+\begin{lstlisting}
+(let   %*\emph{name}*) %*\emph{expression}*))
+(if    %*\emph{condition-expr}*) %*\emph{true-expr}*) %*\emph{false-expr}*))
+(try   %*\emph{guarded-expr}*) ...)
+(actor %*\emph{id}*) %*\emph{expr}*)*)
+(+     %*\emph{lhs-expr}*) %*\emph{rhs-expr}*))
+\end{lstlisting}
+
+Jeśli całość oprócz pierwszego tokenu zostanie ''ukryta'' to dalej oczywistym jest z jaką konstrukcją mamy do
+czynienia:
+\begin{lstlisting}
+(let   ...)
+(if    ...)
+(try   ...)
+(actor ...)
+(+     ...)
+\end{lstlisting}
+
+Wykorzystanie notacji polskiej (notacji prefiksowej) i takie zaprojektowanie składni, że każda konstrukcja ma
+stałą ''szerokość'' pozwala na zastosowanie chwytu ''\emph{pierwszy token decyduje}''. Sprawia to też, że
+język ma rozpoznawalne tempo i styl, a konsekwencja układu nadaje mu elegancji.

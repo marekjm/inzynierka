@@ -1,0 +1,103 @@
+\chapter{Wprowadzenie}
+\label{wprowadzenie}
+
+We wprowadzeniu chcielibyśmy poruszyć ogólne tematy związane z naszą pracą, oraz przedstawić Czytelnikowi
+spójny wstęp zapewniający solidne podstawy do dalszej lektury. Zakładamy, że Czytelnik ma doświadczenie z
+językami programowania i umie biegle posługiwać się co najmniej jednym ''\emph{mainstreamowym}'' językiem, np.
+C++, Java, czy Python.
+
+Wprowadzenie jest dla nas miejscem, w którym przedstawimy problemy dręczące popularne obecnie języki
+programowania oraz powiemy skąd się te problemy biorą i dlaczego w miarę postępu technologii są one coraz
+trudniejsze do zignorowania.
+
+Po krótce przedstawiona zostanie również maszyna wirtualna Viua, która jest platformą, na której nasza praca
+się opiera.
+
+\section{Przedstawienie problemu}
+
+Tytułem pracy jest ,,\inzmaintitlePL''. Problemem, który poruszamy jest sprawdzenie czy Viua VM w stanie
+,,zastanym'' (tj. w takim w jakim znajdowała się jej implementacja na początku prac nad projektem
+inżynierskim) umożliwia pisanie niezawodnego, wysoce współbieżnego, nietrywialnego oprogramowania.
+
+W naszej pracy prezentujemy język programowania, który z założenia ma pozwalać na tworzenie oprogramowania
+niezawodnego i wykorzystującego potencjał współbieżności w stopniu wyższym niż powszechnie używane,
+,,mainstreamowe'' języki programowania.
+
+Aby udowodnić, że w wytworzonym języku możliwe jest tworzenie nietrywialnego oprogramowania prezenetujemy
+aplikację użytkową -- czat -- napisany w tym języku. Czat umożliwi komunikację (zorganizowaną kanałach) wielu
+użytkownikom naraz. Wybór rodzaju aplikacji (czat) jest warunkowany tym, że oprogramowanie komunikacyjne
+powinno charakteryzować się tymi cechami, które chcemy uzyskać:
+
+\begin{enumerate}
+    \item niezawodnością -- jeśli jedno połączenie ulegnie awarii to pozostałe powinny działać dalej
+    \item izolacją procesów -- każde połączenie powinno być izolowane od wszystkich innych
+    \item współbieżnością -- wiele połączeń musi być obsługiwanych w tym samym czasie
+\end{enumerate}
+
+\subsection{Ogląd sytuacji}
+
+Współczesny \emph{hardware} zmierza coraz bardziej w stronę współbieżności oraz przetwarzania równoległego.
+Firma AMD w roku 2018 wprowadziła na rynek konsumencki procesory wielordzeniowe z serii
+Threadripper\footnote{https://www.amd.com/en/products/ryzen-threadripper} prezentujące nawet 32 rdzenie logiczne.
+
+Współczesny \emph{software} stoi w miejscu. Poza oprogramowaniem specjalistycznym (np.
+Blender\footnote{https://www.blender.org/}) mało który program jest w stanie wykorzystać więcej niż kilka wątków.
+Współbieżności szuka się nieco ''na siłę''; np. przeglądarki internetowe uruchamiają współbieżnie obsługę
+wielu kart.
+
+Mainstreamowe języki w większości korzystają z wątków (np. Java, C++) lub są stricte jednowątkowe i
+niedostosowane do przetwarzania współbieżnego i równoległego (np. Python).
+
+Dla takich języków tworzone są biblioteki ułatwiające wykorzystanie mechanizmów systemu operacyjnego
+(np.~wieloprocesowość dla języka Python) lub cała infrastruktura umożliwiająca rozproszenie pracy,
+np.~sewery pracy (np. Gearman, Celery) czy kolejki wiadomości (np. RabbitMQ, ZeroMQ).
+To wszystko są jednak jedynie ''łatki'' mające za zadanie dodać do istniejących języków mechanizmy, z którymi
+pierwotnie nie były one projektowane. Istnieje dla takiego działania angielski termin bardzo dobrze oddający
+jego postać: \emph{retrofitting}.
+
+Istnieją środowiska i języki zaprojektowane od zera z myślą o współbieżności i przetwarzaniu równoległym, a
+nawet rozproszonym.
+Najbardziej znanym przykładem takiego środowiska jest BEAM -- maszyna wirtualna
+języka Erlang\footnote{http://www.erlang.org/}. To środowisko wraz z językiem jest z powodzeniem
+wykorzystywane w sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których
+działanie obejmuje niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach
+komunikatora Discord\footnote{https://discordapp.com/}.
+
+\section{Cel}
+
+Ta praca inżynierska motywowana jest chęcią stworzenia bazy programistycznej (środowiska uruchomieniowego i
+języka programowania) umożliwiającej programistom pisanie oprogramowania od początku uwzględniającego
+przetwarzanie współbieżne na pierwszym miejscu, oraz charakteryzującego się wysokim poziomem niezawodności i
+stabliności działania.
+
+Osiągniemy to dzięki zbudowaniu języka wyposażonego w łatwo dostępne konstrukcje umożliwiające wprowadzenie
+współbieżności do programu, oraz uruchamianiu programów wynikowych w środowisku zdolnym do rozłożenia pracy na
+całość dostępnych zasobów sprzętowych.
+
+\subsection{Problemy i ryzyko}
+
+Postawienie współbieżności na pierwszym miejscu powoduje, że problemy związane z pisaniem poprawnych programów
+są bardziej liczne niż w innych (niewspółbieżnych) językach -- oprócz zapewnienia poprawności pojedynczego
+procesu, programista musi zadbać o poprawność interakcji między procesami, oraz o stabilność działania
+oprogramowania w momencie awarii któregoś z procesów składowych programu.
+
+Zminimalizujemy ryzyko płynące z wprowadzenia współbieżności do warsztatu programistów udostępniając im
+mechanizmy umożliwiające opanowanie awarii, propagowanie informacji o błędach, oraz izolację poszczególnych
+procesów składowych.
+
+\section{Układ pracy inżynierskiej}
+
+W rozdziale \ref{jezyk_viuact_i_jego_kompilator}.~\nameref{jezyk_viuact_i_jego_kompilator} (na stronie
+\pageref{jezyk_viuact_i_jego_kompilator}) przedstawiamy język Viuact oraz jego implementację - kompilator.
+Są to narzędzia wykorzystywane do stworzenia aplikacji użytkowej przedstawionej w rozdziale
+\ref{program_viuachat}.~\nameref{program_viuachat} (na stronie \pageref{program_viuachat}).
+
+Wkład własny członków zespołu przedstawiony jest w rozdziale \ref{wklad_wlasny_czlonkow_zespolu} na stronie
+\pageref{wklad_wlasny_czlonkow_zespolu}.
+
+W rozdziale \ref{slownik_pojec}.~\nameref{slownik_pojec} na stronie \pageref{slownik_pojec} prezentujemy listę
+pojęć i terminów używanych w pracy, które mogą wymagać doprecyzowania lub definicji. Dla wygody Czytelnika są
+one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językiem i kompilatorem
+(rozdział~\ref{slownik_pojec_jezyka}) i związane z chatem (rozdział~\ref{slownik_pojec_chatu}).
+
+\input{common/glossary}

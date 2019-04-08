@@ -1,0 +1,198 @@
+\documentclass[11pt,oneside,a4paper,titlepage,onecolumn]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+% \usepackage{nameref}
+% \usepackage{showlabels}
+% \usepackage{titlesec}
+\usepackage{geometry}
+\geometry{a4paper, portrait, margin=2cm}
+\graphicspath{ {./fig/} }
+\usepackage{listings}
+\usepackage{tabularx}
+
+\newenvironment{enumreq}
+{ \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
+{ \end{enumerate}                  }
+
+\newcommand{\inzmaintitlePL}{Viua VM w akcji}
+
+\setcounter{secnumdepth}{4}
+
+%% Author and title
+% \author{Marek Marecki \and Gr.52c \and Krzysztof Franek}
+\author{Zespół: Marek Marecki i Krzysztof Franek\\Promotor: dr hab. Marek A. Bednarczyk, prof. PJWSTK}
+\title{%
+    \inzmaintitlePL \\
+    \large
+    Implementacja języka wysokiego poziomu i \\
+    prostej aplikacji\\
+    ~\\
+    Viua VM in action.\\
+    Implementation of a high-level programming language and\\ a simple application}
+
+\begin{document}
+
+\lstset{basicstyle=\ttfamily,
+columns=fixed,
+escapeinside={\%*}{*)},
+inputencoding=utf8,
+extendedchars=true}
+
+\maketitle
+
+\tableofcontents
+% \listoftables
+\listoffigures
+
+Praca została złożona za pomocą systemu \LaTeX.
+
+\newpage
+
+\input{wprowadzenie/main}
+
+\input{strategia/main}
+
+\input{przebieg/main}
+
+\input{viuact/zal/main}
+
+\input{viuact/spec/main}
+
+\input{viuact/impl/main}
+
+\input{chat/zal/main}
+
+\input{chat/impl/main}
+
+\input{raport/main}
+
+\input{wklad_wlasny/main}
+
+\chapter{Bibliografia}
+
+\chapter{Załączniki}
+
+\newpage  %% Stara wersja
+
+\include{strategia}
+
+\chapter{Przebieg prac}
+
+\include{przebieg/specyfikacja_jezyka}
+
+\include{przebieg/implementacja_kompilatora}
+
+\include{przebieg/implementacja_viuachat}
+
+\chapter{Język ViuAct i jego kompilator -- założenia}
+
+W tym rozdziale prezentujemy wszelkie ''formalności'' związane z pierwszą częścią naszej pracy, czyli
+dokumenty takie jak DZW\footnote{Dokument Założeń Wstępnych} czy SWS\footnote{Spis Wymagań Systemowych}.
+Opis projektu języka i jego implementacji prezentujemy w rozdziale \nameref{jezyk_viuact_i_jego_kompilator} na
+stronie~\pageref{jezyk_viuact_i_jego_kompilator}.
+
+\include{viuact/sws}
+
+\include{viuact/language_specification}
+
+\chapter{Język ViuAct i jego kompilator}
+\label{jezyk_viuact_i_jego_kompilator}
+
+Pierwszą częścią naszej pracy jest zaprojektowanie wysokopoziomowego języka programowania i opracowanie jego
+implementacji. Z uwagi na to, że platforma uruchomieniowa, którą wykorzystujemy (czyli Viua VM) jest maszyną
+wirtualną wykonującą programy w postaci \emph{bytecode} wybranym sposobem implementacji języka jest
+kompilator - program tłumaczący kod źródłowy w jednym języku na kod źródłowy w innym języku przy jednoczesnym
+zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym jest język Viuact (dokładniej
+opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
+\pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
+
+\include{viuact/ps/architektura}
+
+\include{viuact/ps}
+
+\section{Testowanie}
+
+Testy kompilatora.
+
+\subsection{Zestaw przypadków testowych}
+
+Jeden testowy program na każdą funkcjonalność języka.
+Kilka większych testowych programów sprawdzających integrację języka, np. wielomodułowych, wykorzystujących
+moduły obce.
+
+\subsection{Wykonanie testów}
+
+Opis tego jak wygląda uruchomienie testów, w jaki sposób został zbudowany framework, itp.
+
+\subsection{Trudności w testowaniu}
+
+Niedeterminizm wynikający z równoległego działania aktorów stwarza problemy w testach. Trzeba uciekać się do
+"sztuczek", np. sortowanie wyników programu testowego.
+
+\include{viuact/manual}
+
+\chapter{Program ViuaChat -- założenia}
+
+\include{chat/sws}
+
+\chapter{Program ViuaChat}
+\label{program_viuachat}
+
+Drugą częścią naszej pracy jest program ViuaChat - chat internetowy o funkcjonalności podobnej do IRC.
+Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematycznych do rozmów, oraz rozmowy
+''prywatne'' (tj. wyłączne dla dwóch użytkowników).
+
+\include{chat/ps}
+
+\include{chat/spu}
+
+\chapter{Raport końcowy}
+
+\section{Sukcesy}
+
+Podsumowanie prac.
+Pochwalić się co się udało zrobić, jakie efekty osiągnęliśmy, co się sprawdziło.
+
+\section{Niepowodzenia} %% Jakąś lepszą nazwę dla tego rozdziału trzeba wymyślić.
+
+Opisać co się nie udało, z czym nie zdążyliśmy, z czego musieliśmy zrezygnować, co okazało się niemożliwe.
+
+\section{Wpływ pracy na platformę Viua VM}
+
+W tym rozdziale omówiony jest wpływ naszej pracy inżynierskiej na platformę Viua VM; zarówno na implementację
+samej maszyny wirtualnej i dopracowanie jej mechanizmów (np. doprowadzenie systemu modułów do stanu
+używalności), ale też na ,,ekosystem'' dookoła niej -- nowe moduły biblioteki standardowej i zewnętrzne.
+
+\subsection{System modułów}
+
+Viua VM musiała zostać wyposażona w system modułów. Wymagane było przeprojektowanie i ,,ucywilizowanie''
+stanu, w którym system modułów Viua VM się znajdował przed rozpoczęciem prac nad projektem inżynierskim.
+
+\subsection{Moduł do obsługi protokołu WebSocket}
+
+Do wykonania czatu potrzebny był moduł do obsługi protokołu WebSocket.
+
+\chapter{Wkład własny członków zespołu}
+\label{wklad_wlasny_czlonkow_zespolu}
+
+\section{Krzysztof Franek}
+
+\section{Marek Marecki}
+
+\chapter{Bibliografia}
+
+Książki. Internetowe materiały. Materiały wykładowe. Opracowania własne.
+
+\chapter{Załączniki}
+
+\end{document}
