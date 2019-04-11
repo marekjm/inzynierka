@@ -38,12 +38,12 @@ powinno charakteryzować się tymi cechami, które chcemy uzyskać:
 
 Współczesny \emph{hardware} zmierza coraz bardziej w stronę współbieżności oraz przetwarzania równoległego.
 Firma AMD w roku 2018 wprowadziła na rynek konsumencki procesory wielordzeniowe z serii
-Threadripper\footnote{https://www.amd.com/en/products/ryzen-threadripper} prezentujące nawet 32 rdzenie logiczne.
+Threadripper (\cite{AmdProductThreadripper}) prezentujące nawet 32 rdzenie logiczne.
 
 Współczesny \emph{software} stoi w miejscu. Poza oprogramowaniem specjalistycznym (np.
-Blender\footnote{https://www.blender.org/}) mało który program jest w stanie wykorzystać więcej niż kilka wątków.
-Współbieżności szuka się nieco ''na siłę''; np. przeglądarki internetowe uruchamiają współbieżnie obsługę
-wielu kart.
+Blender\footnote{\url{https://www.blender.org/}} mało który program jest w stanie wykorzystać więcej niż
+kilka wątków.  Współbieżności szuka się nieco ''na siłę''; np. przeglądarki internetowe uruchamiają
+współbieżnie obsługę wielu kart.
 
 Mainstreamowe języki w większości korzystają z wątków (np. Java, C++) lub są stricte jednowątkowe i
 niedostosowane do przetwarzania współbieżnego i równoległego (np. Python).
@@ -87,17 +87,12 @@ procesów składowych.
 
 \section{Układ pracy inżynierskiej}
 
-W rozdziale \ref{jezyk_viuact_i_jego_kompilator}.~\nameref{jezyk_viuact_i_jego_kompilator} (na stronie
-\pageref{jezyk_viuact_i_jego_kompilator}) przedstawiamy język Viuact oraz jego implementację - kompilator.
-Są to narzędzia wykorzystywane do stworzenia aplikacji użytkowej przedstawionej w rozdziale
+W rozdziale \ref{viuact_zal}.~\nameref{viuact_zal} (na stronie \pageref{viuact_zal}) przedstawiamy język
+Viuact, a w rozdziale \ref{viuact_impl} jego implementację - kompilator. Są to narzędzia wykorzystywane do
+stworzenia aplikacji użytkowej przedstawionej w rozdziale
 \ref{program_viuachat_zal}.~\nameref{program_viuachat_zal} (na stronie \pageref{program_viuachat_zal}).
 
 Wkład własny członków zespołu przedstawiony jest w rozdziale \ref{wklad_wlasny} na stronie
 \pageref{wklad_wlasny}.
-
-W rozdziale \ref{slownik_pojec}.~\nameref{slownik_pojec} na stronie \pageref{slownik_pojec} prezentujemy listę
-pojęć i terminów używanych w pracy, które mogą wymagać doprecyzowania lub definicji. Dla wygody Czytelnika są
-one umieszczone w jednym miejscu, oraz podzielone na sekcje związane z językiem i kompilatorem
-(rozdział~\ref{slownik_pojec_jezyka}) i związane z chatem (rozdział~\ref{slownik_pojec_chatu}).
 
 \input{common/glossary}

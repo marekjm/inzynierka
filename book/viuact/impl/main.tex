@@ -10,6 +10,19 @@ zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym 
 opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
 \pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
 
+Materiałem teoretycznym przy pracy nad kompilatorem i językiem był \cite{PLP:1}.
+Jedną z książek, które wywarły wpływ na zestaw instrukcji (ISA) Viua VM był \cite{RISCV}.
+Pomocą w pracach nad systemem modułów był \cite{Linkers}.
+
+Sama maszyna wirtualna nie tylko implementuje określone ISA, ale też dostarcza \emph{runtime} realizujący
+zadania typowo związane z systemem operacyjnym takie jak zarządzanie czasem procesora, przydzielanie numerów
+PID, czy nadzór na komunikacją między procesami -- w tym rejonie pomocą była \cite{OperatingSystems}.
+
+Aktory w ViuAct (tak samo jak implementujące je procesy w Viua VM) komunikują się bezpośrednio.
+Dla porównania, język Go (opisany w \cite{Golang}), który podobnie jak ViuAct kładzie duży nacisk na
+współbieżność i równoległość do komunikacji między \emph{goroutines} (jego odmiana procesów) wykorzystuje
+kanały -- używając ,,pośredników'' zamiast skomunikować procesy bezpośrednio.
+
 \input{viuact/ps/architektura}
 
 \input{viuact/ps}

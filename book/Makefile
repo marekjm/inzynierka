@@ -5,6 +5,7 @@ all: \
 
 %.pdf: %.tex
 	pdflatex $^
+	bibtex $*.aux
 
 %.png: %.dot
 	dot -Tpng $^ > $@
@@ -24,7 +25,7 @@ again:
 	make
 
 watch:
-	find . -name '*.tex' | entr -pc make again
+	(find . -name '*.tex' ; find . -name '*.bib') | entr -pc make again
 
 clean:
 	find . -name '*.pdf' | xargs -n 1 --no-run-if-empty rm
