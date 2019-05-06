@@ -50,18 +50,20 @@ niedostosowane do przetwarzania współbieżnego i równoległego (np. Python).
 
 Dla takich języków tworzone są biblioteki ułatwiające wykorzystanie mechanizmów systemu operacyjnego
 (np.~wieloprocesowość dla języka Python) lub cała infrastruktura umożliwiająca rozproszenie pracy,
-np.~sewery pracy (np. Gearman, Celery) czy kolejki wiadomości (np. RabbitMQ, ZeroMQ).
-To wszystko są jednak jedynie ''łatki'' mające za zadanie dodać do istniejących języków mechanizmy, z którymi
+np.~sewery pracy (np. Gearman\footnote{\url{http://gearman.org/}},
+Celery\footnote{\url{http://www.celeryproject.org/}}) czy kolejki wiadomości
+(np.~RabbitMQ\footnote{\url{https://www.rabbitmq.com/}}, ZeroMQ\footnote{\url{http://zeromq.org/}}).
+To wszystko są jednak jedynie ,,łatki'' mające za zadanie dodać do istniejących języków mechanizmy, z którymi
 pierwotnie nie były one projektowane. Istnieje dla takiego działania angielski termin bardzo dobrze oddający
 jego postać: \emph{retrofitting}.
 
 Istnieją środowiska i języki zaprojektowane od zera z myślą o współbieżności i przetwarzaniu równoległym, a
 nawet rozproszonym.
-Najbardziej znanym przykładem takiego środowiska jest BEAM -- maszyna wirtualna
-języka Erlang\footnote{http://www.erlang.org/}. To środowisko wraz z językiem jest z powodzeniem
-wykorzystywane w sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których
-działanie obejmuje niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach
-komunikatora Discord\footnote{https://discordapp.com/}.
+Najbardziej znanym przykładem takiego środowiska jest BEAM -- maszyna wirtualna języka
+Erlang\footnote{\url{http://www.erlang.org/}}. To środowisko wraz z językiem jest z powodzeniem wykorzystywane
+w sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których działanie
+obejmuje niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach komunikatora
+Discord\footnote{\url{https://discordapp.com/}}.
 
 \section{Cel}
 
