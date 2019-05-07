@@ -1,0 +1,275 @@
+\section{Język assemblera Viua VM}
+\label{appendix_viua_vm_assembly_language}
+
+\subsection{Składnia języka assemblera}
+
+\subsubsection{Ogólna składnia instrukcji}
+\subsubsection{Definicje funkcji i bloków}
+\subsubsection{Deklaracje funkcji i bloków}
+\subsubsection{Import modułów}
+\subsubsection{Markery}
+\subsubsection{Nazywanie rejestrów}
+
+\subsection{Instrukcje Viua VM}
+
+\subsubsection{\texttt{nop}}
+
+\subsubsection{\texttt{izero}}
+\subsubsection{\texttt{integer}}
+\subsubsection{\texttt{iinc}}
+\subsubsection{\texttt{idec}}
+
+\subsubsection{\texttt{float}}
+
+\subsubsection{\texttt{itof}}
+\subsubsection{\texttt{ftoi}}
+\subsubsection{\texttt{stoi}}
+\subsubsection{\texttt{stof}}
+
+\subsubsection{\texttt{add}}
+\subsubsection{\texttt{sub}}
+\subsubsection{\texttt{mul}}
+\subsubsection{\texttt{div}}
+\subsubsection{\texttt{lt}}
+\subsubsection{\texttt{lte}}
+\subsubsection{\texttt{gt}}
+\subsubsection{\texttt{gte}}
+\subsubsection{\texttt{eq}}
+
+\subsubsection{\texttt{string}}
+\subsubsection{\texttt{streq}}
+
+\subsubsection{\texttt{text}}
+\subsubsection{\texttt{texteq}}
+\subsubsection{\texttt{textat}}
+\subsubsection{\texttt{textsub}}
+\subsubsection{\texttt{textlength}}
+\subsubsection{\texttt{textcommonprefix}}
+\subsubsection{\texttt{textcommonsuffix}}
+\subsubsection{\texttt{textconcat}}
+
+\subsubsection{\texttt{vector}}
+\subsubsection{\texttt{vinsert}}
+\subsubsection{\texttt{vpush}}
+\subsubsection{\texttt{vpop}}
+\subsubsection{\texttt{vat}}
+\subsubsection{\texttt{vlen}}
+
+\subsubsection{\texttt{not}}
+
+Negacja boolowska.
+
+\subsubsection{\texttt{and}}
+
+Iloczyn boolowski.
+
+\subsubsection{\texttt{or}}
+
+Suma boolowska.
+
+\subsubsection{\texttt{bits\_of\_integer}}
+
+Konstruktor bitów z liczby całkowitej.
+
+\subsubsection{\texttt{integer\_of\_bits}}
+
+Konstruktor liczby całkowitej z bitów.
+
+\subsubsection{\texttt{bits}}
+
+Konstruktor bitów.
+
+\subsubsection{\texttt{bitand}}
+
+Bitowa operacja \emph{\texttt{and}}.
+
+\subsubsection{\texttt{bitor}}
+
+Bitowa operacja \emph{\texttt{or}}.
+
+\subsubsection{\texttt{bitnot}}
+
+Bitowa operacja \emph{\texttt{not}}.
+
+\subsubsection{\texttt{bitxor}}
+
+Bitowa operacja \emph{\texttt{xor}}.
+
+\subsubsection{\texttt{bitat}}
+
+Sprawdzenie wartości pojedynczego bitu.
+
+\subsubsection{\texttt{bitset}}
+
+Ustawienie wartości pojedynczego bitu.
+
+\subsubsection{\texttt{shl}}
+
+Przesunięcie bitowe w lewo.
+
+\subsubsection{\texttt{shr}}
+
+Przesunięcie bitowe w prawo.
+
+\subsubsection{\texttt{ashl}}
+
+Arytmetyczne (z zachowaniem znaku) przesunięcie bitowe w lewo.
+
+\subsubsection{\texttt{ashr}}
+
+Arytmetyczne przesunięcie bitowe w prawo.
+
+\subsubsection{\texttt{rol}}
+
+Rotacja bitowa w lewo.
+
+\subsubsection{\texttt{ror}}
+
+Rotacja bitowa w prawo.
+
+\subsubsection{\texttt{wrapincrement}}
+
+Modulo inkrementacja ze znakiem.
+
+\subsubsection{\texttt{wrapdecrement}}
+
+Modulo dekrementacja ze znakiem.
+
+\subsubsection{\texttt{wrapadd}}
+
+Modulo dodawanie ze znakiem.
+
+\subsubsection{\texttt{wrapsub}}
+
+Modulo odejmowanie ze znakiem.
+
+\subsubsection{\texttt{wrapmul}}
+
+Modulo mnożenie ze znakiem.
+
+\subsubsection{\texttt{wrapdiv}}
+
+Modulo dzielenie ze znakiem.
+
+\subsubsection{\texttt{checkedsincrement}}
+
+Sprawdzana inkrementacja ze znakiem.
+
+\subsubsection{\texttt{checkedsdecrement}}
+\subsubsection{\texttt{checkedsadd}}
+\subsubsection{\texttt{checkedssub}}
+\subsubsection{\texttt{checkedsmul}}
+\subsubsection{\texttt{checkedsdiv}}
+
+\subsubsection{\texttt{saturatingsincrement}}
+
+Nasycająca inkrementacja ze znakiem.
+
+\subsubsection{\texttt{saturatingsdecrement}}
+\subsubsection{\texttt{saturatingsadd}}
+\subsubsection{\texttt{saturatingssub}}
+\subsubsection{\texttt{saturatingsmul}}
+\subsubsection{\texttt{saturatingsdiv}}
+
+\subsubsection{\texttt{move}}
+
+Przesunięcie wartości między rejestrami.
+
+\subsubsection{\texttt{copy}}
+
+Skopiowanie wartości między rejestrami.
+
+\subsubsection{\texttt{ptr}}
+
+Konstruktor wskaźnika do wartości.
+
+\subsubsection{\texttt{ptrlive}}
+
+Sprawdzenie poprawności wskaźnika.
+
+\subsubsection{\texttt{swap}}
+
+Zamiana wartości w rejestrach.
+
+\subsubsection{\texttt{delete}}
+
+Wywołanie destruktora wartości.
+
+\subsubsection{\texttt{isnull}}
+
+\subsubsection{\texttt{print}}
+\subsubsection{\texttt{echo}}
+
+\subsubsection{\texttt{capture}}
+\subsubsection{\texttt{capturecopy}}
+\subsubsection{\texttt{capturemove}}
+
+\subsubsection{\texttt{closure}}
+\subsubsection{\texttt{function}}
+
+\subsubsection{\texttt{frame}}
+\subsubsection{\texttt{param}}
+
+Instrukcja prywatna.
+
+\subsubsection{\texttt{pamv}}
+
+Instrukcja prywatna.
+
+\subsubsection{\texttt{call}}
+\subsubsection{\texttt{tailcall}}
+\subsubsection{\texttt{defer}}
+\subsubsection{\texttt{arg}}
+
+Instrukcja prywatna.
+
+\subsubsection{\texttt{allocate\_registers}}
+
+\subsubsection{\texttt{process}}
+\subsubsection{\texttt{self}}
+\subsubsection{\texttt{pideq}}
+\subsubsection{\texttt{join}}
+\subsubsection{\texttt{send}}
+\subsubsection{\texttt{receive}}
+
+\subsubsection{\texttt{watchdog}}
+
+\subsubsection{\texttt{jump}}
+\subsubsection{\texttt{if}}
+
+\subsubsection{\texttt{throw}}
+
+Rzucenie wartości jako wyjątku.
+
+\subsubsection{\texttt{catch}}
+\subsubsection{\texttt{draw}}
+\subsubsection{\texttt{try}}
+\subsubsection{\texttt{enter}}
+\subsubsection{\texttt{leave}}
+
+\subsubsection{\texttt{import}}
+
+Import modułu.
+
+\subsubsection{\texttt{atom}}
+
+Konstruktor atomu.
+
+\subsubsection{\texttt{atomeq}}
+
+\subsubsection{\texttt{struct}}
+
+Konstruktor struktury.
+
+\subsubsection{\texttt{structinsert}}
+\subsubsection{\texttt{structremove}}
+\subsubsection{\texttt{structat}}
+\subsubsection{\texttt{structkeys}}
+
+\subsubsection{\texttt{return}}
+
+Wyjście z funkcji.
+
+\subsubsection{\texttt{halt}}
+
+Zakończenie działania i wyłączenie VM.
