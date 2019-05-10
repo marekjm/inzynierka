@@ -1,9 +1,374 @@
 \chapter{Język ViuAct i jego kompilator -- założenia}
 \label{viuact_zal}
 
-W tym rozdziale prezentujemy wszelkie ''formalności'' związane z pierwszą częścią naszej pracy, czyli
-dokumenty takie jak DZW\footnote{Dokument Założeń Wstępnych} czy SWS\footnote{Spis Wymagań Systemowych}.
-Opis projektu języka i jego implementacji prezentujemy w rozdziale \nameref{jezyk_viuact_i_jego_kompilator} na
-stronie~\pageref{jezyk_viuact_i_jego_kompilator}.
+W tym rozdziale prezentujemy wszelkie ,,formalności'' związane z pierwszą częścią naszej pracy.
+Opis projektu języka i jego implementacji prezentujemy w rozdziale \nameref{viuact_impl} na
+stronie~\pageref{viuact_impl}. Zakresem tych formalności jest:
 
-\input{viuact/sws}
+\begin{itemize}
+    \item analiza otoczenia, wraz z z klientami
+    \item wskazanie kontekstu biznesowego systemu
+    \item określenie udziałowców
+\end{itemize}
+
+\section{Język ViuAct i jego kompilator w kontekście}
+
+\subsection{Kontekst biznesowy}
+
+Docelowym środowiskiem języka ViuAct są urządzenia i programy, których zachowanie ma charakteryzować się wysoką
+niezawodnością i stabilnością (np. urządzenia telekomunikacyjne, oprogramowanie monitorujące i diagnostyczne).
+
+\subsection{Charakterystyka użytkowników}
+
+Docelowym użytkownikiem języka i kompilatora ViuAct jest \textbf{programista}.
+Oczekuje on od języka narzędzi pozwalających na tworzenie programów odpornych na awarie, poprawnych, i
+prostych w utrzymaniu.
+
+Docelowym użytkownikiem platformy, na której wdrażane są programy napisane w języku ViuAct (czyli platformy
+prezentowanej przez Viua VM) jest \textbf{administrator}. Oczekuje on od platformy przejrzystego modelu
+wdrożenia i konserwacji instalacji, oraz możliwości monitorowania zachowania wdrożonego oprogramowania.
+
+\subsection{Istniejąca infrastruktura}
+
+Język \ViuAct wchodzi w interakcje z istniejącą infrastrukturą poprzez narzędzia, kanały, i protokoły
+prezentowane przez platformę Viua VM.
+Zakłada się, że ,,istniejąca infrastruktura'' w \emph{miejscu wdrożenia} działającego programu napisanego
+w języku ViuAct jest zgodna z wymaganiami i pozwala na działanie platformy Viua VM.
+Zakłada się, że ,,istniejąca infrastruktura'' w \emph{miejscu wytwarzania} programu w języku \ViuAct jest
+zgodna z wymaganiami i pozwala na działanie platformy Viua VM, oraz jest zgodna z wymaganiami
+kompilatora języka \ViuAct.
+
+\section{Wymagania}
+
+Wymaganie precyzują cele projektu i określają założenia tego co musi (lub nie musi) zostać wykonane, aby
+projekt został uznany za zakończony sukcesem. Zostały opracowane przez członków zespołu z uwzględnieniem
+uwag udziałowców.
+
+\subsection{Wymagania ogólne i dziedzinowe}
+
+% Potrzebne żeby pierwsza tabela nie była wcięta w prawo. Inaczej źle to wygląda.
+\phantom{}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WD-01} \\
+    \hline
+    \textbf{Priorytet} & S \\
+    \hline
+    \textbf{Nazwa} & Udowodnienie przydatności (ang. \emph{viability}) Viua VM \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Udowodnienie, że maszyna wirtualna Viua może być celem kompilacji dla
+        języków wyższego poziomu oraz jest możliwe uruchomienie na niej nietrywialnego
+        oprogramowania (w przypadku tego projektu będzie to ViuaChat).} \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+% Potrzebne żeby był odstęp między tabelami z wymaganiami.
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WD-02} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Projekt języka ViuAct \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Wymagane jest zaprojektowanie języka programowania wyższego poziomu oraz przygotowanie
+        jego specyfikacji.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & WD-01 \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WD-03} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Implementacja kompilatora \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Wymagana jest implementacja kompilatora przetwarzającego kod źródłowy napisany w języku
+        wyższego poziomu (zaprojektowanym w punkcie WD-02) na kod w języku assemblera Viua VM.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & WD-02 \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WD-04} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Chat \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Musi powstać implementacja czatu napisana w języku zaprojektowanym w punkcie WD-02.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \parbox[t]{11cm}{
+        WD-03 (\emph{do wykonania tego wymagania niezbędny jest kompilator})
+    } \\
+    \hline
+\end{tabular}
+
+\subsection{Wymagania funkcjonalne}
+
+Część wymagań funkcjonalnych języka ViuAct jest opisana w rozdziale
+\ref{viuact_spec}.~\nameref{viuact_spec} na stronie \pageref{viuact_spec}.
+Poniżej opisane są wymagania, które nie mogły być zawarte bezpośrednio w specyfikacji języka (np. sposób
+obsługi i raportowania błędów przez kompilator).
+Interfejs kompilatora jest opisany w rozdziale \ref{viuact_manual} na stronie \pageref{viuact_manual}.
+
+\subsubsection{Funkcjonalności kompilatora}
+
+W tej sekcji opisane są wymagania dotyczące kompilatora języka ViuAct.
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-01} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Zachowanie znaczenia programu podczas kompilacji \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator musi wygenerować kod wynikowy implementujący dokładnie taki sam program jak oryginalny
+        kod źródłowy. Niedopuszczalne jest aby po skompilowaniu program miał inne zachowanie niż to, które
+        zostało opisane przez oryginalny kod źródłowy w języku wyższego poziomu.
+        \\
+        Całkowite zachowanie znaczenia oznacza również, że jeśli oryginalny kod źródłowy zawiera błąd
+        logiczny to program wynikowy również będzie go zawierać.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-02} \\
+    \hline
+    \textbf{Priorytet} & W \\
+    \hline
+    \textbf{Nazwa} & Obsługa błędów \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator nie będzie w żaden sposób obsługiwał błędów ani ich raportował. \\
+        Strategią obsługi błędów będzie rzucenie wyjątku, ewentualnie dodając do niego informacje o tym
+        co konkretnie się wydarzyło, i pozwolenie mu na zabicie procesu kompilatora.
+        Na podstawie zrzutu stosu i treści wyjątku użytkownik będzie musiał się domyślić co wywołało błąd.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-03} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Emisja plików pomocniczych \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator podczas przetwarzania kodu źródłowego musi zebrać informacje jakie funkcje zawiera dany
+        moduł, jakie moduły są w nim zagnieżdżone, i jakie moduły są przez niego importowane.
+        Te informacje są potrzebne programowi łączącemu moduły do automatycznego wykonania swojej pracy. \\
+        Pliki pomocnicze to:
+
+        \begin{enumerate}
+            \item \texttt{.i} pliki opisujące interfejs modułu (eksportowane funkcje)
+            \item \texttt{.d} pliki opisujące zależności modułu (importowane moduły)
+        \end{enumerate}
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-04} \\
+    \hline
+    \textbf{Priorytet} & C \\
+    \hline
+    \textbf{Nazwa} & Optymalizacja zużycia rejestrów \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Z uwagi na prostą budowę kompilatora generuje on kod, który alokuje duże ilości rejestrów.
+        Optymalizacja polegająca na analizie dostępu do rejestrów (odczytach i zapisach) i wyszuaniu
+        momentów, po których rejestr \texttt{x} nie jest już więcej używany mogłaby zredukować rozmiar
+        alokacji dzięki recyklingowi rejestrów (ponownym użyciu po udowodnieniu, że po danej instrukcji
+        żadna inna nie będzie korzystać z wartości w danym rejestrze).
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{WF-05} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Kompletność implementacji \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator musi implementować wszystkie konstrukcje językowe opisane w specyfikaji języka
+        ViuAct.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\subsubsection{Interfejs z otoczeniem}
+
+Punkty styku projektowanego języka i kompilatora z innymi podsystemami (np. assembler dostarczany jako
+część Viua VM), sieciami (np. Internet), i operatorami (np. programista).
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{IZO-01} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Poprawność emitowanego kodu \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator musi generować poprawny kod źródłowy w języku assemblera Viua VM.
+        Niedopuszczalne jest aby kompilator generował kod, który będzie zawierał błędy składniowe bądź
+        nieznane lub niedozwolone instrukcje.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{IZO-02} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Biblioteki implementujące operacji I/O \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Muszą być dostarczone biblioteki umożliwiające przeprowadzanie operacji I/O (\emph{wejścia-wyjścia}).
+        Takie biblioteki mogą być napisane w języku ViuAct, języku assemblera Viua VM, lub języku C++.
+        W przypadku implementacji w języku assemblera Viua VM lub języku C++ muszą zostać dostarczone pliki
+        umożliwiające kompilatorowi ViuAct wczytanie listy funkcji oferowanych przez taką bibliotekę.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\subsection{Wymagania dotyczące procesu wytwarzania}
+
+W tej sekcji opisane są wymagania dotyczące kompilatora języka \ViuAct.
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{PW-01} \\
+    \hline
+    \textbf{Priorytet} & M \\
+    \hline
+    \textbf{Nazwa} & Testy kompilatora \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Kompilator musi być dostarczony wraz z zestawem prostych do uruchomienia testów werfikujących
+        poprawność jego pracy.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+    \hline
+    \textbf{Identyfikator} & \parbox[t]{11cm}{PW-01} \\
+    \hline
+    \textbf{Priorytet} & S \\
+    \hline
+    \textbf{Nazwa} & Kompletność testów kompilatora \\
+    \hline
+    \textbf{Opis} & \parbox[t]{11cm}{
+        Testy kompilatora powinny obejmować jak największe spektrum możliwych konstrukcji językowych i
+        ich kombinacji. W uwagi na to, że jest niemożliwym przetestowanie kompilatora na wszystkich
+        możliwych do napisania programach ''kompletność'' jest względna, a to wymaganie zakłada jedynie, że
+        nie powinna istnieć konstrukcja językowa, która nie będzie przetestowana. \\
+        \textbf{Uwaga}: Ostatecznym testem kompilatora pozostaje kompilacja czatu ViuaChat, który jest
+        wymagany do poprawnego zaliczenia projektu.
+    } \\
+    \hline
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
+    \hline
+    \textbf{Wymagania powiązane} & \phantom{} \\
+    \hline
+\end{tabular}
+
+\section{Kryteria akceptacji rozwiązania}
+
+Podstawowym kryterium akceptacji dla języka jest
+,,\emph{Da się w nim napisać czat, który spełnia wymagania opisane w
+rozdziale \ref{program_viuachat_wymagania}}'',
+a dla kompilatora ,,\emph{Da się nim skompilować czat}''.

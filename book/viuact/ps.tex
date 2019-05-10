@@ -9,6 +9,16 @@ wartości), struktura reprezentująca stan kompilowanego programu, oraz cztery s
 niskopoziomowe abstrakcje linii programu w języku assemblera -- konstruktor, przeniesienie, wywołanie, i
 ''\emph{verbatim}''.
 
+\begin{quote}
+    Listingi przedstawiające wykorzystywane struktury danych jest podany w języku OCaml.
+    Kompilator jest napisany w języku Python, który nie pozwala na tak łatwe i czytelne definiowanie
+    nowych struktur danych -- stąd decyzja o użyciu innego języka w pracy.
+
+    Zachowane zostały typy danych, nazwy pól i całych struktur. OCaml pozwala na duże bardziej
+    przejrzyste i czytelne opisanie typów danych poszczególnych pól niż Python, co ma dużą
+    wartość dokumentacyjną.
+\end{quote}
+
 \subsubsection{Tokeny}
 \label{diagram_klas_tokeny}
 
@@ -135,7 +145,6 @@ Linia \emph{verbatim} opisuje dowolną linię języka assemblera (m.in. dyrektyw
 można w ten sposób wyemitować spory zakres instrukcji bez potrzeby projektowania struktury dla każdego typu
 instrukcji.
 
-\newpage
 \section{Decyzje projektowe}
 
 \subsection{Środowisko docelowe}
@@ -155,7 +164,6 @@ Maksymalizacja prostoty budowy kompilatora i języka.
 Marginalizacja obsługi błędów w kompilatorze z uwagi na brak czasu.
 Marginalizacja optymalizacji z uwagi na brak czasu.
 
-\newpage
 \section{Projekt algorytmów i przyjętych protokołów}
 
 Dyskusja na temat algorytmów i sposobu implementacji jest częściowo przeprowadzona w rozdziale
@@ -200,7 +208,7 @@ nie różnią się zasadniczą strukturą od plików interfejsu dla modułów ''
 modułów ''obcych'' muszą być uzupełnione o kilka dodatkowych pól. Jest to dokładniej opisane w rozdziale
 \ref{pliki_interfejsow_modulow_obcych} na stronie \pageref{pliki_interfejsow_modulow_obcych}.
 
-Pliki interfejsów są kodowane w formacie JSON.
+Pliki interfejsów są zapisywane w formacie JSON.
 
 \paragraph{Plik interfejsu dla modułów ''własnych''}
 
@@ -293,7 +301,6 @@ W elementach listy \texttt{imports} atrybuty mają następujące znaczenie:
     \item \texttt{foreign} określa czy moduł jest ''własny'' (\texttt{false}) czy ''obcy'' (\texttt{true})
 \end{enumerate}
 
-\newpage
 \section{Projekt bazy danych}
 
 Brak bazy danych jako takiej w projekcie.
@@ -307,6 +314,7 @@ Implementacja kompilatora jest bardzo prosta, jak na standardy tego typu projekt
 Rysunek \ref{basic_compiler_flow} na stronie \pageref{basic_compiler_flow} bardzo dobrze oddaje strukturę
 kompilatora dostarczonego jako wynik tej pracy.
 
+\paragraph*{Analiza leksykalna i składniowa}
 W fazie przygotowania tekstu programu ''do obróbki'' najpierw przeprowadzana jest analiza leksykalna (podział
 tekstu na tokeny), później analiza składniowa -- która w dużej mierze polega na uporządkowaniu ''płaskiej''
 listy tokenów w grupy ograniczone nawiasami. Algorytm dokonujący analizy składniowej jest trywialny:
@@ -328,6 +336,7 @@ algorytmu sprawia, że jest on też bardzo szybki w działaniu.
 Faktycznie, na tym etapie łączone są również rozbudowane identyfikatory (np. \texttt{foo.bar.baz}), ale nie
 wpływa to znacząco na skomplikowanie kodu.
 
+\paragraph*{Klasyfikacja grup}
 Po tym etapie ''wstępnej'' analizy następuje klasyfikacja grup. W tym przypadku algorytm również jest bardzo
 prosty. Klasyfikator rekurencyjnie sprawdza wszystkie listy i nadaje im typ oznaczający jaką konstrukcję
 językową reprezentują. W tym celu musi jedynie sprawdzić typ pierwszego tokenu, i ewentualnie (w przypadku

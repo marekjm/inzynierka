@@ -33,8 +33,6 @@ Oprócz kompilatora (rozdział \ref{opis_kompilatora} na stronie \pageref{opis_k
 również ''program łączący'' (rozdział \ref{opis_linkera} na stronie \pageref{opis_linkera}) dokonujący
 automatycznego połączenia wymaganych modułów w gotowy plik wykonywalny.
 
-\newpage
-
 \subsection{Architektura systemu}
 \label{lang_architektura_systemu}
 
@@ -44,8 +42,9 @@ uruchomienia programu przez jądro Viua VM.
 
 Ostatnią fazą jaką zajmuje się kompilator języka ViuAct dostarczany jako element tej pracy inżynierskiej jest
 emisja kodu (''Assembly code emission''), której wynikiem jest plik z kodem źródłowym w języku assemblera Viua
-VM (''\texttt{hello\_world.asm}'' na rysunku). Rozdział \ref{architektura_kompilatora_viuact}
-(\nameref{architektura_kompilatora_viuact}) dokładniej opisuje działanie samego kompilatora.
+VM (''\texttt{hello\_world.asm}'' na rysunku \ref{schemat_interakcji_viuact_z_viuavm}).
+Rozdział \ref{architektura_kompilatora_viuact} (\nameref{architektura_kompilatora_viuact}) dokładniej opisuje
+działanie samego kompilatora.
 
 \begin{figure}[!htp]
     \centering

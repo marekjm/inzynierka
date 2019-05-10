@@ -1,6 +1,6 @@
 \chapter{Specyfikacja języka ViuAct}
 \label{viuact_spec}
-\label{specyfikacja_jezyka_viuact}
+\label{specyfikacja_jezyka_viuact} % FIXME zbędny label
 
 ViuAct jest językiem kładącym silny nacisk na funkcjonalność związaną z współbieżnością opartą na modelu
 aktorów. Większość konstrukcji językowych jest wyrażeniami (\emph{expressions}) zamiast ''stwierdzeniami''
@@ -101,46 +101,53 @@ składnię \texttt{try-catch}.
 
 \subsubsection{Liczba całkowita}
 
-\emph{Liczba całkowita ze znakiem, o szerokości 64 bitów, kodowana z dopełnienem do
-dwóch}
+Liczba całkowita ze znakiem, o szerokości 64 bitów, kodowana z dopełnienem do dwóch
 
 \subsubsection{Liczba zmiennoprzecinkowa}
 
-\emph{Liczba zmiennoprzecinkowa o szerokości 64 bitów kodowana w standardzie IEEE 754-2008}
+Liczba zmiennoprzecinkowa o szerokości 64 bitów kodowana w standardzie IEEE 754-2008
 
 \subsubsection{Wartość boolowska}
 
-\emph{Wartość logiczna reprezentująca prawdę lub fałsz o szerokości 8 bitów}
+Wartość logiczna reprezentująca prawdę lub fałsz o szerokości 8 bitów
 
 \subsubsection{Tekst}
 
-\emph{Ciąg znaków Unicode, kodowany w formacie UTF-8}
+Ciąg znaków Unicode, kodowany w formacie UTF-8
 
 \subsubsection{String}
 
-\emph{Ciąg 8-bitowych bajtów}
+Ciąg 8-bitowych bajtów
 
 \subsection{Typy złożone}
 
 \subsubsection{Wektor}
 
-\emph{Sekwencja wartości dowolnych typów danych, indeksowana od 0}
+Sekwencja wartości dowolnych typów danych, indeksowana od 0
 
 \subsubsection{Struktura}
 
-\emph{Struktura agregująca wartości dowolnych typów danych, w której jedna
-wartość jest mapowana do jednego pola}
+Struktura agregująca wartości dowolnych typów danych, w której jedna
+wartość jest mapowana do jednego pola
 
 \subsection{Typy platformy}
 
 \subsubsection{PID}
 
-\emph{Wartość identyfikująca aktora w programie}
-
-Jest to typ dostarczany przez Viua VM. Dla programów pisanych w Viuact jest to
+Wartość identyfikująca aktora w programie.
+Jest to typ dostarczany przez Viua VM. Dla programów pisanych w \ViuAct jest to
 typ nieprzezroczysty.
 
 \section{Konstrukcje języka}
+
+W tym rozdziale zaprezentowane są wszystkie konstrukcje językowe dostępne w języku \ViuAct.
+Schemat opisu każdego z wyrażeń jest następujący:
+
+\begin{enumerate}
+    \item abstrakcyjna składnia w formacie EBNF
+    \item opis wyrażenia
+    \item przykład kodu wykorzystujący dane wyrażenie
+\end{enumerate}
 
 \subsection{Wyrażenia}
 \label{language_expressions}
@@ -154,6 +161,14 @@ typ nieprzezroczysty.
 \phantom{expression :}| \emph{if-expr}}
 \\
 \texttt{expression := \{ \emph{expression}+ \}}
+\vspace{1em}
+
+Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
+reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (''\emph{run-time}'')
+zależnie od wcześniejszego stanu programu.
+
+Większość konstrukcji jezykowych oferowanych przez Viuact może być użyta jako wyrażenie.
+Wyjątki to definicje zmiennych, definicje funkcji, definicje modułów, i przypisanie do pola struktury.
 
 \begin{lstlisting}
 42
@@ -173,13 +188,6 @@ x
 }
 \end{lstlisting}
 
-Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
-reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (''\emph{run-time}'')
-zależnie od wcześniejszego stanu programu.
-
-Większość konstrukcji jezykowych oferowanych przez Viuact może być użyta jako wyrażenie.
-Wyjątki to definicje zmiennych, definicje funkcji, definicje modułów, i przypisanie do pola struktury.
-
 \subsubsection{Wyrażenia złożone}
 
 Wyrażenia złożone są wyrażeniami składającymi się z kilku wyrażeń ograniczonych nawiasami klamrowymi.
@@ -192,7 +200,8 @@ Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \t
 {
     (let x 42)
     (print x)
-    x   ; %*wartość zwracana z tego wyrażenia jest wartością przechowywaną pod nazwą x*)
+    x   ; %*wartość zwracana z tego wyrażenia jest wartością*)
+        ; %*przechowywaną pod nazwą x*)
 }
 \end{lstlisting}
 
@@ -213,6 +222,9 @@ wyrażenia obsługi w konstrukcji \texttt{try}, itp.). Na przykładzie poniżej 
 \subsection{Definicje zmiennych}
 
 \texttt{let-binding := (let \emph{name} \emph{expression})}
+\vspace{1em}
+
+Definicje zmiennych przypisują wartości wyrażeń do nazw.
 
 \begin{lstlisting}
 (let i 42)
@@ -220,18 +232,17 @@ wyrażenia obsługi w konstrukcji \texttt{try}, itp.). Na przykładzie poniżej 
 (let t "Hello World!")
 \end{lstlisting}
 
-Definicje zmiennych przypisują wartości wyrażeń do nazw.
-
 \subsection{Wywołanie operatora}
 
 \texttt{(\emph{operator} \emph{lhs} \emph{rhs})}
+\vspace{1em}
+
+Operatory są zapisywane w konwencji prefiksowej (tj. najpierw operator, potem operandy).
 
 \begin{lstlisting}
 (+ x 1)
 (* a b)
 \end{lstlisting}
-
-Operatory są zapisywane w konwencji prefiksowej (tj. najpierw operator, potem operandy).
 
 \subsubsection{Operatory binarne (dwuargumentowe) logiczne}
 
@@ -290,18 +301,22 @@ let op : Ta -> Tb -> Ta
 \subsection{Przypisanie do pola struktury}
 
 \texttt{(:= \emph{field} \emph{expression})}
+\vspace{1em}
+
+Operator przypisania do pola struktury powoduje utworzenie żądanego pola w strukturze (jeśli wcześniej nie
+istniało) lub aktualizację wartości przechowywanej w tym polu (jeśli wcześniej istniało).
 
 \begin{lstlisting}
 (let x (struct))
 (:= x.field 42)
 \end{lstlisting}
 
-Operator przypisania do pola struktury powoduje utworzenie żądanego pola w strukturze (jeśli wcześniej nie
-istniało) lub aktualizację wartości przechowywanej w tym polu (jeśli wcześniej istniało).
-
 \subsection{Definicje funkcji}
 
 \texttt{function-definition := (let \emph{name} (\emph{formal-parameters}) \emph{expression})}
+\vspace{1em}
+
+O funkcjach w Viuact można myśleć jak o parametryzowanych wyrażeniach.
 
 \begin{lstlisting}
 (let f (x) (+ x 1))
@@ -311,12 +326,10 @@ istniało) lub aktualizację wartości przechowywanej w tym polu (jeśli wcześn
 })
 \end{lstlisting}
 
-O funkcjach w Viuact można myśleć jak o parametryzowanych wyrażeniach.
-
 \subsubsection{Parametry formalne}
 
 \texttt{formal-parameters := \emph{name}*}
-\\
+\vspace{1em}
 
 Parametry formalne (\emph{formal parameters}) są nazwami zmiennych widocznymi wewnątrz funkcji.
 Parametry faktyczne (\emph{actual parameters}) są wartościami przypisywanymi parametrom formalnym na etapie
@@ -363,18 +376,18 @@ Funkcje, których definicje znajdują się w innych modułach niż aktualnie prz
 pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix.Network.socket}). Jedynie funkcje
 znajdujące się w tym samym module mogą być wywoływane bez pełnej ścieżki.
 
-\subsection{Wywołanie ''tailcall''}
+\subsection{Wywołanie ,,tailcall''}
 
 \texttt{(tailcall \emph{id} \emph{expression}*)}
 \newline
 
-Wywołania \emph{tailcall} powodują wywołanie funkcji nowej funkcje ''wykorzystując'' ramkę obecnej funkcji.
+Wywołania \emph{tailcall} powodują wywołanie funkcji nowej funkcje ,,wykorzystując'' ramkę obecnej funkcji.
 W praktyce powodują natychmiastowe zdjęcie obecnej ramki ze stosu (co powoduje destrukcję wszystkich wartości
 w rejestrach lokalnych obecnej ramki, oraz uruchomienie wszelkich wywołań odroczonych) i wepchnięcie na szczyt
 stosu ramki dla funkcji wywołanej \emph{tailcall}.
 
 Wywołanie \emph{tailcall} nie ma bezpośredniej wartości zwracanej, ponieważ nie da się jej zaobserwować.
-Wywołanie \emph{tailcall} ''porywa'' (ang. ''hijacks'') punkt, do którego powinna zwrócić wartość funkcja,
+Wywołanie \emph{tailcall} ,,porywa'' (ang. ,,hijacks'') punkt, do którego powinna zwrócić wartość funkcja,
 która wykonała takie wywołanie -- i dopiero ten punkt zaobserwuje de facto wartość zwróconą przez wywołanie
 \emph{tailcall}, ale z jego punktu widzenia wygląda to tak jakby tą wartość zwróciła funkcja, którą on
 bezpośrednio wywołał.
@@ -431,7 +444,7 @@ Wywołania odroczone są uruchamiane po zakończeniu działania funkcji, w któr
 przed zniszczeniem wartości, które były umieszczone w jej zmiennych lokalnych. Ten fakt może zostać
 wykorzystany do implementacji zarządzania zasobami -- jeśli wywołanie odroczone ma jakikolwiek uchwyt (np.
 wskaźnik) do zasobu to może wykonać dla niego jakąś logikę finalizacji. W takim celu po utworzeniu zasobu
-najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ''finalizacji''.
+najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ,,finalizacji''.
 
 \begin{lstlisting}
 (let f () {
@@ -451,7 +464,7 @@ najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ''fina
 \subsubsection{Fork-join}
 
 Metoda \emph{fork-join} może być zrealizowana w Viuact za pomocą aktorów. Jeśli wynik wywołania aktora jest
-przypisywany do zmiennej, to aktor będzie działał jako ''\emph{aktor potomny}'' aktora, który go wywołał. Taki
+przypisywany do zmiennej, to aktor będzie działał jako ,,\emph{aktor potomny}'' aktora, który go wywołał. Taki
 aktor potomny może być włączony (\emph{join}) za pomocą wywołania funkcji wbudowanej \texttt{Std.Actor.join()}
 z biblioteki standardowej (opisanej na stronie \pageref{Std_Actor_join}).
 
@@ -550,6 +563,16 @@ natychmiast zabity, a watchdog nie będzie uruchomiony przez VM ,,z powodu sameg
 \subsection{Obsługa wyjątków}
 
 \texttt{(try \emph{expression} ((catch \emph{exception-tag} \emph{name} \emph{expression})+))}
+\vspace{1em}
+
+Obsługa wyjątków w \ViuAct jest mechanizmem bardzo prostym. W momencie, w którym wyjątek jest zgłaszany
+stos wywołań jest odwijany w poszukiwaniu pierwszego bloku \texttt{catch} z odpowiadającym mu
+tagiem (\texttt{\emph{exception-tag}}).
+
+Kiedy taki blok jest znaleziony, wyłapana wartość wyjątku jest dowiązywana do nazwy (\texttt{\emph{name}})
+określonej w bloku. Wyjątek jest odrzucany (jeśli nie jest potrzebny) jeśli nazwa to
+,,\texttt{\_}''\footnote{Podobne zachowanie, czyli odrzucenie wartości jeśli nazwa dowiązania to
+\texttt{\_}, można odnaleźć w języku Erlang.}
 
 \begin{lstlisting}
 (let x (try (Std.Actor.receive 1s)) (
