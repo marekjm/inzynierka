@@ -1,0 +1,123 @@
+\subsection{Zarządzanie wartościami}
+\label{viua_vm_ops_value_management}
+
+\subsubsection{\texttt{move}}
+
+\begin{lstlisting}
+move Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Przesuwa wartości między rejestrami. Jeśli w rejestrze
+\texttt{\emph{Rd}} przed wykonaniem instrukcji znajduje się jakaś wartość to
+będzie ona zniszczona. Po wykonaniu instrukcji wartość, która znajdowała się w
+rejestrze \texttt{\emph{Rs}} znajduje się w rejestrze \texttt{\emph{Rd}}, a
+rejestr \texttt{\emph{Rs}} jest pusty.
+
+\begin{lstlisting}
+move %0 local %4 local
+move %0 parameters %1 local
+move %1 local %1 static
+\end{lstlisting}
+
+Instrukcja z wariantu \emph{1} przesuwa wartość z lokalnego rejestru 4 do
+lokalnego rejstru 0.
+Instrukcja z wariantu \emph{2} przesuwa wartość z lokalnego rejestru 1 do
+rejestru parametrów 0 (znajdującego się w ramce wywołania).
+Instrukcja z wariantu \emph{3} przesuwa wartość ze statycznego rejestru 1 do
+lokalnego rejestru 1.
+
+\subsubsection{\texttt{copy}}
+
+\begin{lstlisting}
+copy Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Kopiuje wartość z rejestru \texttt{\emph{Rs}} do rejestru
+\texttt{\emph{Rd}}. Jeśli w rejestrze \texttt{\emph{Rd}} przed wykonaniem
+instrukcji znajduje się jakaś wartość to będzie ona zniszczona. Po wykonaniu
+instrukcji wartość w rejestrze \texttt{\emph{Rs}} pozostaje nienaruszona.
+
+\begin{lstlisting}
+copy %0 local %4 local
+copy %0 parameters %1 local
+copy %1 local %1 static
+\end{lstlisting}
+
+Instrukcja z wariantu \emph{1} kopiuje wartość z lokalnego rejestru 4 do
+lokalnego rejstru 0.
+Instrukcja z wariantu \emph{2} kopiuje wartość z lokalnego rejestru 1 do
+rejestru parametrów 0 (znajdującego się w ramce wywołania).
+Instrukcja z wariantu \emph{3} kopiuje wartość ze statycznego rejestru 1 do
+lokalnego rejestru 1.
+
+\subsubsection{\texttt{ptr}}
+
+\begin{lstlisting}
+ptr Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{\emph{Rd}} wskaźnik do wartości
+znajdującej się w rejestrze \texttt{\emph{Rs}}.
+
+\begin{lstlisting}
+ptr %1 local %2 local
+\end{lstlisting}
+
+\subsubsection{\texttt{ptrlive}}
+
+\begin{lstlisting}
+ptrlive Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Sprawdza poprawność (ważność) wskaźnika w rejestrze
+\texttt{\emph{Rs}}. W rejestrze \texttt{\emph{Rd}} umieszcza wartość logiczną
+\texttt{true} jeśli wskaźnik wskazuje na ,,żywą'' (niezniszczoną) wartość, lub
+\texttt{false} jeśli wskaźnik wskazuje na ,,martwą'' (zniszczoną) wartość.
+
+\begin{lstlisting}
+ptrlive %1 local %2 local
+\end{lstlisting}
+
+\subsubsection{\texttt{swap}}
+
+\begin{lstlisting}
+swap Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Zamienia miejscami wartości w rejestrach \texttt{\emph{Ra}} i
+\texttt{\emph{Rb}}.
+
+\begin{lstlisting}
+swap %1 local %2 local
+\end{lstlisting}
+
+\subsubsection{\texttt{delete}}
+
+\begin{lstlisting}
+delete Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Niszczy wartość w rejestrze \texttt{\emph{Rt}}.
+
+\begin{lstlisting}
+	izero %0 local
+	return
+.end
+\end{lstlisting}
+
+Wywołanie destruktora wartości.
+
+\subsubsection{\texttt{isnull}}
+
+\begin{lstlisting}
+izero Rd
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} liczbę całkowitą o wartości 0.
+Zwyczajowo wykorzystywana na końcu funkcji \texttt{main} do utworzenia domyślnej wartości zwracanej:
+
+\begin{lstlisting}
+	izero %0 local
+	return
+.end
+\end{lstlisting}

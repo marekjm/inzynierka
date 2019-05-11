@@ -1,0 +1,60 @@
+\subsection{Arytmetyka (CPU)}
+\label{viua_vm_ops_arithmetic_cpu}
+
+Arytmetyka implementowana przez fizyczne CPU, na którym działa Viua VM.
+Specyfika tego fizycznego CPU wpływa na wyniki działania instrukcji z tej grupy.
+Arytmetyka o zdefiniowanym zachowaniu niezależnym od fizycznej platformy jest
+opisana w rozdziale \ref{viua_vm_ops_arithmetic_vm} na stronie
+\pageref{viua_vm_ops_arithmetic_vm}. Arytmetyka oparta o CPU jest
+bardziej wydajna (,,szybsza''), ale nie zawsze zapewnia przewidywalność,
+stabliność, i weryfikację wyników operacji (wykrywanie błędów).
+
+\subsubsection{\texttt{izero}}
+
+\begin{lstlisting}
+izero Rd
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} liczbę całkowitą o wartości 0.
+Zwyczajowo wykorzystywana na końcu funkcji \texttt{main} do utworzenia domyślnej wartości zwracanej:
+
+\begin{lstlisting}
+	izero %0 local
+	return
+.end
+\end{lstlisting}
+
+\subsubsection{\texttt{integer}}
+
+\begin{lstlisting}
+integer Rd %*\emph{<integer>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} liczbę całkowitą o wartości \emph{\texttt{integer}}.
+
+\subsubsection{\texttt{iinc}}
+\subsubsection{\texttt{idec}}
+
+\subsubsection{\texttt{float}}
+
+\begin{lstlisting}
+float Rd %*\emph{<float>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} liczbę zmiennoprzecinkową o wartości
+\emph{\texttt{float}}.
+
+\subsubsection{\texttt{itof}}
+\subsubsection{\texttt{ftoi}}
+\subsubsection{\texttt{stoi}}
+\subsubsection{\texttt{stof}}
+
+\subsubsection{\texttt{add}}
+\subsubsection{\texttt{sub}}
+\subsubsection{\texttt{mul}}
+\subsubsection{\texttt{div}}
+\subsubsection{\texttt{lt}}
+\subsubsection{\texttt{lte}}
+\subsubsection{\texttt{gt}}
+\subsubsection{\texttt{gte}}
+\subsubsection{\texttt{eq}}

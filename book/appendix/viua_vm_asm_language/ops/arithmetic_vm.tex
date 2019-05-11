@@ -1,0 +1,58 @@
+\subsection{Arytmetyka (Viua VM)}
+\label{viua_vm_ops_arithmetic_vm}
+
+Arytmetyka implementowana przez Viua VM, niezależna od fizycznej platformy, na
+której maszyna wirtualna jest uruchomiona. Arytmetyka o zachowaniu zależnym od
+fizycznej platformy jest opisana w rozdziale \ref{viua_vm_ops_arithmetic_cpu} na
+stronie \pageref{viua_vm_ops_arithmetic_cpu}. Arytmetyka o zachowaniu
+niezależnym od fizycznej platformy jest mniej wydajna (,,wolniesza''), ale
+zapewnia przewidywalność, stabliność, i weryfikację wyników operacji (wykrywanie
+błędów).
+
+Operandami w instrukcjach arytmetycznych implementowanych przez VM są ciągi
+bitów, których konstruktory są opisane w rozdziale \ref{viua_vm_ops_bit_ops} na
+stronie \pageref{viua_vm_ops_bit_ops}.
+
+\subsubsection{\texttt{wrapincrement}}
+
+Modulo inkrementacja ze znakiem.
+
+\subsubsection{\texttt{wrapdecrement}}
+
+Modulo dekrementacja ze znakiem.
+
+\subsubsection{\texttt{wrapadd}}
+
+Modulo dodawanie ze znakiem.
+
+\subsubsection{\texttt{wrapsub}}
+
+Modulo odejmowanie ze znakiem.
+
+\subsubsection{\texttt{wrapmul}}
+
+Modulo mnożenie ze znakiem.
+
+\subsubsection{\texttt{wrapdiv}}
+
+Modulo dzielenie ze znakiem.
+
+\subsubsection{\texttt{checkedsincrement}}
+
+Sprawdzana inkrementacja ze znakiem.
+
+\subsubsection{\texttt{checkedsdecrement}}
+\subsubsection{\texttt{checkedsadd}}
+\subsubsection{\texttt{checkedssub}}
+\subsubsection{\texttt{checkedsmul}}
+\subsubsection{\texttt{checkedsdiv}}
+
+\subsubsection{\texttt{saturatingsincrement}}
+
+Nasycająca inkrementacja ze znakiem.
+
+\subsubsection{\texttt{saturatingsdecrement}}
+\subsubsection{\texttt{saturatingsadd}}
+\subsubsection{\texttt{saturatingssub}}
+\subsubsection{\texttt{saturatingsmul}}
+\subsubsection{\texttt{saturatingsdiv}}
