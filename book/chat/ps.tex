@@ -36,69 +36,86 @@ na żądanie zmiany używanego protokołu na WebSocket, jego wersję oraz klucz
 („Sec-WebSocketKey”). Serwer udzieli wówczas odpowiedzi ze swoim własnym
 kluczem, informując o zmianie stosowanego protokołu na WebSocket.
 
-\subsection{Dekompozycja systemu na podsystemy}
-\label{architektura_chatu}
-
-\subsubsection{Backend}
-Za nasłuchiwanie na porcie 8000 po stronie serwera będzie odpowiadał aktor
-,,WSListener'', który przy pierwszej próbie połączenia utworzy kolejnego,
-niezależnego aktora ,,WSInitializer'', odpowiadającego za realizację ,,uścisku
-dłoni'' i formułowanie odpowiedzi zwrotnej po stronie serwera w odniesieniu do
-połącznia na konkretnym gnieździe. W razie prawidłowego nawiązania połączenia,
-aktor ten utworzy kolejną parę aktorów, ,,WSConnector'' oraz ,,Authorizer'', zaś
-sam WSInitializer ulegnie samozniszczeniu.
-
-Od tej pory, ,,WSConnector'' będzie odpowiadał za dalszą, bezpośrednią obsługę
-przydzielonego gniazda. Jego rolą będzie również kodowanie i dekodowanie
-wiadomości (ang.,,messages''), czyli podstawowych logicznych jednostek
-informacji, które są używane przy połączeniach z użyciem protokołu WebSocket.
-Z kolei ,,Authorizer'' będzie od tego momentu odbierał wiadomości od
-,,WSConnectora'', który został uruchomiony wraz z nim, i będzie odpowiadał za
-należytą autentykację i/lub autoryzację użytkownika w usłudze czatu.
-
 W chwili prawidłowego rozpoczęcia połączenia WebSocket, aplikacja po stronie
 klienta wyświetli użytkownikowi okno autoryzacyjne. Wpisane tam dane zostaną
 następnie przesłane do serwera. Po jego stronie, komunikat zostanie zdekodowany
-przez aktora ,,WSConnector'' i przekazany powiązanemu aktorowi ,,Authorizer''.
-Jego zadaniem będzie weryfikacja przedstawionych informacji oraz podjęcie
-decyzji o autoryzacji lub jej odmowie. Decyzja ta jest odsyłana do
-,,WSConnectora'' i następnie przekazywana do aplikacji po stronie klienta.
+przez aktora \texttt{WSConnector} i przekazany powiązanemu aktorowi
+\texttt{Authorizer}. Jego zadaniem będzie weryfikacja przedstawionych informacji
+oraz podjęcie decyzji o autoryzacji lub jej odmowie. Decyzja ta jest odsyłana do
+\texttt{WSConnectora} i następnie przekazywana do aplikacji po stronie klienta.
 
-Za gromadzenie informacji związanych z autentykacją odpowiada jeden, na stałe
-uruchomiony aktor o nazwie ,,UsernameLessor''. Jego zadaniem jest zarządzanie
-informacjami na temat tymczasowych nazw użytkowników, należących do	użytkowników
-bez stałych kont (ich gromadzenie, udzielanie, weryfikacja), a także weryfikacja
-tożsamości kont administratorów.
+Jezeli autentykacja przebiegnie pomyślnie, aktor \texttt{Authorizer} uruchamia aktora \texttt{UserSession}, spina go z aktorem \texttt{WSConnector} używanym wcześniej do komunikacji z frontendem, oraz ulega autodestrukcji.
 
-Jezeli autentykacja przebiegnie pomyślnie, aktor ,,Authorizer'' uruchamia aktora
-,,UserSession'', spina go z aktorem ,,WSConnector'' używanym wcześniej do
-komunikacji z frontendem, oraz ulega autodestrukcji. Od tego momentu, aktor
-,,UserSession'' przejmuje komunikację z użyciem ,,WSConnector'', pozwalając na
-zwyczajne użytkowanie czatu. Aktor ,,UserSession'' gromadzi informacje na temat
-nazwy oraz poziomu uprawnień użytkownika, a także tego, z jakim pokojem jest
-obecnie spięty.
+\subsection{Dekompozycja systemu na podsystemy}
+\label{architektura_chatu}
 
-Kolejnym kluczowym aktorem, służącym do zarządzania pokojami, jest ,,Landlord''.
-Jego zadaniem jest współudział w podpinaniu użytkowników do pokoju, tworzeniem
-nowych i usuwaniem istniejących pokojów, a także utrzymywanie i udostępnianie
-kompletnej listy aktywnych pokojów.
+\subsubsection{Strona serwera (,,backend'')}
+Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębnych od
+siebie aktorów:
 
-Za  obsługę każdego z poszczególnych pokojów odpowiada para aktorów: ,,Room'',
-który działa jak router wiadomości i przechowuje listę użytkowników którzy
-są do niego wpięci, oraz ,,MessageCache'', który przechowuje i odtwarza 10
-najnowszych wiadomości wysłanych do pokoju.
+\begin{labeling}{UsernameLessor}
 
-Wreszcie, istnieje aktor ,,Architect'', który jest uruchamiany jako pierwszy
-wraz z całym
-serwerem, a także inicjalizuje i nadzoruje aktorów ,,WSListener'',
-,,UsernameLessor'' oraz ,,Landlord''. W razie nieprawidłwego działania lub
-wyłączenia któregokolwiek z tych trzech głównych aktorów, ,,Architect''
-automatycznie zainicjuje przeładowanie całego serwera. Ponadto, ,,Architect''
-potrafi w momencie uruchamiania serwera odczytać jego pliki konfiguracyjne i
-na tej podstawie należycie skonfigurować pokoje oraz administratorów.
+  \item[\texttt{Architect}] Uruchamiany jako pierwszy wraz z całym
+  serwerem, a następnie inicjalizuje i nadzoruje aktorów \texttt{WSListener},
+  \texttt{UsernameLessor} oraz \texttt{Landlord}. W razie nieprawidłwego
+  działania lub wyłączenia któregokolwiek z tych trzech głównych aktorów,
+  \texttt{Architect} automatycznie zainicjuje przeładowanie całego serwera.
+  Ponadto, \texttt{Architect} potrafi w momencie uruchamiania serwera odczytać
+  jego pliki konfiguracyjne i na tej podstawie należycie skonfigurować pokoje
+  oraz administratorów. Zawsze występuje w jednym egzemplarzu.
 
-\subsubsection{Frontend}
+  \item[\texttt{WSListener}] Odpowiada za nasłuchiwanie na porcie 8000 po
+  stronie serwera, a przy każdej próbie połączenia będzie tworzyć kolejnego,
+  niezależnego aktora \texttt{WSInitializer}. Występuje zawsze w jednym
+  egzemplarzu.
 
+  \item[\texttt{WSInitializer}] Odpowiada za  realizację ,,uścisku dłoni'' i
+  formułowanie odpowiedzi zwrotnej po stronie serwera w odniesieniu do
+  połączenia na konkretnym gnieździe. W razie prawidłowego nawiązania
+  połączenia, aktor ten utworzy kolejną parę aktorów, \texttt{WSConnector} oraz
+  \texttt{Authorizer}, zaś WSInitializer ulegnie samozniszczeniu.
+
+  \item[\texttt{WSConnector}] Odpowiada za dalszą, bezpośrednią obsługę
+  przydzielonego gniazda. Występuje ich tylu, ile jest otwartych połącznień.
+  Jego rolą będzie również kodowanie i dekodowanie wiadomości (ang.
+  ,,messages''), czyli podstawowych logicznych jednostek informacji, które są
+  używane przy połączeniach z użyciem protokołu WebSocket. Pilnuje również, czy
+  połączenie nie zostało zerwane oraz inicjuje zamykanie sesji użytkownika.
+
+  \item[\texttt{Authorizer}] Wymienia wiadomości od \texttt{WSConnectora}, który
+  został uruchomiony wraz z nim i odpowiada za należytą autentykację i/lub
+  autoryzację użytkownika w usłudze czatu. Egzemplarz aktora tego typu jest
+  powoływany dla każdego otwartego połączenia bez nawiązanej sesji. Aby dokonać
+  autoryzacji, aktor \texttt{Authorizer} kontaktuje się \texttt{UsernameLessor}.
+  Jeżeli autentykacja przebiegnie pomyślnie, aktor \texttt{Authorizer} uruchamia
+  aktora \texttt{UserSession}, spina go z aktorem \texttt{WSConnector} używanym
+  wcześniej do komunikacji z frontendem, oraz ulega autodestrukcji.
+
+  \item[\texttt{UsernameLessor}] Jego zadaniem jest zarządzanie informacjami na
+  temat tymczasowych nazw użytkowników, należących do	użytkowników bez stałych
+  kont (ich gromadzenie, udzielanie, weryfikacja, dbanie o unikalność), a także
+  weryfikacja tożsamości kont administratorów z dodatkowym użyciem hasła.
+  Występuje w jednym egzemplarzu, przez cały czas istnienia serwera. Ponadto,
+  nadzoruje działanie aktorów \texttt{Authorizer} oraz \texttt{UserSession}.
+
+  \item[\texttt{UserSession}] Przejmuje komunikację z użyciem
+  \texttt{WSConnector}, pozwalając na zwyczajne użytkowanie czatu. Aktor
+  ,,UserSession'' gromadzi informacje na temat nazwy oraz poziomu uprawnień
+  użytkownika, a także tego, z jakim pokojem jest obecnie spięty.
+
+  \item[\texttt{Landlord}] Jego zadaniem jest współudział w podpinaniu
+  użytkowników do pokoju, tworzeniem nowych i usuwaniem istniejących pokojów, a
+  także utrzymywanie i udostępnianie kompletnej listy aktywnych pokojów.
+
+  \item[\texttt{Room}] Działa jak router wiadomości i przechowuje listę użytkowników którzy są do niego wpięci. Istnieje w tylu egzemplarzach, ile jest aktywnych pokojów.
+
+  \item[\texttt{MessageCache}] Przechowuje i odtwarza 10 najnowszych wiadomości wysłanych do pokoju. Występuje po jednym egzemplarzu dla każdego aktywnego aktora \texttt{Room}.
+
+\end{labeling}
+
+\subsubsection{Warstwa interfejsu użytkownika (,,frontend'')}
+Podczas pracy nad wartwą frontendu, zastosowano framework webowy Vue.js. Jedną
+z przyczyn dla tej decyzji jest możliwość zdekomponowania projektowanej aplikacji na mniejsze części, nazywane modułami (ang. \textit{modules}). Są one zorganizowane hierarchiczne.
 
 \section{Projekt struktury}
 
