@@ -15,6 +15,7 @@
 % \usepackage{showlabels}
 % \usepackage{titlesec}
 \usepackage{geometry}
+\usepackage{rotating}
 \geometry{a4paper, portrait, margin=2cm}
 \graphicspath{ {./fig/} }
 \usepackage{listings}
@@ -41,13 +42,21 @@
     Viua VM in action.\\
     Implementation of a high-level programming language and\\ a simple application}
 
+\definecolor{light-gray}{gray}{0.9}
+
 \begin{document}
 
 \lstset{basicstyle=\ttfamily,
-columns=fixed,
-escapeinside={\%*}{*)},
-inputencoding=utf8,
-extendedchars=true}
+		columns=fixed,
+		escapeinside={\%*}{*)},
+		inputencoding=utf8,
+		extendedchars=true,
+		xleftmargin=.4in,
+		xrightmargin=.4in,
+		backgroundcolor=\color{light-gray},
+		numbers=right,
+		numberstyle=\tiny
+		}
 
 \maketitle
 
@@ -91,16 +100,17 @@ Praca została złożona za pomocą systemu \LaTeX.
 
 Książki. Internetowe materiały. Materiały wykładowe. Opracowania własne.
 
-% \bibliographystyle{ieeetr}
-\bibliographystyle{apalike}
+\bibliographystyle{ieeetr}
+% \bibliographystyle{apalike}
+% \bibliographystyle{acm}
+% \bibliographystyle{alpha}
 \bibliography{bibliografia}
 
-\chapter{Załączniki}
+\part{Załączniki}
 
-\section{Język assemblera Viua VM}
-\label{appendix_viua_vm_assembly_language}
+\input{appendix/viua_vm_asm_language/main}
 
-\section{Model obliczeniowy Viua VM}
+\chapter{Model obliczeniowy Viua VM}
 \label{appendix_viua_vm_execution_model}
 
 \end{document}

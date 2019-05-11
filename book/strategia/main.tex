@@ -2,8 +2,8 @@
 \label{strategia_prac}
 
 W tym rozdziale opisujemy metodologię prac nad poszczególnymi częściami projektu. Każda z nich była rozwijana
-innym sposobem z dużych rozbieżności specyfiki konkretnych problemu -- zupełnie inaczej pracuje się nad
-semi-formalną specyfikacją języka programowania niż nad aplikacją użytkową, więc podjęliśmy decyzję o
+innym sposobem z powodu dużych rozbieżności specyfiki konkretnych problemów -- zupełnie inaczej pracuje się
+nad semi-formalną specyfikacją języka programowania niż nad aplikacją użytkową, więc podjęliśmy decyzję o
 rozdzieleniu tych części i poprowadzeniu ich jako osobne, mniejsze projekty wewnątrz pracy inżynierskiej.
 
 \section{Język ViuAct}
@@ -31,13 +31,24 @@ niej zostaje dokumentacja (obejmująca m.in. przykłady użycia).
 
 \section{Kompilator języka ViuAct}
 
-Issue tracking, open-source. Prototypowanie. Iteracja.
-Prace przeplatają się z pracami nad specyfikacją celem walidacji co jest możliwe.
+Prace nad kompilatorem języka ViuAct były prowadzone w identyczny sposób jak prace nad Viua VM.
+Jest to połączenie strategii prototypowania i iteracji, które spawdza się przy projekcie rozwijanym jako
+open-source (mowa tu o ,,open-source'' jako modelu wytwarzania, nie jako o ruchu alternatywnym do
+Free~Software).
+
+Zadania w tej części projektu były śledzone za pomocą narzędzia
+\texttt{issue}\footnote{\url{https://github.com/marekjm/issue}}, które jest również wykorzystywane przez
+jednego z członków zespołu do śledzenia zadań w pracy zawodowej i projektach open-source.
+
+Prace implementacyjne przeplatały się z pracami nad specyfikacją w celu weryfikowania na bieżąco co jest
+możliwe do wykonania w zamierzonym czasie w całości, co tylko w części, a co nie jest możliwe do wykonania
+przy zakładanych zasobach czasowo-ludzkich.
 
 \subsection{Testowanie}
 
 Zestaw prostych programów testowych. Test sprawdza czy program się kompiluje i czy po uruchomieniu daje
-spodziewane wyniki.
+spodziewane wyniki. Jest to strategia zaadaptowana z projektu Viua VM, gdzie jest z powodzeniem
+wykorzystywana.
 
 \section{Program ViuaChat}
 

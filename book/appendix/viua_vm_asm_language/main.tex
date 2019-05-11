@@ -1,0 +1,416 @@
+\chapter{Język assemblera Viua VM}
+\label{appendix_viua_vm_assembly_language}
+
+W tym rozdziale zostanie po krótce omówiony język assemblera Viua VM.
+
+\section{Składnia języka assemblera}
+
+Składnia języka assemblera Viua VM jest prosta. Wyglądem przypomina składnię innych języków tego rodzaju
+(np. języki assemblera x86 czy ARM).
+
+\subsection{Ogólna składnia instrukcji}
+
+Instrukcje składają się z mnemoniki, zera lub więcej adresów rejestrów, i co najwyżej jednego literału. Ogólną składnię można zapisać więc tak:
+
+\begin{lstlisting}
+mnemonic [<register>...] [<literal>]
+\end{lstlisting}
+
+Zanim pokazanych zostanie kilka przykładów ilustrujących różne warianty składni na konkretnych instrukcjach
+należy zdefiniować czym jest ,,adres rejestru'' (lub, skrótowo, ,,rejestr''), a czym jest ,,literał''.
+
+\begin{labeling}{\textbf{adres rejestru}}
+	\item[\textbf{adres rejestru}] identyfikator informujący kernel VM skąd ma pobrać wartości do
+		przetworzenia i gdzie zapisać wyniki działania instrukcji, w specjalnym przypadku adresem rejestru
+		jest tzw. ,,\emph{rejestr pusty}'' -- \texttt{void}
+	\item[\textbf{literał}] reprezentacja wartości wpisana dosłownie w kod źródłowy lub binarny,
+		np. \texttt{0xdeadbeef}, \texttt{"Hello World!"}, \texttt{42}; do literałów zaliczane są też nazwy
+		funkcji, bloków i modułów
+\end{labeling}
+
+\subsubsection{Adresy rejestrów}
+
+\begin{lstlisting}
+<access-operator> <index> <register-set>
+void
+\end{lstlisting}
+
+\begin{labeling}{\texttt{access-operator}}
+\item[\texttt{access-operator}] \texttt{\%} -- ,,dostęp bezpośredni'', lub
+	\texttt{*} -- ,,dereferencja wskaźnika''
+\item[\texttt{index}] indeks rejestru wewnątrz zestawu rejestrów
+\item[\texttt{register-set}] nazwa zestawu rejestrów
+\end{labeling}
+
+Dostępne zestawy rejestrów to:
+
+\begin{labeling}{\texttt{parameters}}
+\item[\texttt{local}] zawiera wartości lokalne (,,zmienne lokalne'')
+\item[\texttt{static}] zawiera wartości statyczne (,,zmienne statyczne'')
+\item[\texttt{arguments}] zawiera wartości przekazane do aktywnej funkcji jako argumenty
+\item[\texttt{parameters}] zawiera wartości przekazane do przygotowywanej ramki wywołania jako parametry
+\end{labeling}
+
+Podczas odczytu wartości adres \texttt{\%3 static} powoduje ,,dostęp do wartości w 3. statycznym rejestrze'';
+\texttt{*4 local} powoduje ,,dostęp do wartości, na którą wskazuje wskaźnik w 4. lokalnym rejestrze''.
+
+Wartości w rejestrach z zestawów \texttt{parameters} i \texttt{arguments} nie mogą być modyfikowane
+bezpośrednio. Muszą być najpierw przeniesione lub skopiowane do rejestrów lokalnych lub statycznych.
+
+\subsection{Definicje funkcji i bloków}
+
+\begin{lstlisting}
+.function: <name>/<arity>
+	<instruction>
+	[<instruction>...]
+.end
+\end{lstlisting}
+
+\begin{lstlisting}
+.block: <name>
+	<instruction>
+	[<instruction>...]
+.end
+\end{lstlisting}
+
+\subsection{Deklaracje funkcji}
+
+\begin{lstlisting}
+.signature: <name>/<arity>
+\end{lstlisting}
+
+\subsection{Import modułów}
+
+\begin{lstlisting}
+.import: <module>[::<module>...]
+\end{lstlisting}
+
+\subsection{Markery}
+
+\begin{lstlisting}
+.mark: <marker-name>
+\end{lstlisting}
+
+\subsection{Nazywanie rejestrów}
+
+\begin{lstlisting}
+.name: <index> <name>
+\end{lstlisting}
+
+\section{Instrukcje Viua VM}
+
+\subsection{\texttt{nop}}
+
+\begin{lstlisting}
+nop
+\end{lstlisting}
+
+\paragraph*{Opis} Instrukcja ,,pusta''.
+
+\paragraph*{Wyjątki} Brak.
+
+\paragraph*{Uwagi} Brak.
+
+\subsection{\texttt{izero}}
+
+\begin{lstlisting}
+izero Rd
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} liczbę całkowitą o wartości 0.
+Zwyczajowo wykorzystywana na końcu funkcji \texttt{main} do utworzenia domyślnej wartości zwracanej:
+
+\begin{lstlisting}
+	izero %0 local
+	return
+.end
+\end{lstlisting}
+
+\subsection{\texttt{integer}}
+
+\begin{lstlisting}
+integer Rd %*\emph{<integer>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} liczbę całkowitą o wartości \emph{\texttt{integer}}.
+
+\subsection{\texttt{iinc}}
+\subsection{\texttt{idec}}
+
+\subsection{\texttt{float}}
+
+\begin{lstlisting}
+float Rd %*\emph{<float>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} liczbę zmiennoprzecinkową o wartości
+\emph{\texttt{float}}.
+
+\subsection{\texttt{itof}}
+\subsection{\texttt{ftoi}}
+\subsection{\texttt{stoi}}
+\subsection{\texttt{stof}}
+
+\subsection{\texttt{add}}
+\subsection{\texttt{sub}}
+\subsection{\texttt{mul}}
+\subsection{\texttt{div}}
+\subsection{\texttt{lt}}
+\subsection{\texttt{lte}}
+\subsection{\texttt{gt}}
+\subsection{\texttt{gte}}
+\subsection{\texttt{eq}}
+
+\subsection{\texttt{string}}
+
+\begin{lstlisting}
+string Rd %*\emph{<str>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} ciąg bajtów o wartości \emph{\texttt{str}}.
+
+\subsection{\texttt{streq}}
+
+\subsection{\texttt{text}}
+
+\begin{lstlisting}
+text Rd %*\emph{<txt>}*)
+text Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Wariant pierwszy konstruuje w rejestrze \texttt{Rd} tekst o wartości \emph{\texttt{txt}}.
+Wariant drugi konwertuje wartość z rejestru \texttt{Rs} na tekst i umieszcza go w rejestrze \texttt{Rd}.
+
+\subsection{\texttt{texteq}}
+\subsection{\texttt{textat}}
+\subsection{\texttt{textsub}}
+\subsection{\texttt{textlength}}
+\subsection{\texttt{textcommonprefix}}
+\subsection{\texttt{textcommonsuffix}}
+\subsection{\texttt{textconcat}}
+
+\subsection{\texttt{vector}}
+\subsection{\texttt{vinsert}}
+\subsection{\texttt{vpush}}
+\subsection{\texttt{vpop}}
+\subsection{\texttt{vat}}
+\subsection{\texttt{vlen}}
+
+\subsection{\texttt{not}}
+
+Negacja boolowska.
+
+\subsection{\texttt{and}}
+
+Iloczyn boolowski.
+
+\subsection{\texttt{or}}
+
+Suma boolowska.
+
+\subsection{\texttt{bits\_of\_integer}}
+
+Konstruktor bitów z liczby całkowitej.
+
+\subsection{\texttt{integer\_of\_bits}}
+
+Konstruktor liczby całkowitej z bitów.
+
+\subsection{\texttt{bits}}
+
+Konstruktor bitów.
+
+\subsection{\texttt{bitand}}
+
+Bitowa operacja \emph{\texttt{and}}.
+
+\subsection{\texttt{bitor}}
+
+Bitowa operacja \emph{\texttt{or}}.
+
+\subsection{\texttt{bitnot}}
+
+Bitowa operacja \emph{\texttt{not}}.
+
+\subsection{\texttt{bitxor}}
+
+Bitowa operacja \emph{\texttt{xor}}.
+
+\subsection{\texttt{bitat}}
+
+Sprawdzenie wartości pojedynczego bitu.
+
+\subsection{\texttt{bitset}}
+
+Ustawienie wartości pojedynczego bitu.
+
+\subsection{\texttt{shl}}
+
+Przesunięcie bitowe w lewo.
+
+\subsection{\texttt{shr}}
+
+Przesunięcie bitowe w prawo.
+
+\subsection{\texttt{ashl}}
+
+Arytmetyczne (z zachowaniem znaku) przesunięcie bitowe w lewo.
+
+\subsection{\texttt{ashr}}
+
+Arytmetyczne przesunięcie bitowe w prawo.
+
+\subsection{\texttt{rol}}
+
+Rotacja bitowa w lewo.
+
+\subsection{\texttt{ror}}
+
+Rotacja bitowa w prawo.
+
+\subsection{\texttt{wrapincrement}}
+
+Modulo inkrementacja ze znakiem.
+
+\subsection{\texttt{wrapdecrement}}
+
+Modulo dekrementacja ze znakiem.
+
+\subsection{\texttt{wrapadd}}
+
+Modulo dodawanie ze znakiem.
+
+\subsection{\texttt{wrapsub}}
+
+Modulo odejmowanie ze znakiem.
+
+\subsection{\texttt{wrapmul}}
+
+Modulo mnożenie ze znakiem.
+
+\subsection{\texttt{wrapdiv}}
+
+Modulo dzielenie ze znakiem.
+
+\subsection{\texttt{checkedsincrement}}
+
+Sprawdzana inkrementacja ze znakiem.
+
+\subsection{\texttt{checkedsdecrement}}
+\subsection{\texttt{checkedsadd}}
+\subsection{\texttt{checkedssub}}
+\subsection{\texttt{checkedsmul}}
+\subsection{\texttt{checkedsdiv}}
+
+\subsection{\texttt{saturatingsincrement}}
+
+Nasycająca inkrementacja ze znakiem.
+
+\subsection{\texttt{saturatingsdecrement}}
+\subsection{\texttt{saturatingsadd}}
+\subsection{\texttt{saturatingssub}}
+\subsection{\texttt{saturatingsmul}}
+\subsection{\texttt{saturatingsdiv}}
+
+\subsection{\texttt{move}}
+
+Przesunięcie wartości między rejestrami.
+
+\subsection{\texttt{copy}}
+
+Skopiowanie wartości między rejestrami.
+
+\subsection{\texttt{ptr}}
+
+Konstruktor wskaźnika do wartości.
+
+\subsection{\texttt{ptrlive}}
+
+Sprawdzenie poprawności wskaźnika.
+
+\subsection{\texttt{swap}}
+
+Zamiana wartości w rejestrach.
+
+\subsection{\texttt{delete}}
+
+Wywołanie destruktora wartości.
+
+\subsection{\texttt{isnull}}
+
+\subsection{\texttt{print}}
+\subsection{\texttt{echo}}
+
+\subsection{\texttt{capture}}
+\subsection{\texttt{capturecopy}}
+\subsection{\texttt{capturemove}}
+
+\subsection{\texttt{closure}}
+\subsection{\texttt{function}}
+
+\subsection{\texttt{frame}}
+\subsection{\texttt{param}}
+
+Instrukcja prywatna.
+
+\subsection{\texttt{pamv}}
+
+Instrukcja prywatna.
+
+\subsection{\texttt{call}}
+\subsection{\texttt{tailcall}}
+\subsection{\texttt{defer}}
+\subsection{\texttt{arg}}
+
+Instrukcja prywatna.
+
+\subsection{\texttt{allocate\_registers}}
+
+\subsection{\texttt{process}}
+\subsection{\texttt{self}}
+\subsection{\texttt{pideq}}
+\subsection{\texttt{join}}
+\subsection{\texttt{send}}
+\subsection{\texttt{receive}}
+
+\subsection{\texttt{watchdog}}
+
+\subsection{\texttt{jump}}
+\subsection{\texttt{if}}
+
+\subsection{\texttt{throw}}
+
+Rzucenie wartości jako wyjątku.
+
+\subsection{\texttt{catch}}
+\subsection{\texttt{draw}}
+\subsection{\texttt{try}}
+\subsection{\texttt{enter}}
+\subsection{\texttt{leave}}
+
+\subsection{\texttt{import}}
+
+Import modułu.
+
+\subsection{\texttt{atom}}
+
+Konstruktor atomu.
+
+\subsection{\texttt{atomeq}}
+
+\subsection{\texttt{struct}}
+
+Konstruktor struktury.
+
+\subsection{\texttt{structinsert}}
+\subsection{\texttt{structremove}}
+\subsection{\texttt{structat}}
+\subsection{\texttt{structkeys}}
+
+\subsection{\texttt{return}}
+
+Wyjście z funkcji.
+
+\subsection{\texttt{halt}}
+
+Zakończenie działania i wyłączenie VM.

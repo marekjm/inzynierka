@@ -3,7 +3,7 @@
 
 We wprowadzeniu chcielibyśmy poruszyć ogólne tematy związane z naszą pracą, oraz przedstawić Czytelnikowi
 spójny wstęp zapewniający solidne podstawy do dalszej lektury. Zakładamy, że Czytelnik ma doświadczenie z
-językami programowania i umie biegle posługiwać się co najmniej jednym ''\emph{mainstreamowym}'' językiem, np.
+językami programowania i umie biegle posługiwać się co najmniej jednym ,,\emph{mainstreamowym}'' językiem, np.
 C++, Java, czy Python.
 
 Wprowadzenie jest dla nas miejscem, w którym przedstawimy problemy dręczące popularne obecnie języki
@@ -42,7 +42,7 @@ Threadripper (\cite{AmdProductThreadripper}) prezentujące nawet 32 rdzenie logi
 
 Współczesny \emph{software} stoi w miejscu. Poza oprogramowaniem specjalistycznym (np.
 Blender\footnote{\url{https://www.blender.org/}} mało który program jest w stanie wykorzystać więcej niż
-kilka wątków.  Współbieżności szuka się nieco ''na siłę''; np. przeglądarki internetowe uruchamiają
+kilka wątków. Współbieżności szuka się nieco ,,na siłę''; np. przeglądarki internetowe uruchamiają
 współbieżnie obsługę wielu kart.
 
 Mainstreamowe języki w większości korzystają z wątków (np. Java, C++) lub są stricte jednowątkowe i
@@ -50,18 +50,32 @@ niedostosowane do przetwarzania współbieżnego i równoległego (np. Python).
 
 Dla takich języków tworzone są biblioteki ułatwiające wykorzystanie mechanizmów systemu operacyjnego
 (np.~wieloprocesowość dla języka Python) lub cała infrastruktura umożliwiająca rozproszenie pracy,
-np.~sewery pracy (np. Gearman, Celery) czy kolejki wiadomości (np. RabbitMQ, ZeroMQ).
-To wszystko są jednak jedynie ''łatki'' mające za zadanie dodać do istniejących języków mechanizmy, z którymi
+np.~sewery pracy (np. Gearman\footnote{\url{http://gearman.org/}},
+Celery\footnote{\url{http://www.celeryproject.org/}}) czy kolejki wiadomości
+(np.~RabbitMQ\footnote{\url{https://www.rabbitmq.com/}}, ZeroMQ\footnote{\url{http://zeromq.org/}}).
+To wszystko są jednak jedynie ,,łatki'' mające za zadanie dodać do istniejących języków mechanizmy, z którymi
 pierwotnie nie były one projektowane. Istnieje dla takiego działania angielski termin bardzo dobrze oddający
-jego postać: \emph{retrofitting}.
+jego postać --
+\emph{retrofitting}\footnote{\url{https://dictionary.cambridge.org/dictionary/english/retrofit}}:
 
-Istnieją środowiska i języki zaprojektowane od zera z myślą o współbieżności i przetwarzaniu równoległym, a
+\begin{quote}
+    \textbf{retrofit}
+    \newline
+    \emph{verb}
+    \newline
+    to provide a machine with a part, or a place with equipment, that it did not originally have when it was
+    built
+\end{quote}
+
+Polski odpowiednik tego słowa to (za \cite{PWNAngielskoPolskiRetrofit}) ,,doposażyć''.
+
+Istnieją środowiska i języki zaprojektowane od zera z myślą o współbieżności i programowaniu równoległym, a
 nawet rozproszonym.
-Najbardziej znanym przykładem takiego środowiska jest BEAM -- maszyna wirtualna
-języka Erlang\footnote{http://www.erlang.org/}. To środowisko wraz z językiem jest z powodzeniem
-wykorzystywane w sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których
-działanie obejmuje niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach
-komunikatora Discord\footnote{https://discordapp.com/}.
+Najbardziej znanym przykładem takiego środowiska jest BEAM, maszyna wirtualna języka
+Erlang\footnote{\url{http://www.erlang.org/}}. To środowisko wraz z językiem jest z powodzeniem wykorzystywane
+w sprzęcie telekomunikacyjnym firmy Ericsson, oraz do tworzenia aplikacji użytkowych, których działanie
+obejmuje niemal z definicji działanie rozproszone i współbieżne, na przykład w serwerach komunikatora
+Discord\footnote{\url{https://discordapp.com/}}.
 
 \section{Cel}
 
@@ -88,11 +102,11 @@ procesów składowych.
 \section{Układ pracy inżynierskiej}
 
 W rozdziale \ref{viuact_zal}.~\nameref{viuact_zal} (na stronie \pageref{viuact_zal}) przedstawiamy język
-Viuact, a w rozdziale \ref{viuact_impl} jego implementację - kompilator. Są to narzędzia wykorzystywane do
+Viuact, a w rozdziale \ref{viuact_impl}. jego implementację - kompilator. Są to narzędzia wykorzystywane do
 stworzenia aplikacji użytkowej przedstawionej w rozdziale
 \ref{program_viuachat_zal}.~\nameref{program_viuachat_zal} (na stronie \pageref{program_viuachat_zal}).
 
-Wkład własny członków zespołu przedstawiony jest w rozdziale \ref{wklad_wlasny} na stronie
+Wkład własny członków zespołu przedstawiony jest w rozdziale \ref{wklad_wlasny}. na stronie
 \pageref{wklad_wlasny}.
 
 \input{common/glossary}
