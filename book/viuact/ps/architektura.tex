@@ -261,7 +261,11 @@ kompilator miał dostęp do ich plików interfejsów i umożliwić ich importowa
 \subsubsection{Analiza importu modułów}
 
 Kolejnym krokiem jest analiza modułów importowanych przez aktualnie kompilowany moduł i wczytanie ich
-interfejsów.
+interfejsów. Kompilator ładuje listy sygnatur funkcji i wyliczenia z każdego zaimportowanego modułu.
+
+Jeśli kompilator nie może znaleźć pliku interfejsu danego modułu to kończy kompilację informując o błędzie.
+Kompilator szuka plików interfejsów i modułów w ścieżkach podanych w zmiennej środowiskowej
+\texttt{VIUAC\_LIBRARY\_PATH} (opisanej na stronie \pageref{viuact_manual_env_viuac_library_path}).
 
 \subsubsection{Emisja kodu wynikowego}
 \label{opis_etapow_kompilacji_emisja_kodu_wynikowego}
