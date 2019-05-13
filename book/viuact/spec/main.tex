@@ -625,6 +625,13 @@ Wyliczenia mogą pojawić się jedynie na poziomie modułu, w tym na poziomie mo
 dodawanego do plików z kodem źródłowym kompilowanym do plików wykonywalnych. Wyliczeń nie można tworzyć
 wewnątrz funkcji.
 
+Wyliczenia są symbolicznymi wartościami liczbowymi, dlatego można porównywać je
+za pomocą normalnego operatora porównania:
+
+\begin{lstlisting}
+(let is_viuact (x) (= x Good_languages.ViuAct))
+\end{lstlisting}
+
 \section{Biblioteka standardowa}
 
 Biblioteka standardowa języka Viuact składa się z modułów implementujących wybrane algorytmy (np. sortowanie)
