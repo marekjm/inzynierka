@@ -39,21 +39,23 @@ Definicje struktur reprezentujących grupy są zawarte w pliku \texttt{viuact/gr
 \subsubsection{Slot}
 \label{diagram_klas_slot}
 
+\begin{small}
 \begin{lstlisting}
-enum Register_set =
+type register_set =
     | Local
     | Parameters
     | Arguments
     | Closure_local
 
-type Slot = {
+type slot = {
     name         : string ;
     index        : int ;
     register_set : register_set ;
 }
 \end{lstlisting}
+\end{small}
 
-Struktura \texttt{Slot} reprezentuje adres rejestru. Z punktu widzenia języka ViuAct istotne jest pole
+Struktura \texttt{slot} reprezentuje adres rejestru. Z punktu widzenia języka ViuAct istotne jest pole
 \texttt{name} (określające nazwę slotu jaką posługuje się programista); z punktu widzenia emitera kodu istotne
 są pola \texttt{index} i \texttt{register\_set} określające adres rejestru jakim posługuje się Viua VM.
 
@@ -67,39 +69,45 @@ zakresu leksykalnego.
 \subsubsection{Konstruktor}
 \label{diagram_klas_konstruktor}
 
+\begin{small}
 \begin{lstlisting}
-type Ctor = {
+type ctor = {
     of_type : string ;
-    slot    : Slot ;
+    slot    : slot ;
     value   : string ;
 }
 \end{lstlisting}
+\end{small}
 
 Konstruktor reprezentuje instrukcję bezpośrednio tworzącą wartość w rejestrze. Przykładowo, aby wyemitować
 instrukcję \texttt{integer \%1 local 42} utworzony zostanie:
 
+\begin{small}
 \begin{lstlisting}
 {
     of_type = "integer" ;
-    slot = { name = "x"; index = 1 ; Register_set.Local } ;
+    slot = { name = "x"; index = 1 ; register_set = Local } ;
     value = "42"
 }
 \end{lstlisting}
+\end{small}
 
 \subsubsection{Przeniesienie}
 \label{diagram_klas_przeniesienie}
 
+\begin{small}
 \begin{lstlisting}
-enum Move_kind =
+type move_kind =
     | Move
     | Copy
 
-type Move = {
-    kind   : Move_kind ;
-    source : Slot ;
-    dest   : Slot option ;
+type move = {
+    kind   : move_kind ;
+    source : slot ;
+    dest   : slot option ;
 }
 \end{lstlisting}
+\end{small}
 
 Przeniesienie opisuje przesunięcie (instrukcja \emph{\texttt{move}}) lub kopię wartości (instrukcja
 \emph{\texttt{copy}}). Slot docelowy nie musi być obecny - np. wtedy wartość jest przenoszona do slotu
@@ -108,19 +116,21 @@ Przeniesienie opisuje przesunięcie (instrukcja \emph{\texttt{move}}) lub kopię
 \subsubsection{Wywołanie}
 \label{diagram_klas_wywolanie}
 
+\begin{small}
 \begin{lstlisting}
-enum Call_kind =
+type call_kind =
     | Synchronous
     | Actor
     | Tail
     | Deferred
 
-type Call = {
-    kind : Call_kind ;
-    slot : Slot option ;
+type call = {
+    kind : call_kind ;
+    slot : slot option ;
     to   : string ;
 }
 \end{lstlisting}
+\end{small}
 
 Wywołanie opisuje wywołanie funkcji w każdy sposób dostępny w języku ViuAct: zwykłe wywołanie funkcji,
 wywołanie tworzące aktora, wywołąnie \emph{tail call}, i wywołanie ''odroczone''.
@@ -130,11 +140,13 @@ Typy wywołań opisane są w specyfikacji języka.
 \subsubsection{Linia ''\emph{verbatim}''}
 \label{diagram_klas_linia_verbatim}
 
+\begin{small}
 \begin{lstlisting}
-type Verbatim = {
+type verbatim = {
     text : string ;
 }
 \end{lstlisting}
+\end{small}
 
 Linia \emph{verbatim} opisuje dowolną linię języka assemblera (m.in. dyrektywy \texttt{.import:} czy
 \texttt{.function:}).
