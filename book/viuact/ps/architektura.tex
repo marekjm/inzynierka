@@ -120,16 +120,16 @@ Proces kompilacji dokłaniej opisany jest w rozdziale \ref{opis_etapow_kompilacj
 \subsubsection{Program łączący -- \texttt{viuact-opt}}
 \label{opis_linkera}
 
-Program łączący (tzw. ''\emph{linker}'') zajmuje się finalną fazę ''kompilacji''.
-Jest to stwierdzenie o tyle trafne, co niepoprawne. Zazwyczaj jednak nie ma to znaczenia, ponieważ zarówno
-linker jak i kompilator jest ukrywany przed programistą. Popularne ''kompilatory'' jak np \emph{\texttt{g++}}
-z GCC to tak naprawdę ''drivery''; wywołanie polecenia \emph{\texttt{g++}} powoduje wywołanie zarówno
+Program łączący (tzw. ,,\emph{linker}'') zajmuje się finalną fazą ,,kompilacji''.
+Jest to stwierdzenie jednocześnie trafne i niepoprawne. Zazwyczaj jednak nie ma to znaczenia, ponieważ zarówno
+linker jak i kompilator jest ukrywany przed programistą. Popularne ,,kompilatory'' jak np \emph{\texttt{g++}}
+z GCC to tak naprawdę ,,drivery''; wywołanie polecenia \emph{\texttt{g++}} powoduje wywołanie zarówno
 kompilatora (\emph{\texttt{cc1}}), assemblera (\emph{\texttt{as}}), jak i linkera (\emph{\texttt{ld}}) w taki
 sposób aby na wyjściu uzyskać oczekiwany wynik, czyli na przykład plik wykonywalny w formacie
 ELF \emph{\texttt{a.out}}.
 
 W przypadku kompilatora ViuAct proces ten wygląda podobnie, ale nie jest aż tak zautomatyzowany.
-Rolę ''drivera'' pełni programista, który jest odpowiedzialny za wywołanie zarówno kompilatora jak i linkera.
+Rolę ,,drivera'' pełni programista, który jest odpowiedzialny za wywołanie zarówno kompilatora jak i linkera.
 Przykładowo:
 
 \begin{lstlisting}
@@ -159,7 +159,7 @@ poleceniem \texttt{viuact-cc} z opcją \texttt{-}\texttt{-mode} określającą c
 (\texttt{exec}) czy moduł biblioteki (\texttt{module}):
 
 \begin{lstlisting}
-viuact-cc --mode ( 'exec' | 'module' ) file.lisp
+viuact-cc --mode ( 'exec' | 'module' ) %*\emph{file.lisp}*)
 \end{lstlisting}
 
 \subsubsection{Wczytanie pliku źródłowego}
@@ -174,7 +174,7 @@ przypasowaniu pozycja, która będzie rozpatrywana przez lexer jest przesuwana o
 wygenerowanego tokenu i lexer rozpoczyna pracę od nowa. Ten proces trwa do momentu aż cały string wejściowy
 nie zostanie przeanalizowany, albo odrzucony jako nieprawidłowy.
 
-Algorytm przypasowania jest banalny. Lexer dysponuje listą wzorców (określonych przez wyrażenia regularne),
+Algorytm przypasowania jest banalny. Lexer dysponuje listę wzorców (określonych przez wyrażenia regularne),
 które określają jak wygląda każdy możliwy token w języku. Lexer po kolei próbuje przypasować każdy wzorzec z
 listy i kończy na pierwszym trafieniu. Jeśli żaden wzorzec nie może zostać przypisany lexer odrzuca kod
 źródłowy jako nieprawidłowy.
