@@ -149,6 +149,9 @@ Schemat opisu każdego z wyrażeń jest następujący:
     \item przykład kodu wykorzystujący dane wyrażenie
 \end{enumerate}
 
+Przykład kodu to zazwyczaj kilka przykładów jak dana konstrukcja może wyglądać, nie kawałek działającego
+programu.
+
 \subsection{Wyrażenia}
 \label{language_expressions}
 
@@ -580,8 +583,16 @@ określonej w bloku. Wyjątek jest odrzucany (jeśli nie jest potrzebny) jeśli 
 
 \begin{lstlisting}
 (let x (try (Std.Actor.receive 1s)) (
-    (catch Exception _ {
-        (print "Did not receive a message in time.")
+    (catch Bad_error _ {
+        (print "Something bad happened.")
+        0   ; return a default value
+    })
+    (catch Worse_error _ {
+        (print "Something worse happened!")
+        0   ; return a default value
+    })
+    (catch The_worst_error _ {
+        (print "Apocalypse.")
         0   ; return a default value
     })
 ))
