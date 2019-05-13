@@ -365,6 +365,7 @@ Taka kolejność w kodzie źródłowym nie jest wymagana, ale kompilator w takie
 składające się na definicję modułu.
 
 \subsection{Wywołanie funkcji}
+\label{viuact_spec_fn_call}
 
 \texttt{fn-call := (\emph{id} \emph{expression}*)}
 \newline
@@ -377,6 +378,7 @@ pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix
 znajdujące się w tym samym module mogą być wywoływane bez pełnej ścieżki.
 
 \subsection{Wywołanie ,,tailcall''}
+\label{viuact_spec_tail_call}
 
 \texttt{(tailcall \emph{id} \emph{expression}*)}
 \newline
@@ -406,6 +408,7 @@ bezpośrednio wywołał.
 Podmiana ramki jest niedostrzegalna dla wywołującego oryginalną funkcję.
 
 \subsection{Wywołanie odroczone}
+\label{viuact_spec_deferred_call}
 
 \texttt{(defer \emph{name} \emph{expression}*)}
 \newline
@@ -458,6 +461,7 @@ najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ,,fina
 \end{lstlisting}
 
 \subsection{Wywołanie aktora}
+\label{viuact_spec_actor_call}
 
 \texttt{(actor \emph{name} \emph{expression}*)}
 
