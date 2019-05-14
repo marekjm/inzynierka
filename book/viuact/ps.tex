@@ -433,25 +433,63 @@ kompilacji: generowania kodu.
 
 \subsection{Generowanie kodu wynikowego}
 
-Po przeprowadzeniu analizy składniowej kompilator od razu przystępuje do generowania kodu.
-Jest to warunkowane pomienięciem w pracy etapów analizy semantycznej (jest to częściowo oddelegowane do
-assemblera Viua VM, który potrafi ją przeprowadzić -- chociaż w ograniczonym zakresie) i optymalizacji.
-Te dwie fazy zostały pominięte z uwagi na ograniczoną ilość czasu na wykonanie projektu.
+Po przeprowadzeniu analizy składniowej i wygenerowaniu AST kompilator od razu
+przystępuje do generowania kodu. Jest to uwarunkowane pomienięciem w pracy
+etapów analizy semantycznej i optymalizacji. Te fazy są nieodzownymi elementami
+w kompilatorach ,,produkcyjnych'' jednak zostały pominięte z uwagi na
+ograniczoną ilość czasu na wykonanie projektu gdyż zarówno optymalizacje jak i
+analiza semantyczna są elementami kompilatora, które mogą być rozwijane ,,w
+nieskończoność'' -- implementując kolejne algorytmy i metody optimalizacji, i
+tworząc coraz bardziej ,,inteligentne'' systemy analizy statycznej (kończąc na
+systemach będących w stanie udowodnić poprawność bądź niepoprawność programu).
+
+Analiza semantyczna (m.in. weryfikacja typów i analiza poprawności kodu) jest
+częściowo oddelegowana do assemblera Viua VM, który potrafi ją, w ograniczonym
+zakresie, przeprowadzić.
+
+W kompilatorze języka \ViuAct\phantom{} będącym wynikiem tej pracy generowanie
+kodu wynikowego jest implementowane przez dwa procesy działające naprzemiennie:
+\emph{obniżanie poziomu} i \emph{emisję instrukcji}.
+
+Modułem implementującym fazę obniżenia poziomu jest \texttt{viuact.lowerer}, a
+fazę emisji instrukcji \texttt{viuact.emitter}. Funkcja \texttt{compile\_text()}
+przekazuje AST otrzymane po etykietowaniu do funkcji \texttt{lower\_file()} z
+modułu \texttt{viuact.lowerer} czym rozpoczyna proces generowania kodu
+wynikowego.
 
 \subsubsection{Obniżenie poziomu}
 
-Obniżenie poziomu polega na ,,pocięciu'' logicznych elementów przeanalizowanego
-kodu źródłowego w języku \ViuAct na takie fragmenty, dla których wygenerowanie
-kodu wynikowego będzie względnie łatwe -- tj. fragmenty, które mają odpowiedniki
-w języku assemblera Viua VM.
+,,Obniżenie poziomu'' polega na ,,rozbiciu'' elementów AST na takie fragmenty,
+które mają swój bezpośredni (lub bliski bezpośredniemu) odpowiednik w języku
+assemblera Viua VM. Wygenerowanie kodu wynikowego dla takich fragmentów jest
+względnie proste.
 
 Na tym etapie ,,znikają'' konstrukcje istniejące w języku \ViuAct, ale nie w
-języku assemblera Viua VM; są to na przykład wyliczenia, dowiązania \emph{let}.
+języku assemblera Viua VM; są to na przykład wyliczenia i dowiązania \emph{let}.
 Wyrażenia, które mają swoje odpowiedniki, ale są zbyt skomplikowane do prostego
 przetworzenia są rozbijane na prostsze formy (np. wyrażenia złożone, wywołania
 funkcji, instrukcje warunkowe).
 
-To ,,rozbijanie'' i ,,znikanie'' konstrukcji języka dało tej fazie jej nazwę.
+To ,,rozbijanie'' i ,,znikanie'' konstrukcji języka daje tej fazie jej nazwę:
+konstrukcje języka wysokiego poziomu są tłumaczone na konstrukcje języka
+niskiego poziomu.
+
+\paragraph{Obniżenie modułów}
+
+W pierwszej kolejności obniżane są moduły. Jest to wykonywane rekurencyjnie,
+a zagnieżdżone moduły są obniżane przed modułem, który je zawiera. Ten proces
+implementuje funkcja \texttt{viuact.lowerer.lower\_module()}.
+
+\subparagraph{Importowanie} Po obniżeniu modułów przetwarzane są importy
+modułów. Obniżenie musi być wykonane najpierw żeby umożliwić importowanie
+zagnieżdżonych modułów. Przetworzeniem importów zajmuje się funkcja
+\texttt{viuact.lowerer.perform\_imports()}.
+
+\paragraph{,,Obniżenie'' wyliczeń}
+
+Następnie ,,obniżane''
+
+\paragraph{Obniżenie funkcji}
 
 \subsubsection{Emisja instrukcji}
 
