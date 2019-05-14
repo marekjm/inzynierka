@@ -368,6 +368,10 @@ jest pomiędzy nimi, i okazjonalnej konkatenacji jeśli parser napotka znak
 bardzo regularna co pozwala przeprowadzić proste parsowanie małym nakładem pracy
 i sprawdzając niewielką ilość informacji.
 
+% Żeby ten ostatni akapit był nieco oddzielony od głównego tekstu. On ma tylko
+% powiedzieć co jest wynikiem tej fazy.
+\vspace{1em}
+
 W wyniku grupowania otrzymujemy prymitywne drzewo składni abstrakcyjnej
 (\emph{abstract syntax tree}, \emph{AST}), które następnie jest ,,etykietowane''
 podczas następnej fazy: klasyfikacji grup.
@@ -377,15 +381,18 @@ podczas następnej fazy: klasyfikacji grup.
 Klasyfikacją grup otrzymanych podczas fazy grupowania jako wynik funkcji
 \texttt{group()} zajmuje się funkcja \texttt{parse()} z modułu \texttt{viuact.parser}.
 
-Po etapie ,,wstępnej'' analizy (grupowaniu) następuje klasyfikacja grup. W tym
-przypadku algorytm również jest bardzo prosty. Klasyfikator rekurencyjnie sprawdza wszystkie listy i nadaje im typ oznaczający jaką
-konstrukcję językową reprezentują. W tym celu musi jedynie sprawdzić typ
-pierwszego tokenu, i ewentualnie (w przypadku dowiązań \emph{\texttt{let}} i
-definicji funkcji) długość listy.
+Również w tym przypadku algorytm jest bardzo prosty. Funkcja \texttt{parse()}
+sprawdza każdy element podstawowego AST i konwertuje go na pewien typ z modułu
+\texttt{viuact.group\_types}. Jeśli jest to pojedynczy token konwersja następuje
+bezpośrednio; jeśli sprawdzanym elementem jest to lista algorytm determinuje co
+ta lista reprezentuje (na podstawie pierwszego elementu tejże, którym zawsze
+jest pojedynczy token) i postępuje rekurencyjnie etykietując każdy jej element,
+pozostawiając konwersję podstawowego elementu na koniec -- po przeanalizowaniu
+elementów składowych.
 
-Wykorzystanie algorytmu o tak niskim poziomie złożoności jest możliwe dzięki
+Wykorzystanie algorytmu o tak niskim poziomie skomplikowania jest możliwe dzięki
 uważnemu zaprojektowaniu składni języka. Każda konstrukcja językowa jest
-grupowana nawiasami -- klamrowymi bądź okrągłymi -- lub ma stałe miejsce w
+ograniczona nawiasami -- klamrowymi bądź okrągłymi -- lub ma stałe miejsce w
 grupie. Poniżej, dla przykładu, zaprezentowane są wzorce odpowiadające wybranym
 konstrukcjom językowym:
 
@@ -413,7 +420,18 @@ składni, że każda konstrukcja ma stałą ,,szerokość'' pozwala na zastosowa
 chwytu ,,\emph{pierwszy token decyduje}''. Sprawia to też, że język ma
 rozpoznawalne tempo i styl, a konsekwencja układu nadaje mu elegancji.
 
-\subsection{Generowanie kodu w języku assemblera}
+% Żeby ten ostatni akapit był nieco oddzielony od głównego tekstu. On ma tylko
+% powiedzieć co jest wynikiem tej fazy.
+\vspace{1em}
+
+W wyniku procesu ,,etykietowania'' otrzymujemy ,,wzbogacone'' AST składające się
+ze sklasyfikowanych konstrukcji językowych reprezentowanych przez wartości
+konkretnego typu zamiast ubogich w informację (bez dodatkowej weryfikacji) list
+i ,,samotnych'' tokenów. Zamiast ,,listy list'' otrzymujemy listę modułów,
+funkcji, wyliczeń itd. Takie AST znacząco upraszcza implementację kolejnej fazy
+kompilacji: generowania kodu.
+
+\subsection{Generowanie kodu wynikowego}
 
 Po przeprowadzeniu analizy składniowej kompilator od razu przystępuje do generowania kodu.
 Jest to warunkowane pomienięciem w pracy etapów analizy semantycznej (jest to częściowo oddelegowane do
