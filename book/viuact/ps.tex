@@ -322,42 +322,63 @@ Implementacja kompilatora jest bardzo prosta, jak na standardy tego typu projekt
 Rysunek \ref{basic_compiler_flow} na stronie \pageref{basic_compiler_flow} bardzo dobrze oddaje strukturę
 kompilatora dostarczonego jako wynik tej pracy.
 
+Kompilacja rozpoczyna się od funkcji \texttt{main()} w pliku \texttt{cc.py},
+która wywołuje funkcję\newline\texttt{viuact.driver.compile\_file()} w sposób
+określony przez argumenty podane w wierszu poleceń.
+\texttt{compile\_file()} przygotowuje katalog kompilacji (domyślnie jest to
+\texttt{./build/\_default}), wczytuje plik z kodem źródłowym przekazany do
+kompilacji i wywołuje funkcję \texttt{compile\_text()} z tego samego modułu.
+
 \subsection{Analiza leksykalna}
 
-W fazie przygotowania tekstu programu ''do obróbki'' najpierw przeprowadzana jest analiza leksykalna (podział
-tekstu na tokeny)
+Funkcja \texttt{viuact.driver.compile\_text()} na początek dokonuje analizy
+leksykalnej kodu źródłowego. Ta pierwsza faza przygotowania tekstu programu ,,do
+obróbki'' jest wykonywana przez funkcję \texttt{lex()} z modułu
+\texttt{viuact.lexer}.
 
 \subsection{Analiza składniowa}
 
-Analiza składniowa polega w dużej mierze na uporządkowaniu ''płaskiej'' listy
-tokenów w grupy ograniczone nawiasami. Algorytm dokonujący analizy składniowej
-jest trywialny:
+\subsubsection{Grupowanie}
+
+Po przeprowadzeniu analizy leksykalnej, funkcja \texttt{compile\_text()} oddaje
+jej wynik (czyli listę tokenów) do funkcji \texttt{viuact.parser.group()}, która
+przeprowadza grupowanie tokenów odpowiadających różnym konstrukcjom językowym.
+Algorytm sterujący tym procesem jest trywialny:
 
 \begin{enumerate}
-    \item utwórz pustą listę przetworzoną
+    \item utwórz pustą listę
     \item rozważ pierwszy nieprzenalizowany token
     \item jeśli ten token to \texttt{(} lub \texttt{\{}, rozpocznij
         rekurencyjnie przetwarzanie strumienia tokenów od następnego tokenu, a
-        wynik analizy dodaj jako pojedynczy element do listy przetworzonej
-    \item w innym przypadku dodaj token do listy przetworzonej
-    \item jeśli na strumień tokenów jest pusty, zakończ algorytm
+        wynik analizy dodaj jako pojedynczy element do listy
+    \item w innym przypadku dodaj token do listy
+    \item jeśli strumień tokenów jest pusty, zakończ algorytm
     \item w innym przypadku kontynuuj od punktu 2.
 \end{enumerate}
 
-Na pierwszy rzut oka widać, że ten algorytm nie analizuje wiele -- jego jedynym
-zadaniem jest pogrupowanie płaskiego, jednowymiarowego strumienia tokenów w
-grupy reprezentujące pojedyncze tokeny lub ich grupy. Prostota algorytmu
-sprawia, że jest on też bardzo szybki w działaniu.
+W ten sposób tworzona jest lista list i pojedynczych tokenów reprezentujących
+konstrukcje językowe, z których składa się analizowany kod źródłowy. Na tym
+etapie łączone są również rozbudowane identyfikatory (np. \texttt{foo.bar.baz})
+oraz wstawiane markery wyrażeń złożonych.
 
-Na tym etapie łączone są również rozbudowane identyfikatory
-(np. \texttt{foo.bar.baz}) oraz wstawiane markery wyrażeń złożonych, ale nie
-wpływa to znacząco na skomplikowanie kodu.
+To, że wstępna faza analizy składniowej sprowadza się w dużej mierze do
+rekurencyjnego ,,odbijania się'' od nawiasów, bez konieczności sprawdzania co
+jest pomiędzy nimi, i okazjonalnej konkatenacji jeśli parser napotka znak
+\emph{.} jest zasługą wykorzystania składni wzorowanej na języku Lisp. Jest ona
+bardzo regularna co pozwala przeprowadzić proste parsowanie małym nakładem pracy
+i sprawdzając niewielką ilość informacji.
+
+W wyniku grupowania otrzymujemy prymitywne drzewo składni abstrakcyjnej
+(\emph{abstract syntax tree}, \emph{AST}), które następnie jest ,,etykietowane''
+podczas następnej fazy: klasyfikacji grup.
 
 \subsubsection{Klasyfikacja grup}
 
-Po etapie ,,wstępnej'' analizy (grupowaniu nawiasów) następuje klasyfikacja
-grup. W tym przypadku algorytm również jest bardzo prosty. Klasyfikator
-rekurencyjnie sprawdza wszystkie listy i nadaje im typ oznaczający jaką
+Klasyfikacją grup otrzymanych podczas fazy grupowania jako wynik funkcji
+\texttt{group()} zajmuje się funkcja \texttt{parse()} z modułu \texttt{viuact.parser}.
+
+Po etapie ,,wstępnej'' analizy (grupowaniu) następuje klasyfikacja grup. W tym
+przypadku algorytm również jest bardzo prosty. Klasyfikator rekurencyjnie sprawdza wszystkie listy i nadaje im typ oznaczający jaką
 konstrukcję językową reprezentują. W tym celu musi jedynie sprawdzić typ
 pierwszego tokenu, i ewentualnie (w przypadku dowiązań \emph{\texttt{let}} i
 definicji funkcji) długość listy.
