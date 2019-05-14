@@ -153,14 +153,20 @@ bytecode'u w gotowy plik wykonywalny.
 \subsection{Przebieg procesu kompilacji}
 \label{opis_etapow_kompilacji}
 
-Ten rozdział zawiera dokładny opis procesu kompilacji, od momentu wczytania pliku z kodem źródłowym w języku
-ViuAct do momentu wyemitowania kodu wynikowego w języku assemblera Viua VM. Kompilator jest wywoływany
-poleceniem \texttt{viuact-cc} z opcją \texttt{-}\texttt{-mode} określającą czy kompilowany jest moduł wykonywalny
-(\texttt{exec}) czy moduł biblioteki (\texttt{module}):
+Ten rozdział zawiera dokładny opis procesu kompilacji, od momentu wczytania
+pliku z kodem źródłowym w języku \ViuAct\phantom{} do momentu wyemitowania kodu
+wynikowego w języku assemblera Viua VM. Kompilator jest wywoływany poleceniem
+\texttt{viuact-cc} z opcją \texttt{-}\texttt{-mode} określającą czy kompilowany
+jest moduł wykonywalny (\texttt{exec}) czy moduł biblioteki (\texttt{module}):
 
 \begin{lstlisting}
 viuact-cc --mode ( 'exec' | 'module' ) %*\emph{file.lisp}*)
 \end{lstlisting}
+
+Ten rozdział opisuje proces kompilacji ,,omawiając'' go, bez odnoszenia się do
+konkretnych elementów implementacji kompilatora. Opis implementacji kompilatora
+znajduje się w rozdziale \ref{viuact_cc_implementation_desc} na
+stronie~\pageref{viuact_cc_implementation_desc}.
 
 \subsubsection{Wczytanie pliku źródłowego}
 
