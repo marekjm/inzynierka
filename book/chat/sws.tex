@@ -1,10 +1,6 @@
 \section{Wprowadzenie}
 
-\subsection{Cel dokumentu}
-Celem dokumentu jest zdefiniowanie wymagań dla czatu ViuaChat na podstawie analizy otoczenia aplikacji oraz analizy potrzeb projektu w stosunku do niej.
-
-\subsection{Zakres dokumentu}
-Niniejszy dokument jest produktem pierwszego etapu procesu wytwórczego czatu ViuaChat, na który składają się:
+W poniższym rozdziale zdefiniowano wymagania dla czatu ViuaChat. Ich opracowanie nastąpiło na podstawie analizy otoczenia aplikacji oraz analizy potrzeb projektu w stosunku do niej. W ramach tego procesu nastąpiły:
 \begin{itemize}
     \item analiza otoczenia, wraz z z klientami;
     \item wskazanie kontekstu biznesowego systemu;
@@ -13,18 +9,10 @@ Niniejszy dokument jest produktem pierwszego etapu procesu wytwórczego czatu Vi
 	\item opracowanie historyjek na podstawie ustalonych zasad biznesowych.
 \end{itemize}
 
-\textbf{Uwaga:} Niniejszy dokument nie dotyczy języka ViuAct ani jego kompilatora.
-
-\subsection{Dokumenty powiązane}
-\begin{itemize}
-	\item Szkic funkcjonalności ViuaChat - pierwszy zarys zasad biznesowych, ujęty w formie prostego konspektu;
-	\item Specyfikacja wymagań biznesowych i \textit{user stories} - starsza wersja dokumentu SWS, nieujmująca otoczenia i kontekstu aplikacji.
-\end{itemize}
+\textbf{Uwaga:} Niniejszy rozdział nie dotyczy języka ViuAct ani jego kompilatora.
 
 \subsection{Odbiorcy}
-Dokument został skierowany przede wszystkim dla członków zespołu, aby ułatwić im współpracę - w szczególności wówczas, gdy funkcjonalności czatu mogą pociągać za sobą modyfikację zestawu bibliotek ViuaVM bądź struktury składni projektowanego języka ViuAct.
-
-Kolejną grupą adresatów niniejszego dokumentu są pracownicy uczelni, odpowiedzialni za nadzór nad prawidłowym ukształtowaniem i przebiegiem projektu. Wśród nich, szczególną rolę odgrywa JE Dziekan ZWI, prof. Marek Bednarczyk, będący opiekunem projektu.
+Rozdział został pierwotnie napisany przede wszystkim dla członków zespołu, aby ułatwić im współpracę - w szczególności wówczas, gdy funkcjonalności czatu mogły pociągać za sobą modyfikację zestawu bibliotek Viua VM bądź struktury składni projektowanego języka ViuAct.
 
 \section{Czat w kontekście}
 
@@ -38,229 +26,245 @@ Niniejszy czat stanowi część szerszego kontekstu, jakim jest potrzeba zademon
 	\caption{Ilustracja środowiska wytwórczego wraz zasięgiem, którym są objęte prace przewidziane projektem inżynierskim}
 \end{figure}
 
-Cel demonstracyjny jest pierwszym i najważniejszym, jaki przyświeca konstrukcji czatu. Ponadto, sam proces wytwórczy pozwoli
-przetestować wydajność całego środowiska w jego praktycznym wymiarze. Tym samym, możliwe będzie poprawienie konstrukcji kompilatora 
-lub zastosowanych konstrukcji językowych ViuAct, podnoszących jego użyteczność.
+Cel demonstracyjny był pierwszym i najważniejszym, jaki przyświecał budowie
+czatu. Ponadto, proces wytwórczy pozwolił przetestować wydajność całego
+środowiska w jego praktycznym wymiarze. Tym samym, możliwe było poprawienie
+konstrukcji kompilatora lub zastosowanych konstrukcji językowych ViuAct,
+podnosząc tym samym jego użyteczność.
 
-Wszelcy odbiorcy dla aplikacji czatu zostaną, podobnie jak sama aplikacja, skonstruowani na cele demonstracyjne. Nie powinni oni
-odbiegać od modelowych odbiorców podobnych komunikatorów, tak, aby potencjalny, poczatkujący użytkownik środowiska ViuaVM mógł
-zrozumieć intencje stojące za rozwiązaniami zastosowanymi w ViuaChat oraz przenieść je do swoich pierwszych programów, opracowanych
-w tym środowisku.
+Wszelcy odbiorcy dla aplikacji czatu zostaną, podobnie jak sama aplikacja,
+skonstruowani na cele demonstracyjne. Nie powinni oni odbiegać od modelowych
+odbiorców podobnych komunikatorów, tak, aby potencjalny, poczatkujący
+użytkownik środowiska ViuaVM mógł zrozumieć intencje stojące za rozwiązaniami
+zastosowanymi w ViuaChat oraz przenieść je do swoich pierwszych programów.
 
 \subsection{Udziałowcy}
 
 Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
 
 \begin{tabular}{ | l | l | }
-  
+
 	\hline
 	\multicolumn{2}{ | l | }{\textbf{Karta udziałowca}}  \\
-  
+
 	\hline
     \parbox[t]{3cm}{
     	\textbf{Identyfikator}
-    } & UN-01 \\  
-    
+    } & UN-01 \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Nazwa}
-    } & ViuaVM \\  
-    
+    } & ViuaVM \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Opis}
     } & \parbox[t]{12cm}{
-    	Maszyna wirtualna, oparta o przechowywanie danych w rejestrach zamiast \textit{płaskich} tablic pamięci. Stanowi ona 
-    	platformę, na której musi zostać uruchomiony serwer czatu. Ponieważ jej największym atutem jest zorientowanie na kod
-    	wykonywany współbieżnie, sam serwer czatu powinien tę cechę wykorzystywać w maksymalnym stopniu. 
-    	} \\ 
-    
+    	Maszyna wirtualna, oparta o przechowywanie danych w rejestrach zamiast
+      \textit{płaskich} tablic pamięci. Stanowi ona platformę, na której musi
+      zostać uruchomiony serwer czatu. Ponieważ jej największym atutem jest
+      zorientowanie na kod wykonywany współbieżnie, sam serwer czatu powinien
+      tę cechę wykorzystywać w maksymalnym stopniu.
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Typ}
-    } & Nieożywiony, bezpośredni \\  
-    
+    } & Nieożywiony, bezpośredni \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Punkt widzenia}
     } & \parbox[t]{12cm}{
-    	ViuaVM jest absolutnie nieodzownym elementem projektu, a serwer czatu stanowi przede wszystkim dowód jej użyteczności.
-    	O ile jądro maszyny nie ma być poddawane już żadnym zmianom i być wykorzystane takie, jakie było na inicjalnym etapie
-    	pracy inżynierskiej, o tyle dopuszcza się poszerzanie jej funkcjonalności o dodatkowe biblioteki zewnętrzne.
-    	} \\ 
-    
+    	ViuaVM jest absolutnie nieodzownym elementem projektu, a serwer czatu
+      stanowi przede wszystkim dowód jej użyteczności. O ile jądro maszyny nie
+      ma być poddawane już żadnym zmianom i być wykorzystane takie, jakie było
+      na inicjalnym etapie pracy inżynierskiej, o tyle dopuszcza się
+      poszerzanie funkcjonalności o dodatkowe biblioteki zewnętrzne.
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Ograniczenia}
     } & \parbox[t]{12cm}{
-    	Maszyna wirtualna, jakkolwiek stanowi istotny czynnik dla decyzji w zakresie architektury czy konstrukcji oprogramowania,
-    	nie powinna mieć wpływu na wymagania stricte biznesowe, jest bowiem jedynie środowiskiem do uruchamiania współbieżnych
-    	programów, \textit{przezroczystym} dla końcowego użytkownika czy zleceniodawcy zrealizowanego oprogramowania.
-    	} \\ 
-    
+    	Maszyna wirtualna, jakkolwiek stanowi istotny czynnik dla decyzji w
+      zakresie architektury czy konstrukcji oprogramowania, nie powinna mieć
+      wpływu na wymagania stricte biznesowe, jest bowiem jedynie środowiskiem
+      do uruchamiania współbieżnych programów, \textit{przezroczystym} dla
+      końcowego użytkownika czy zleceniodawcy zrealizowanego oprogramowania.
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & \colorbox{yellow}{...} \\ 
-  
+    } & \colorbox{yellow}{...} \\
+
     \hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 
 	\hline
 	\multicolumn{2}{ | l | }{\textbf{Karta udziałowca}}  \\
-  
+
 	\hline
     \parbox[t]{3cm}{
     	\textbf{Identyfikator}
-    } & UO-01 \\  
-    
+    } & UO-01 \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Nazwa}
-    } & Opiekun pracy inżynierskiej \\ 
-    
+    } & Opiekun pracy inżynierskiej \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Opis}
     } & \parbox[t]{12cm}{
-    	Pracownik uczelni, wyznaczony do opieki nad całym projektem inżynierskim - nadzorowania jego postępów, wskazywania problemów
-    	oraz sugerowania decyzji podwyższających walor pracy oraz szanse na jej skuteczne obronienie. Ma również zasadniczy wpływ na 
-    	decyzję o dopuszczeniu pracy do recenzji.
-    } \\ 
-    
+    	Pracownik uczelni, wyznaczony do opieki nad całym projektem inżynierskim
+      - nadzorowania jego postępów, wskazywania problemów oraz sugerowania
+      decyzji podwyższających walor pracy oraz szanse na jej skuteczne
+      obronienie. Ma również zasadniczy wpływ na decyzję o dopuszczeniu pracy
+      do recenzji.
+    } \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Typ}
-    } & Ożywiony, bezpośredni \\  
-    
+    } & Ożywiony, bezpośredni \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Punkt widzenia}
     } & \parbox[t]{12cm}{
-    	Opiekun pracy patrzy na czat przede wszystkim przez pryzmat jego użyteczności jako efektownego przykładu implementacji modelu
-    	aktora w praktycznym, programistycznym ujęciu. Stąd, jego uwaga skupia się przede wszystkim na konstrukcjach językowych,
-    	strukturach oraz rozwiązaniach od strony kodu źródłowego. Czat stanowi jedynie pretekst do przeniesienia teoretycznych, akademickich
-    	rozważań na praktyczny grunt. 
-    	} \\ 
-    
+    	Opiekun pracy patrzy na czat przede wszystkim przez pryzmat jego
+      użyteczności jako efektownego przykładu implementacji modelu
+    	aktora w praktycznym, programistycznym ujęciu. Stąd, jego uwaga skupia
+      się przede wszystkim na konstrukcjach językowych, strukturach oraz
+      rozwiązaniach od strony kodu źródłowego. Czat stanowi jedynie pretekst do
+      przeniesienia teoretycznych, akademickich rozważań na praktyczny grunt.
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Ograniczenia}
     } & \parbox[t]{12cm}{
-    	Opiekun pracy, pomimo bycia jej nadzorcą i posiadania istotnych uprawnień decyzyjnych w stosunku do jej dalszego rozwoju, 
-    	nie ma możliwości bieżącego śledzenia prac oraz
-    	podejmowania decyzji w przypadku konkretnych problemów. Powinien zachować dystans, pozwalający na samodzielną realizację projektu
-    	przez zespół. Stąd, jego faktyczny udział ogranicza się do udzielania porad w przypadku strategicznych kierunków, w jakich
-    	będzie podążała grupa, a także doraźnego recenzowania ograniczonej puli zagadnień, wyłapanych w trakcie wspólnych spotkań.
-    	} \\ 
-    
+    	Opiekun pracy, pomimo bycia jej nadzorcą i posiadania istotnych uprawnień
+      decyzyjnych w stosunku do jej dalszego rozwoju, nie ma możliwości
+      bieżącego śledzenia prac oraz podejmowania decyzji w przypadku
+      konkretnych problemów. Powinien zachować dystans, pozwalający na
+      samodzielną realizację projektu przez zespół. Stąd, jego faktyczny udział
+      ogranicza się do udzielania porad w przypadku strategicznych kierunków, w
+      jakich będzie podążała grupa, a także doraźnego recenzowania ograniczonej
+      puli zagadnień, wyłapanych w trakcie wspólnych spotkań.
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & \colorbox{yellow}{...} \\ 
-  
+    } & \colorbox{yellow}{...} \\
+
     \hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 
 	\hline
 	\multicolumn{2}{ | l | }{\textbf{Karta udziałowca}}  \\
-  
+
 	\hline
     \parbox[t]{3cm}{
     	\textbf{Identyfikator}
-    } & UO-02 \\  
-    
+    } & UO-02 \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Nazwa}
     } & \parbox[t]{12cm}{
     Członek zespołu ds. ViuAct
-    } \\ 
-    
+    } \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Opis}
     } & \parbox[t]{12cm}{
     	Student i członek zespołu, skupiający się w pierwszej kolejności nad rozwojem języka programowania ViuAct, jego kompilatora oraz
     	ewentualnego rozbudowania maszyny ViuaVM o kolejne, zewnętrzne biblioteki.
-    } \\ 
-    
+    } \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Typ}
-    } & Ożywiony, bezpośredni \\  
-    
+    } & Ożywiony, bezpośredni \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Punkt widzenia}
     } & \parbox[t]{12cm}{
     	Przede wszystkim, postrzega czat jako produkt, realizowany na końcowej platformie. Stąd, musi brać udział w formułowaniu
-    	wymagań związanych z ViuaVM oraz językiem ViuAct. Jego zadaniem jest doprowadzenia do zaprojektowania czatu w sposób, 
+    	wymagań związanych z ViuaVM oraz językiem ViuAct. Jego zadaniem jest doprowadzenia do zaprojektowania czatu w sposób,
     	który ukaże możliwości ViuAct jako solidnego, kompletnego rozwiązania. Przy tym, musi trzymać rękę na pulsie i reagować,
     	gdyby pojawiały się przeszkody w zaprogramowaniu czatu, wynikające z niedoskonałości środowiska wytwórczego.
-    	
-    	Podczas współudziału w definiowaniu wymagań, istotny jest dla niego zakres pracy, wiążący się z 
+
+    	Podczas współudziału w definiowaniu wymagań, istotny jest dla niego zakres pracy, wiążący się z
     	urzeczywistnianiem poszczególnych, proponowanych wymagań. Zbyt rozbudowany czat może opóźnić prace nad całym projektem,
     	a w efekcie - zniweczyć trud włożony w rozwój języka programowania i dedykowanego mu kompilatora.
-    	} \\ 
-    
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Ograniczenia}
     } & \parbox[t]{12cm}{
-    	Jego udział w pracach nad czatem jest z gruntu nieograniczony. Jednakże, decydując się na podział odpowiedzialności 
-    	podyktowany zespołowym charakterem projektu oraz własnymi ograniczeniami czasowymi, zrezygnował z decydowania o biznesowej 
+    	Jego udział w pracach nad czatem jest z gruntu nieograniczony. Jednakże, decydując się na podział odpowiedzialności
+    	podyktowany zespołowym charakterem projektu oraz własnymi ograniczeniami czasowymi, zrezygnował z decydowania o biznesowej
     	części wymagań, faktycznie pozostając w roli konsultanta.
-    	
-    	} \\ 
-    
+
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & \colorbox{yellow}{...} \\ 
-  
+    } & \colorbox{yellow}{...} \\
+
     \hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 
 	\hline
 	\multicolumn{2}{ | l | }{\textbf{Karta udziałowca}}  \\
-  
+
 	\hline
     \parbox[t]{3cm}{
     	\textbf{Identyfikator}
-    } & UO-03 \\  
-    
+    } & UO-03 \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Nazwa}
     } & \parbox[t]{12cm}{
     Członek zespołu ds. Czatu
-    } \\ 
-    
+    } \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Opis}
     } & \parbox[t]{12cm}{
     	Student i członek zespołu, odpowiedzialny za prace nad czatem
-    } \\ 
-    
+    } \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Typ}
-    } & Ożywiony, bezpośredni \\  
-    
+    } & Ożywiony, bezpośredni \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Punkt widzenia}
@@ -268,25 +272,25 @@ Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
     	Czat stanowi dla niego, obok dokumentacji, najistotniejszą część przedsięwzięcia. Musi z jednej strony nauczyć się poruszać
     	w nowym, dynamicznie zmieniającym się środowisku programistycznym, a z drugiej strony - zrealizować przy jego użyciu serwer
     	czatu, który pokaże jego możliwości i zastosowania innym nowicjuszom.
-    	
-    	Podczas współudziału w definiowaniu wymagań, istotny jest dla niego zakres końcowych funkcjonalności czatu. Nie może być zbyt 
+
+    	Podczas współudziału w definiowaniu wymagań, istotny jest dla niego zakres końcowych funkcjonalności czatu. Nie może być zbyt
     	wąski. Z drugiej strony, konstrukcja programu powinna pozostać prosta i przejrzysta. Przykładowy kod nie powinien odstraszać
     	potencjalnego programisty, dla którego cała koncepcja ViuaVM oraz modelu aktorów może wydawać się na pierwszy rzut oka nieco egzotyczna.
-    	} \\ 
-    
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Ograniczenia}
     } & \parbox[t]{12cm}{
     	Nie ma w zasadzie organizacyjnych czy kompetencyjnych ograniczeń dla formułowania wymagań. Nie oznacza to jednak, że może
     	definiować wymagań w oderwaniu od pozostałych udziałowców (ich role i punkty widzenia opisano wcześniej).
-    	} \\ 
-    
+    	} \\
+
     \hline
     \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & \colorbox{yellow}{...} \\ 
-  
+    } & \colorbox{yellow}{...} \\
+
     \hline
 \end{tabular}
 
@@ -297,21 +301,19 @@ modelowych użytkowników docelowego oprogramowania:
 
 \begin{enumerate}
 
-	\item \textbf{Użytkownik tymczasowy.} Typ użytkownika, którego konto jest tworzone podczas połączenia z serwerem czatu oraz 
+	\item \textbf{Użytkownik tymczasowy.} Typ użytkownika, którego konto jest tworzone podczas połączenia z serwerem czatu oraz
 		niszczone po jego zakończeniu. Podczas łączenia z czatem, nie będzie musiał się autoryzować przy użyciu hasła, a deklarować
-		tylko unikalną nazwę, nie powtarzającą się z nazwą innego użytkownika, posiadającego konto na danym serwerze czatu. Ten typ
-		konta jest przeznaczony dla osób, zainteresowanych dołączeniem do dyskusji na czacie bez dodatkowych zobowiązań.
-		
-	\item \textbf{Użytkownik stały.} Typ użytkownika, którego konto jest utrzymywane przez serwer pomiędzy połączeniami do czatu. W
+		tylko unikalną nazwę, nie powtarzającą się z nazwą innego użytkownika, posiadającego konto na danym serwerze czatu.
+
+	\item \textbf{Użytkownik stały.} Typ użytkownika, którego W
 		zamierzeniu, adresatami takiego rozwiązania mają być stali bywalcy serwera, którzy chcą mieć zarezerwowaną określoną nazwę
-		dla siebie i uniknąć ewentualnego podszywania się. Stąd każdorazowo, przed rozpoczęciem sesji połączenia z serwerem, muszą się
-		dodatkowo autoryzować przy użyciu hasła. Równocześnie, ich nazwa jest zarezerwowana wyłącznie do jego użytku oraz niedostępna
-		dla użytkowników tymczasowych.
-		
-	\item \textbf{Administrator.} To użytkownik stały, który jest dodatkowo wyróżniony i posiada uprawienia do szeroko pojętego 
-		zarządzania serwerem (w tym - pozostałymi użytkownikami). Nie wyróżnia się wśród administratorów żadnych dodatkowych, szczególnych
+		dla siebie i uniknąć ewentualnego podszywania się. Stąd
+
+	\item \textbf{Administrator.} To użytkownik, który jest dodatkowo wyróżniony i posiada uprawienia do szeroko pojętego
+		zarządzania serwerem (w tym - pozostałymi użytkownikami). Konto administratora jest utrzymywane przez serwer pomiędzy połączeniami do czatu. Każdorazowo, przed rozpoczęciem sesji połączenia z serwerem, muszą się dodatkowo autoryzować przy użyciu hasła. Równocześnie, ich nazwa jest zarezerwowana wyłącznie do jego użytku oraz niedostępna
+		dla użytkowników tymczasowych.Nie wyróżnia się wśród administratorów żadnych dodatkowych, szczególnych
 		ról (np. superadministrator, właściciel).
-		
+
 \end{enumerate}
 
 Poza wspomnianymi różnicami, wszyscy użytkownicy po rozpoczęciu sesji połączenia mają prawo do dołączania do pokojów oraz wysyłania sobie
@@ -326,8 +328,10 @@ szkolnych, uczelnianych czy hobbystycznych.
 	\begin{itemize}
 		\item komputer przenośny z procesorem Intel Core i5 oraz systemem operacyjnym Windows 10
 		\item XAMPP 7.2.7, obejmujący serwer Apache 2.4 oraz interpreter języka PHP w wersji 7.2.7.
+    \item oprogramowanie VirtualBox z uruchomioną maszyną wirtualną z systemem
+    operacyjnym Linux Mint 19 ,,Tara''.
 	\end{itemize}
-	
+
 	\item \textbf{Komputer B}
 	\begin{itemize}
 		\item komputer przenośny, na którym zainstalowano system operacyjny Linux Mint 19 ,,Tara''
@@ -336,7 +340,7 @@ szkolnych, uczelnianych czy hobbystycznych.
 		\item \textit{należy doinstalować serwer Nginx, odpowiedzialny za wysłanie frontendu do
 		użytkownika łączącego się z czatem oraz za handshake Websocketu}
 	\end{itemize}
-	
+
 	\item \textit{\textbf{Do uzupełnienia}
 	\begin{itemize}
 		\item Kolejne urządzenie końcowe (trzecie), dzięki któremu będzie można symulować połączenie kolejnej
@@ -348,7 +352,10 @@ szkolnych, uczelnianych czy hobbystycznych.
 \section{Zasady biznesowe}
 
 Zidentyfikowane zasady pogrupowano w 3 kategorie, biorąc pod uwagę podstawowe bloki funkcjonalności. Przydzielenie
-do kategorii jest sygnalizowanie literą alfabetu, będącą prefiksem identyfikatora danej zasady. Dokonano
+do kategorii jest sygnalizowanie literą alfabetu, będącą prefiksem identyfikatora danej zasady. Numeracja identyfikatorów może być nieciągła, gdyż
+część z wymagań została usunięta w trakcie prac nad dokumentacją.
+
+Dokonano
 również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 
 \begin{itemize}
@@ -360,21 +367,23 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 	\item \textbf{,,W''} (z ang. \textit{won't}) - takie wymagania, po dyskusji, zostały wycofane dalszej realizacji.
 \end{itemize}
 
+
+
 \subsection{System użytkowników [ZU]}
   \begin{tabular}{ | l | l | l | }
 	\hline
     \textbf{ID} & \parbox[t]{14cm}{
     	\textbf{Zasada biznesowa}
-    } & \textbf{Priorytet} \\  
-  
+    } & \textbf{Priorytet} \\
+
     \hline
     ZU-01 & \parbox[t]{14cm}{
-      Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika. 
+      Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika.
     } & M \\
 
     \hline
     ZU-02 & \parbox[t]{14cm}{
-      Użytkownicy bez stałego konta podczas logowania podają tylko nazwę użytkownika, pole hasła pozostaje puste .
+      Użytkownicy bez stałego konta podczas logowania podają tylko nazwę użytkownika, pole hasła pozostaje puste.
     } & M \\
 
     \hline
@@ -384,91 +393,69 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 
     \hline
     ZU-04 & \parbox[t]{14cm}{
-      Można rozpocząć sesję jako użytkownik, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami już zalogowanych użytkowników. 
+      Można rozpocząć sesję jako użytkownik, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami już zalogowanych użytkowników.
     } & M \\
 
     \hline
     ZU-05 & \parbox[t]{14cm}{
-      Monit podczas wejścia na czat jest wyposażony w pole do wpisania hasła (nieobowiązkowe). 
+      Monit podczas wejścia na czat jest wyposażony w pole do wpisania hasła (nieobowiązkowe).
     } & S \\
 
     \hline
     ZU-06 & \parbox[t]{14cm}{
-      Użytkownicy czatu ze stałym kontem, podczas logowania podają nazwę i odpowiadające mu hasło.
+      Administrator podczas logowania podają nazwę i odpowiadające mu hasło.
     } & S \\
 
     \hline
     ZU-07 & \parbox[t]{14cm}{
-      Stałe konta użytkowników są utrzymywane na serwerze w postaci trójek wartości: nazwa użytkownika, hasło (md5), czy jest administratorem. 
+      Konta administratorów są utrzymywane na serwerze w postaci par wartości: nazwa użytkownika i hasło.
     } & S \\
 
     \hline
     ZU-08 & \parbox[t]{14cm}{
-      Nie można rozpocząć sesji użytkownika o nazwie, która pasuje do istniejącego konta, jeżeli nie zostanie podane prawidłowe hasło (nie można podszywać się pod nazwy użytkowników ze stałym kontem).
+      Nie można rozpocząć sesji użytkownika o nazwie, która pasuje do istniejącego konta, jeżeli nie zostanie podane prawidłowe hasło (nie można podszywać się pod nazwy administratorów).
     } & S \\
 
     \hline
     ZU-09 & \parbox[t]{14cm}{
-      Można rozpocząć sesję jako użytkownik bez podawania hasła, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami stałych kont użytkowników.
+      Można rozpocząć sesję jako użytkownik bez podawania hasła, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami kont administratorów i już zalogowanych użytkowników tymczasowych.
     } & S \\
 
     \hline
     ZU-10 & \parbox[t]{14cm}{
-      W okienkach czatu, loginy użytkowników ze stałym kontem są pogrubione i pokolorowane: Administratorzy na czerwono,
-      Pozostali na zielono. 
+      W okienkach czatu, loginy administratoró są pogrubione i pokolorowane na czerwono.
       } & S \\
 
     \hline
     ZU-11 & \parbox[t]{14cm}{
-      Administratorzy mają prawo przeglądać nazwy pokojów na serwerze. 
+      Administratorzy mają prawo przeglądać nazwy pokojów na serwerze.
     } & M \\
 
     \hline
     ZU-12 & \parbox[t]{14cm}{
-      Administratorzy mają prawo tworzyć i usuwać pokoje. 
+      Administratorzy mają prawo tworzyć i usuwać pokoje.
     } & S \\
 
     \hline
-    ZU-13 & \parbox[t]{14cm}{
-      Administratorzy mają prawo ustanawiać, zmieniać i usuwać hasła do pokojów. 
-    } & C \\
-
-    \hline
     ZU-14 & \parbox[t]{14cm}{
-      Administratorzy mają prawo wyrzucać użytkowników z pokojów. 
+      Administratorzy mają prawo wyrzucać użytkowników z pokojów.
     } & C \\
 
     \hline
     ZU-15 & \parbox[t]{14cm}{
-      Administratorzy mają prawo wyrzucać użytkowników z serwera. 
+      Administratorzy mają prawo wyrzucać użytkowników z serwera.
     } & C \\
 
     \hline
     ZU-16 & \parbox[t]{14cm}{
-      Administratorzy mają prawo przeglądać nazwy i poziomy uprawnień kont stałych użytkowników. 
+      Administratorzy mają prawo przeglądać nazwy i poziomy uprawnień użytkowników.
     } & M \\
 
     \hline
-    ZU-17 & \parbox[t]{14cm}{
-      Administratorzy mają prawo tworzyć i usuwać użytkowników. 
-    } & S \\
-
-    \hline
     ZU-18 & \parbox[t]{14cm}{
-      Administratorzy mają prawo zmieniać hasła użytkowników. 
+      Administratorzy mają prawo zmieniać swoje hasła użytkowników.
     } & C \\
 
-    \hline
-    ZU-19 & \parbox[t]{14cm}{
-      Administratorzy mają prawo zmieniać uprawnienia stałych kont użytkowników. 
-    } & C \\
-
-    \hline
-    ZU-20 & \parbox[t]{14cm}{
-      Użytkownicy ze stałymi kontami mogą zmieniać swoje hasło.
-    } & W \\
-
-    
     \hline
   \end{tabular}
 
@@ -477,8 +464,8 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 	\hline
     \textbf{ID} & \parbox[t]{14cm}{
     	\textbf{Zasada biznesowa}
-    } & \textbf{Priorytet} \\  
-    
+    } & \textbf{Priorytet} \\
+
     \hline
     ZP-01 & \parbox[t]{14cm}{
       Pokoje to właściwe czaty – tam użytkownicy mogą wejść i pisać do siebie nazwajem
@@ -513,52 +500,52 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     ZP-07 & \parbox[t]{14cm}{
       Pokój może mieć ustanowione hasło, które użytkownik musi wpisać przed podpięciem się do niego
     } & C \\
-    
+
     \hline
     ZP-08 & \parbox[t]{14cm}{
-      Nowo wpięty użytkownik widzi 10 najnowszych wiadomości, 
+      Nowo wpięty użytkownik widzi 10 najnowszych wiadomości,
       które zostały wysłane do pokoju tuż przed wpięciem
     } & S \\
-    
+
     \hline
     ZP-09 & \parbox[t]{14cm}{
-      Serwer czatu automatycznie wysyła do pokoju wiadomości, 
+      Serwer czatu automatycznie wysyła do pokoju wiadomości,
       zawierające powiadomienia o wydarzeniach związanych z
       pokojem, tzw. wiadomości systemowe
     } & S \\
-    
+
     \hline
     ZP-10 & \parbox[t]{14cm}{
       Wiadomości systemowe są niepodpisane przez
       żadnego użytkownika i zapisane kursywą
    	} & C \\
-   	
+
    	\hline
     ZP-11 & \parbox[t]{14cm}{
       Wiadomość systemowa zostaje wysłana podczas wpięcia się
       nowego użytkownika do pokoju
    	} & S \\
-   	
+
    	\hline
     ZP-12 & \parbox[t]{14cm}{
       Wiadomość systemowa zostaje wysłana podczas wypięcia
       użytkownika z pokoju
    	} & S \\
-   	
+
    	\hline
     ZP-13 & \parbox[t]{14cm}{
       Wiadomość systemowa zostaje wysłana, gdy użytkownik
       wpięty do pokoju traci połączenie z serwerem czatu
    	} & S \\
-   	
+
    	\hline
     ZP-14 & \parbox[t]{14cm}{
       Wiadomość systemowa zostaje wysłana, gdy użytkownik
       zostaje wyrzucony z pokoju
-   	} & S \\	
-    
+   	} & S \\
+
     \hline
-    
+
   \end{tabular}
 
 \subsection{Prywatne wiadomości [ZW]}
@@ -566,8 +553,8 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
   	\hline
     \textbf{ID} & \parbox[t]{14cm}{
     	\textbf{Zasada biznesowa}
-    } & \textbf{Priorytet} \\  
-    
+    } & \textbf{Priorytet} \\
+
     \hline
     ZW-01 & \parbox[t]{14cm}{
       Wiadomości prywatne to wiadomości, które są wysyłane do
@@ -576,79 +563,36 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
     } & M \\
 
     \hline
-    ZW-02 & \parbox[t]{14cm}{
-      Wiadomość prywatna może być wysłana z okna czatu pokoju – wiadomości prywatne nie są pokazywane wszystkim uczestnikom czatu, a jedynie użytkownikowi, do którego jest adresowana. 
-    } & M \\
-
-    \hline
-    ZW-03 & \parbox[t]{14cm}{
-      Aby wysłać wiadomość prywatną w oknie pokoju, należy poprzedzić ją znakiem \# i nazwą użytkownika, do którego jest kierowana wiadomość, oddzielona spacją od komunikatu, np.: „\#user Tajna wiadomość”.
-    } & C \\
-
-    \hline
-    ZW-04 & \parbox[t]{14cm}{
-      W oknie czatu pokoju dopuszczalne jest wysyłanie wiadomości prywatnych tylko tych użytkowników, którzy są do niego w danym momencie podpięci
-    } & C \\
-
-    \hline
-    ZW-05 & \parbox[t]{14cm}{
-      Próba wysłania wiadomości prywatnej w pokoju powinna zostać
-      odrzucona przez serwer i zwrócić błąd w przypadku gdy:
-      \begin{itemize}
-      	\item Po znaku „\#” pojawi się od razu znak spacji lub nie
-      	będzie żadnych znaków (nie zostanie podana 
-		nazwa użytkownika który jest adresatem)
-		\item Nazwa adresata jest dłuższa niż 32 znaki
-		\item Wysyłamy wiadomość prywatną w pokoju czatu do
-		użytkownika, który nie jest podpięty do tego pokoju
-      \end{itemize}
-		
-    } & M \\
-    
-    \hline
     ZW-06 & \parbox[t]{14cm}{
-      Użytkownik dysponuje dedykowanym oknem, w którym widzi wiadomości prywatne. 
+      Użytkownik dysponuje dedykowanym oknem, w którym widzi wiadomości prywatne.
     } & M \\
-    
+
     \hline
     ZW-07 & \parbox[t]{14cm}{
       Z okna wiadomości prywatnych można odbierać i wysyłać wyłącznie
       wiadomości prywatne, których nadawcą/odbiorcą jest wybrany
       użytkownik
-    } & M \\    
-    
+    } & M \\
+
     \hline
     ZW-08 & \parbox[t]{14cm}{
       W oknie wiadomości prywatnych można przeglądać wiadomości wysłane do i odebrane od jednego, wybranego użytkownika.
-      
+
     } & S \\
-    
+
     \hline
     ZW-09 & \parbox[t]{14cm}{
       W oknie wiadomości prywatnych można wysyłać wiadomości
       wyłącznie do nadawcy, którego wiadomości są w danym momencie
       pokazywane.
     } & S \\
-    
+
     \hline
     ZW-10 & \parbox[t]{14cm}{
-      Czas istnienia wiadomości prywatnych zależy od typu użytkownika
-      który jest jej nadawcą i odbiorcą:
-      \begin{itemize}
-      	\item Jeżeli co najmniej jedna strona komunikacji
-      	 jest użytkownikiem tymczasowym, wiadomości są
-      	 utrzymywane dopóki nadawca i odbiorca nie skończą
-      	 sesji na serwerze
-      	\item Jeżeli jedna strona komunikacji jest
-      	użytkownikiem
-      	tymczasowym, a druga stałym, to wiadomość jest utrzymywana
-      	dopóki użytkownik tymczasowy skończy sesję połączenia z
-      	serwerem
-      	\item Jeżeli obie strony są użytkownikami stałymi, to
-      	wiadomość jest trzymana bezterminowo
-      \end{itemize}
+      Wiadomości prywatne są utrzymywane dopóki nadawca i odbiorca mają aktywną
+      sesję na serwerze.
     } & S \\
-    
+
     \hline
     ZW-11 & \parbox[t]{14cm}{
       Dla każdej pary użytkowników, na serwerze jest
@@ -664,26 +608,26 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 
 Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, należący do kategorii metodyk zwinnych, wymagania funkcjonalne ujęto w formie historyjek (\textit{user stories}).
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-01
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę się do niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
 			ZU-01 Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika. \\
 			ZP-03 Lista pokojów jest widoczna dla każdego użytkownika
 			po zalogowaniu się do serwera czatu
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -697,30 +641,30 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-02
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę wpiąć się do pokoju,
 			aby wziąć udział w dyskusji.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
 			ZP-01 Pokoje to właściwe czaty - tam użytkownicy mogą
 			wejść i pisać do siebie nawzajem
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
-				\item Użytkownik, który ma otwartą sesję 
+				\item Użytkownik, który ma otwartą sesję
 				połączenia z serwerem czatu i nie jest wpięty
 				do żadnego pokoju, zobaczy listę pokojów.
 				\item Użytkownik, po kilknięciu w liście pokojów
@@ -729,7 +673,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				okno pokoju
 				\item Użytkownik, który ma otwartą sesję
 				połączenia z serwerem i jest wpięty do pokoju,
-				po odświeżeniu przeglądarki zobaczy okno pokoju, 
+				po odświeżeniu przeglądarki zobaczy okno pokoju,
 				do którego jest wpięty
 			\end{enumreq}
 			}
@@ -738,14 +682,14 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-03
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę po wpięciu
@@ -753,14 +697,14 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 			przed moim dołączeniem, aby dowiedzieć się, co
 			tam się obecnie dzieje.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
 			ZP-08 Nowo wpięty użytkownik widzi 10 najnowszych
 			wiadomości, które zostały wysłane do pokoju tuż
 			przed wpięciem
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -776,27 +720,27 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-04
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę chcę wysłać
 			wiadomość do pokoju w który jestem wpięty, aby
 			zobaczyli ją inni uczestnicy dyskusji.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
 			ZP-01 Pokoje to właściwe czaty - tam użytkownicy mogą
 			wejść i pisać do siebie nawzajem
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -823,14 +767,14 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-05
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę chcę zobaczyć
@@ -838,7 +782,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 			pokoju w którym sam jestem obecnie wpięty, aby powitać
 			nowego dyskutanta
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
 			ZP-09 Serwer czatu automatycznie wysyła do pokoju
@@ -847,7 +791,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 			ZP-11 Wiadomość systemowa zostaje wysłana podczas
 			wpięcia się nowego użytkownika do pokoju
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -862,22 +806,22 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-06
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę zobaczyć
 			powiadomienie o opuszczeniu pokoju przez użytkownika,
-			aby łatwo zorientować się, że nie bierze już udziału 
+			aby łatwo zorientować się, że nie bierze już udziału
 			w dyskusji.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
 			ZP-09 Serwer czatu automatycznie wysyła do pokoju
@@ -889,9 +833,9 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 			wpięty do pokoju traci połączenie z serwerem \\
 			ZP-14 Wiadomość systemowa zostaje wysłana, gdy użytkownik
 			zostaje wyrzucony z pokoju
-			
+
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -916,27 +860,27 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-07
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę odpiąć się od pokoju,
 			aby wpiąć się do innego pokoju.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
 			ZP-06 Użytkownik może się samodzielnie wypiąć z pokoju,
 			do którego jest wpięty
-			
+
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -951,21 +895,21 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-08
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę zobaczyć
 			okno wiadomości prywatnych, aby odczytać wiadomości,
 			które wysłano specjalnie do mnie.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
 			ZW-01 Wiadomości prywatne to wiadomości, które są
@@ -977,7 +921,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 			wysyłać wyłącznie wiadomości prywatne, których
 			nadawcą / odbiorcą jest wybrany użytkownik. \\
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -996,27 +940,27 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-09
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
 			Jako użytkownik serwera czatu, chcę wysłać
 			wiadomość prywatną do jednego użytkownika, aby
 			prowadzić z nim ciągłą konwersację.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
-			
-			
+
+
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -1037,78 +981,35 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				konwersacja
 				\item Nowa wiadomość jest pokazywana wraz z nazwą
 				użytkownika wysyłającego u dołu konwersacji
-			\end{enumreq}`								
+			\end{enumreq}
 			}
 		\\
 
 	\hline
 \end{tabular}
 
-
-\vspace{2em} 
-
-\begin{tabular}{ | l | l | }
-	\hline
-		\textbf{Identyfikator} & 
-		WF-10
-		\\
-		
-	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
-			Jako użbytkownik czatu, chcę wysłać wiadomość
-			prywatną w oknie czatu, aby zobaczył ją tylko jej
-			odbiorca
-		}\\
-		 
-	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
-			
-			
-		}\\
-		
-	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
-			\begin{enumreq}
-				\item Użytkownik wpisze w oknie pokoju 
-				wiadomość zapoczątkowaną znakiem kratki \# i nazwą 
-				użytkownika obecnego na czacie, oddzieloną spacją 
-				od treści wiadomości
-				tekstowym u dołu okna wiadomości prywatnych
-				\item Wiadomość wysłana w oknie zostanie pokazana
-				tylko użytkownikowi, do którego została skierowana
-				a także u tego użytkownika, który ją nadał
-				\item Wiadomości prywatna w oknie pokoju jest
-				podświetlona na żółto.
-			\end{enumreq}`								
-			}
-		\\
-
-	\hline
-\end{tabular}
-
-
-\vspace{2em} 
+\vspace{2em}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 		WF-11
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{11cm}{
-			Jako użytkownik serwera czatu, chcę wysłać wiadomość 
+			Jako użytkownik serwera czatu, chcę wysłać wiadomość
 			prywatną do innego użytkownika, z którym wcześniej nie
 			wymieniałem takich wiadomości, aby rozpocząć z nim
 			prywatną konwersację.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
-			
-			
+
+
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
 			\begin{enumreq}
@@ -1116,7 +1017,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				prywatnych w przyciski ,,Nowy''.
 				\item Użytkownik zobaczy monit o podanie nazwy
 				użytkownika, z którym chce rozpocząć rozmowę
-				\item Jeżeli użytkownik jest aktywny, wówczas 
+				\item Jeżeli użytkownik jest aktywny, wówczas
 				\item Wiadomość wpisana w polu tekstowym zostanie
 				wysłana po wciśnięciu klawisza ,,Enter'', gdy
 				aktywne
@@ -1132,7 +1033,203 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				konwersacja
 				\item Nowa wiadomość jest pokazywana wraz z nazwą
 				użytkownika wysyłającego u dołu konwersacji
-			\end{enumreq}`								
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-12
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako administrator, chcę utworzyć nowy pokój, aby umożliwić użytkownikom konwersację w węższym gronie.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+    ZU-12 Administratorzy mają prawo tworzyć i usuwać pokoje.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Administrator kliknie w oknie z listą pokojów w przycisk ,,Nowy''.
+				\item Administrator zobaczy monit o podanie nazwy
+				nowego pokoju.
+				\item Administrator po podaniu nazwy i zaakceptowaniu,
+        zostanie przeniesiony do listy pokojów, na której
+        będzie widoczna nazwa dodanego pokoju.
+				\item Administrator i inni użytkownicy mogą wpiąć się do nowoutworzonego pokoju.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-13
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako administrator, chcę usunąć zbędny pokój, aby utrzymać porządek na swoim serwerze czatu.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+    ZU-12 Administratorzy mają prawo tworzyć i usuwać pokoje.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Administrator wejdzie do pokoju, który chce
+        usunąć.
+        \item Administrator zobaczy obok tytułu z nazwą pokoju
+        przycisk ,,Usuń''.
+				\item Administrator po kliknięciu przycisku zobaczy
+        monit z potwierdzeniem działania.
+        \item Administrator potwierdzi decyzję w monicie.
+        \item Po potwierdzeniu decyzji o usunięciu, administrator
+        zostanie przeniesiony do listy pokojów, na której nie
+         będzie już widniała nazwa usuniętego pokoju.
+				\item Pozostali użytkownicy w usuniętym pokoju zostaną niezwłocznie od niego odpięci i zobaczą monit systemowy informujący o usunięciu pokoju.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-14
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako administrator, chcę usunąć użytkownika z pokoju,
+      aby utrzymać należyty poziom konwersacji.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+    ZU-14 Administratorzy mają prawo wyrzucać użytkowników z pokojów.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Administrator wejdzie do pokoju.
+        \item Administrator najedzie na nazwę użytkownika którego chce usunąć z pokoju i kliknie na przycisk z
+        nazwą ,,Usuń z pokoju''.
+				\item Administrator po kliknięciu przycisku zobaczy
+        monit z potwierdzeniem działania.
+        \item Administrator potwierdzi decyzję w monicie.
+        \item Po potwierdzeniu decyzji o usunięciu, administrator
+        (tak samo jak każdy inny użytkownik podpięty do pokoju) zobaczy wiadomość systemową o usunięciu z konwersacji.
+				\item Usunięty użytkownik zostanie niezwłocznie wypięty
+        z pokoju, a także zobaczy monit o przyczynie wypięcia.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-15
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako administrator, chcę usunąć użytkownika z serwera,
+      aby ukarać go za łamanie zasad netykiety.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+    ZU-15 Administratorzy mają prawo wyrzucać użytkowników z serwera.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Administrator wejdzie do pokoju.
+        \item Administrator najedzie na nazwę użytkownika którego chce usunąć z pokoju i kliknie na przycisk z
+        nazwą ,,Usuń z serwera''.
+				\item Administrator po kliknięciu przycisku zobaczy
+        monit z potwierdzeniem działania.
+        \item Administrator potwierdzi decyzję w monicie.
+        \item Po potwierdzeniu decyzji o usunięciu, administrator
+        (tak samo jak każdy inny użytkownik podpięty do pokoju) zobaczy wiadomość systemową o usunięciu z serwera.
+				\item Usunięty użytkownik zostanie niezwłocznie wypięty
+        z pokoju i jego sesja zostanie zakończona, a także pokazany zostanie monit o przyczynie tych zdarzeń (usunięcie z serwera czatu).
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-16
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11cm}{
+			Jako administrator, chcę zmienić swoje hasło, aby zabezpieczyć swoje hasło w razie ujawnienia go osobie niepowołanej, bez zmiany plików konfiguracyjnych i restartowania całego serwera.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+    ZU-18 Administratorzy mają prawo zmieniać swoje hasła
+    użytkowników.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+			\begin{enumreq}
+				\item Administrator wejdzie na kartę ,,Moje konto''.
+        \item Administrator kliknie na przycisk ,,Zmień hasło'',
+        widoczny pod nazwą użytkownika.
+				\item Administrator zobaczy monit zmiany hasła,
+        zawierający jedno pole tekstowe na stare hasło i dwa na
+        nowe hasło (wszystkie trzy ukryte przed podglądaniem
+        treści podczas ich wprowadzania).
+        \item Administrator potwierdzi decyzję o zmianie hasła w monicie.
+        \item Po potwierdzeniu decyzji, administrator zobaczy wiadomość systemową o zmianie hasła.
+        \item Administrator rozłączy się z serwerem.
+        \item Administrator spróbuje rozpocząć nową sesję z
+        serwerem, autoryzując się nowym hasłem.
+        \item Nowe hasło zostanie zaakceptowane przez serwer,
+        sesja zostanie rozpoczęta prawidłowo.
+			\end{enumreq}
 			}
 		\\
 
@@ -1141,22 +1238,24 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 \subsection{Wymagania niefunkcjonalne}
 
+\phantom{}
+
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
-		HN-1
+		\textbf{Identyfikator} &
+		HN-01
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{13cm}{
 			Długość nazwy użytkownika jest ograniczona od 2 do 32 znaków alfanumerycznych, w celu uniknięcia problemów z identyfikacją użytkownika na serwerze.
 		}\\
-		 
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
-			U-3 Nazwa użytkownika to ciąg od 3 do 32 alfanumerycznych znaków.
+			ZU-03 Nazwa użytkownika to ciąg od 3 do 32 alfanumerycznych znaków.
 		}\\
-		
+
 	\hline
 		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
 			\begin{enumreq}
@@ -1168,18 +1267,175 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-02
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Loginy i hasła administratorów są gromadzone w plikach
+      konfiguracyjnych, a po uruchomieniu serwera - w jego
+      pamięci operacyjnej.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+			ZU-07 Konta administratorów są utrzymywane na serwerze w postaci par wartości: nazwa użytkownika i hasło.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+			\begin{enumreq}
+				\item Serwer jest wyposażony w pliki konfiguracyjne
+        \item Po załadowaniu serwera, z plików konfiguracyjnych
+        są odczytywane dane kont administracyjnych
+        \item Serwer po uruchomieniu jest wyposażony w konta o
+        nazwach i hasłach zgodnych z wpisami w plikach konfiguracyjnych.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-03
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Loginy administratorów w oknach czatu są pogrubione i pokolorowane na czerwono.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+			ZU-10 W okienkach czatu, loginy administratorów są pogrubione i pokolorowane na czerwono.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+			\begin{enumreq}
+				\item Nazwy administratorów w oknach czatu są pogrubione
+        i pokolorowane na czerowono.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-04
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Nazwy pokojów mają od 3 do 32 znaków alfanumerycznych długości, bez
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+			ZP-02 Każdy pokój ma unikalną nazwę będącą ciągiem
+      alfanumerycznym od 3 do 32 znaków.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+			\begin{enumreq}
+				\item Nie jest możlwe utworzenie pokoju o nazwie, która
+        już wcześniej się pojawiała
+        \item Nie jest możliwe utworzenie pokoju o nazwie krótszej niż 3 znaki i dłuższej niż 32 znaki.
+        \item Nie jest możliwe utworzenie pokoju o nazwie zawierającej znaki inne niż litery alfabetu łacińskiego, cyfry i znak podkreślenia.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-05
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Wiadomości prywatne są czyszczone niezwłocznie po rozłączeniu się przez dowolnego z rozmówców.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+			ZW-10 Wiadomości prywatne są utrzymywane dopóki nadawca i odbiorca mają aktywną sesję na serwerze.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+			\begin{enumreq}
+				\item Po zamknięciu sesji użytkownika, wiadomości prywatne których był nadawcą lub odbiorcą ulegają
+        usunięciu.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{2em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-06
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			Bufor pokoju wiadomości prywatnych zawiera do 100 wiadomości.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+			ZW-11 Dla każdej pary użytkowników, na serwerze jest gromadzone co najwyżej 100 wiadomości prywatnych.
+		}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+			\begin{enumreq}
+				\item Po przekroczeniu liczby 100 wiadomości prywatnych w pokoju, bufor ulega ,,zawinięciu'', usuwając najstarsze 100 wiadomości.
+			\end{enumreq}
+			}
+		\\
+
+	\hline
+\end{tabular}
+
 \subsection{Wymagania na środowisko docelowe}
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 	WS-01
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{13cm}{
-			W rozwiązaniu należy wykorzystać środowisko ViuaVM i
-			język Viuact
+			W rozwiązaniu należy wykorzystać środowisko Viua VM i
+			język ViuAct
 		}\\
 
 	\hline
@@ -1187,10 +1443,10 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 	WS-02
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{13cm}{
 			Czat będzie użytkowany jako aplikacja webowa typu
@@ -1202,10 +1458,10 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 	WS-03
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{13cm}{
 			Aplikacja czatu będzie dostosowana przede wszystkim
@@ -1219,14 +1475,28 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 \begin{tabular}{ | l | l | }
 	\hline
-		\textbf{Identyfikator} & 
+		\textbf{Identyfikator} &
 	WW-01
 		\\
-		
+
 	\hline
 		\textbf{Treść} & \parbox[t]{13cm}{
 			W procesie wytwórczym należy korzystać z metodologii
 			mini-Scrum
+		}\\
+
+	\hline
+\end{tabular}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+	WW-02
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{13cm}{
+			W procesie wytwórczym należy korzystać uprzednio przygotować specyfikację przypadków użycia - co wynika z wymagań uczelni.
 		}\\
 
 	\hline
