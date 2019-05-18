@@ -330,6 +330,7 @@ określony przez argumenty podane w wierszu poleceń.
 kompilacji i wywołuje funkcję \texttt{compile\_text()} z tego samego modułu.
 
 \subsection{Analiza leksykalna}
+\label{viuact_cc_impl_desc_lex}
 
 Funkcja \texttt{viuact.driver.compile\_text()} na początek dokonuje analizy
 leksykalnej kodu źródłowego. Ta pierwsza faza przygotowania tekstu programu ,,do
@@ -337,6 +338,7 @@ obróbki'' jest wykonywana przez funkcję \texttt{lex()} z modułu
 \texttt{viuact.lexer}.
 
 \subsection{Analiza składniowa}
+\label{viuact_cc_impl_desc_parse}
 
 \subsubsection{Grupowanie}
 
@@ -432,6 +434,7 @@ funkcji, wyliczeń itd. Takie AST znacząco upraszcza implementację kolejnej fa
 kompilacji: generowania kodu.
 
 \subsection{Generowanie kodu wynikowego}
+\label{viuact_cc_impl_desc_codegen}
 
 Po przeprowadzeniu analizy składniowej i wygenerowaniu AST kompilator od razu
 przystępuje do generowania kodu. Jest to uwarunkowane pomienięciem w pracy
@@ -457,7 +460,8 @@ przekazuje AST otrzymane po etykietowaniu do funkcji \texttt{lower\_file()} z
 modułu \texttt{viuact.lowerer} czym rozpoczyna proces generowania kodu
 wynikowego.
 
-\subsubsection{Obniżenie poziomu}
+\subsection{Obniżenie poziomu}
+\label{viuact_cc_impl_desc_lower}
 
 ,,Obniżenie poziomu'' polega na ,,rozbiciu'' elementów AST na takie fragmenty,
 które mają swój bezpośredni (lub bliski bezpośredniemu) odpowiednik w języku
@@ -474,24 +478,150 @@ To ,,rozbijanie'' i ,,znikanie'' konstrukcji języka daje tej fazie jej nazwę:
 konstrukcje języka wysokiego poziomu są tłumaczone na konstrukcje języka
 niskiego poziomu.
 
-\paragraph{Obniżenie modułów}
+\subsubsection{Obniżenie modułów}
 
 W pierwszej kolejności obniżane są moduły. Jest to wykonywane rekurencyjnie,
 a zagnieżdżone moduły są obniżane przed modułem, który je zawiera. Ten proces
-implementuje funkcja \texttt{viuact.lowerer.lower\_module()}.
+jest implementowany przez funkcję \texttt{viuact.lowerer.lower\_module()}.
 
-\subparagraph{Importowanie} Po obniżeniu modułów przetwarzane są importy
+\paragraph*{Importowanie} Po obniżeniu modułów przetwarzane są importy
 modułów. Obniżenie musi być wykonane najpierw żeby umożliwić importowanie
 zagnieżdżonych modułów. Przetworzeniem importów zajmuje się funkcja
 \texttt{viuact.lowerer.perform\_imports()}.
 
-\paragraph{,,Obniżenie'' wyliczeń}
+\subsubsection{,,Obniżenie'' wyliczeń}
 
-Następnie ,,obniżane''
+Następnie ,,obniżane'' są wyliczenia. Jest to jeden z najprostszych elementów
+kompilatora. Obniżenie wyliczeń sprowadza się do przypisania każdej wartości
+składowej wyliczenia pewnej wartości całkowitoliczbowej, a następnie zapisania
+wyniku tego przypisania i udostępnienia go do podglądu podczas dalszej
+kompilacji.
 
-\paragraph{Obniżenie funkcji}
+Przypisywanie wartości całkowitoliczbowych rozpoczyna się od 0, a każdej
+kolejnej wartości składowej pojedynczego wyliczenia jest przypisywana liczba
+całkowita o 1 większa od poprzedniej.
+Wyliczenie w języku \ViuAct\phantom{} może mieć jedynie $2^{63}$ elementów z
+uwagi na użycie typu liczby całkowitej ze znakiem (rozdział \ref{viuact_spec_datatypes_simple_integer}
+na stronie \pageref{viuact_spec_datatypes_simple_integer}) jako typu bazowego
+dla wyliczeń.
 
-\subsubsection{Emisja instrukcji}
+\subsubsection{Obniżenie funkcji} Obniżanie funkcji jest w założeniu prostym
+procesem podzielonym na kilka faz:
 
-Emisja instrukcji tłumaczy przetworzone konstrukcje języka \ViuAct na ich
-bezpośrednie odpowiedniki w języku assemblera Viua VM.
+\begin{enumerate}
+    \item przesunięcia argumentów do rejestrów lokalnych
+    \item emisja wyrażenia będącego ciałem funkcji
+    \item przesunięcie wyniku do rejestru 0 (rejestru wartości zwracanych)
+\end{enumerate}
+
+Skomplikowanie tego procesu jest ,,ukryte'' przez fakt, że wyrażenie będące
+ciałem funkcji może być dowolnie złożone, ale zawsze jest emitowane przy użyciu
+tylko jednego (z punktu widzenia modułu obniżającego) wywołania funkcji
+\texttt{viuact.emitter.emit\_expr()}. To, że wewnątrze \texttt{emit\_expr()}
+może nastąpić ,,eksplozja'' wywołań i działania nie jest widoczne z tego
+poziomu.
+
+\paragraph{,,Sklejanie'' funkcji}
+
+Funkcje są jedynymi elementami języka \ViuAct\phantom{}, które po obniżeniu są
+wyraźnie widoczne w postaci linii kodu. Generowanie tekstu dla funkcji następuje
+w kilku etapach, których kolejność nie pokrywa się z tym co widać w pliku
+wynikowym.
+
+Całość procesu spina stan (reprezentowany przez typ \texttt{State}) nazdorujący
+ilość alokowanych rejestrów, funkcje zagnieżdżone, oraz -- w przypadku domknięć
+-- informację o domykanym zakresie leksykalnym, do którego funkcja może się
+odwoływać.
+
+Po utworzeniu stanu funkcji wykonywane są etapy opisane poniżej.
+
+\subparagraph{Przesunięcia argumentów}
+
+Dla każdego argumentu emitowana jest instrukcja \texttt{move} (opisana dokładnie
+w \ref{viua_vm_ops_value_management_move} na stronie \pageref{viua_vm_ops_value_management_move})
+przesuwająca wartość przekazaną jako argument z rejestru argumentów do
+rejestru lokalnego.
+
+Wiersze dopisywane są do listy instrukcji składajacych się na funkcję.
+
+\subparagraph{Emisja ciała funkcji}
+
+Po przesunięciu argumentów emitowane jest wyrażenie będące ciałem funkcji.
+Wiersze dopisywane są na końcu listy instrukcji składajacych się na funkcję.
+
+\subparagraph{Utworzenie wiersza sygnatury funkcji i całościowej listy wierszy}
+
+Po wyemitowaniu wyrażenia będącego ciałem funkcji tworzona jest całościowa lista
+wierszy funkcji. Jako jej pierwszy element wstawiana jest linia będąca syganturą
+funkcji zgodną z formatem oczekiwanym przez assembler Viua VM:
+,,\texttt{.function: \emph{nazwa\_funkcji}/\emph{ilość\_argumentów}}''.
+Na przykład ,,\texttt{.function:~say\_hello\_to/1}''.
+
+\subparagraph{Zapis alokacji rejestrów}
+
+Po sygnaturze, jak pierwszy wiersz ciała właściwego (instrukcji składających się
+na funkcję) dopisywana jest instrukcja \texttt{allocate\_registers} alokująca
+taką ilość rejestrów lokalnych jaka jest potrzebna emitowanej funkcji do
+działania.
+
+Ilość potrzebnych funkcji rejestrów lokalnych jest śledzona przez obiekt
+reprezentujący stan funkcji. Każdy nowy potrzebny rejestr jest ,,oddawany''
+przez funkcję \texttt{State.get\_slot()} co powoduje, że stan funkcji zna
+dokładną ilość rejestrów ,,zaalokowanych'' podczas emisji kodu funkcji.
+
+\subparagraph{Zapis ciała wewnętrznego}
+
+Po zapisie zaalokowanych rejestrów do całościowej listy wierszy dopisywane są
+wiersze wygenerowane przez wyrażenie będące ciałem funkcji.
+
+\subparagraph{Przesunięcie wartości zwracanej i epilog funkcji}
+
+Po zapisie ciała wewnętrznego do całościowej listy wierszy dopisywana jest
+instrukcja \texttt{move} przesuwająca wynik wyrażenia będącego ciałem funkcji do
+rejestru 0 (rejestru wartości zwracanej).
+
+Następnie do całościowej listy wierszy dopisywana jest instrukcja \texttt{return}
+oraz dyrektywa \texttt{.end}, a proces generowania funkcji jest zakończony.
+
+\paragraph{Funkcje zagnieżdżone}
+
+Funkcje w języku \ViuAct\phantom{} mogą być zagnieżdżane. Z tego powodu funkcja
+\texttt{lower\_function()} może zwrócić jeden lub więcej wyników. Aby ułatwić
+obsługę takich sytuacji \texttt{lower\_function()} deleguje swoją pracę do
+funkcji \texttt{output\_function\_body()}, która zwraca listę wszystkich funkcji
+wyemitowanych jako wynik obniżenia funkcji wejściowych. Następnie każdy element
+(tj. każda funkcja) tej listy jest przekazywany do funkcji \texttt{lower\_function\_body()},
+która przetwarza ,,surowe'' wyniki na formę tekstową gotową do zapisu w pliku z
+kodem wynikowym (tj. programem przetłumaczonym z języka \ViuAct\phantom{} na
+jezyk assemblera Viua VM).
+
+\vspace{1em}
+
+Obniżenie funkcji jest ostatnim elementem fazy ,,obniżania poziomu''. Jest też
+punktem styku modułu \texttt{viuact.lowerer} z modułem \texttt{viuact.emitter}
+-- funkcja \texttt{output\_function\_body()} jest jedyną funkcją wywołującą
+funkcje modułu \texttt{emitter} podczas tej fazy.
+
+Emisja instrukcji jest szczegółowo opisana w rozdziale \ref{viuact_cc_impl_desc_emit}.
+
+\subsection{Emisja instrukcji}
+\label{viuact_cc_impl_desc_emit}
+
+Emisja instrukcji tłumaczy przetworzone konstrukcje języka \ViuAct\phantom{} na
+ich bezpośrednie odpowiedniki w języku assemblera Viua VM.
+
+\subsubsection{Emisja wyrażeń prostych}
+\paragraph{Emisja konstruktorów}
+\subsubsection{Emisja wyrażeń złożonych}
+\subsubsection{Emisja dowiązań \emph{let}}
+\subsubsection{Emisja wywołań funkcji wbudowanych}
+\subsubsection{Emisja wywołań funkcji}
+\subsubsection{Emisja wywołań aktorów}
+\subsubsection{Emisja wywołań odroczonych}
+\subsubsection{Emisja wywołań watchdog}
+\subsubsection{Emisja wywołań ogonowych}
+\subsubsection{Emisja wyrażeń warunkowych}
+\subsubsection{Emisja funkcji zagnieżdżonych}
+\subsubsection{Emisja wyrażeń \emph{try}}
+\subsubsection{Emisja przypisania do pola struktury}
+\subsubsection{Emisja dostępu do pola struktury}

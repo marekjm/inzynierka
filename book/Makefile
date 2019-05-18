@@ -4,7 +4,7 @@ all: \
 .PHONY: watch
 
 %.pdf: %.tex
-	pdflatex $^
+	pdflatex -halt-on-error $^
 	bibtex $*.aux
 
 %.png: %.dot
