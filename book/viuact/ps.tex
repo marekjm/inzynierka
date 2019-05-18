@@ -487,7 +487,19 @@ zagnieżdżonych modułów. Przetworzeniem importów zajmuje się funkcja
 
 \paragraph{,,Obniżenie'' wyliczeń}
 
-Następnie ,,obniżane''
+Następnie ,,obniżane'' są wyliczenia. Jest to jeden z najprostszych elementów
+kompilatora. Obniżenie wyliczeń sprowadza się do przypisania każdej wartości
+składowej wyliczenia pewnej wartości całkowitoliczbowej, a następnie zapisania
+wyniku tego przypisania i udostępnienia go do podglądu podczas dalszej
+kompilacji.
+
+Przypisywanie wartości całkowitoliczbowych rozpoczyna się od 0, a każdej
+kolejnej wartości składowej pojedynczego wyliczenia jest przypisywana liczba
+całkowita o 1 większa od poprzedniej.
+Wyliczenie w języku \ViuAct\phantom{} może mieć jedynie $2^{63}$ elementów z
+uwagi na użycie typu liczby całkowitej ze znakiem (rozdział \ref{viuact_spec_datatypes_simple_integer}
+na stronie \pageref{viuact_spec_datatypes_simple_integer}) jako typu bazowego
+dla wyliczeń.
 
 \paragraph{Obniżenie funkcji}
 
