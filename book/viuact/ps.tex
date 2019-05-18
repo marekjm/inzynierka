@@ -608,11 +608,68 @@ Emisja instrukcji jest szczegółowo opisana w rozdziale \ref{viuact_cc_impl_des
 \label{viuact_cc_impl_desc_emit}
 
 Emisja instrukcji tłumaczy przetworzone konstrukcje języka \ViuAct\phantom{} na
-ich bezpośrednie odpowiedniki w języku assemblera Viua VM.
+ich bezpośrednie odpowiedniki w języku assemblera Viua VM. Emisją instrukcji
+zajmuje się moduł \texttt{viuact.emitter}.
 
 \subsubsection{Emisja wyrażeń prostych}
+
+Emisja wyrażeń prostych jest implementowana przez funkcję \texttt{emit\_expr()}.
+Jest to również funkcja ,,ogólna'' zajmująca się rozsyłaniem poszczególnych
+typów wyrażeń do ich dedykowanych funkcji emisji. Bezpośrednio \texttt{emit\_expr()}
+emituje jedynie instrukcje odpowiadające za konstruktory wartości typów prostych
+(literały) i konstruktory wartości złożonych.
+
+\paragraph{Emisja literałów}
+
+Emisja literałów polega na wygenerowaniu instrukcji, które utworzą w rejestrze
+wartości typów prostych: tekst, liczbę całkowitą, liczbę zmiennoprzecinkową, lub
+wartość logiczną.
+
+Odpowiadają im następujące instrukcje:
+
+\begin{labeling}{liczba zmiennoprzecinkowa}
+\item[tekst] \texttt{text Rd ...}
+\item[liczba całkowita] \texttt{integer Rd ...}
+\item[liczba zmiennoprzecinkowa] \texttt{float Rd ...}
+\item[wartość logiczna] \texttt{izero Rd} w połączeniu z \texttt{not Rd}
+\end{labeling}
+
+Wartości proste mogą być wyemitowane jako pojedyncze instrukcje; wyjątkiem jest
+wartość logiczna, która nie ma bezpośredniego konstruktora i jest ,,składana'' z
+dwóch (w przypadku \texttt{true}) lub trzech (w przypadku \texttt{false})
+instrukcji.
+
 \paragraph{Emisja konstruktorów}
+
+Konstruktory są dostępne dla typów złożonych -- wektorów i struktur. Mają
+składnię identyczną z wywołaniami funkcji, jednak emitowane są jako pojedyncze
+instrukcje \texttt{vector Rd} dla wektorów i \texttt{struct} dla struktur.
+
+\paragraph{Emisja odwołań do dowiązania \emph{let}}
+
+Emisja odwołań do dowiązań \emph{let} może, ale nie musi wygenerować instrukcji.
+Jeśli odwołanie jest emitowane jako część większego wyrażenia, na przykład:
+\begin{lstlisting}
+(let x (+ lhs rhs))
+\end{lstlisting}
+to dla \texttt{lhs} i \texttt{rhs} nie zostaną wyemitowane osobne instrukcje;
+oba odwołania zawierają się w instrukcji \texttt{add} (jako adresy rejestrów).
+Jeśli jednak odwołanie jest wyrażeniem ,,samym w sobie'' jak \texttt{x} na
+listingu poniżej:
+\begin{lstlisting}
+(let foo (a b) {
+    (let x ...)
+    ...
+    x
+})
+\end{lstlisting}
+to wyemitowana zostanie dla niego instrukcja \texttt{copy} tworząca nową wartość
+(\texttt{x} ewaluuje do siebie samego).
+
 \subsubsection{Emisja wyrażeń złożonych}
+
+Emisja wyrażeń prostych jest implementowana przez funkcję \texttt{emit\_compound\_expr()}.
+
 \subsubsection{Emisja dowiązań \emph{let}}
 \subsubsection{Emisja wywołań funkcji wbudowanych}
 \subsubsection{Emisja wywołań funkcji}
