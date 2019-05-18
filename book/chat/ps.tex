@@ -40,14 +40,26 @@ przez aktora \texttt{WSConnector} i przekazany powiązanemu aktorowi
 oraz podjęcie decyzji o autoryzacji lub jej odmowie. Decyzja ta jest odsyłana do
 \texttt{WSConnectora} i następnie przekazywana do aplikacji po stronie klienta.
 
-Jezeli autentykacja przebiegnie pomyślnie, aktor \texttt{Authorizer} uruchamia aktora \texttt{UserSession}, spina go z aktorem \texttt{WSConnector} używanym wcześniej do komunikacji z frontendem, oraz ulega autodestrukcji.
+Jezeli autentykacja przebiegnie pomyślnie, aktor \texttt{Authorizer} uruchamia
+aktora \texttt{UserSession}, spina go z aktorem \texttt{WSConnector} używanym
+wcześniej do komunikacji z frontendem, oraz ulega autodestrukcji.
+
+\newpage
 
 \subsection{Dekompozycja systemu na podsystemy}
 \label{architektura_chatu}
 
 \subsubsection{Strona serwera (,,backend'')}
 Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębnych od
-siebie aktorów:
+siebie aktorów, ukazanych na rysunku \ref{diag-komp}
+
+\nameref{diag-komp}.
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/pck-diag}
+	\caption{Diagram komponentów serwera ViuaChat}
+	\label{diag-komp}
+\end{figure}
 
 \begin{labeling}{UsernameLessor}
 
@@ -111,11 +123,26 @@ siebie aktorów:
 
 \subsubsection{Warstwa interfejsu użytkownika (,,frontend'')}
 Podczas pracy nad wartwą frontendu, zastosowano framework webowy Vue.js. Jedną
-z przyczyn dla tej decyzji jest możliwość zdekomponowania projektowanej aplikacji na mniejsze części, nazywane modułami (ang. \textit{modules}). Są one zorganizowane hierarchiczne.
+z przyczyn dla tej decyzji jest możliwość zdekomponowania projektowanej aplikacji na mniejsze części, nazywane modułami (ang. \textit{modules}). Są one zorganizowane hierarchiczne. Każdy z modułów zawiera własny skrypt JavaScript, a także kod HTML i arkusz CSS. Powoduje to, że każdy z modułów jest niezależny od pozostałych i może realizować swoje zadania w pełni autonomicznie.
 
-\section{Projekt struktury}
+Każdy z modułów udostępnia swojemu rodzicowi pewne określone parametry. Ich zmiana
+jest podstawowym sposobem na interakcję pomiędzy nimi, co jest zgodne z
+paradygmatem \textit{data driven application} (z ang. ,,aplikacja sterowana
+poprzez dane''). W podobny sposób następuje zmiana kodu HTML modułów. Zamiast
+zmieniać węzły DOM w sposób jawny poprzez skrypt, programista wskazuje w
+szablonie HTML te miejsca, które ulegają określonym przemianom wraz ze zmianą
+wewnętrznych parametrów modułu.
 
-\subsection{Diagram klas}
+W projekcie przewidziano zastosowanie modułów, przedstawionych na \ref{diag-komp-front}.
+
+\nameref{diag-komp-front}.
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/pck-diag-front}
+	\caption{Diagram komponentów aplikacji webowej ViuaChat}
+	\label{diag-komp-front}
+\end{figure}
+
 
 \section{Decyzje projektowe}
 
