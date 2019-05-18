@@ -1,8 +1,4 @@
-\section{Architektura}
-
-\subsection{Użyte wzorce projektowe}
-
-\subsection{Architektura systemu}
+\section{Architektura systemu}
 \label{chat_architektura_systemu}
 
 Architektura systemu opiera się na klasycznym modelu klient-serwer.
@@ -44,14 +40,26 @@ przez aktora \texttt{WSConnector} i przekazany powiązanemu aktorowi
 oraz podjęcie decyzji o autoryzacji lub jej odmowie. Decyzja ta jest odsyłana do
 \texttt{WSConnectora} i następnie przekazywana do aplikacji po stronie klienta.
 
-Jezeli autentykacja przebiegnie pomyślnie, aktor \texttt{Authorizer} uruchamia aktora \texttt{UserSession}, spina go z aktorem \texttt{WSConnector} używanym wcześniej do komunikacji z frontendem, oraz ulega autodestrukcji.
+Jezeli autentykacja przebiegnie pomyślnie, aktor \texttt{Authorizer} uruchamia
+aktora \texttt{UserSession}, spina go z aktorem \texttt{WSConnector} używanym
+wcześniej do komunikacji z frontendem, oraz ulega autodestrukcji.
+
+\newpage
 
 \subsection{Dekompozycja systemu na podsystemy}
 \label{architektura_chatu}
 
 \subsubsection{Strona serwera (,,backend'')}
 Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębnych od
-siebie aktorów:
+siebie aktorów, ukazanych na rysunku \ref{diag-komp}
+
+\nameref{diag-komp}.
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/pck-diag}
+	\caption{Diagram komponentów serwera ViuaChat}
+	\label{diag-komp}
+\end{figure}
 
 \begin{labeling}{UsernameLessor}
 
@@ -113,14 +121,135 @@ siebie aktorów:
 
 \end{labeling}
 
+\newpage
+
 \subsubsection{Warstwa interfejsu użytkownika (,,frontend'')}
 Podczas pracy nad wartwą frontendu, zastosowano framework webowy Vue.js. Jedną
-z przyczyn dla tej decyzji jest możliwość zdekomponowania projektowanej aplikacji na mniejsze części, nazywane modułami (ang. \textit{modules}). Są one zorganizowane hierarchiczne.
+z przyczyn dla tej decyzji jest możliwość zdekomponowania projektowanej aplikacji na mniejsze części, nazywane modułami (ang. \textit{modules}). Są one zorganizowane hierarchiczne. Każdy z modułów zawiera własny skrypt JavaScript, a także kod HTML i arkusz CSS. Powoduje to, że każdy z modułów jest niezależny od pozostałych i może realizować swoje zadania w pełni autonomicznie.
 
-\section{Projekt struktury}
+Każdy z modułów udostępnia swojemu rodzicowi pewne określone parametry. Ich zmiana
+jest podstawowym sposobem na interakcję pomiędzy nimi, co jest zgodne z
+paradygmatem \textit{data driven application} (z ang. ,,aplikacja sterowana
+poprzez dane''). W podobny sposób następuje zmiana kodu HTML modułów. Zamiast
+zmieniać węzły DOM w sposób jawny poprzez skrypt, programista wskazuje w
+szablonie HTML te miejsca, które ulegają określonym przemianom wraz ze
+zmian wewnętrznych parametrów modułu.
 
-\subsection{Diagram klas}
+Podstawowa struktura aplikacji frontendowej przewiduje podział na
+pięć części:
+\begin{itemize}
+	\item Część autoryzacyjna -- służy do nawiązania połączenia z
+	serwerem i rozpoczęcie sesji użytkownika.
 
+	\item Pokoje (publiczne) -- dostarcza listę ogólnodostępnych pokojów,
+	umożliwia podpięcie się wybranych z nich oraz prowadzenie rozmów z
+	innymi użytkownikami, którzy się do nich podpięli.
+
+	\item Wiadomości prywatne -- umożliwia nawiązywanie prywatnych
+	rozmów pomiędzy użytkownikami oraz wymianę wiadomości prywatnych.
+
+	\item Narzędzia administracyjne -- pozwalają administratorom
+	na dodawanie i usuwanie pokojów, wyrzucanie użytkowników z pokojów
+	i z serwera.
+
+	\item Profil użytkownika -- umożliwia podejrzenie informacji na
+	temat własnego konta, zmianę przez administratora swojego hasła
+	użytkownika oraz rozłączenie się z serwerem.
+
+\end{itemize}
+
+W projekcie przewidziano zastosowanie modułów, przedstawionych na rysunku \ref{diag-komp-front}.
+
+\nameref{diag-komp-front}.
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/pck-diag-front}
+	\caption{Diagram komponentów aplikacji webowej ViuaChat}
+	\label{diag-komp-front}
+\end{figure}
+
+\begin{labeling}{\texttt{UserProfile}}
+
+  \item[\texttt{App}] Nadrzędny moduł, istniejący przez cały czas użycia
+	instancji aplikacji. Obejmuje najbardziej zewnętrzne struktury HTML,
+	przechowuje podstawowy stan aplikacji (stan autoryzacji, nazwę
+	użytkownika, poziom uprawnień, gniazdo WebSocket dla połączeń
+	z wartwą backendu), a także zapewnia routing do głównych części
+	aplikacji - czyli modułu logowania, modułu pokojów (publicznych),
+	pokojów prywatnych wiadomości, profilu użytkownika i narzędzi
+	administracyjnych.
+
+	\item[\texttt{SignIn}] Moduł odpowiadający za początkową autoryzację
+	do serwera (potocznie znane jako ,,logowanie'').
+
+	\item[\texttt{Rooms}] Moduł reprezentuje część aplikacji poświęconą
+	ogólnodostępnym pokojom dla wspólnych konwersacji. Podlegają mu:
+
+	\begin{labeling}{\texttt{RoomsChat}}
+		\item[\texttt{RoomsChat}] Moduł odpowiedzialny \textit{stricte} za
+		okno czatu - wyświetlanie konwersacji oraz wysyłanie wiadomości
+		do pokoju.
+
+		\item[\texttt{RoomsList}] Moduł wyświetlający listę pokojów, a także
+		umożliwiający podpięcie się do wybranego z nich.
+
+	\end{labeling}
+
+	\item[\texttt{PM}] Moduł odwzorowujący całą część aplikacji poświęconą
+	wymianie pomiędzy użytkownikami wiadomości prywatnych. W jego skład
+	wchodzą:
+
+	\begin{labeling}{\texttt{PMUserList}}
+		\item[\texttt{PMFindUser}] Moduł, którego zadaniem jest odnalezienie
+		użytkowika, do którego ma zostać wysłana wiadomość prywatna
+
+		\item[\texttt{PMUserList}] Moduł obsługujący listę użytkowników,
+		którzy wcześniej otrzymali lub wysłali wiadomości prywatne.
+
+		\item[\texttt{PMChat}] Moduł odpowiedzialny za obsługę zasadniczego
+		okna czatu wiadomości prywatnych, pozwalającego wymieniać wiadomości
+		prywatne z jednym, wybranym użytkownikem.
+	\end{labeling}
+
+\item[\texttt{UserProfile}] Moduł pozwalający na podstawową kontrolę
+własnego profilu, w tym:
+
+\begin{labeling}{\texttt{ChangePassword}}
+	\item[\texttt{SignOut}] Moduł odpowiedzialny za zamknięcie sesji
+	użytkownika, rozłączenie z serwerem oraz powrót aplikacji do
+	stanu sprzed autoryzacji
+
+	\item[\texttt{ChangePassword}] Moduł mający umożliwiać administratorom
+	zmianę swoich własnych haseł
+
+\end{labeling}
+
+\item[\texttt{Admin}] Moduł obejmujący pod sobą wszystkie narzędzia
+administracyjne. W jego skład wchodzą:
+
+\begin{labeling}{\texttt{BanFromServer}}
+	\item[\texttt{AdminRooms}] Moduł do zarządzania ogólnodostępnymi
+	pokojami czatu, w tym:
+
+	\begin{labeling}{\texttt{AdminRoomsList}}
+		\item[\texttt{AdminRoomsList}] Moduł listy wszystkich ogólnodostępnych
+		pokojów z narzędziami do ich edycji
+
+		\item[\texttt{CreateRoom}] Moduł pozwalający na dodawanie pokojów
+		do serweru czatu
+
+		\item[\texttt{RemoveRoom}] Moduł pozwalający na usuwanie istniejących
+		pokojów z serwera
+	\end{labeling}
+
+	\item[\texttt{BanFromRoom}] Moduł służący do wyrzucania użytkowników
+	z pokojów, w których obecnie się znajdują.
+
+	\item[\texttt{BanFromServer}] Moduł pozwalający na wyrzucenie
+	użytkowników z serwera.
+\end{labeling}
+
+\end{labeling}
 \section{Decyzje projektowe}
 
 \subsection{Środowisko docelowe}

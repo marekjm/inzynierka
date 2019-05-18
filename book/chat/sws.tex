@@ -1,5 +1,9 @@
 \section{Wprowadzenie}
 
+Ostatnią częścią pracy inżynierskiej jest program ViuaChat - chat internetowy o funkcjonalności podobnej do IRC.
+Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematycznych do rozmów, oraz rozmowy
+''prywatne'' (tj. wyłączne dla dwóch użytkowników).
+
 W poniższym rozdziale zdefiniowano wymagania dla czatu ViuaChat. Ich opracowanie nastąpiło na podstawie analizy otoczenia aplikacji oraz analizy potrzeb projektu w stosunku do niej. W ramach tego procesu nastąpiły:
 \begin{itemize}
     \item analiza otoczenia, wraz z z klientami;
@@ -103,7 +107,7 @@ Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
     \hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 
@@ -170,7 +174,7 @@ Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
     \hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 
@@ -234,7 +238,7 @@ Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
     \hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 
@@ -367,239 +371,509 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 	\item \textbf{,,W''} (z ang. \textit{won't}) - takie wymagania, po dyskusji, zostały wycofane dalszej realizacji.
 \end{itemize}
 
-
+\newpage
 
 \subsection{System użytkowników [ZU]}
+
+\leavevmode\hbox{}
+
   \begin{tabular}{ | l | l | l | }
 	\hline
-    \textbf{ID} & \parbox[t]{14cm}{
+    \textbf{ID} & \parbox[t]{12cm}{\strut
     	\textbf{Zasada biznesowa}
-    } & \textbf{Priorytet} \\
+    \strut} & \textbf{Priorytet} \\
 
     \hline
-    ZU-01 & \parbox[t]{14cm}{
-      Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika.
-    } & M \\
+      \parbox[t]{1.2cm}{
+        ZU-01
+
+      } & \parbox[t]{12.1cm}{\strut
+        Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika.
+      \strut} & \parbox{1.8cm}{
+        M
+
+      } \\
 
     \hline
-    ZU-02 & \parbox[t]{14cm}{
-      Użytkownicy bez stałego konta podczas logowania podają tylko nazwę użytkownika, pole hasła pozostaje puste.
-    } & M \\
+      \parbox[t]{1.2cm}{
+        ZU-02
+
+      } & \parbox[t]{12.1cm}{\strut
+        Użytkownicy bez stałego konta podczas logowania podają tylko nazwę użytkownika, pole hasła pozostaje puste.
+
+      \strut} & \parbox{1.8cm}{
+        M
+
+      } \\
 
     \hline
-    ZU-03 & \parbox[t]{14cm}{
-      Nazwa użytkownika to ciąg od 3 do 32 alfanumerycznych znaków.
-    } & M \\
+      \parbox[t]{1.2cm}{
+        ZU-03
+
+      } & \parbox[t]{12.1cm}{\strut
+        Nazwa użytkownika to ciąg od 3 do 32 alfanumerycznych znaków.
+
+      \strut} & \parbox{1.8cm}{
+        M
+
+      } \\
 
     \hline
-    ZU-04 & \parbox[t]{14cm}{
-      Można rozpocząć sesję jako użytkownik, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami już zalogowanych użytkowników.
-    } & M \\
+      \parbox[t]{1.2cm}{
+        ZU-04
+      } & \parbox[t]{12.1cm}{\strut
+      Można rozpocząć sesję jako użytkownik, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami ju  ż
+      zalogowanych użytkowników.
+    \strut} & \parbox{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZU-05 & \parbox[t]{14cm}{
-      Monit podczas wejścia na czat jest wyposażony w pole do wpisania hasła (nieobowiązkowe).
-    } & S \\
+      \parbox[t]{1.2cm}{
+        ZU-05
+
+      } & \parbox[t]{12.1cm}{\strut
+        Monit podczas wejścia na czat jest wyposażony w pole do wpisania hasła (nieobowiązkowe).
+
+      \strut} & \parbox{1.8cm}{
+        S
+
+      } \\
 
     \hline
-    ZU-06 & \parbox[t]{14cm}{
-      Administrator podczas logowania podają nazwę i odpowiadające mu hasło.
-    } & S \\
+      \parbox[t]{1.2cm}{
+        ZU-06
+
+      } & \parbox[t]{12.1cm}{\strut
+        Administrator podczas logowania podają nazwę i odpowiadające mu hasło.
+
+      \strut} & \parbox{1.8cm}{
+        S
+
+      } \\
 
     \hline
-    ZU-07 & \parbox[t]{14cm}{
-      Konta administratorów są utrzymywane na serwerze w postaci par wartości: nazwa użytkownika i hasło.
-    } & S \\
+      \parbox[t]{1.2cm}{
+        ZU-07
+
+      } & \parbox[t]{12.1cm}{\strut
+        Konta administratorów są utrzymywane na serwerze w postaci par wartości: nazwa użytkownika i hasło.
+
+      \strut} & \parbox{1.8cm}{
+        S
+
+      } \\
 
     \hline
-    ZU-08 & \parbox[t]{14cm}{
-      Nie można rozpocząć sesji użytkownika o nazwie, która pasuje do istniejącego konta, jeżeli nie zostanie podane prawidłowe hasło (nie można podszywać się pod nazwy administratorów).
-    } & S \\
+      \parbox[t]{1.2cm}{
+        ZU-08
+      } & \parbox[t]{12.1cm}{\strut
+      Nie można rozpocząć sesji użytkownika o nazwie, która pasuje do istniejącego konta, jeżeli nie zostanie podan e
+      prawidłowe hasło (nie można podszywać się pod nazwy administratorów).
+    \strut} & \parbox{1.8cm}{
+      S
+
+    } \\
 
     \hline
-    ZU-09 & \parbox[t]{14cm}{
-      Można rozpocząć sesję jako użytkownik bez podawania hasła, pod warunkiem, że zadeklarowana nazwa nie będzie powtarzać się z nazwami kont administratorów i już zalogowanych użytkowników tymczasowych.
-    } & S \\
+      \parbox[t]{1.2cm}{
+        ZU-09
+      } & \parbox[t]{12.1cm}{\strut
+      Można rozpocząć sesję jako użytkownik bez podawania hasła, pod warunkiem, że zadeklarowana nazwa nie będzie powtarza  ć
+      się z nazwami kont administratorów i już zalogowanych użytkowników tymczasowych.
+    \strut} & \parbox{1.8cm}{
+      S
+
+    } \\
 
     \hline
-    ZU-10 & \parbox[t]{14cm}{
-      W okienkach czatu, loginy administratoró są pogrubione i pokolorowane na czerwono.
-      } & S \\
+      \parbox[t]{1.2cm}{
+        ZU-10
+
+      } & \parbox[t]{12.1cm}{\strut
+      W okienkach czatu, loginy administratorów są pogrubione i pokolorowane na czerwono.
+
+        \strut} & \parbox{1.8cm}{
+          S
+
+        } \\
 
     \hline
-    ZU-11 & \parbox[t]{14cm}{
-      Administratorzy mają prawo przeglądać nazwy pokojów na serwerze.
-    } & M \\
+      \parbox[t]{1.2cm}{
+        ZU-11
+
+      } & \parbox[t]{12.1cm}{\strut
+        Administratorzy mają prawo przeglądać nazwy pokojów na serwerze.
+
+      \strut} & \parbox{1.8cm}{
+        M
+
+      } \\
 
     \hline
-    ZU-12 & \parbox[t]{14cm}{
-      Administratorzy mają prawo tworzyć i usuwać pokoje.
-    } & S \\
+      \parbox[t]{1.2cm}{
+        ZU-12
+
+      } & \parbox[t]{12.1cm}{\strut
+        Administratorzy mają prawo tworzyć i usuwać pokoje.
+
+      \strut} & \parbox{1.8cm}{
+        S
+
+      } \\
 
     \hline
-    ZU-14 & \parbox[t]{14cm}{
-      Administratorzy mają prawo wyrzucać użytkowników z pokojów.
-    } & C \\
+      \parbox[t]{1.2cm}{
+        ZU-14
+
+      } & \parbox[t]{12.1cm}{\strut
+        Administratorzy mają prawo wyrzucać użytkowników z pokojów.
+
+      \strut} & \parbox{1.8cm}{
+        C
+
+      } \\
 
     \hline
-    ZU-15 & \parbox[t]{14cm}{
-      Administratorzy mają prawo wyrzucać użytkowników z serwera.
-    } & C \\
+      \parbox[t]{1.2cm}{
+        ZU-15
+
+      } & \parbox[t]{12.1cm}{\strut
+        Administratorzy mają prawo wyrzucać użytkowników z serwera.
+
+      \strut} & \parbox{1.8cm}{
+        C
+
+      } \\
 
     \hline
-    ZU-16 & \parbox[t]{14cm}{
-      Administratorzy mają prawo przeglądać nazwy i poziomy uprawnień użytkowników.
-    } & M \\
+      \parbox[t]{1.2cm}{
+        ZU-16
+
+      } & \parbox[t]{12.1cm}{\strut
+        Administratorzy mają prawo przeglądać nazwy i poziomy uprawnień użytkowników.
+
+      \strut} & \parbox{1.8cm}{
+        M
+
+      } \\
 
     \hline
-    ZU-18 & \parbox[t]{14cm}{
-      Administratorzy mają prawo zmieniać swoje hasła użytkowników.
-    } & C \\
+      \parbox[t]{1.2cm}{
+        ZU-18
+
+      } & \parbox[t]{12.1cm}{\strut
+        Administratorzy mają prawo zmieniać swoje hasła użytkowników.
+
+      \strut} & \parbox{1.8cm}{
+        C
+
+      } \\
 
     \hline
   \end{tabular}
 
+\newpage
+
 \subsection{Pokoje [ZP]}
+
+\leavevmode\hbox{}
+
   \begin{tabular}{ | l | l | l | }
 	\hline
-    \textbf{ID} & \parbox[t]{14cm}{
+    \textbf{ID} & \parbox[t]{12cm}{\strut
     	\textbf{Zasada biznesowa}
     } & \textbf{Priorytet} \\
 
     \hline
-    ZP-01 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-01
+
+    } & \parbox[t]{12.1cm}{\strut
       Pokoje to właściwe czaty – tam użytkownicy mogą wejść i pisać do siebie nazwajem
-    } & M \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZP-02 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-02
+
+    } & \parbox[t]{12.1cm}{\strut
       Każdy pokój ma unikalną nazwę będącą ciągiem alfanumerycznym od 3 do 32 znaków
-    } & M \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZP-03 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-03
+
+    } & \parbox[t]{12.1cm}{\strut
       Lista pokojów jest widoczna dla każdego użytkownika po zalogowaniu się do serwera czatu
-    } & M \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZP-04 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-04
+
+    } & \parbox[t]{12.1cm}{\strut
       Użytkownik może być równocześnie wpięty do jednego pokoju
-    } & M \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZP-05 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-05
+
+    } & \parbox[t]{12.1cm}{\strut
       Wiadomość wysłana w pokoju jest widoczna w oknie pokoju dla wszystkich użytkowników podpiętych do tego pokoju
-    } & M \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZP-06 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-06
+
+    } & \parbox[t]{12.1cm}{\strut
       Użytkownik może się samodzielnie wypiąć z pokoju, do którego jest wpięty
-    } & S \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      S
+
+    } \\
 
     \hline
-    ZP-07 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-07
+
+    } & \parbox[t]{12.1cm}{\strut
       Pokój może mieć ustanowione hasło, które użytkownik musi wpisać przed podpięciem się do niego
-    } & C \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      C
+
+    } \\
 
     \hline
-    ZP-08 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-08
+
+    } & \parbox[t]{12.1cm}{\strut
       Nowo wpięty użytkownik widzi 10 najnowszych wiadomości,
       które zostały wysłane do pokoju tuż przed wpięciem
-    } & S \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      S
+
+    } \\
 
     \hline
-    ZP-09 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-09
+
+    } & \parbox[t]{12.1cm}{\strut
       Serwer czatu automatycznie wysyła do pokoju wiadomości,
       zawierające powiadomienia o wydarzeniach związanych z
       pokojem, tzw. wiadomości systemowe
-    } & S \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      S
+
+    } \\
 
     \hline
-    ZP-10 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-10
+
+    } & \parbox[t]{12.1cm}{\strut
       Wiadomości systemowe są niepodpisane przez
       żadnego użytkownika i zapisane kursywą
-   	} & C \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      C
+
+    } \\
 
    	\hline
-    ZP-11 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-11
+
+    } & \parbox[t]{12.1cm}{\strut
       Wiadomość systemowa zostaje wysłana podczas wpięcia się
       nowego użytkownika do pokoju
-   	} & S \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      S
+
+    } \\
 
    	\hline
-    ZP-12 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-12
+
+    } & \parbox[t]{12.1cm}{\strut
       Wiadomość systemowa zostaje wysłana podczas wypięcia
       użytkownika z pokoju
-   	} & S \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      S
+
+    } \\
 
    	\hline
-    ZP-13 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-13
+
+    } & \parbox[t]{12.1cm}{\strut
       Wiadomość systemowa zostaje wysłana, gdy użytkownik
       wpięty do pokoju traci połączenie z serwerem czatu
-   	} & S \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      S
+
+    } \\
 
    	\hline
-    ZP-14 & \parbox[t]{14cm}{
+    \parbox[t]{1.2cm}{
+      ZP-14
+
+    } & \parbox[t]{12.1cm}{\strut
       Wiadomość systemowa zostaje wysłana, gdy użytkownik
       zostaje wyrzucony z pokoju
-   	} & S \\
+
+    \strut} & \parbox[t]{1.8cm}{
+      S
+
+    } \\
 
     \hline
 
   \end{tabular}
 
+\newpage
+
 \subsection{Prywatne wiadomości [ZW]}
+
+\leavevmode\hbox{}
+
   \begin{tabular}{ | l | l | l | }
   	\hline
-    \textbf{ID} & \parbox[t]{14cm}{
+    \textbf{ID} & \parbox[t]{12cm}{
     	\textbf{Zasada biznesowa}
     } & \textbf{Priorytet} \\
 
     \hline
-    ZW-01 & \parbox[t]{14cm}{
+    \parbox{1.2cm}{
+      ZW-01
+
+    } & \parbox[t]{12.1cm}{\strut
       Wiadomości prywatne to wiadomości, które są wysyłane do
       konkretnego odbiorcy, innego niż nadawca. Są one widoczne
       wyłącznie dla nadawcy i odbiorcy takiej wiadomości
-    } & M \\
+
+    \strut} & \parbox{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZW-06 & \parbox[t]{14cm}{
+    \parbox{1.2cm}{
+      ZW-06
+
+    } & \parbox[t]{12.1cm}{\strut
       Użytkownik dysponuje dedykowanym oknem, w którym widzi wiadomości prywatne.
-    } & M \\
+
+    \strut} & \parbox{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZW-07 & \parbox[t]{14cm}{
+    \parbox{1.2cm}{
+      ZW-07
+
+    } & \parbox[t]{12.1cm}{\strut
       Z okna wiadomości prywatnych można odbierać i wysyłać wyłącznie
       wiadomości prywatne, których nadawcą/odbiorcą jest wybrany
       użytkownik
-    } & M \\
+
+    \strut} & \parbox{1.8cm}{
+      M
+
+    } \\
 
     \hline
-    ZW-08 & \parbox[t]{14cm}{
+    \parbox{1.2cm}{
+      ZW-08
+
+    } & \parbox[t]{12.1cm}{\strut
       W oknie wiadomości prywatnych można przeglądać wiadomości wysłane do i odebrane od jednego, wybranego użytkownika.
 
-    } & S \\
+
+    \strut} & \parbox{1.8cm}{
+      S
+
+    } \\
 
     \hline
-    ZW-09 & \parbox[t]{14cm}{
+    \parbox{1.2cm}{
+      ZW-09
+
+    } & \parbox[t]{12.1cm}{\strut
       W oknie wiadomości prywatnych można wysyłać wiadomości
       wyłącznie do nadawcy, którego wiadomości są w danym momencie
       pokazywane.
-    } & S \\
+
+    \strut} & \parbox{1.8cm}{
+      S
+
+    } \\
 
     \hline
-    ZW-10 & \parbox[t]{14cm}{
+    \parbox{1.2cm}{
+      ZW-10
+
+    } & \parbox[t]{12.1cm}{\strut
       Wiadomości prywatne są utrzymywane dopóki nadawca i odbiorca mają aktywną
       sesję na serwerze.
-    } & S \\
+
+    \strut} & \parbox{1.8cm}{
+      S
+
+    } \\
 
     \hline
-    ZW-11 & \parbox[t]{14cm}{
+    \parbox{1.2cm}{
+      ZW-11
+
+    } & \parbox[t]{12.1cm}{\strut
       Dla każdej pary użytkowników, na serwerze jest
       gromadzone co najwyżej 100 wiadomości prywatnych.
-    } & S \\
+
+    \strut} & \parbox{1.8cm}{
+      S
+
+    } \\
     \hline
   \end{tabular}
+
+\newpage
 
 \section{Wymagania}
 \label{program_viuachat_wymagania}
@@ -608,7 +882,7 @@ również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
 
 Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, należący do kategorii metodyk zwinnych, wymagania funkcjonalne ujęto w formie historyjek (\textit{user stories}).
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -617,31 +891,31 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę się do niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZU-01 Podczas wejścia na czat, użytkownikowi pokazuje się monit z polem do wpisania nazwy użytkownika. \\
 			ZP-03 Lista pokojów jest widoczna dla każdego użytkownika
 			po zalogowaniu się do serwera czatu
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Po wejściu na czat bez rozpoczętej sesji, pokazuje się monit o podanie nazwy użytkownika.
 				\item Po wpisaniu nazwy użytkownika i zatwierdzeniu, użytkownik rozpocznie sesję na serwerze czatu.
 				\item Tuż po rozpoczęciu sesji czatu, użytkownik zobaczy listę pokojów.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -650,19 +924,19 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę wpiąć się do pokoju,
 			aby wziąć udział w dyskusji.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZP-01 Pokoje to właściwe czaty - tam użytkownicy mogą
 			wejść i pisać do siebie nawzajem
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Użytkownik, który ma otwartą sesję
 				połączenia z serwerem czatu i nie jest wpięty
@@ -676,13 +950,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				po odświeżeniu przeglądarki zobaczy okno pokoju,
 				do którego jest wpięty
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -691,22 +965,22 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę po wpięciu
 			do pokoju zobaczyć ostatnie wiadomości wysłane
 			przed moim dołączeniem, aby dowiedzieć się, co
 			tam się obecnie dzieje.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZP-08 Nowo wpięty użytkownik widzi 10 najnowszych
 			wiadomości, które zostały wysłane do pokoju tuż
 			przed wpięciem
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Użytkownik po wpięciu się do pokoju zobaczy
 				10 najnowszych wiadomości wysłanych do pokoju
@@ -714,13 +988,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				dotychczas nie wysłano do pokoju co najmniej
 				10 wiadomości)
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -729,20 +1003,20 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę chcę wysłać
 			wiadomość do pokoju w który jestem wpięty, aby
 			zobaczyli ją inni uczestnicy dyskusji.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZP-01 Pokoje to właściwe czaty - tam użytkownicy mogą
 			wejść i pisać do siebie nawzajem
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Użytkownik wpisze tekst wiadomości w polu
 				tekstowym u dołu czatu
@@ -761,13 +1035,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				\item Nowa wiadomość jest pokazywana wraz z nazwą
 				użytkownika wysyłającego u dołu konwersacji
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -776,37 +1050,37 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę chcę zobaczyć
 			powiadomienie o wpięciu się nowego użytkownika do
 			pokoju w którym sam jestem obecnie wpięty, aby powitać
 			nowego dyskutanta
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZP-09 Serwer czatu automatycznie wysyła do pokoju
 			wiadomości, zawierające powiadomienia o wydarzeniach
 			związanych z pokojem, tzw. wiadomości systemowe \\
 			ZP-11 Wiadomość systemowa zostaje wysłana podczas
 			wpięcia się nowego użytkownika do pokoju
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Niezwłocznie po wpięciu się użytkownika do
 				pokoju, serwer wyśle wiadomość systemową o treści
 				,,Użytkownik ... dołączył do pokoju'', widoczną
 				dla wszystkich użytkowników wpiętych do tego pokoju
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -815,15 +1089,15 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę zobaczyć
 			powiadomienie o opuszczeniu pokoju przez użytkownika,
 			aby łatwo zorientować się, że nie bierze już udziału
 			w dyskusji.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZP-09 Serwer czatu automatycznie wysyła do pokoju
 			wiadomości, zawierające powiadomienia o wydarzeniach
 			związanych z pokojem, tzw. wiadomości systemowe \\
@@ -834,10 +1108,10 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 			ZP-14 Wiadomość systemowa zostaje wysłana, gdy użytkownik
 			zostaje wyrzucony z pokoju
 
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Niezwłocznie po wypięciu się użytkownika z
 				pokoju, serwer wyśle wiadomość systemową, widoczną
@@ -854,13 +1128,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 					administratora
 				\end{enumerate}
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -869,33 +1143,33 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę odpiąć się od pokoju,
 			aby wpiąć się do innego pokoju.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZP-06 Użytkownik może się samodzielnie wypiąć z pokoju,
 			do którego jest wpięty
 
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item W oknie pokoju użytkownik zobaczy przycisk
 				lub link ,,Opuść pokój''.
 				\item Po kliknięciu w ,,Opuść pokój'', użytkownik
 				zobaczy listę pokojów.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -904,14 +1178,14 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę zobaczyć
 			okno wiadomości prywatnych, aby odczytać wiadomości,
 			które wysłano specjalnie do mnie.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZW-01 Wiadomości prywatne to wiadomości, które są
 			wysyłane do konkretnego odbiorcy, innego niż
 			nadawca... \\
@@ -920,10 +1194,10 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 			ZW-07 Z okna wiadomości prywatnych można odbierać i
 			wysyłać wyłącznie wiadomości prywatne, których
 			nadawcą / odbiorcą jest wybrany użytkownik. \\
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Po kliknięciu w link ,,PW'', użytkownik
 				zobaczy okno prywatnych wiadomości
@@ -934,13 +1208,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				użytkownik zobaczy prywatne wiadomości, których
 				nadawcą i odbiorcą jest wskazana osoba.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -949,20 +1223,20 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę wysłać
 			wiadomość prywatną do jednego użytkownika, aby
 			prowadzić z nim ciągłą konwersację.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 
 
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Użytkownik wpisze tekst wiadomości w polu
 				tekstowym u dołu okna wiadomości prywatnych
@@ -982,13 +1256,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				\item Nowa wiadomość jest pokazywana wraz z nazwą
 				użytkownika wysyłającego u dołu konwersacji
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -997,21 +1271,25 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako użytkownik serwera czatu, chcę wysłać wiadomość
 			prywatną do innego użytkownika, z którym wcześniej nie
 			wymieniałem takich wiadomości, aby rozpocząć z nim
 			prywatną konwersację.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+    ZW-08 W oknie wiadomości prywatnych można przeglądać wiadomości wysłane do
+    i odebrane od jednego, wybranego użytkownika.
 
+    ZW-09 W oknie wiadomości prywatnych można wysyłać wiadomości wyłącznie do
+    nadawcy, którego wiadomości są w danym momencie pokazywane.
 
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Użytkownik kliknie w oknie wiadomości
 				prywatnych w przyciski ,,Nowy''.
@@ -1034,13 +1312,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				\item Nowa wiadomość jest pokazywana wraz z nazwą
 				użytkownika wysyłającego u dołu konwersacji
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1049,17 +1327,17 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako administrator, chcę utworzyć nowy pokój, aby umożliwić użytkownikom konwersację w węższym gronie.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
     ZU-12 Administratorzy mają prawo tworzyć i usuwać pokoje.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Administrator kliknie w oknie z listą pokojów w przycisk ,,Nowy''.
 				\item Administrator zobaczy monit o podanie nazwy
@@ -1069,13 +1347,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
         będzie widoczna nazwa dodanego pokoju.
 				\item Administrator i inni użytkownicy mogą wpiąć się do nowoutworzonego pokoju.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1084,17 +1362,17 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako administrator, chcę usunąć zbędny pokój, aby utrzymać porządek na swoim serwerze czatu.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
     ZU-12 Administratorzy mają prawo tworzyć i usuwać pokoje.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Administrator wejdzie do pokoju, który chce
         usunąć.
@@ -1108,13 +1386,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
          będzie już widniała nazwa usuniętego pokoju.
 				\item Pozostali użytkownicy w usuniętym pokoju zostaną niezwłocznie od niego odpięci i zobaczą monit systemowy informujący o usunięciu pokoju.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1123,18 +1401,18 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako administrator, chcę usunąć użytkownika z pokoju,
       aby utrzymać należyty poziom konwersacji.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
     ZU-14 Administratorzy mają prawo wyrzucać użytkowników z pokojów.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Administrator wejdzie do pokoju.
         \item Administrator najedzie na nazwę użytkownika którego chce usunąć z pokoju i kliknie na przycisk z
@@ -1147,13 +1425,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				\item Usunięty użytkownik zostanie niezwłocznie wypięty
         z pokoju, a także zobaczy monit o przyczynie wypięcia.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1162,18 +1440,18 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako administrator, chcę usunąć użytkownika z serwera,
       aby ukarać go za łamanie zasad netykiety.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
     ZU-15 Administratorzy mają prawo wyrzucać użytkowników z serwera.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Administrator wejdzie do pokoju.
         \item Administrator najedzie na nazwę użytkownika którego chce usunąć z pokoju i kliknie na przycisk z
@@ -1186,13 +1464,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 				\item Usunięty użytkownik zostanie niezwłocznie wypięty
         z pokoju i jego sesja zostanie zakończona, a także pokazany zostanie monit o przyczynie tych zdarzeń (usunięcie z serwera czatu).
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 
 \begin{tabular}{ | l | l | }
@@ -1202,18 +1480,18 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{11cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Jako administrator, chcę zmienić swoje hasło, aby zabezpieczyć swoje hasło w razie ujawnienia go osobie niepowołanej, bez zmiany plików konfiguracyjnych i restartowania całego serwera.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
     ZU-18 Administratorzy mają prawo zmieniać swoje hasła
     użytkowników.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Administrator wejdzie na kartę ,,Moje konto''.
         \item Administrator kliknie na przycisk ,,Zmień hasło'',
@@ -1230,15 +1508,17 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
         \item Nowe hasło zostanie zaakceptowane przez serwer,
         sesja zostanie rozpoczęta prawidłowo.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
+\newpage
+
 \subsection{Wymagania niefunkcjonalne}
 
-\phantom{}
+\leavevmode\hbox{}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1247,27 +1527,27 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{13cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Długość nazwy użytkownika jest ograniczona od 2 do 32 znaków alfanumerycznych, w celu uniknięcia problemów z identyfikacją użytkownika na serwerze.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZU-03 Nazwa użytkownika to ciąg od 3 do 32 alfanumerycznych znaków.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Po wpisaniu do pola użytkownika nazwy krótszej niż 2 znaki, dłużej niż 32 znaki lub zawierającej inne znaki niż alfanumeryczne, zwracany jest błąd.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1276,19 +1556,19 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{13cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Loginy i hasła administratorów są gromadzone w plikach
       konfiguracyjnych, a po uruchomieniu serwera - w jego
       pamięci operacyjnej.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZU-07 Konta administratorów są utrzymywane na serwerze w postaci par wartości: nazwa użytkownika i hasło.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Serwer jest wyposażony w pliki konfiguracyjne
         \item Po załadowaniu serwera, z plików konfiguracyjnych
@@ -1296,13 +1576,13 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
         \item Serwer po uruchomieniu jest wyposażony w konta o
         nazwach i hasłach zgodnych z wpisami w plikach konfiguracyjnych.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1311,28 +1591,28 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{13cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Loginy administratorów w oknach czatu są pogrubione i pokolorowane na czerwono.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZU-10 W okienkach czatu, loginy administratorów są pogrubione i pokolorowane na czerwono.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Nazwy administratorów w oknach czatu są pogrubione
         i pokolorowane na czerowono.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1341,31 +1621,31 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{13cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Nazwy pokojów mają od 3 do 32 znaków alfanumerycznych długości, bez
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZP-02 Każdy pokój ma unikalną nazwę będącą ciągiem
       alfanumerycznym od 3 do 32 znaków.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Nie jest możlwe utworzenie pokoju o nazwie, która
         już wcześniej się pojawiała
         \item Nie jest możliwe utworzenie pokoju o nazwie krótszej niż 3 znaki i dłuższej niż 32 znaki.
         \item Nie jest możliwe utworzenie pokoju o nazwie zawierającej znaki inne niż litery alfabetu łacińskiego, cyfry i znak podkreślenia.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1374,28 +1654,28 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{13cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Wiadomości prywatne są czyszczone niezwłocznie po rozłączeniu się przez dowolnego z rozmówców.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZW-10 Wiadomości prywatne są utrzymywane dopóki nadawca i odbiorca mają aktywną sesję na serwerze.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
 				\item Po zamknięciu sesji użytkownika, wiadomości prywatne których był nadawcą lub odbiorcą ulegają
         usunięciu.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
-\vspace{2em}
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1404,27 +1684,64 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\\
 
 	\hline
-		\textbf{Treść} & \parbox[t]{13cm}{
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Bufor pokoju wiadomości prywatnych zawiera do 100 wiadomości.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
 			ZW-11 Dla każdej pary użytkowników, na serwerze jest gromadzone co najwyżej 100 wiadomości prywatnych.
-		}\\
+		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{13cm}{
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
 			\begin{enumreq}
-				\item Po przekroczeniu liczby 100 wiadomości prywatnych w pokoju, bufor ulega ,,zawinięciu'', usuwając najstarsze 100 wiadomości.
+				\item Po przekroczeniu liczby 100 wiadomości prywatnych w pokoju, bufor
+        ulega ,,zawinięciu'', usuwając najstarsze wiadomości.
 			\end{enumreq}
-			}
+			\strut}
 		\\
 
 	\hline
 \end{tabular}
 
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-07
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Bufor pokoju niebędącego dedykowanym do wiadomości prywatnych zawiera do
+      10 wiadomości.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+			ZP-08 Nowo wpięty użytkownik widzi 10 najnowszych wiadomości,
+      które zostały wysłane do pokoju tuż przed wpięciem
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Po przekroczeniu liczby 10 wiadomości w pokoju, bufor ulega
+        ,,zawinięciu'', usuwając najstarsze wiadomości.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+\end{tabular}
+
+\newpage
+
 \subsection{Wymagania na środowisko docelowe}
+
+\leavevmode\hbox{}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1441,6 +1758,8 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 \end{tabular}
 
+\vspace{1em}
+
 \begin{tabular}{ | l | l | }
 	\hline
 		\textbf{Identyfikator} &
@@ -1455,6 +1774,8 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 	\hline
 \end{tabular}
+
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
@@ -1473,6 +1794,8 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 \subsection{Wymagania dotyczące procesu wytwarzania}
 
+\leavevmode\hbox{}
+
 \begin{tabular}{ | l | l | }
 	\hline
 		\textbf{Identyfikator} &
@@ -1487,6 +1810,8 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 	\hline
 \end{tabular}
+
+\vspace{1em}
 
 \begin{tabular}{ | l | l | }
 	\hline
