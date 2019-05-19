@@ -51,15 +51,20 @@ wcześniej do komunikacji z frontendem, oraz ulega autodestrukcji.
 \label{architektura_chatu}
 
 \subsubsection{Strona serwera (,,backend'')}
-Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębnych od
-siebie aktorów, ukazanych na rysunku \ref{diag-komp}
+Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębnych od siebie aktorów.
 
-\nameref{diag-komp}.
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[width=\textwidth]{chat/fig/pck-diag}
 	\caption{Diagram komponentów serwera ViuaChat}
 	\label{diag-komp}
+\end{figure}
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/com-diag-init}
+	\caption{Diagram komunikacji pomiędzy aktorami w czasie nawiązywania połączenia}
+	\label{com-diag-init}
 \end{figure}
 
 \begin{labeling}{UsernameLessor}
