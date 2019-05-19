@@ -11,8 +11,9 @@ niego żądanie metodą GET. Wówczas, serwer będzie zawsze odpowiadał statycz
 plikiem HTML, zawierającym odwołania do skryptów w języku JavaScript (JS) oraz
 pozostałej, statycznej treści (np. grafiki czy arkusze stylów CSS). Serwer
 będzie odsyłał te pliki do przeglądarki w odpowiedzi na kolejne żądania HTTP
-GET, wysyłane w miarę dalszego renderowania pliku HTML. W ten sposób, po stronie
-klienta zostanie pobrana i uruchomiona aplikacja internetowa typu Single Page
+GET, wysyłane w miarę dalszego renderowania pliku HTML. W ten sposób, po
+stronie klienta zostanie pobrana i uruchomiona aplikacja internetowa typu
+Single Page
 Application, której interfejs będzie reagował z użytkownikiem oraz ulegał
 zmianom wskutek działania skryptów JS, załadowanych na pierwszym etapie
 uruchomienia. Po stronie serwera, dostarczaniem treści statycznych będzie
@@ -253,24 +254,526 @@ administracyjne. W jego skład wchodzą:
 \section{Decyzje projektowe}
 
 \subsection{Środowisko docelowe}
+Decyzje związane ze środowiskiem docelowym zostały zdeterminowane w głównej
+mierze przez wymagnia WS-01, WS-02 i WS-03. Punktem wyjścia była konieczność
+uruchomienia serwera czatu (backendu) na maszynie Viua VM. W związku z tym,
+z kręgu zaintersowań wypadły systemy operacyjne z rodziny Windows, z uwagi na
+ich niekompatybilność z Viua VM. Wybór padł na system operacyjny Linux Mint,
+ponieważ jest dobrze utrzymywaną platformą opartą o Debiana. Ważkim argumentem
+była łatwość obsługi tej dystrybucji przez nowych użytkowników, którzy nie byli zaznajomieni wcześniej z rozwiązaniami linuksowymi.
+
+W dalszej kolejności należało podjąć decyzję, w jaki sposób serwować pliki
+związane z warstwą frontendu. Propozycja użycia serwera Nginx została uznana
+za słuszną. Zespół przekonała prostota tego rozwiązania. Równocześnie, serwer
+Nginx był serwerem wypróbowanym i rozwijanym od wielu lat. Uznano zatem, że
+będzie użyteczny również w środowisku produkcyjnym.
+
+Na cele obrony pracy dyplomowej, przygotowano i uruchomiono serwer wirtualny u
+dostawcy usług chmurowych, aby zapewnić niezależność od infrastruktury na
+miejscu prezentacji i zapewnić jej należyty poziom niezawodności. Nie jest
+on jedak niezbędny do uruchomienia aplikacji przez potencjalnego, przyszłego
+użytkownika platformy ViuAct.
+
+Aby zademonstrować możliwości wielowątkowości w praktyce, urządzenie docelowe,
+na którym przyszły użytkownik będzie uruchamiał serwer czatu, powinno dysponować
+wielordzeniowym procesorem. Nie ma tu znaczenia, w jakiej architekturze
+zrealizowano określony procesor. Za uruchamianie poszczególnych wątków odpowiada
+bowiem Viua VM.
 
 \subsection{Środowisko implementacji}
+Pierwszym kryterium przy doborze składników środowiska implementacyjnego była
+spójność z rozwiązaniami produkcyjnymi. Miało to pozwolić uniknąć problemów
+z przenośnością. Na środowisko implementacyjne wybrano laptop z takim samym
+systemem operacyjnym, w jakim ma być uruchomiona ViuaVM wraz z oprogramowaniem
+serwera czatu. Szczegółowo, warstwę sprzętowo opisano w \fullref{existing-infr}.
 
-\subsection{Priorytety implementacyjne}
+Jak już wspomniano, nie jest możliwe skompilowanie i uruchomienie Viua
+VM w systemach Microsoft Windows. W związku z tym, początkowo serwer był
+uruchamiany po systemem operacyjnym Linux Mint, zainstalowanym na maszynie
+wirtualnej uruchomionej w środowisku Oracle VirtualBox. Gdy pierwsze testy
+uruchomieniowe zostały zakończone z powodzeniem, pracę nad projektem
+przeniesiono na komputer z natywnie zainstanowanym systemem Linux Mint.
+
+Równolegle z testami współpracy Viua VM ze środowiskiem Linux Mint, Marek
+Marecki przygotowywał skrypt powłoki Bash oraz zestaw repozytoriów Git z
+podstawowymi komponentami platformy ViuAct (czyli maszyną Viua VM, kompilatorem
+ViuAct i kolekcją bibliotek zewnętrznych). Tak przygotowany zestaw mógł zostać
+pobrany i skompilowany z użyciem jednej komendy, co znacznie ułatwiło prace
+nad czatem.
 
 \section{Projekt algorytmów i przyjętych protokołów}
 
 \subsection{Protokół frontend-backend}
-Komunikacja pomiędzy frontendem a backendem...
+Komunikacja pomiędzy frontendem a backendem będzie odbywać się poprzez wymianę
+krótkich komunikatów tekstowych, opisujących struktury danych w standardzie
+JSON. Przyjęto, że komunikaty dzielą się na dwie grupy:
 
-\section{Projekt rozwiązań sprzętowych}
+\begin{enumerate}
+	\item \textbf{Synchroniczne} -- są wysyłane zawsze od klienta do serwera, a
+	serwer zawsze odpowiada na nie klientowi, podając informację na temat
+	powodzenia żądanej operacji lub też przesyłając oczekiwane dane.
+
+	\item \textbf{Asynchroniczne} -- mogą być wysyłane z inicjatywy dowolnej ze
+	stron i nie są związane z obowiązkiem jakiejkolwiek odpowiedzi.
+\end{enumerate}
+
+\subsubsection{Budowa komunikatów synchronicznych}
+Prawidłowe komunikaty synchroniczne, wysyłane przez klienta do serwera, mają
+następującą budowę:
+\begin{lstlisting}
+  {
+    'fn': 'funkcja',
+    'arg':
+    {
+      'argument1' : 123,
+      'argument2' : 'abc'
+    },
+    'seq': 1,
+		'session_key': 'ugduwdfohhoifiergijwipjiwejrijewipj'
+  }
+\end{lstlisting}
+
+Kolejne parametry:
+\begin{itemize}
+	\item \texttt{fn} -- łańcuch znaków, który wskazuje, jakiej funkcjonalności
+	(operacji) dotyczy wysłany komunikat (np. \texttt{auth} przy autoryzacji
+	lub \texttt{bind\_room} przy podpinaniu użytkownika do pokoju);
+
+	\item \texttt{arg} -- obiekt, który przenosi dodatkowe argumenty niezbędne do
+	realizacji żądanej operacji (np. np. login i hasło przy komunikacie autoryzacji na
+	serwer lub nazwę pokoju przy komunikacie podpięcia); obiekt ten może zawierać jedynie
+	parametry z typami prostymi, takimi jak łańcuchy znaków czy liczby całkowite;
+	parametr \texttt{arg} jest obowiązkowy ale zawarta w nim struktura może być
+	pusta \texttt{/{/}};
+
+	\item \texttt{seq} -- numer kolejny komunikatu, generowany po stronie klienta,
+	który pozwoli mu potem zorientowac się, na jaki komunikat została przesłana
+	konkretna odpowiedź serwera;
+
+	\item \texttt{session\_key} -- łańcuch znaków, będący kluczem sesji, przy użyciu
+	którego użytkownik autoryzuje wiadomość; klucz jest uzyskiwany przy autoryzacji
+	do serwera; parametr \texttt{session\_key} nie jest obowiązkowy dla wiadomości typu
+	\texttt{auth} przed uzyskaniem pozytywnej autoryzacjji;
+\end{itemize}
+
+Budowa komunikatu, będącego odpowiedzią serwera na komunikat synchroniczny,
+zależy od powodzenia żądanej operacji. W razie sukcesu wygląda następująco:
+
+\begin{lstlisting}
+{
+  'seq': 1,
+  'result': 1,
+  'par':
+  {
+    'parametr1': 123,
+    'parametr2': 'abc'
+  }
+}
+\end{lstlisting}
+
+Z kolei, w przypadku błędu po stronie serwera, komunikat wygląda następująco:
+
+\begin{lstlisting}
+{
+  'seq': 1,
+  'result': 0,
+  'par': {},
+  'error_code': 101,
+  'error_name': 'Brak uprawnien'
+}
+\end{lstlisting}
+
+Poniżej wskazano, jakie typy i znaczenia mają kolejne parametry:
+\begin{itemize}
+	\item \texttt{seq} -- liczba całkowita, przepisana z wiadomości od klienta,
+	pozwalająca zorientować się, jakiej komendy dotyczy wysłany komunikat.
+
+	\item \texttt{result} -- licba całkowita 1 lub 0, która wskazuje, czy żądana
+	operacja została zakończona powodzeniem (1 oznacza sukces, a 0 wskazuje na
+	błąd);
+
+	\item \texttt{par} -- obiekt, który przenosi dodatkowe parametry z danymi,
+	których mógł żądać użytkownik (np. listę nazw pokojów podczas logowania);
+	dokładna struktura obiektu zależy od tego, jakiego typu była żądana
+	operacja; parametr \texttt{par} jest obowiązkowy przy odpowiedziach, ale
+	zawarty w nim obiekt może być pusty \texttt{\{\}}; schmeat
+
+	\item \texttt{error\_code} -- liczba całkowita będąca kodem identyfikującym błąd, który wystąpił po stronie serwera podczas wykonywania żądanej operacji; parametr pojawia się wyłącznie wówczas, gdy wykonanie operacji zakończyło się niepowodzeniem;
+
+	\item \texttt{error\_name} -- łańcuch znaków opisujący błąd, który wystąpił
+	po stronie serwera podczas wykonywania żądanej operacji; parametr pojawia
+	się wyłącznie wówczas, gdy wykonanie operacji zakończyło się niepowodzeniem;
+
+\end{itemize}
+
+\subsubsection{Typy komunikatów synchronicznych}
+
+\leavevmode\hbox{}
+
+{\footnotesize
+\begin{longtable}{ | l | l | l | l | l | }
+\hline
+	\textbf{Lp} &
+	\textbf{Typ (\texttt{fn})} &
+	\parbox{3.9cm}{\textbf{Nazwa funkcjonalności (operacji)}} &
+	\parbox{3.9cm}{\textbf{Oczekiwane argumenty (\texttt{arg})}} &
+	\parbox{3.9cm}{\textbf{Oczekiwane parametry odpowiedzi (\texttt{par})}}
+	\\
+
+	\hline
+		\parbox[t]{0.8cm}{
+			1
+
+		} & \parbox[t]{1.7cm}{\strut
+			\texttt{auth}
+
+		\strut} & \parbox{4.1cm}{
+			Autoryzacja do czatu
+
+		} & \parbox{3.9cm}{
+			\begin{itemize}
+				\item \texttt{username} (nazwa użytkownika);
+				\item \texttt{password} (hasło)
+			\end{itemize}
+
+
+		} & \parbox{3.9cm}{
+			\begin{itemize}
+				\item \texttt{session\_key} (klucz sesji)
+			\end{itemize}
+		} \\
+
+	\hline
+
+	\parbox[t]{0.8cm}{
+		2
+
+	} & \parbox[t]{1.7cm}{\strut
+		\texttt{rooms\_list}
+
+	\strut} & \parbox{4.1cm}{
+		Uzyskanie listy pokojów (ogólnodostępnych)
+
+	} & \parbox{3.9cm}{
+		\textit{Brak.}
+
+
+	} & \parbox{3.9cm}{
+		\begin{itemize}
+			\item \texttt{rooms\_list} (tablica łańcuchów znaków będących nazwami pokojów)
+		\end{itemize}
+	} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	3
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{room\_bind}
+
+\strut} & \parbox{4.1cm}{
+	Wpięcie się do pokoju (ogólnodostępnego)
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{room} (nazwa pokoju)
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	4
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{room\_msgs}
+
+\strut} & \parbox{4.1cm}{
+	Uzyskanie ostatnich 10 wiadomości wysłanych do pokoju, do którego jest wpięty użytkownik
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{msgs} (tablica obiektów reprezentujących ostatnie wiadomości w pokoju)
+	\end{itemize}
+} \\
+
+\hline
+\parbox[t]{0.8cm}{
+	5
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{unbind}
+
+\strut} & \parbox{4.1cm}{
+	Odpięcie się od pokoju lub konwersacji
+	prywatnej.
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	6
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{users}
+
+\strut} & \parbox{4.1cm}{
+	Lista użytkowników podpiętych do czatu, o nazwach rozpoczynających się podanym łańcuchem znaków
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{username} (pierwsze litery w nazwie użytkownika)
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{usernames} (lista łańcuchów znaków będących nazwami odnalezionych użytkowników; na liście może być maksymalnie 10 nazw, kolejne są pomijane)
+	\end{itemize}
+} \\
+
+\hline
+\parbox[t]{0.8cm}{
+	7
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{pm\_join}
+
+\strut} & \parbox{4.1cm}{
+	Podpięcie się pod konwersację wiadomości
+	prywatnych z danym użytkownikiem.
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{username} (nazwa użytkownika z którym ma być nawiązana konwersacja);
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+
+} \\
+
+\hline
+\parbox[t]{0.8cm}{
+	8
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{pm\_msgs}
+
+\strut} & \parbox{4.1cm}{
+	Uzyskanie ostatnich 10 wiadomości prywatnych (z możliwością przewinięcia maksymanie 100 wiadomości wstecz)
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{offset} (liczba najnowszych wiadomości które można pominąć)
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{msgs} (tablica obiektów reprezentujących wiadomości)
+	\end{itemize}
+} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	9
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{room\_new}
+
+\strut} & \parbox{4.1cm}{
+	Utworzenie pokoju (dostępne tylko dla administratorów)
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{name} (nazwa pokoju)
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	10
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{room\_del}
+
+\strut} & \parbox{4.1cm}{
+	Usuwa wskazany pokój z serwera
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{name} (nazwa pokoju do usunięcia)
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	11
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{room\_ban}
+
+\strut} & \parbox{4.1cm}{
+	Wyrzuca użytkownika z pokoju w którym się znajduje (dostępne tylko dla administratorów)
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{username} (nazwa wyrzucanego użytkownika)
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	12
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{srv\_ban}
+
+\strut} & \parbox{4.1cm}{
+	Wyrzuca użytkownika z serwera (dostępne tylko dla administratora)
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{username} (nazwa wyrzucanego użytkownika)
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	13
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{status}
+
+\strut} & \parbox{4.1cm}{
+	Zwrócenie informacji na temat bieżącego stanu połączenia
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{username} (nazwa obecnego użytkownika);
+		\item \texttt{admin} (liczba 1 jeżeli obecny użytkownik jest administratorem, a w przeciwnym przypadku 0);
+		\item \texttt{current\_room} (nazwa pokoju do którego obecnie podpięty jest użytkownik; jeżeli nie jest podpięty, łańcuch jest pusty);
+		\item \texttt{current\_pm} (nazwa użytkownika z którym obecnie prowadzona jest konwersacja prywatna; gdy taka konwersacja nie jest prowadzona, łańcuch jest pusty)
+	\end{itemize}
+} \\
+
+\hline
+
+\parbox[t]{0.8cm}{
+	14
+
+} & \parbox[t]{1.7cm}{\strut
+	\texttt{change\_pass}
+
+\strut} & \parbox{4.1cm}{
+	Zmienia hasło użytkownika (dostępne tylko dla administratorów)
+
+} & \parbox{3.9cm}{
+	\begin{itemize}
+		\item \texttt{old\_password} (treść starego hasła)
+		\item \texttt{new\_password} (treść nowego hasła)
+	\end{itemize}
+
+
+} & \parbox{3.9cm}{
+	\textit{Brak.}
+} \\
+
+\hline
+
+\end{longtable}
+}
+
+\subsubsection{Komunikaty asynchroniczne}
+Wszystkie komunikaty asynchroniczne mają tę samą budowę:
+
+\begin{lstlisting}
+{
+  'reason': 'msg',
+  'payload':
+  {
+    'content': 'Hej!'
+  },
+  'session_key': 'ugduwdfohhoifiergijwipjiwejrijewipj'
+}
+\end{lstlisting}
+
+Poniżej wskazano, jakie typy i znaczenia mają kolejne parametry:
+\begin{itemize}
+	\item \texttt{reason} -- łańcuch znaków wskazujący przyczynę wysłania wiadomości.
+
+	\item \texttt{payload} -- obiekt, który przenosi dodatkowe parametry z danymi
+	przesyłanymi wraz z wiadomością;
+	dokładna struktura obiektu zależy od tego, jaka jest przyczyna wysłania
+	komunikatu; parametr \texttt{payload} jest obowiązkowy, ale
+	zawarty w nim obiekt może być pusty \texttt{\{\}};
+
+	\item \texttt{session\_key} -- łańcuch znaków obowiązkowy przy wysyłaniu
+	wiadomości na serwer, patrz analogiczny parametr we wiadomościach synchronicznych.
+
+\end{itemize}
+
+Powodów wysyłki wiadomości asynchronicznych jest znacznie mniej niż typów wiadomości
+synchronicznych (wytłuszczono wartość parametru \textbf{\texttt{reason}}):
+
+\begin{enumerate}
+	\item \textbf{\texttt{msg}} -- wysłana przez klienta do serwera reprezentuje
+	wysłanie wiadomości do czatu lub konwersacji, w której obecnie jest wpięty użytkownik;
+	przesłana w odwrotnym kierunku oznacza nową wiadomość;
+
+	\item \textbf{\texttt{unbind\_removed}} -- wysłana przez serwer, oznacza że
+	wymuszono odpięcie się od pokoju z powodu jego usunięcia
+
+	\item \textbf{\texttt{unbind\_ban}} -- wysłana przez serwer, oznacza że użytkownik
+	został wyrzucony z pokoju
+
+	\item \textbf{\texttt{disconn\_ban}} -- wysłana przez serwer, oznacza że
+	użytkownik został wyrzucony z serwera
+\end{enumerate}
 
 \section{Projekt interfejsu}
 
 \subsection{Interfejs użytkownika}
-
-\subsubsection{Założenia konstrukcji interfejsu}
-
-\section{Projekt bazy danych}
-
-\section{Opis implementacji}

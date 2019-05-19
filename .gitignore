@@ -12,5 +12,7 @@
 *.nav
 *.snm
 *.vrb
+*.bbl
+*.blg
 
 desktop.ini
