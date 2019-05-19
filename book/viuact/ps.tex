@@ -625,6 +625,23 @@ przechowywany wynik. Ten slot może być ,,pusty'' (tj. nie identyfikować żadn
 rejestru) jeśli funkcja \texttt{emit\_expr()} zostanie poinformowana, że wynik
 danego wyrażenia nie będzie użyty.
 
+Nie wszystkie wyrażenia muszą generować wiersze kodu w każdym kontekście.
+Przykładem jest odwołanie do dowiązania \emph{let} -- jeśli jest samodzielnym
+wyrażeniem na końcu wyrażenia złożonego to musi wyemitować instrukcję
+\texttt{copy} aby zwrócić wartość, ale jeśli jest wyrażeniem przekazywanym
+argument to wystarczy zwrócić jego slot. To czy wymagane jest wyemitowanie
+instrukcji i czy wymagane jest zwrócenie slotu determinują dwa parametry funkcji
+\texttt{emit\_expr()} (oba przyjmują wartości \texttt{bool}):
+
+\begin{labeling}{\texttt{must\_emit}}
+    \item[\texttt{must\_emit}] określa czy musi być wyemitowana instrukcja
+    \item[\texttt{toplevel}] określa czy wyrażenie może pominąć zwracanie
+        ,,zapisywalnego'' (tj. możliwego do umieszczenia w rejestrze) wyniku
+        ponieważ nie ma nad sobą żadnego innego wyrażenia, które mogłoby ten
+        wynik wykorzystać (przykład: wyrażenia składowe wyrażenia złożonego,
+        poza ostatnim wyrażeniem składowym)
+\end{labeling}
+
 \paragraph{Emisja literałów}
 
 Emisja literałów polega na wygenerowaniu instrukcji, które utworzą w rejestrze
