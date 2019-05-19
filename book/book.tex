@@ -20,6 +20,7 @@
 \graphicspath{ {./fig/} }
 \usepackage{listings}
 \usepackage{tabularx}
+\usepackage{longtable}
 
 \newenvironment{enumreq}
 { \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex] }
@@ -27,6 +28,7 @@
 
 \newcommand{\inzmaintitlePL}{Viua VM w akcji}
 \newcommand{\ViuAct}{ViuAct}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} \nameref*{#1}}}
 
 \setcounter{secnumdepth}{4}
 
