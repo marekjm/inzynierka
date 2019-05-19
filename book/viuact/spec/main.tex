@@ -335,9 +335,25 @@ O funkcjach w Viuact można myśleć jak o parametryzowanych wyrażeniach.
 \texttt{formal-parameters := \emph{name}*}
 \vspace{1em}
 
-Parametry formalne (\emph{formal parameters}) są nazwami zmiennych widocznymi wewnątrz funkcji.
-Parametry faktyczne (\emph{actual parameters}) są wartościami przypisywanymi parametrom formalnym na etapie
-wykonania przez wywołującego.
+Parametry formalne (\emph{formal parameters}) są nazwami zmiennych widocznymi
+wewnątrz funkcji. Parametry faktyczne (\emph{actual parameters}) są wartościami
+przypisywanymi parametrom formalnym na etapie wykonania przez wywołującego.
+Parametry formalne przyjęło się nazywać \emph{parametrami}, a parametry
+faktyczne \emph{argumentami}.
+
+Powyższe definicje zostały zaczerpnięte z rozdziału 8.3 ,,Parameter~Passing'' w
+\cite{ProgrammingLanguagePragmatics}.
+
+\subsubsection{Przekazywanie parametrów}
+
+Przekazywanie parametrów do funkcji odbywa się przez kopiowanie
+(\emph{call-by-value} w \cite{ProgrammingLanguagePragmatics}). Kopia każdego
+argumentu (parametru faktycznego) jest dowiązywana (jak w dowiązaniach
+\emph{let}) do nazwy odpowiadającego mu parametru (parametru formalnego).
+
+Możliwe jest przekazanie ,,przez referencję'' (\emph{call-by-reference} w
+\cite{ProgrammingLanguagePragmatics}) za pomocą wskaźników -- w takim wypadku to
+wskaźnik będzie skopiowany, nie wartość, na którą on wskazuje.
 
 \subsubsection{Ciało funkcji}
 
