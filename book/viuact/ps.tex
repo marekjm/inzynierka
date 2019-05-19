@@ -712,16 +712,54 @@ całego wyrażenia złożonego.
 
 \subsubsection{Emisja dowiązań \emph{let}}
 
-
+Emisja dowiązań \emph{let} jest implementowana przez funkcję \texttt{emit\_let\_binding()}.
+Wywołuje ona funkcję \texttt{emit\_expr()} przekazując fałsz jako wartość
+argumentu \texttt{toplevel}, a następnie otrzymany slot zapisuje w stanie
+funkcji pod nazwą podaną w kodzie źródłowym.
 
 \subsubsection{Emisja wywołań funkcji wbudowanych}
+
+Emisja wywołań funkcji ,,wbudowanych'' jest implementowana przez funkcję \texttt{emit\_builtin\_call()}.
+
 \subsubsection{Emisja wywołań funkcji}
+
+Emisja wywołań funkcji jest implementowana przez funkcję \texttt{emit\_call()}.
+
 \subsubsection{Emisja wywołań aktorów}
+
+Emisja wywołań aktorów jest implementowana przez funkcję \texttt{emit\_actor\_call()}.
+
 \subsubsection{Emisja wywołań odroczonych}
+
+Emisja wywołań odroczonych jest implementowana przez funkcję \texttt{emit\_deferred\_call()}.
+
 \subsubsection{Emisja wywołań watchdog}
+
+Emisja wywołań watchdog jest implementowana przez funkcję \texttt{emit\_watchdog\_call()}.
+
 \subsubsection{Emisja wywołań ogonowych}
+
+Emisja wywołań ogonowych jest implementowana przez funkcję \texttt{emit\_tail\_call()}.
+
 \subsubsection{Emisja wyrażeń warunkowych}
+
+Emisja wyrażeń warunkowych jest implementowana przez funkcję \texttt{emit\_if()}.
+
 \subsubsection{Emisja funkcji zagnieżdżonych}
+
+Emisja funkcji zagnieżdżonych jest implementowana przez funkcję \texttt{emit\_function()}.
+
 \subsubsection{Emisja wyrażeń \emph{try}}
+
+Emisja wyrażeń \emph{try} jest implementowana przez funkcję \texttt{emit\_try\_expr()}.
+
 \subsubsection{Emisja przypisania do pola struktury}
+
+Emisja przypisania do pola struktury jest implementowana przez funkcję
+\texttt{emit\_field\_assignment()}.
+
 \subsubsection{Emisja dostępu do pola struktury}
+
+Emisja dostępu do pola struktury jest implementowana przez funkcję
+\texttt{emit\_struct\_field\_access()}.
+
