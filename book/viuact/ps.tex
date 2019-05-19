@@ -619,6 +619,29 @@ typów wyrażeń do ich dedykowanych funkcji emisji. Bezpośrednio \texttt{emit\
 emituje jedynie instrukcje odpowiadające za konstruktory wartości typów prostych
 (literały) i konstruktory wartości złożonych.
 
+Funkcja \texttt{emit\_expr()} zwraca ,,slot'' (\ref{diagram_klas_slot} na
+stronie \pageref{diagram_klas_slot}) identyfikujący rejestr, w którym jest
+przechowywany wynik. Ten slot może być ,,pusty'' (tj. nie identyfikować żadnego
+rejestru) jeśli funkcja \texttt{emit\_expr()} zostanie poinformowana, że wynik
+danego wyrażenia nie będzie użyty.
+
+Nie wszystkie wyrażenia muszą generować wiersze kodu w każdym kontekście.
+Przykładem jest odwołanie do dowiązania \emph{let} -- jeśli jest samodzielnym
+wyrażeniem na końcu wyrażenia złożonego to musi wyemitować instrukcję
+\texttt{copy} aby zwrócić wartość, ale jeśli jest wyrażeniem przekazywanym
+argument to wystarczy zwrócić jego slot. To czy wymagane jest wyemitowanie
+instrukcji i czy wymagane jest zwrócenie slotu determinują dwa parametry funkcji
+\texttt{emit\_expr()} (oba przyjmują wartości \texttt{bool}):
+
+\begin{labeling}{\texttt{must\_emit}}
+    \item[\texttt{must\_emit}] określa czy musi być wyemitowana instrukcja
+    \item[\texttt{toplevel}] określa czy wyrażenie może pominąć zwracanie
+        ,,zapisywalnego'' (tj. możliwego do umieszczenia w rejestrze) wyniku
+        ponieważ nie ma nad sobą żadnego innego wyrażenia, które mogłoby ten
+        wynik wykorzystać (przykład: wyrażenia składowe wyrażenia złożonego,
+        poza ostatnim wyrażeniem składowym)
+\end{labeling}
+
 \paragraph{Emisja literałów}
 
 Emisja literałów polega na wygenerowaniu instrukcji, które utworzą w rejestrze
@@ -664,21 +687,79 @@ listingu poniżej:
 })
 \end{lstlisting}
 to wyemitowana zostanie dla niego instrukcja \texttt{copy} tworząca nową wartość
-(\texttt{x} ewaluuje do siebie samego).
+będącą kopią tej, do której odwołanie się odwołuje (\texttt{x} ewaluuje do
+siebie samego).
 
 \subsubsection{Emisja wyrażeń złożonych}
 
-Emisja wyrażeń prostych jest implementowana przez funkcję \texttt{emit\_compound\_expr()}.
+Emisja wyrażeń złożonych jest implementowana przez funkcję \texttt{emit\_compound\_expr()}.
+
+Wyrażenie złożone jest listą $n$ wyrażeń prostych. Każde z nich nich jest
+emitowane za pomocą funkcji \texttt{emit\_expr()}. Dla wyrażeń od $0$ do $n-1$
+bezpośrednie wyniki tych emisji są ignorowane (tj. wyniki nie są przypisywane do
+żadnego rejestru). Zapisywane są tylko efekty uboczne, jak np. utworzenie
+dowiązania \emph{let} do wartości, wypisanie wartości na ekran lub wpisanie jej
+do pliku). Dla każdego wyrażenia składowego są generowane są wiersze, które
+implementują dane wyrażenie.
+
+Emisja wyrażeń od $0$ do $n-1$ jest zaimplementowana przy pomocy pętli, w której
+wywoływana jest funkcja \texttt{emit\_expr()} z każdym kolejnym wyrażeniem
+składowym na wejściu.
+
+Zapisywany jest wynik ostatniego wyrażenia składowego wyrażenia złożonego.
+Wartość ostatniego wyrażenia składowego jest jednocześnie wartością zwracaną
+całego wyrażenia złożonego.
 
 \subsubsection{Emisja dowiązań \emph{let}}
+
+Emisja dowiązań \emph{let} jest implementowana przez funkcję \texttt{emit\_let\_binding()}.
+Wywołuje ona funkcję \texttt{emit\_expr()} przekazując fałsz jako wartość
+argumentu \texttt{toplevel}, a następnie otrzymany slot zapisuje w stanie
+funkcji pod nazwą podaną w kodzie źródłowym.
+
 \subsubsection{Emisja wywołań funkcji wbudowanych}
+
+Emisja wywołań funkcji ,,wbudowanych'' jest implementowana przez funkcję \texttt{emit\_builtin\_call()}.
+
 \subsubsection{Emisja wywołań funkcji}
+
+Emisja wywołań funkcji jest implementowana przez funkcję \texttt{emit\_call()}.
+
 \subsubsection{Emisja wywołań aktorów}
+
+Emisja wywołań aktorów jest implementowana przez funkcję \texttt{emit\_actor\_call()}.
+
 \subsubsection{Emisja wywołań odroczonych}
+
+Emisja wywołań odroczonych jest implementowana przez funkcję \texttt{emit\_deferred\_call()}.
+
 \subsubsection{Emisja wywołań watchdog}
+
+Emisja wywołań watchdog jest implementowana przez funkcję \texttt{emit\_watchdog\_call()}.
+
 \subsubsection{Emisja wywołań ogonowych}
+
+Emisja wywołań ogonowych jest implementowana przez funkcję \texttt{emit\_tail\_call()}.
+
 \subsubsection{Emisja wyrażeń warunkowych}
+
+Emisja wyrażeń warunkowych jest implementowana przez funkcję \texttt{emit\_if()}.
+
 \subsubsection{Emisja funkcji zagnieżdżonych}
+
+Emisja funkcji zagnieżdżonych jest implementowana przez funkcję \texttt{emit\_function()}.
+
 \subsubsection{Emisja wyrażeń \emph{try}}
+
+Emisja wyrażeń \emph{try} jest implementowana przez funkcję \texttt{emit\_try\_expr()}.
+
 \subsubsection{Emisja przypisania do pola struktury}
+
+Emisja przypisania do pola struktury jest implementowana przez funkcję
+\texttt{emit\_field\_assignment()}.
+
 \subsubsection{Emisja dostępu do pola struktury}
+
+Emisja dostępu do pola struktury jest implementowana przez funkcję
+\texttt{emit\_struct\_field\_access()}.
+

@@ -10,7 +10,7 @@ zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym 
 opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
 \pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
 
-Materiałem teoretycznym przy pracy nad kompilatorem i językiem był \cite{PLP:1}.
+Materiałem teoretycznym przy pracy nad kompilatorem i językiem był \cite{ProgrammingLanguagePragmatics}.
 Jedną z książek, które wywarły wpływ na zestaw instrukcji (ISA) Viua VM był \cite{RISCV}.
 Pomocą w pracach nad systemem modułów był \cite{Linkers}.
 
@@ -29,21 +29,52 @@ kanały -- używając ,,pośredników'' zamiast skomunikować procesy bezpośred
 
 \section{Testowanie}
 
-Testy kompilatora.
-
-\subsection{Zestaw przypadków testowych}
-
-Jeden testowy program na każdą funkcjonalność języka.
-Kilka większych testowych programów sprawdzających integrację języka, np. wielomodułowych, wykorzystujących
-moduły obce.
+Testy kompilatora polegało na opracowaniu zestawu przypadków testowych (w formie
+przykładowych programów napisanych w języku \ViuAct) pokrywających cały zakres
+konstrukcji językowych zawartych w specyfikacji języka \ViuAct. Oprócz prostych
+programów sprawdzających działanie konkretnych konstrukcji (np. definicji
+funkcji zagnieżdżonych, wyrażeń warunkowych, wyrażeń złożonych) potrzebne były
+też ,,większe'' programy sprawdzające współpracę kilku konstrukcji językowych
+naraz lub integrację i poprawność działania kompilatora (np. programy
+wielomodułowe, programy korzystające z modułów FFI).
 
 \subsection{Wykonanie testów}
 
-Opis tego jak wygląda uruchomienie testów, w jaki sposób został zbudowany framework, itp.
+Każdy przypadek testowy składa się z trzech plików:
+
+\begin{enumerate}
+    \item \texttt{\emph{test}.sh}
+    \item \texttt{\emph{test}.lisp}
+    \item \texttt{\emph{test}.text}
+\end{enumerate}
+
+Plik \texttt{.sh} zawiera polecenia potrzebne do skompilowania programu
+testowego. Jest to szczególnie potrzebne przy testach sprawdzających
+integrację wielu części języka (np. współpracy z modułami FFI).
+
+Plik \texttt{.lisp} zawiera kod źródłowy przykładowego programu. Tych plików
+może być więcej niż jeden w przypadku bardziej skomplikowanych programów.
+
+Plik \texttt{.text} zawiera spodziewany wynik działania programu. Każdy program
+testowy miał za zadanie ostatecznie wydrukować coś na standardowe wyjście, a
+framework testowy porównywał to z zawartością pliku \texttt{.text} i na tej
+podstawie oceniał czy test się powiódł czy nie.
 
 \subsection{Trudności w testowaniu}
 
-Niedeterminizm wynikający z równoległego działania aktorów stwarza problemy w testach. Trzeba uciekać się do
-,,sztuczek'', np. sortowanie wyników programu testowego.
+Przeszkodą w testowaniu był między innymi niedeterminizm wynikający z
+równoległego działania aktorów. Żeby znormalizować wyniki i umożliwić ich
+powtarzalną weryfikację trzeba było uciekać się do ,,sztuczek'', np. sortowania
+linii na standardowym wyjściu programu testowego.
+
+Także samo założenie, że każdy program miał wyprodukować na standardowym wyjściu
+wyniki swojej pracy nie zawsze było pomocne i zmuszało do pisania programów
+testowych w określony sposób -- tak żeby zawsze miały co wypisać na ekran.
+Viua VM umożliwia generowanie ,,śladów wykonania'' -- zapisów wszystkich
+wykonanych w programie instrukcji wewnątrz wszystkich działających aktorów.
+Analiza tych śladów zapewniłaby niemal perfekcyjną dokładność i precyzję testów 
+jednak z uwagi na ograniczoną ilość czasu na projekt takie podejście byłoby
+nierozsądne gdyż opracowanie testów zajmowałoby znacznie więcej czasu niż w
+przyjętym ostatecznie rozwiązaniu.
 
 \input{viuact/manual}
