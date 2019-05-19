@@ -1,0 +1,41 @@
+\chapter{Model obliczeniowy Viua VM}
+\label{appendix_viua_vm_execution_model}
+
+Model obliczeniowy Viua VM jest oparty na modelu aktorów. Bardzo abstrakcyjnie i
+skrótowo może być opisany podanymi poniżej cechami:
+
+\begin{enumerate}
+\item programy uruchamiane w Viua VM składają się z jednego lub większej liczby
+    równolegle działających, odizolowanych od siebie aktorów (procesów)
+\item każdy aktor jest implementowany przez pojedynczą funkcję ,,główną''
+\item funkcje mogą wywoływać siebie nawzajem, tworząc stos wywołań
+\item funkcje przyjmują wartości w parametrach, informują o wynikach swojej
+    pracy zwracając wartości
+\item każda funkcja jest reprezentowana przez uszeregowaną sekwencję instrukcji
+\item instrukcje wewnątrz funkcji są wykonywane sekwencyjnie, jedna po drugiej
+\item instrukcje wykonują pracę modyfikując wartości znajdujące się w rejestrach
+\item każdy rejestr może przechowywać dowolną wartość
+\item rejestry są grupowane w ,,zestawy'': lokalny (dla wartości lokalnych),
+    argumentów (dla przekazanych argumentów), statyczny (dla wartości
+    statycznych; ten jest zachowywany pomiędzy wywołaniami funkcji w ramach
+    pojedynczego aktora)
+\item każdy aktor może tworzyć nowe aktory
+\item aktory komunikują się między sobą za pomocą asynchronicznej wymiany
+    wiadomości
+\item wiadomość jest dowolną wartością
+\end{enumerate}
+
+O instrukcjach można myśleć jak o funkcjach, które na wejściu dostają zestawy
+rejestrów i adresy rejestrów, które powinny zmodyfikować, a na wyjściu podają
+zmodyfikowane zestawy rejestrów. Ich sygnatura w języku OCaml mogłaby wyglądać
+następująco:
+
+\begin{lstlisting}
+val %*\emph{op}*) : local_register_set
+      -> static_register_set
+      -> arguments_register_set
+      -> register_address list
+      = <fun>
+\end{lstlisting}
+
+Zasady działania poszczególnych instrukcji opisane są w dodatku \ref{appendix_viua_vm_assembly_language}.
