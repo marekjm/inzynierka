@@ -619,6 +619,12 @@ typów wyrażeń do ich dedykowanych funkcji emisji. Bezpośrednio \texttt{emit\
 emituje jedynie instrukcje odpowiadające za konstruktory wartości typów prostych
 (literały) i konstruktory wartości złożonych.
 
+Funkcja \texttt{emit\_expr()} zwraca ,,slot'' (\ref{diagram_klas_slot} na
+stronie \pageref{diagram_klas_slot}) identyfikujący rejestr, w którym jest
+przechowywany wynik. Ten slot może być ,,pusty'' (tj. nie identyfikować żadnego
+rejestru) jeśli funkcja \texttt{emit\_expr()} zostanie poinformowana, że wynik
+danego wyrażenia nie będzie użyty.
+
 \paragraph{Emisja literałów}
 
 Emisja literałów polega na wygenerowaniu instrukcji, które utworzą w rejestrze
@@ -669,9 +675,28 @@ siebie samego).
 
 \subsubsection{Emisja wyrażeń złożonych}
 
-Emisja wyrażeń prostych jest implementowana przez funkcję \texttt{emit\_compound\_expr()}.
+Emisja wyrażeń złożonych jest implementowana przez funkcję \texttt{emit\_compound\_expr()}.
+
+Wyrażenie złożone jest listą $n$ wyrażeń prostych. Każde z nich nich jest
+emitowane za pomocą funkcji \texttt{emit\_expr()}. Dla wyrażeń od $0$ do $n-1$
+bezpośrednie wyniki tych emisji są ignorowane (tj. wyniki nie są przypisywane do
+żadnego rejestru). Zapisywane są tylko efekty uboczne, jak np. utworzenie
+dowiązania \emph{let} do wartości, wypisanie wartości na ekran lub wpisanie jej
+do pliku). Dla każdego wyrażenia składowego są generowane są wiersze, które
+implementują dane wyrażenie.
+
+Emisja wyrażeń od $0$ do $n-1$ jest zaimplementowana przy pomocy pętli, w której
+wywoływana jest funkcja \texttt{emit\_expr()} z każdym kolejnym wyrażeniem
+składowym na wejściu.
+
+Zapisywany jest wynik ostatniego wyrażenia składowego wyrażenia złożonego.
+Wartość ostatniego wyrażenia składowego jest jednocześnie wartością zwracaną
+całego wyrażenia złożonego.
 
 \subsubsection{Emisja dowiązań \emph{let}}
+
+
+
 \subsubsection{Emisja wywołań funkcji wbudowanych}
 \subsubsection{Emisja wywołań funkcji}
 \subsubsection{Emisja wywołań aktorów}
