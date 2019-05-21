@@ -38,4 +38,7 @@ clean:
 	rm *.aux || true
 	rm *.toc || true
 	rm *.out || true
+	rm *.nav || true
+	rm *.snm || true
+	rm *.vrb || true
 	rm *.synctex.gz || true
