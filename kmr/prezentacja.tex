@@ -1,0 +1,159 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\graphicspath{ {./fig/} }
+
+\usetheme{default}
+% \usecolortheme{seahorse}
+% \usetheme{Pittsburg}
+\usecolortheme{beaver}
+
+\beamertemplatenavigationsymbolsempty
+
+\title{Viua VM}
+\subtitle{Stabline środowisko uruchomieniowe dla oprogramowania o\\podwyższonych wymaganiach niezawodności}
+% \author{Marek Marecki \and Krzysztof Franek}
+
+\begin{document}
+\lstset{basicstyle=\ttfamily\color{black},
+columns=fixed,
+escapeinside={\%*}{*)},
+inputencoding=utf8,
+extendedchars=true,
+moredelim=**[is][\color{red}]{@}{@}}
+
+\frame{\titlepage}
+
+\begin{frame}
+    \frametitle{Problem}
+
+    \begin{enumerate}
+        \item niezdefiniowane lub niedoprecyzowane zachowanie istniejących
+            środowisk
+        \item nieefektywne wykorzystanie zasobów sprzętowych
+        \item zawodne, ulegające awariom oprogramowanie
+        \item problematyczność skalowania i rozpraszania oprogramowania
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rozwiązanie}
+
+    \begin{enumerate}
+        \item wykorzystanie maszyny wirtualnej, której ISA ma całkowicie
+            zdefiniowane zachowanie
+        \item scheduler na poziomie VM, mapujący lekkie, wirtualne procesy
+            \emph{MxN} do wątków sprzętowych
+        \item kompletna izolacja procesów, komunikacja jedynie poprzez
+            asynchroniczną wymianę wiadomości
+        \item \emph{actor model} zakładający rozproszenie procesów jako
+            podstawowy element sposobu programowania
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Metryki}
+
+    \begin{enumerate}
+        \item średni czas pomiędzy awariami zwiększony o co najmniej 40\%
+        \item całkowity roczny downtime poniżej 5 minut
+        \item stabline obciążenie zamiast peaków pozwalające na lepsze
+            oszacowanie wymagań i redukcję kosztów o ok. 20\%
+        \item ilość zgłaszanych defektów zredukowana o ok. 60\%
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rynek i konkurencja -- potencjalni klienci}
+
+    Niewielu dużych klientów -- firmy telekomunikacyjne i wojsko.
+
+    \begin{quote}
+        \begin{small}
+            \emph{Nokia, Ericsson, Huawei, NATO, uczelnie...}
+        \end{small}
+    \end{quote}
+
+    Sporo mniejszych klientów -- ISP, firmy hostingowe (oprogramowanie do
+    monitorowania stanu infrastruktury).
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rynek i konkurencja -- konkurencja}
+
+    Tylko jedno rozwiązanie konkurencyjne -- Erlang/OTP (BEAM) -- ale z
+    całkowitą penetracją rynku.
+
+    ~
+
+    Dajemy zdefiniowane podstawy (specyfikacja~ISA) i zwiększenie konkurencji.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Model zarabiania}
+
+    W początkowej fazie głównie dofinansowanie projektów badawczych z
+    NATO\footnote{\begin{tiny}\url{https://www.nato.int/cps/en/natohq/85291.htm} sekcja 1.c.ii\end{tiny}}
+    i UE. Po ugruntowaniu pozycji:
+
+    \begin{enumerate}
+        \item sprzedaż licencji własnościowych
+        \item sprzedaż dokumentacji (domyślnie GNU GPL)
+        \item prowadzenie wykładów
+        \item usługi konsultacyjne
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Strategia ekspozycji rynkowej}
+
+    Kampania marketingowa poprzez ,,pracę u podstaw'':
+
+    \begin{enumerate}
+        \item prezentacje na konferencjach i publikacje w czasopismach
+            branżowych i akademickich
+        \item rozwój oprogramowania na licencji GNU~GPL jako Free~Software
+        \item darmowe szkolenia podczas konferencji
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Wykres krzywej finansowej}
+
+    Podjęcie decyzji o przyznaniu finansowania dla projektów NATO to około
+    9~miesięcy. Do tego momentu projekt jest finansowany z kapitału i pracy
+    zawodowej członków zespołu i działa na ,,zwolnionych obrotach''.
+
+    ~
+
+    Po zakończeniu okresu finansowania projektu badawczego (2 do 3 lat),
+    spodziewamy się mieć portfolio, które zapewni stałe konktrakty i przychody.
+\end{frame}
+
+\begin{frame}
+    \frametitle{W przypadku niepowodzenia}
+
+    Ryzyko porażki projektu jest bardzo duże z uwagi na trudność przebicia się
+    przez mainstreamowe języki i brak zaufania do nowych, niesprawdzonych
+    technologii.
+
+    ~
+
+    W przypadku projektu \emph{Viua VM} możliwości pivotowania są bardzo
+    ograniczone. Możliwe jest przejście na model crowd-fundingowy (jak
+    Elixir) lub próba uzyskania grantu od uczelni lub instytucji naukowych (jak
+    Haskell lub OCaml). Jednak najbardziej prawdopodobnym wynikiem porażki jest
+    porzucenie projektu i wpisanie go jako silnej pozycji w CV.
+\end{frame}
+
+\end{document}
