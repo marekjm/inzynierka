@@ -39,7 +39,7 @@ moredelim=**[is][\color{red}]{@}{@}}
 
     \begin{enumerate}
         \item niezdefiniowane lub niedoprecyzowane zachowanie istniejących
-            środowisk
+            środowisk -- w przypadku rakiety Ariane 5 straty \$500 000 000
         \item nieefektywne wykorzystanie zasobów sprzętowych
         \item zawodne, ulegające awariom oprogramowanie
         \item problematyczność skalowania i rozpraszania oprogramowania
@@ -65,53 +65,163 @@ moredelim=**[is][\color{red}]{@}{@}}
     \frametitle{Metryki}
 
     \begin{enumerate}
-        \item średni czas pomiędzy awariami zwiększony o co najmniej 40\%
-        \item całkowity roczny downtime poniżej 5 minut
+        \item wydłużenie średniego czasu pomiędzy awariami
+        \item skrócenie całkowitego rocznego czasu awarii (\emph{downtime})
         \item stabline obciążenie zamiast peaków pozwalające na lepsze
-            oszacowanie wymagań i redukcję kosztów o ok. 20\%
-        \item ilość zgłaszanych defektów zredukowana o ok. 60\%
+            oszacowanie wymagań i redukcję kosztów
+        \item redukcja ilości zgłaszanych defektów
     \end{enumerate}
 \end{frame}
 
 \begin{frame}
     \frametitle{Rynek i konkurencja -- potencjalni klienci}
 
-    Niewielu dużych klientów -- firmy telekomunikacyjne i wojsko.
+    Dostawcy sprzętu telekomunikacyjnego i wojsko.
 
     \begin{quote}
         \begin{small}
-            \emph{Nokia, Ericsson, Huawei, NATO, uczelnie...}
+            \emph{Nokia, Ericsson, ADVA, Huawei, NATO, uczelnie...}
         \end{small}
     \end{quote}
 
-    Sporo mniejszych klientów -- ISP, firmy hostingowe (oprogramowanie do
-    monitorowania stanu infrastruktury).
+    ISP, firmy hostingowe, dostawcy usług ,,w chmurze''.
+
+    \begin{quote}
+        \begin{small}
+            \emph{Deutsche Telekom, OVH, Amazon...}
+        \end{small}
+    \end{quote}
+
+    ~
+
+    Grupą docelową są firmy i organizacje, mogące sobie pozwolić na finansowanie
+    rozwoju specjalistycznego środowiska uruchomieniowego i potrzebujące
+    wysokiej stabliności, dostępności i niezawodności swojego oprogramowania.
+
+    ~
+
+    Wartość rynku zamówień w sektorze wojskowym w strefie EUR-28 w 2019 to około
+    \textbf{164 biliony USD}, z czego około 20\% jest przeznaczone na nowe rozwiązania
+    (nasz obszar zainteresowań).
 \end{frame}
 
 \begin{frame}
     \frametitle{Rynek i konkurencja -- konkurencja}
 
-    Tylko jedno rozwiązanie konkurencyjne -- Erlang/OTP (BEAM) -- ale z
-    całkowitą penetracją rynku.
+    Tylko jedno rozwiązanie konkurencyjne o podobnej charakterystyce --
+    Erlang/OTP (BEAM).
 
     ~
 
-    Dajemy zdefiniowane podstawy (specyfikacja~ISA) i zwiększenie konkurencji.
+    Nasze zalety:
+
+    \begin{enumerate}
+        \item zdefiniowane ISA (możliwość implementacji własnego języka)
+        \item implementacja pozbawiona niezdefiniowanego zachowania, z obszernym
+            zestawem testowym i wysokimi gwarancjami poprawności
+    \end{enumerate}
 \end{frame}
 
 \begin{frame}
     \frametitle{Model zarabiania}
 
-    W początkowej fazie głównie dofinansowanie projektów badawczych z
-    NATO\footnote{\begin{tiny}\url{https://www.nato.int/cps/en/natohq/85291.htm} sekcja 1.c.ii\end{tiny}}
-    i UE. Po ugruntowaniu pozycji:
+    \begin{labeling}{20\%}
+        \item[20\%] sprzedaż licencji własnościowych (domyślnie GNU GPL)
+        \item[4\%] sprzedaż dokumentacji
+        \item[20\%] prowadzenie wykładów i szkoleń
+        \item[8\%] usługi konsultacyjne
+        \item[48\%] wytwarzanie oprogramowania
+    \end{labeling}
+
+    \begin{quote}
+        \begin{tiny}
+            Procentowy udział w zakładanym finalnym przychodzie rocznym na
+            poziomie 250~000~EUR.
+        \end{tiny}
+    \end{quote}
+
+    ~
+
+    Źródłem finansowania w początkowej fazie projektu (2 do 3
+    lat\footnote{\begin{tiny}\url{https://www.nato.int/cps/en/natolive/87260.htm}\end{tiny}})
+    będzie grant na badania i rozwój z
+    NATO\footnote{\begin{tiny}\url{https://www.nato.int/cps/en/natohq/85291.htm} sekcja 1.c.ii\end{tiny}}.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Model zarabiania -- sprzedaż licencji własnościowych}
+
+    Domyślnie projekt jest udostępniany na licencji GNU GPL. Jeśli dana firma
+    wymaga użycia zamkniętego kodu, lub potrzebuje wprowadzić zmiany bez
+    udostępniania ich może wykupić licencję własnościową.
+
+    ~
+
+    Minimum 50 000 EUR za licencję (per projekt).
+
+    ~
+
+    Zakłada się, że sprzedaż wyniesie 1-2 licencje rocznie.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Model zarabiania -- sprzedaż dokumentacji}
+
+    Dokumentacja ogólna (specyfikacja ISA, dokumentacja języka i narzędzi) jest
+    dostępna za darmo.
+
+    ~
+
+    Dokumentacja szczegółowa obejmująca m.in.:
 
     \begin{enumerate}
-        \item sprzedaż licencji własnościowych
-        \item sprzedaż dokumentacji (domyślnie GNU GPL)
-        \item prowadzenie wykładów
-        \item usługi konsultacyjne
+        \item dostosowywanie schedulerów
+        \item instrukcje optymalizacji
+        \item \emph{case-studies} implementacji różnego rodzaju oprogramowania
     \end{enumerate}
+
+    będzie dostępna w subskrypcji 1000~EUR na rok, lub 2000~EUR za
+    \emph{snapshot} dokumentacji w momencie zakupu.
+
+    ~
+
+    Zakłada się, że przychody z tego punktu będą wynosić około 10~000~EUR rocznie.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Model zarabiania -- wykłady i szkolenia}
+
+    Ceny wykładów i szkoleń są ustalane \emph{case-by-case}, w zależności od
+    poziomu zaawansowania i tematu szkolenia lub wykładu.
+
+    ~
+
+    Zakłada się, że przychody z tego punktu będą wynosić około 50~000~EUR rocznie.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Model zarabiania -- usługi konsultacyjne}
+
+    Wszelkiego rodzaju pomoc w wytwarzaniu, wdrażaniu, i utrzymywaniu
+    oprogramowania działającego na platformie Viua~VM.
+
+    ~
+
+    Zakłada się, że przychody z tego punktu będą wynosić około 20~000~EUR
+    rocznie.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Model zarabiania -- wytwarzanie oprogramowania}
+
+    Wytwarzanie oprogramowania na platformę Viua~VM, lub
+    \newline
+    wprowadzanie zmian w samej platformie (jądrze, schedulerach, itd.).
+
+    ~
+
+    Zakłada się, że przychody z tego punktu będą wynosić około 120~000~EUR
+    rocznie.
 \end{frame}
 
 \begin{frame}
@@ -121,9 +231,9 @@ moredelim=**[is][\color{red}]{@}{@}}
 
     \begin{enumerate}
         \item prezentacje na konferencjach i publikacje w czasopismach
-            branżowych i akademickich
-        \item rozwój oprogramowania na licencji GNU~GPL jako Free~Software
-        \item darmowe szkolenia podczas konferencji
+            branżowych i akademickich -- około 30~000~EUR rocznie
+        \item rozwój oprogramowania na licencji GNU~GPL jako Free~Software --
+            koszt związany z wynagrodzeniem programistów
     \end{enumerate}
 \end{frame}
 
@@ -150,10 +260,30 @@ moredelim=**[is][\color{red}]{@}{@}}
     ~
 
     W przypadku projektu \emph{Viua VM} możliwości pivotowania są bardzo
-    ograniczone. Możliwe jest przejście na model crowd-fundingowy (jak
-    Elixir) lub próba uzyskania grantu od uczelni lub instytucji naukowych (jak
-    Haskell lub OCaml). Jednak najbardziej prawdopodobnym wynikiem porażki jest
-    porzucenie projektu i wpisanie go jako silnej pozycji w CV.
+    ograniczone. Możliwe jest:
+
+    \begin{enumerate}
+        \item przejście na model crowd-fundingowy (jak Elixir bądź Zig)
+        \item próba uzyskania grantu od uczelni lub instytucji naukowych (jak
+            Haskell lub OCaml)
+        \item wykorzystanie zalet platformy do implementacji oprogramowania i
+            jego sprzedaż
+    \end{enumerate}
+    Jednak najbardziej prawdopodobnym wynikiem porażki jest porzucenie projektu.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Źródła}
+
+    \begin{small}
+    \begin{enumerate}
+        \item \url{https://www.europarl.europa.eu/factsheets/en/sheet/65/defence-industry}
+        \item \url{https://tradingeconomics.com/euro-area/gdp}
+        \item \url{https://www.dw.com/en/eu-to-support-common-defense-market-boost-joint-spending/a-36593660}
+        \item
+            \url{https://ec.europa.eu/eurostat/statistics-explained/index.php/Government_expenditure_on_defence}
+    \end{enumerate}
+    \end{small}
 \end{frame}
 
 \end{document}
