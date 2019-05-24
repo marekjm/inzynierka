@@ -21,7 +21,7 @@
 \subtitle{Implementacja wysokopoziomowego języka programowania i realizacja prostej aplikacji
 \\
 \emph{Viua VM in action. Implementation of a high-level programming language and a simple application}}
-\author{Marek Marecki \and Krzysztof Franek}
+\author{Marek Marecki \and Krzysztof Franek \\ Promotor: dr hab. Marek Bednarczyk prof. PJATK}
 
 \begin{document}
 \lstset{basicstyle=\ttfamily\color{black},
@@ -30,31 +30,6 @@ escapeinside={\%*}{*)},
 inputencoding=utf8,
 extendedchars=true,
 moredelim=**[is][\color{red}]{@}{@}}
-
-%% PLAN PREZENTACJI
-%%
-%% Powinniśmy się zamknąć w maksimum 15 slajdach.
-%%
-%% 00. slajd tytułowy
-%%
-%% 01. początki Viua VM
-%% 02. podział pracy w projekcie
-%%
-%% 03. o języku (elementy)
-%% 04. ciekawostka: aktory
-%% 05. przykład składni (wszystkie elementy języka w jednej funkcji); wiele slajdów "fizycznych", ale jeden
-%%     "logiczny", bo na każdym fizycznym to samo tylko inny element podkreślony kolorem
-%% 06. o kompilatorze (fazy, elementy)
-%% 07. ciekawostka: analiza składniowa (tokeny fantomowe, pierwszy token decyduje)
-%%
-%% 08. o czacie
-%% 09. ...
-%% 10. ...
-%% 11. ...
-%% 12. ...
-%% 13. ???
-%% 14. profit!
-%%
 
 \frame{\titlepage}
 
@@ -75,21 +50,68 @@ moredelim=**[is][\color{red}]{@}{@}}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Zakres pracy inżynierskiej}
-    \framesubtitle{Podział zadań}
+    \frametitle{Omówienie problemu}
+    \framesubtitle{Problemy i więcej problemów}
+
+    Współbieżność jest trudna. Pisanie poprawnych programów jest \textbf{zajebiście} trudne.
+
+    Rozwiązania. (wziąć to z wstępu do pracy)
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cel i zakres pracy inżynierskiej}
+    \framesubtitle{Wynikające z problemu}
+
+    Projekt obejmuje:
+    \begin{enumerate}
+        \item implementację wysokopoziomowego języka programowania
+        \item realizację prostej aplikacji
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Główne zadania}
+    \framesubtitle{Z podziałem na członków zespołu}
 
     Marek Marecki:
     \begin{enumerate}
         \item specyfikacja języka programowania ViuAct
-        \item implementacja kompilatora języka ViuAct
+        \item projekt i implementacja kompilatora języka ViuAct
     \end{enumerate}
 
     ~\\
 
     Krzysztof Franek:
     \begin{enumerate}
-        \item specyfikacja wymagań dla programu ViuaChat
-        \item implementacja programu ViuaChat w języku ViuAct
+        \item testowanie kompilatora języka ViuAct ,,w praktyce''
+        \item projekt i implementacja programu ViuaChat w języku ViuAct
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Strategia realizacji i technologia}
+    % \framesubtitle{Podział zadań}
+
+    Specyfikacja języka programowania ViuAct:
+    \begin{enumerate}
+        \item strategia: kaskada
+    \end{enumerate}
+
+    ~\\
+
+    Kompilator języka programowania ViuAct:
+    \begin{enumerate}
+        \item języka implementacji kompilatora: Python
+        \item strategia: issue tracking i prototypowanie
+    \end{enumerate}
+
+    ~\\
+
+    Program ViuaChat:
+    \begin{enumerate}
+        \item język implementacji: ViuAct
+        \item strategia: ,,miniSCRUM'' (kanban, bez \emph{daily stands}, bez
+            ,,Scrum Mastera'', typowe artefakty: user stories, backlog, sprinty)
     \end{enumerate}
 \end{frame}
 
@@ -107,6 +129,39 @@ moredelim=**[is][\color{red}]{@}{@}}
     ~\\
 
     Model wykonywania programów jest wzorowany na modelu aktorów.
+\end{frame}
+
+\begin{frame}
+    \frametitle{ViuaChat}
+    \framesubtitle{Chat w ViuAct}
+
+    \begin{enumerate}
+        \item Prosta aplikacja czatu webowego
+        \item Zbudowana w dwóch celach:
+        \begin{enumerate}
+        	\item Zademonstrowanie możliwości kompilatora
+        	\item Przykładowy kod dla przyszłych programistów
+        \end{enumerate}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{ViuaChat}
+    \framesubtitle{Podstawowa architektura}
+
+    \begin{enumerate}
+        \item Frontend: Single Page App
+        \begin{enumerate}
+        	\item Vue.js
+        	\item HTML5
+        \end{enumerate}
+        \item Backend
+        \begin{enumerate}
+        	\item Serwer Nginx - wystawia statyczny HTML i JS
+        	\item Maszyna ViuaVM - właściwy serwer czatu
+        \end{enumerate}
+        \item Komunikacja front-back: via Websocket
+    \end{enumerate}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -483,144 +538,30 @@ moredelim=**[is][\color{red}]{@}{@}}
     \end{small}
 \end{frame}
 
-\begin{frame}
-    \frametitle{ViuaChat}
-    \framesubtitle{Chat w ViuAct}
+% \begin{frame}
+%     \frametitle{ViuaVM}
+%     \framesubtitle{Harmonogram prac}
 
-    \begin{enumerate}
-        \item Prosta aplikacja czatu webowego
-        \item Zbudowana w dwóch celach:
-        \begin{enumerate}
-        	\item Zademonstrowanie możliwości kompilatora
-        	\item Przykładowy kod dla przyszłych programistów
-        \end{enumerate}
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    \frametitle{ViuaChat}
-    \framesubtitle{Metoda wytwórcza}
-
-	,,mini-Scrum''
-    \begin{enumerate}
-        \item Inspirowany Scumem
-        \item Typowe artefakty: \textit{User stories}, backlog, sprinty (1-2 tyg.)
-        \item Bez Scrum Mastera
-        \item Bez \textit{daily stands}
-        \item Kanban via Trello
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    \frametitle{ViuaChat}
-    \framesubtitle{Rys funkcjonalności}
-
-    \begin{enumerate}
-        \item Możliwość łączenia się z serwerem
-        \item Obecność oddzielnych kanałów - pokojów
-        \begin{enumerate}
-        	\item Mogą dołączać do nich użytkownicy
-        	\item Wiadomości wysłane w pokoju są widoczne dla wszystkich użytkowników w nim obecnych
-        \end{enumerate}
-        \item Możliwość wysyłania prywatnych wiadomości (od użytkownika do użytkownika)
-		\item Prymitywny system uprawnień administrator-nieadministrator
-		\item Podstawowe narzędzia administracyjne: tworzenie i usuwanie pokojów, wyrzucanie użytkowników z pokojów i z serwera
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    \frametitle{ViuaChat}
-    \framesubtitle{Podstawowa architektura}
-
-    \begin{enumerate}
-        \item Frontend: Single Page App
-        \begin{enumerate}
-        	\item Vue.js
-        	\item HTML5
-        \end{enumerate}
-        \item Backend
-        \begin{enumerate}
-        	\item Serwer Nginx - wystawia statyczny HTML i JS
-        	\item Maszyna ViuaVM - właściwy serwer czatu
-        \end{enumerate}
-        \item Komunikacja front-back: via Websocket
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    \frametitle{ViuaChat}
-    \framesubtitle{Diagram komponentów}
-	\begin{figure}[!htp]
-		\centering
-		\includegraphics[width=\textwidth]{pckdiag}
-		\caption{Diagram komponentów}
-		\label{diagram_komponentow}
-	\end{figure}
-\end{frame}
-
-\begin{frame}
-    \frametitle{ViuaVM}
-    \framesubtitle{Harmonogram prac}
-
-    \begin{enumerate}
-        \item Do końca marca
-        \begin{enumerate}
-        	\item finalizacja kompilatora ViuAct i specyfikacji ViuaChat
-        	\item pierwsza wersja frontendu ViuaChat
-        \end{enumerate}         
-        \item Do końca kwietnia
-        \begin{enumerate}
-        	\item finalizacja pierwszej wersji backendu ViuaChat
-        	\item pierwsza integracja frontend-backend
-        	\item pierwsza wersja \textit{książki} do konsultacji z promotorem
-        \end{enumerate}
-        \item Do końca maja
-        \begin{enumerate}
-        	\item realizacja testów stabilności działania ViuaChat
-        	\item ukończenie prac nad stabilną wersją ViuaChat
-        	\item przygotowanie urządzeń testowych dla zaprezentowania projektu
-        	\item ukończenie \textit{książki}
-        \end{enumerate}
-    \end{enumerate}
-\end{frame}
-
-
-%\begin{frame}
-%    \frametitle{ViuaChat}
-%    \framesubtitle{Aktory - podstawowe}
-%	Są tworzone wraz z inicjalizacją maszyny, występują zawsze w jednym egzemplarzu
-%
-%    \begin{enumerate}
-%    	\item \texttt{Architect} - powstaje jako pierwszy, tworzy pozostałych 3 i pilnuje ich
-%        \item \texttt{WSListener} - nasluchuje nowych połączeń od klientów
-%        \item \texttt{Landlord} - zarządza pokojami i umożliwia łączenie się z nimi
-%        \item \texttt{UsernameLessor} - zarządza nazwami użytkowników i pilnuje, czy nadal są używane
-%    \end{enumerate}
-%\end{frame}
-%
-%\begin{frame}
-%    \frametitle{ViuaChat}
-%    \framesubtitle{Aktory - odpowiedzialne za połączenie}
-%	Występuje po jednym zestawie dla każdego otwartego połączenia
-%
-%    \begin{enumerate}
-%    	\item \texttt{WSInitializer} - tworzony natychmiast przez \texttt{WSLister}a; tworzy \texttt{WSConnector}a i \texttt{Authorizer}a po czym ulega samozniszczeniu
-%    	\item \texttt{WSConnector} - pośredniczy pomiędzy warstwą WebSocket i wewnętrznym światem serwera (\texttt{Authorizer}em lub \texttt{UserSession})
-%        \item \texttt{Authorizer} - próbuje uzyskać nazwę użytkownika, a w razie sukcesu - tworzy \texttt{UserSession} i ulega samozniszczeniu
-%        \item \texttt{UserSession} - posiada przypisaną nazwę użytkownika i poziom uprawnień; wysyła/odbiera wiadomości i łączy/rozłącza się z pokojami
-%    \end{enumerate}
-%\end{frame}
-%
-%\begin{frame}
-%    \frametitle{ViuaChat}
-%    \framesubtitle{Aktory - odpowiedzialne za wymianę wiadomości}
-%	Występuje po jednym zestawie dla każdego otwartego pokoju
-%
-%    \begin{enumerate}
-%    	\item \texttt{Room} - tworzeni i usuwani przez \texttt{Landlord}a; rozsyłają wiadomości pomiędzy podpięte sesje \texttt{UserSession}
-%    	\item \texttt{MessageBuffer} - zapisują ostatnie kilkanaście wiadomości i umożliwiają ich odczytanie w razie potrzeby
-%    \end{enumerate}
-%\end{frame}
-
+%     \begin{enumerate}
+%         \item Do końca marca
+%         \begin{enumerate}
+%         	\item finalizacja kompilatora ViuAct i specyfikacji ViuaChat
+%         	\item pierwsza wersja frontendu ViuaChat
+%         \end{enumerate}         
+%         \item Do końca kwietnia
+%         \begin{enumerate}
+%         	\item finalizacja pierwszej wersji backendu ViuaChat
+%         	\item pierwsza integracja frontend-backend
+%         	\item pierwsza wersja \textit{książki} do konsultacji z promotorem
+%         \end{enumerate}
+%         \item Do końca maja
+%         \begin{enumerate}
+%         	\item realizacja testów stabilności działania ViuaChat
+%         	\item ukończenie prac nad stabilną wersją ViuaChat
+%         	\item przygotowanie urządzeń testowych dla zaprezentowania projektu
+%         	\item ukończenie \textit{książki}
+%         \end{enumerate}
+%     \end{enumerate}
+% \end{frame}
 
 \end{document}
