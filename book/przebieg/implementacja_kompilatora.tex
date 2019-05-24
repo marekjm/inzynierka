@@ -47,13 +47,33 @@ Język \ViuAct\phantom{} posiada działający system modułów opisany w rozdzia
 Identyfikator zadania: \texttt{3295295f3d3b08cd0a3ae46c1adebe40bb3ebad4}
 \newline
 Rozpoczęte 2018-12-19 00:04:24, zakończone 2019-03-26 20:00:00.
+\newline
 
 Zadanie zostało zakończone po umieszczeniu w pracy specyfikacji języka \ViuAct,
-która opisuje składnię w notacji EBNF.
+która opisuje składnię w notacji EBNF. Specyfikacja znajduje się w rozdziale~\ref{viuact_spec}
+na stronie \pageref{viuact_spec}.
 
 \subsubsection{Dump intermediate representations}
 
-Identyfikator zadania: \texttt{902f}
+Identifykator zadania: \texttt{902ffbd31e61d8446375620f8511042ca88f31e6}
+\newline
+Rozpoczęte 2019-01-07 18:42:28, zakończone 2019-01-07 19:43:09.
+\newline
+
+Zadanie polegało na umożliwieniu ,,podejrzenia'' tego na czym tak naprawdę
+pracuje kompilator. W jego wyniku powstał mechanizm, który wymusza na
+kompilatorze zapisanie do plików zserializowanej postaci strumienia tokenów,
+AST, lub obu tych rzeczy.
+
+Do zasygnalizowania kompilatorowi tej potrzeby wykorzystywana jest zmienna
+środowiskowa. Przykłady użycia:
+
+\begin{enumerate}
+    \item \texttt{VIUAC\_DUMP\_INTERMEDIATE=tokens} -- zapis strumienia tokenów
+    \item \texttt{VIUAC\_DUMP\_INTERMEDIATE=exprs} -- zapis AST
+    \item \texttt{VIUAC\_DUMP\_INTERMEDIATE=tokens,exprs} -- zapis strumienia
+        tokenów i AST
+\end{enumerate}
 
 \subsubsection{Emit dependency files for modules and executables}
 
