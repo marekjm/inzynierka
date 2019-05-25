@@ -16,6 +16,8 @@
 \usetheme{default}
 \usecolortheme{seahorse}
 
+\beamertemplatenavigationsymbolsempty
+
 \title{Viua VM w akcji}
 %%\subtitle{Implementacja wysokopoziomowego języka programowania i realizacja prostej aplikacji}
 \subtitle{Implementacja wysokopoziomowego języka programowania i realizacja prostej aplikacji
@@ -113,7 +115,7 @@ moredelim=**[is][\color{red}]{@}{@}}
     Kompilator języka programowania ViuAct:
     \begin{enumerate}
         \item języka implementacji kompilatora: Python
-        \item strategia: issue tracking i prototypowanie
+        \item strategia: \emph{cowboy coding}\footnote{\url{ttps://wiki.c2.com/?CowboyCoding}}
     \end{enumerate}
 
     ~\\
@@ -140,6 +142,17 @@ moredelim=**[is][\color{red}]{@}{@}}
     ~\\
 
     Model wykonywania programów jest wzorowany na modelu aktorów.
+\end{frame}
+
+\begin{frame}
+    \frametitle{ViuAct}
+    \framesubtitle{Struktura kompilatora}
+
+    \begin{figure}[!htp]
+        \centering
+        % \includegraphics[width=9cm]{viuact-pipeline}
+        \includegraphics[width=10cm]{viuact-ogolny-schemat-kompilatora}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
@@ -173,6 +186,16 @@ moredelim=**[is][\color{red}]{@}{@}}
         \end{enumerate}
         \item Komunikacja front-back: via Websocket
     \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{ViuaChat}
+    \framesubtitle{Architektura}
+
+    \begin{figure}[!htp]
+        \centering
+        \includegraphics[width=\textwidth]{pckdiag}
+    \end{figure}
 \end{frame}
 
 \begin{frame}[fragile]
