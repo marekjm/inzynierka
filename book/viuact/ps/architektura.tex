@@ -14,18 +14,18 @@ W kompilatorach ''produkcyjnych'' (np. GCC, Clang, czy ICC) tych faz jest więce
 emisji kodu jest dużo bardziej rozbudowany, oraz dochodzą etapy analizy semantycznej (czy program ma sens) czy
 optymalizacji (prób takiego przekształcenia kodu programu żeby przy zachowaniu znaczenia działał wydajniej).
 
-Kompilator języka ViuAct dostarczany jako element tej pracy inżynierskiej jest pozbawiony etapów
+Kompilator języka \ViuAct\ dostarczany jako element tej pracy inżynierskiej jest pozbawiony etapów
 analizy semantycznej oraz optymalizacji. Analiza semantyczna (oraz weryfikacja typów i wykrywanie błędów na
 etapie kompilacji) jest oddelegowana do assemblera dostarczanego przez platformę. Optymalizacja jest
 całkowicie pominięta gdyż jest to temat niezwykle rozległy; implementacja i doszlifowanie algorytmów
 optymalizujących kod jest sama w sobie materiałem wystarczającym na napisanie osobnej pracy inżynierskiej.
 
-Architektura kompilatora języka ViuAct jest dokładniej opisana w rozdziale
+Architektura kompilatora języka \ViuAct\ jest dokładniej opisana w rozdziale
 \ref{architektura_kompilatora_viuact} (\nameref{architektura_kompilatora_viuact}) na
 stronie \pageref{architektura_kompilatora_viuact}.
 Sposób działania kompilatora jest opisany w rozdziale \ref{opis_etapow_kompilacji}
 (\nameref{opis_etapow_kompilacji}) na stronie \pageref{opis_etapow_kompilacji}.
-Omówienie interakcji kompilatora języka ViuAct z narzędziami dostarczanymi przez platformę Viua VM znajduje
+Omówienie interakcji kompilatora języka \ViuAct\ z narzędziami dostarczanymi przez platformę Viua VM znajduje
 się w rozdziale \ref{lang_architektura_systemu} (\nameref{lang_architektura_systemu}) na stronie
 \pageref{lang_architektura_systemu}.
 
@@ -40,7 +40,7 @@ Rysunek \ref{schemat_interakcji_viuact_z_viuavm} (''\nameref{schemat_interakcji_
 schemat interakcji jakie zachodzą w całym systemie od momentu wczytania pliku źródłowego przez kompilator do
 uruchomienia programu przez jądro Viua VM.
 
-Ostatnią fazą jaką zajmuje się kompilator języka ViuAct dostarczany jako element tej pracy inżynierskiej jest
+Ostatnią fazą jaką zajmuje się kompilator języka \ViuAct\ dostarczany jako element tej pracy inżynierskiej jest
 emisja kodu (''Assembly code emission''), której wynikiem jest plik z kodem źródłowym w języku assemblera Viua
 VM (''\texttt{hello\_world.asm}'' na rysunku \ref{schemat_interakcji_viuact_z_viuavm}).
 Rozdział \ref{architektura_kompilatora_viuact} (\nameref{architektura_kompilatora_viuact}) dokładniej opisuje
@@ -66,10 +66,10 @@ Pliki pomocnicze są wymagane przez ''program łączący'' (opisany w rozdziale 
 \subsection{Dekompozycja systemu na podsystemy}
 \label{architektura_kompilatora_viuact}
 
-Język ViuAct jest implementowany przez dwa programy:
+Język \ViuAct\ jest implementowany przez dwa programy:
 
 \begin{enumerate}
-    \item \textbf{kompilator} - który przetwarza kod źródłowy w języku ViuAct na kod źródłowy w języku
+    \item \textbf{kompilator} - który przetwarza kod źródłowy w języku \ViuAct\ na kod źródłowy w języku
         assemblera Viua VM
     \item \textbf{linker} - który na podstawie wyników pracy kompilatora tworzy pliki wykonywalne, które
         mogą być uruchomione na jądrze Viua VM
@@ -105,13 +105,13 @@ Każdy podsystem implementuje jedną z faz kompilacji:
         konstrukcje językowe
     \item \textbf{lowerer} mapuje grupy wyprodukowane przez \emph{parser} do odpowiednich funkcji
         \emph{emittera}; jest to dość banalny etap, ale upraszcza budowę kompilatora
-    \item \textbf{emitter} tłumaczy konstrukcje językowe ViuAct na równoznaczne konstrukcje w języku
+    \item \textbf{emitter} tłumaczy konstrukcje językowe \ViuAct\ na równoznaczne konstrukcje w języku
         assemblera Viua VM
 \end{enumerate}
 
 Różnica między podsystemami \emph{lowerer} i \emph{emitter} może być niejasna. Oba biorą udział w emisji
 kodu wynikowego, ale \emph{lowerer} bezpośrednio zajmuje się tylko modułami i funkcjami, natomiast
-\emph{emitter} implementuje emisję pojedynczych wyrażeń języka ViuAct -- przypisań \texttt{let}, konstrukcji
+\emph{emitter} implementuje emisję pojedynczych wyrażeń języka \ViuAct\ -- przypisań \texttt{let}, konstrukcji
 warunkowych \texttt{if}, wywołań funkcji, itd.
 
 Proces kompilacji dokłaniej opisany jest w rozdziale \ref{opis_etapow_kompilacji}
@@ -128,7 +128,7 @@ kompilatora (\emph{\texttt{cc1}}), assemblera (\emph{\texttt{as}}), jak i linker
 sposób aby na wyjściu uzyskać oczekiwany wynik, czyli na przykład plik wykonywalny w formacie
 ELF \emph{\texttt{a.out}}.
 
-W przypadku kompilatora ViuAct proces ten wygląda podobnie, ale nie jest aż tak zautomatyzowany.
+W przypadku kompilatora \ViuAct\ proces ten wygląda podobnie, ale nie jest aż tak zautomatyzowany.
 Rolę ,,drivera'' pełni programista, który jest odpowiedzialny za wywołanie zarówno kompilatora jak i linkera.
 Przykładowo:
 
@@ -154,7 +154,7 @@ bytecode'u w gotowy plik wykonywalny.
 \label{opis_etapow_kompilacji}
 
 Ten rozdział zawiera dokładny opis procesu kompilacji, od momentu wczytania
-pliku z kodem źródłowym w języku \ViuAct\phantom{} do momentu wyemitowania kodu
+pliku z kodem źródłowym w języku \ViuAct\ do momentu wyemitowania kodu
 wynikowego w języku assemblera Viua VM. Kompilator jest wywoływany poleceniem
 \texttt{viuact-cc} z opcją \texttt{-}\texttt{-mode} określającą czy kompilowany
 jest moduł wykonywalny (\texttt{exec}) czy moduł biblioteki (\texttt{module}):
@@ -290,7 +290,7 @@ serializacja wyników do stringów.
 
 Emisja instrukcji języka assemblera jest wykonywana per-wyrażenie. Ten etap przeplata się z redukcją poziomu
 wyrażeń i jest implementowany przez \emph{emitter}. \emph{Emitter} emituje sekwencje instrukcji języka
-assemblera Viua VM odpowiadające zadanym konstrukcjom językowym ViuAct.
+assemblera Viua VM odpowiadające zadanym konstrukcjom językowym \ViuAct.
 
 Dla przykładu \texttt{(let x 42)} zostanie wyemitowane jako pojedyncza instrukcja: \texttt{integer \%x local
 42}.  Natomiast \texttt{(Some\_module.frobnicate 42)} zostanie wyemitowane jako sekwencja instrukcji:

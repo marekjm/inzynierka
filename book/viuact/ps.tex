@@ -24,7 +24,7 @@ niskopoziomowe abstrakcje linii programu w języku assemblera -- konstruktor, pr
 
 Każdy typ tokenu jest reprezentowany przez osobną strukturę. Tokeny, oprócz swojego typu mają atrybuty
 określające ich lokalizację w pliku (wiersz i kolumna), oraz pole z leksemem. Typy tokenów wymagane do
-reprezentacji języka \ViuAct są opisane w specyfikacji języka.
+reprezentacji języka \ViuAct\ są opisane w specyfikacji języka.
 
 Definicje struktur reprezentujących tokeny są zawarte w pliku \texttt{viuact/token\_types.py}.
 
@@ -32,7 +32,7 @@ Definicje struktur reprezentujących tokeny są zawarte w pliku \texttt{viuact/t
 \label{diagram_klas_grupy}
 
 Każda konstrukcja językowa jest reprezentowana przez osobną strukturę. Konstrukcje wymagane do reprezentacji
-języka \ViuAct są opisane w specyfikacji języka.
+języka \ViuAct\ są opisane w specyfikacji języka.
 
 Definicje struktur reprezentujących grupy są zawarte w pliku \texttt{viuact/group\_types.py}.
 
@@ -55,7 +55,7 @@ type slot = {
 \end{lstlisting}
 \end{small}
 
-Struktura \texttt{slot} reprezentuje adres rejestru. Z punktu widzenia języka \ViuAct istotne jest pole
+Struktura \texttt{slot} reprezentuje adres rejestru. Z punktu widzenia języka \ViuAct\ istotne jest pole
 \texttt{name} (określające nazwę slotu jaką posługuje się programista); z punktu widzenia emitera kodu istotne
 są pola \texttt{index} i \texttt{register\_set} określające adres rejestru jakim posługuje się Viua VM.
 
@@ -220,7 +220,7 @@ Pliki interfejsów są zapisywane w formacie JSON.
 
 \paragraph{Plik interfejsu dla modułów ''własnych''}
 
-Moduły ''własne'' języka \ViuAct to moduły napisane w języku \ViuAct.
+Moduły ''własne'' języka \ViuAct\ to moduły napisane w języku \ViuAct.
 
 \begin{small}
 \begin{lstlisting}
@@ -255,7 +255,7 @@ W elementach listy \texttt{fns} atrybuty mają następujące znaczenie:
 \paragraph{Plik interfejsu dla modułów ''obcych''}
 \label{pliki_interfejsow_modulow_obcych}
 
-Moduły ''obce'' języka \ViuAct to moduły napisane w języku assemblera Viua VM lub w C++.
+Moduły ''obce'' języka \ViuAct\ to moduły napisane w języku assemblera Viua VM lub w C++.
 
 \begin{small}
 \begin{lstlisting}
@@ -283,7 +283,7 @@ poziomie języka \ViuAct.
 Dwa atrybuty są potrzebne ponieważ na tym poziomie następuje łączenie dwóch ''światów''; języka \ViuAct, który
 narzuca reguły tego jak muszą wyglądać nazwy modułów i funkcji, oraz języka assemblera Viua VM, który takich
 reguł nie narzuca. Dla modułów ''własnych'' atrybuty \texttt{bytecode\_name} jest zbędny ponieważ dla nich
-nazwa widoczna na poziomie \ViuAct i języka assemblera Viua VM jest taka sama.
+nazwa widoczna na poziomie \ViuAct\ i języka assemblera Viua VM jest taka sama.
 
 \subsubsection{Pliki zależności modułów (\texttt{.d})}
 \label{pliki_zaleznosci_modulow}

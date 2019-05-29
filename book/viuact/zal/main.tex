@@ -1,4 +1,4 @@
-\chapter{Język ViuAct i jego kompilator -- założenia}
+\chapter{Język \ViuAct\ i jego kompilator -- założenia}
 \label{viuact_zal}
 
 W tym rozdziale prezentujemy wszelkie ,,formalności'' związane z pierwszą częścią naszej pracy.
@@ -11,30 +11,31 @@ stronie~\pageref{viuact_impl}. Zakresem tych formalności jest:
     \item określenie udziałowców
 \end{itemize}
 
-\section{Język ViuAct i jego kompilator w kontekście}
+\section{Język \ViuAct\ i jego kompilator w kontekście}
 
 \subsection{Kontekst biznesowy}
 
-Docelowym środowiskiem języka ViuAct są urządzenia i programy, których zachowanie ma charakteryzować się wysoką
-niezawodnością i stabilnością (np. urządzenia telekomunikacyjne, oprogramowanie monitorujące i diagnostyczne).
+Docelowym środowiskiem języka \ViuAct\ są urządzenia i programy, których
+zachowanie ma charakteryzować się wysoką niezawodnością i stabilnością (np.
+urządzenia telekomunikacyjne, oprogramowanie monitorujące i diagnostyczne).
 
 \subsection{Charakterystyka użytkowników}
 
-Docelowym użytkownikiem języka i kompilatora ViuAct jest \textbf{programista}.
+Docelowym użytkownikiem języka i kompilatora \ViuAct\ jest \textbf{programista}.
 Oczekuje on od języka narzędzi pozwalających na tworzenie programów odpornych na awarie, poprawnych, i
 prostych w utrzymaniu.
 
-Docelowym użytkownikiem platformy, na której wdrażane są programy napisane w języku ViuAct (czyli platformy
+Docelowym użytkownikiem platformy, na której wdrażane są programy napisane w języku \ViuAct\ (czyli platformy
 prezentowanej przez Viua VM) jest \textbf{administrator}. Oczekuje on od platformy przejrzystego modelu
 wdrożenia i konserwacji instalacji, oraz możliwości monitorowania zachowania wdrożonego oprogramowania.
 
 \subsection{Istniejąca infrastruktura}
 
-Język \ViuAct wchodzi w interakcje z istniejącą infrastrukturą poprzez narzędzia, kanały, i protokoły
+Język \ViuAct\ wchodzi w interakcje z istniejącą infrastrukturą poprzez narzędzia, kanały, i protokoły
 prezentowane przez platformę Viua VM.
 Zakłada się, że ,,istniejąca infrastruktura'' w \emph{miejscu wdrożenia} działającego programu napisanego
-w języku ViuAct jest zgodna z wymaganiami i pozwala na działanie platformy Viua VM.
-Zakłada się, że ,,istniejąca infrastruktura'' w \emph{miejscu wytwarzania} programu w języku \ViuAct jest
+w języku \ViuAct\ jest zgodna z wymaganiami i pozwala na działanie platformy Viua VM.
+Zakłada się, że ,,istniejąca infrastruktura'' w \emph{miejscu wytwarzania} programu w języku \ViuAct\ jest
 zgodna z wymaganiami i pozwala na działanie platformy Viua VM, oraz jest zgodna z wymaganiami
 kompilatora języka \ViuAct.
 
@@ -77,7 +78,7 @@ uwag udziałowców.
     \hline
     \textbf{Priorytet} & M \\
     \hline
-    \textbf{Nazwa} & Projekt języka ViuAct \\
+    \textbf{Nazwa} & Projekt języka \ViuAct \\
     \hline
     \textbf{Opis} & \parbox[t]{11cm}{
         Wymagane jest zaprojektowanie języka programowania wyższego poziomu oraz przygotowanie
@@ -135,7 +136,7 @@ uwag udziałowców.
 
 \subsection{Wymagania funkcjonalne}
 
-Część wymagań funkcjonalnych języka ViuAct jest opisana w rozdziale
+Część wymagań funkcjonalnych języka \ViuAct\ jest opisana w rozdziale
 \ref{viuact_spec}.~\nameref{viuact_spec} na stronie \pageref{viuact_spec}.
 Poniżej opisane są wymagania, które nie mogły być zawarte bezpośrednio w specyfikacji języka (np. sposób
 obsługi i raportowania błędów przez kompilator).
@@ -143,7 +144,7 @@ Interfejs kompilatora jest opisany w rozdziale \ref{viuact_manual} na stronie \p
 
 \subsubsection{Funkcjonalności kompilatora}
 
-W tej sekcji opisane są wymagania dotyczące kompilatora języka ViuAct.
+W tej sekcji opisane są wymagania dotyczące kompilatora języka \ViuAct.
 
 \vspace{1em}
 
@@ -257,7 +258,7 @@ W tej sekcji opisane są wymagania dotyczące kompilatora języka ViuAct.
     \hline
     \textbf{Opis} & \parbox[t]{11cm}{
         Kompilator musi implementować wszystkie konstrukcje językowe opisane w specyfikaji języka
-        ViuAct.
+        \ViuAct.
     } \\
     \hline
     \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
@@ -305,9 +306,9 @@ część Viua VM), sieciami (np. Internet), i operatorami (np. programista).
     \hline
     \textbf{Opis} & \parbox[t]{11cm}{
         Muszą być dostarczone biblioteki umożliwiające przeprowadzanie operacji I/O (\emph{wejścia-wyjścia}).
-        Takie biblioteki mogą być napisane w języku ViuAct, języku assemblera Viua VM, lub języku C++.
+        Takie biblioteki mogą być napisane w języku \ViuAct, języku assemblera Viua VM, lub języku C++.
         W przypadku implementacji w języku assemblera Viua VM lub języku C++ muszą zostać dostarczone pliki
-        umożliwiające kompilatorowi ViuAct wczytanie listy funkcji oferowanych przez taką bibliotekę.
+        umożliwiające kompilatorowi \ViuAct\ wczytanie listy funkcji oferowanych przez taką bibliotekę.
     } \\
     \hline
     \textbf{Udziałowiec} & Członkowie zespołu \\
