@@ -2,17 +2,18 @@
 !.gitignore
 
 *.aux
-*.lof
-*.log
-*.lot
-*.out
-*.pdf
-*.synctex.gz
-*.toc
-*.nav
-*.snm
-*.vrb
 *.bbl
 *.blg
+*.lof
+*.log
+*.lol
+*.lot
+*.nav
+*.out
+*.pdf
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
 
 desktop.ini
