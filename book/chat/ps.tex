@@ -1,6 +1,13 @@
 \section{Architektura systemu}
 \label{chat_architektura_systemu}
 
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/deploy-diag}
+	\caption{Diagram rozmieszczenia elementów architektury systemu ViuaChat}
+	\label{diag-komp}
+\end{figure}
+
 Architektura systemu opiera się na klasycznym modelu klient-serwer.
 
 Klienci będą uzyskiwali dostęp do usługi czatu za pośrednictwem przeglądarki
@@ -58,13 +65,6 @@ Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębny
 	\includegraphics[width=\textwidth]{chat/fig/pck-diag}
 	\caption{Diagram komponentów serwera ViuaChat}
 	\label{diag-komp}
-\end{figure}
-
-\begin{figure}[!htp]
-	\centering
-	\includegraphics[width=\textwidth]{chat/fig/com-diag-init}
-	\caption{Diagram komunikacji pomiędzy aktorami w czasie nawiązywania połączenia}
-	\label{com-diag-init}
 \end{figure}
 
 \begin{labeling}{UsernameLessor}
@@ -126,6 +126,28 @@ Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębny
   \item[\texttt{MessageBuffer}] Przechowuje i odtwarza 10 najnowszych wiadomości wysłanych do pokoju. Występuje po jednym egzemplarzu dla każdego aktywnego aktora \texttt{Room}.
 
 \end{labeling}
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/com-diag-init}
+	\caption{Diagram komunikacji pomiędzy aktorami w czasie nawiązywania połączenia}
+	\label{com-diag-init}
+\end{figure}
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/com-diag-rooms-list}
+	\caption{Diagram komunikacji pomiędzy aktorami w czasie pobierania listy pokojów}
+	\label{com-diag-rooms-list}
+\end{figure}
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/com-diag-room-bind}
+	\caption{Diagram komunikacji pomiędzy aktorami w ramach podpinania do pokoju}
+	\label{com-diag-room-bind}
+\end{figure}
+
 
 \newpage
 
