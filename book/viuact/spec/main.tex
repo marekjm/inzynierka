@@ -24,11 +24,13 @@ jakiejkolwiek współbieżności), izolowanymi od siebie procesami, które komun
 
 \paragraph*{Przekazywanie wiadomości}
 
-Przekazywanie wiadomości w \ViuAct\ jest \emph{bezpośrednie} (wiadomości są przekazywane bezpośrednio między
-dwoma aktorami, bez użycia jakiegokolwiek kanału pośredniczącego), \emph{asynchroniczne} (wiadomość jest
-wysyłana, a kontrola natychmiast wraca do aktora nadawcy bez oczekiwania na odpowiedź od odbiorcy).
-Przekazywanie wiadomości nie daje gwarancji dostarczenia ani kolejności -- implementacja protokołu
-zapewniającego poprawność komunikacji leży po stronie ,,przestrzeni użytkownika''.
+Przekazywanie wiadomości w \ViuAct\ jest \emph{bezpośrednie} (wiadomości są
+przekazywane bezpośrednio między dwoma aktorami, bez użycia jakiegokolwiek
+jawnego kanału pośredniczącego), \emph{asynchroniczne} (wiadomość jest wysyłana,
+a kontrola natychmiast wraca do aktora nadawcy bez oczekiwania na odpowiedź od
+odbiorcy). Przekazywanie wiadomości nie daje gwarancji dostarczenia ani
+kolejności -- implementacja protokołu zapewniającego poprawność komunikacji leży
+po stronie ,,przestrzeni użytkownika''.
 
 \paragraph*{System modułów}
 
