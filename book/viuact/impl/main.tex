@@ -1,4 +1,4 @@
-\chapter{Język ViuAct i jego kompilator -- implementacja}
+\chapter{Język \ViuAct\ i jego kompilator -- implementacja}
 \label{viuact_impl}
 \label{jezyk_viuact_i_jego_kompilator}
 
@@ -6,7 +6,7 @@ Pierwszą częścią naszej pracy jest zaprojektowanie wysokopoziomowego języka
 implementacji. Z uwagi na to, że platforma uruchomieniowa, którą wykorzystujemy (czyli Viua VM) jest maszyną
 wirtualną wykonującą programy w postaci \emph{bytecode} wybranym sposobem implementacji języka jest
 kompilator - program tłumaczący kod źródłowy w jednym języku na kod źródłowy w innym języku przy jednoczesnym
-zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym jest język Viuact (dokładniej
+zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym jest język \ViuAct\ (dokładniej
 opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
 \pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
 
@@ -18,8 +18,8 @@ Sama maszyna wirtualna nie tylko implementuje określone ISA, ale też dostarcza
 zadania typowo związane z systemem operacyjnym takie jak zarządzanie czasem procesora, przydzielanie numerów
 PID, czy nadzór na komunikacją między procesami -- w tym rejonie pomocą była \cite{OperatingSystems}.
 
-Aktory w ViuAct (tak samo jak implementujące je procesy w Viua VM) komunikują się bezpośrednio.
-Dla porównania, język Go (opisany w \cite{Golang}), który podobnie jak ViuAct kładzie duży nacisk na
+Aktory w \ViuAct\ (tak samo jak implementujące je procesy w Viua VM) komunikują się bezpośrednio.
+Dla porównania, język Go (opisany w \cite{Golang}), który podobnie jak \ViuAct\ kładzie duży nacisk na
 współbieżność i równoległość do komunikacji między \emph{goroutines} (jego odmiana procesów) wykorzystuje
 kanały -- używając ,,pośredników'' zamiast skomunikować procesy bezpośrednio.
 

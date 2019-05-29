@@ -9,32 +9,35 @@ Pojęcia są ułożone w kolejności alfabetycznej.
 \label{slownik_pojec_ogolnych}
 
 \begin{labeling}{interakcje języka z platformą}
-    \item [FFI] (ang. \emph{foreign function interface}) interfejs umożliwiający wywoływanie z jednego języka
-        funkcji napisanych w innym języku
-    \item [ViuAct] język wysokiego poziomu, oparty o modelu aktorów, kompilowany
-        do języka asemblera Viua VM
-    \item [Viua VM] maszyna wirtualna, umożliwiająca uruchamianie programów
-        wykorzystujących współbieżność
-    \item[interakcje języka z platformą] wykorzystanie zasobów sprzętowych, operacje I/O, oraz wszelkie
-        efekty uboczne będące wynikiem działania programu
-	\item [Lisp] język programowania zaprezentowany w 1958 roku przez John'a McCarthy'ego
+	\item [BEAM] maszyna wirtualna, na której działa Erlang
 	\item [Erlang] język programowania zaprojektowany w 1986 roku na potrzeby firmy Ericsson przez
 		zespół, w którego skład wchodzili: Joe Armstrong, Robert Virding, Mike Williams
-	\item [BEAM] maszyna wirtualna, na której działa Erlang
-	\item [\emph{userspace}] (ang. przestrzeń użytkownika) abstrakcyjna przestrzeń, w której działają programy
-		,,użytkowe''; w przypadku Viua VM oznacza przestrzeń, w której działają procesy (aktory)
+    \item [FFI] (ang. \emph{foreign function interface}) interfejs umożliwiający wywoływanie z jednego języka
+        funkcji napisanych w innym języku
+    \item[interakcje języka z platformą] wykorzystanie zasobów sprzętowych, operacje I/O, oraz wszelkie
+        efekty uboczne będące wynikiem działania programu
 	\item [\emph{kernelspace}] (ang. przestrzeń jądra) abstrakcyjna przestrzeń, w której działa kod jądra
 		systemu operacyjnego; w przypadku Viua VM oznacza przestrzeń, w której działa sama Viua VM
+	\item [Lisp] język programowania zaprezentowany w 1958 roku przez John'a McCarthy'ego
+	\item [\emph{userspace}] (ang. przestrzeń użytkownika) abstrakcyjna przestrzeń, w której działają programy
+		,,użytkowe''; w przypadku Viua VM oznacza przestrzeń, w której działają procesy (aktory)
+    \item [Viua VM] maszyna wirtualna, umożliwiająca uruchamianie programów
+        wykorzystujących współbieżność
+    \item [\ViuAct] język wysokiego poziomu, oparty o modelu aktorów, kompilowany
+        do języka asemblera Viua VM
 \end{labeling}
 
 \subsection{Pojęcia związane z językiem i kompilatorem}
 \label{slownik_pojec_jezyka}
 
 \begin{labeling}{jednostka translacji}
+    \item[aktory] procesy działające w programie, jednostka podziału programów
+        na współbieżnie działające fragmenty (zobacz
+        ,,\nameref{glossary_actors}'' na stronie \pageref{glossary_actors})
     \item[biblioteka] zbiór modułów
-    \item[\emph{compile-time}] ,,\emph{czas kompilacji}''; czas, w którym program jest kompilowany
-    \item[jądro] podsystem Viua VM odpowiadający za uruchamianie programów (tzw. ''\emph{kernel}'')
-    \item[jednostka translacji] w przypadku języka ViuAct jest to pojedynczy moduł
+    \item[\emph{compile-time}] ,,czas kompilacji''; czas, w którym program jest kompilowany
+    \item[jądro] podsystem Viua VM odpowiadający za uruchamianie programów (tzw. ,,kernel'')
+    \item[jednostka translacji] w przypadku języka \ViuAct\ jest to pojedynczy moduł
     \item[kompilator] program tłumaczący kod w jednym języku (zazwyczaj wysokiego poziomu) na kod o takim
         samym znaczeniu w innym języku (zazwyczaj niższego poziomu)
     \item[leksem] ciąg znaków odpowiadający wzorcowi określającemu możliwe wartości tokenu
@@ -48,18 +51,36 @@ Pojęcia są ułożone w kolejności alfabetycznej.
     \item[moduł] w załeżności od kontekstu: \emph{1/} kod źródłowy modułu w języku \ViuAct, lub \emph{2/} plik
         zawierający bytecode w formacie, który może zostać wykorzystany przez linker bądź jądro Viua VM do
         dołączenia, lub \emph{3/} zbiór funkcji, wyliczeń, i modułów w języku \ViuAct
+    \item[PID] identyfikator procesu, unikalny w trakcie życia procesu w obrębie
+        jednej maszyny wirtualnej (tj. żadne dwa procesy działające w jednym
+        momencie na tej samej maszynie wirtualnej nie będą miały takiego samego
+        identyfikatora)
     \item[plik wykonywalny] plik zawierający bytecode w formacie, który może zostać wykonany przez jądro Viua
         VM
-    \item[runtime] ,,\emph{środowisko uruchomieniowe}''; maszyna wirtualna bądź realna, na której
+    \item[runtime] ,,środowisko uruchomieniowe''; maszyna wirtualna bądź realna, na której
         wykonywany jest program
-    \item[\emph{run-time}] ,,\emph{czas wykonywania}''; czas, w którym program jest wykonywany przez VM;
+    \item[\emph{run-time}] ,,czas wykonywania''; czas, w którym program jest wykonywany przez VM;
         przeciwieństwo \emph{compile-time}
     \item[token] abstrakcyjna reprezentacja konkretnego elementu leksykalnego, np. słowa kluczowego lub
         identyfikatora, składająca się z nazwy typu tokenu i leksemu, który dana instancja tokenu zawiera
-    \item[wzorzec] wyrażenie regularne określające jaką formę mogą przyjąć leksemy danego typu tokenu
 	\item[wiadomość] wiadomość jest to dowolna wartość (np. liczba całkowita,
 		napis, struktura) wysłana przez jednego aktora do drugiego
+    \item[wzorzec] wyrażenie regularne określające jaką formę mogą przyjąć leksemy danego typu tokenu
 \end{labeling}
+
+\paragraph*{Czemu \emph{aktory}, a nie \emph{aktorzy}?}
+\label{glossary_actors}
+
+\emph{Aktorzy} to osoby odgrywające role w teatrze lub filmie. \emph{Aktory} to
+współbieżnie działające, izolowane od siebie procesy. Ten podział nie jest
+sztywno ustalony w środowisku akademickim i poglądy na to, która forma jest
+poprawna są różne. W naszej pracy będziemy korzystać z formy \emph{aktory}
+zawsze kiedy będzie mowa o aktorach w znaczeniu ,,procesów''.
+
+Odmiana przez przypadki względem formy ,,ludzkiej'' różni się dla liczby mnogiej
+dla \textbf{mianownika}, \textbf{biernika} i \textbf{wołacza} gdzie używamy
+formy ,,aktory'' zamiast ,,aktorzy''. Innym tego typu słowem w języku polskim
+jest ,,pilot''.
 
 \subsection{Pojęcia związane z chatem}
 \label{slownik_pojec_chatu}

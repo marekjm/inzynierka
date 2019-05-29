@@ -1,12 +1,12 @@
-\chapter{Specyfikacja języka ViuAct}
+\chapter{Specyfikacja języka \ViuAct}
 \label{viuact_spec}
 \label{specyfikacja_jezyka_viuact} % FIXME zbędny label
 
-ViuAct jest językiem kładącym silny nacisk na funkcjonalność związaną z współbieżnością opartą na modelu
-aktorów. Większość konstrukcji językowych jest wyrażeniami (\emph{expressions}) zamiast ''stwierdzeniami''
+\ViuAct\ jest językiem kładącym silny nacisk na funkcjonalność związaną z współbieżnością opartą na modelu
+aktorów. Większość konstrukcji językowych jest wyrażeniami (\emph{expressions}) zamiast ,,stwierdzeniami''
 (\emph{statements}). Składnia języka przypomina składnię języka Lisp.
 
-Najciekawsze funkcjonalności języka ViuAct to:
+Najciekawsze funkcjonalności języka \ViuAct\ to:
 
 \begin{enumerate}
     \item aktory
@@ -24,25 +24,25 @@ jakiejkolwiek współbieżności), izolowanymi od siebie procesami, które komun
 
 \paragraph*{Przekazywanie wiadomości}
 
-Przekazywanie wiadomości w ViuAct jest \emph{bezpośrednie} (wiadomości są przekazywane bezpośrednio między
+Przekazywanie wiadomości w \ViuAct\ jest \emph{bezpośrednie} (wiadomości są przekazywane bezpośrednio między
 dwoma aktorami, bez użycia jakiegokolwiek kanału pośredniczącego), \emph{asynchroniczne} (wiadomość jest
 wysyłana, a kontrola natychmiast wraca do aktora nadawcy bez oczekiwania na odpowiedź od odbiorcy).
 Przekazywanie wiadomości nie daje gwarancji dostarczenia ani kolejności -- implementacja protokołu
-zapewniającego poprawność komunikacji leży po stronie ''przestrzeni użytkownika''.
+zapewniającego poprawność komunikacji leży po stronie ,,przestrzeni użytkownika''.
 
 \paragraph*{System modułów}
 
-ViuAct zapewnia programiście system modułów. Moduły są automatycznie kompilowane i linkowane, w większości z
+\ViuAct\ zapewnia programiście system modułów. Moduły są automatycznie kompilowane i linkowane, w większości z
 poziomu języka, co redukuje poziom skomplikowania konfiguracji systemów budowania projektu.
 
 \paragraph*{Funkcje zagnieżdżone i niemutowalne domknięcia}
 
-Funkcje w ViuAct mogą być zagnieżdżane, i tworzyć niemutowalne domknięcia (ang. \emph{closures}) -- funkcje,
+Funkcje w \ViuAct\ mogą być zagnieżdżane, i tworzyć niemutowalne domknięcia (ang. \emph{closures}) -- funkcje,
 które odwołują się do zmiennych zdefiniowanych w otaczającej je przestrzeni leksykalnej.
 
 \paragraph*{Dowiązania \emph{\texttt{let}}}
 
-Zmienne w ViuAct są typowane dynamicznie (czyli zmienna może być dowiązana do wartości wielu typów wewnątrz
+Zmienne w \ViuAct\ są typowane dynamicznie (czyli zmienna może być dowiązana do wartości wielu typów wewnątrz
 jednej funkcji), a wartości statycznie (każda wartość ma konkretny typ, który jest śledzony w czasie
 kompilacji). Dowiązania \emph{\texttt{let}} do jednej nazwy mogą być tworzone wiele razy, na przykład:
 
@@ -52,7 +52,7 @@ kompilacji). Dowiązania \emph{\texttt{let}} do jednej nazwy mogą być tworzone
 \end{lstlisting}
 
 Po ponownym dowiązaniu nie jest możliwe dotarcie do poprzednio dowiązanej wartości, ale użycia zmiennej
-''przed'' ponownym dowiązaniem zachowują swoje znaczenie (\emph{prior art}: na takiej samej zasadzie działają
+,,przed'' ponownym dowiązaniem zachowują swoje znaczenie (\emph{prior art}: na takiej samej zasadzie działają
 dowiązania \emph{\texttt{let}} w językach OCaml i Rust).
 
 \section{Model programowania}
@@ -67,7 +67,7 @@ Funkcje są zebrane w modułach.
 
 \subsection{Wykonywanie programu}
 
-Program składa się z jednego lub większej ilości ''aktorów'' (procesów).
+Program składa się z jednego lub większej ilości ,,aktorów'' (procesów).
 Aktory są izolowane od siebie nawzajem i działają równolegle (wszystkie naraz).
 Wewnętrznie, każdy z aktorów wykonywany jest sekwencyjnie, bez jakiejkolwiek
 współbieżności.
@@ -75,7 +75,7 @@ Wykonanie programu rozpoczyna się od funkcji \texttt{main}.
 
 \subsection{Komunikacja między aktorami}
 
-Aktory komunikują się ze sobą za pomocą ''wymiany wiadomości''.
+Aktory komunikują się ze sobą za pomocą ,,wymiany wiadomości''.
 Wymiana wiadomości ma następujące cechy:
 
 \begin{enumerate}
@@ -92,7 +92,7 @@ możliwe zagwarantowanie poprawności komunikacji.
 
 \subsection{Obsługa błędów}
 
-Obsługa błędów jest realizowana za pomocą wyjątków. Viuact oferuje typową
+Obsługa błędów jest realizowana za pomocą wyjątków. \ViuAct\ oferuje typową
 składnię \texttt{try-catch}.
 
 \section{Typy danych}
@@ -112,13 +112,9 @@ Liczba zmiennoprzecinkowa o szerokości 64 bitów kodowana w standardzie IEEE 75
 
 Wartość logiczna reprezentująca prawdę lub fałsz o szerokości 8 bitów
 
-\subsubsection{Tekst}
-
-Ciąg znaków Unicode, kodowany w formacie UTF-8
-
 \subsubsection{String}
 
-Ciąg 8-bitowych bajtów
+Ciąg znaków Unicode, kodowany w formacie UTF-8
 
 \subsection{Typy złożone}
 
@@ -136,7 +132,7 @@ wartość jest mapowana do jednego pola
 \subsubsection{PID}
 
 Wartość identyfikująca aktora w programie.
-Jest to typ dostarczany przez Viua VM. Dla programów pisanych w \ViuAct jest to
+Jest to typ dostarczany przez Viua VM. Dla programów pisanych w \ViuAct\ jest to
 typ nieprzezroczysty.
 
 \section{Konstrukcje języka}
@@ -168,10 +164,10 @@ programu.
 \vspace{1em}
 
 Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
-reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (''\emph{run-time}'')
+reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (\emph{run-time})
 zależnie od wcześniejszego stanu programu.
 
-Większość konstrukcji jezykowych oferowanych przez Viuact może być użyta jako wyrażenie.
+Większość konstrukcji jezykowych oferowanych przez \ViuAct\ może być użyta jako wyrażenie.
 Wyjątki to definicje zmiennych, definicje funkcji, definicje modułów, i przypisanie do pola struktury.
 
 \begin{lstlisting}
@@ -320,7 +316,7 @@ istniało) lub aktualizację wartości przechowywanej w tym polu (jeśli wcześn
 \texttt{function-definition := (let \emph{name} (\emph{formal-parameters}) \emph{expression})}
 \vspace{1em}
 
-O funkcjach w Viuact można myśleć jak o parametryzowanych wyrażeniach.
+O funkcjach w \ViuAct\ można myśleć jak o parametryzowanych wyrażeniach.
 
 \begin{lstlisting}
 (let f (x) (+ x 1))
@@ -488,7 +484,7 @@ najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ,,fina
 
 \subsubsection{Fork-join}
 
-Metoda \emph{fork-join} może być zrealizowana w Viuact za pomocą aktorów. Jeśli wynik wywołania aktora jest
+Metoda \emph{fork-join} może być zrealizowana w \ViuAct\ za pomocą aktorów. Jeśli wynik wywołania aktora jest
 przypisywany do zmiennej, to aktor będzie działał jako ,,\emph{aktor potomny}'' aktora, który go wywołał. Taki
 aktor potomny może być włączony (\emph{join}) za pomocą wywołania funkcji wbudowanej \texttt{Std.Actor.join()}
 z biblioteki standardowej (opisanej na stronie \pageref{Std_Actor_join}).
@@ -558,7 +554,7 @@ Oznacza to, że aktor zamiast zostać zabity zacznie wykonywać funkcję ustawio
 zachowując PID, co może być bardzo przydatne.
 
 Watchdog jest normalną funkcją i może korzystać ze wszystkich dozwolonych konstrukcji językowych.
-Jedynym ograniczeniem jest to, że watchdog musi być napisany w języku ViuAct lub w języku assemblera Viua VM.
+Jedynym ograniczeniem jest to, że watchdog musi być napisany w języku \ViuAct\ lub w języku assemblera Viua VM.
 
 \paragraph*{Argumenty funkcji watchdog}
 
@@ -590,7 +586,7 @@ natychmiast zabity, a watchdog nie będzie uruchomiony przez VM ,,z powodu sameg
 \texttt{(try \emph{expression} ((catch \emph{exception-tag} \emph{name} \emph{expression})+))}
 \vspace{1em}
 
-Obsługa wyjątków w \ViuAct jest mechanizmem bardzo prostym. W momencie, w którym wyjątek jest zgłaszany
+Obsługa wyjątków w \ViuAct\ jest mechanizmem bardzo prostym. W momencie, w którym wyjątek jest zgłaszany
 stos wywołań jest odwijany w poszukiwaniu pierwszego bloku \texttt{catch} z odpowiadającym mu
 tagiem (\texttt{\emph{exception-tag}}).
 
@@ -661,16 +657,17 @@ Nie istnieją komentarze ,,blokowe'' takie jak \texttt{/* komentarz */} z C++ cz
 
 \section{Biblioteka standardowa}
 
-Biblioteka standardowa języka Viuact składa się z modułów implementujących wybrane algorytmy (np. sortowanie)
-i funkcjonalności (np. konwersje między typami danych), oraz umożliwia interakcję ze środowiskiem zewnętrznym
-gdyż Viuact nie posiada wbudowanych w język mechanizmów takiej interakcji.
+Biblioteka standardowa języka \ViuAct\ składa się z modułów implementujących
+wybrane algorytmy (np. sortowanie) i funkcjonalności (np. konwersje między
+typami danych), oraz umożliwia interakcję ze środowiskiem zewnętrznym gdyż
+\ViuAct\ nie posiada wbudowanych w język mechanizmów takiej interakcji.
 
 Część funkcji udostępnianych przez bibliotekę standardową jest niemożliwa do zaimplementowania w języku
-Viuact. Takie funkcje są napisane albo w języku assemblera Viua VM, albo w języku C++.
+\ViuAct. Takie funkcje są napisane albo w języku assemblera Viua VM, albo w języku C++.
 
-Nie wszystkie funkcje biblioteki standardowej są ''normalnymi'' funkcjami, możliwymi do uruchomienia jako
-aktor ponieważ niektóre z nich kompilują się do pojedynczych instrukcji maszyny (funkcje ''wbudowane'') albo
-są napisane w języku C++, który jest niemożliwy do wywłaszczenia przez Viua VM (funkcje ''obce'').
+Nie wszystkie funkcje biblioteki standardowej są ,,normalnymi'' funkcjami, możliwymi do uruchomienia jako
+aktor ponieważ niektóre z nich kompilują się do pojedynczych instrukcji maszyny (funkcje ,,wbudowane'') albo
+są napisane w języku C++, który jest niemożliwy do wywłaszczenia przez Viua VM (funkcje ,,obce'').
 
 Dla takich funkcji programista musi napisać \emph{wrappery} jeśli chce użyć ich jak w niektórych kontekstach.
 Jednak w typowym programie nie będzie to potrzebne, gdyż funkcje biblioteki standardowej zazwyczaj
@@ -816,7 +813,7 @@ Zapisuje string do strumienia.
 \subsection{\texttt{Std.Posix.Network}}
 \label{stdlib_Std_Posix_Network}
 
-Moduł udostępniający implementację ''POSIX sockets''. Jest to cienka abstrakcja nad API dostarczanym przez
+Moduł udostępniający implementację ,,POSIX sockets''. Jest to cienka abstrakcja nad API dostarczanym przez
 system operacyjny; w przypadku braków w tym dokumencie ich dokumentację można wydedukować ze stron manuala
 sekcji 3 dostarczanych przez program \texttt{man(1)} (np. dokumentację dla funkcji
 \texttt{Std.Posix.Network.socket} można uzyskać wykonując polecenie \texttt{man 3 socket}).
@@ -980,14 +977,14 @@ Zwraca losową liczbę całkowitą z przedziału [\texttt{\emph{lower}}, \texttt
 
 \section{Interakcja z platformą}
 
-''Platformą'' w przypadku Viuact jest Viua VM. Narzuca to pewne ograniczenia związane ze środowiskiem, w
-którym programy napisane w języku Viuact można skompilować i uruchomić. Wynika to z faktu, że Viua VM sama w
+,,Platformą'' w przypadku \ViuAct\ jest Viua VM. Narzuca to pewne ograniczenia związane ze środowiskiem, w
+którym programy napisane w języku \ViuAct\ można skompilować i uruchomić. Wynika to z faktu, że Viua VM sama w
 sobie ma pewną platformę i wymagania.
 
 \subsection{Platforma kompilacji}
 
-Do kompilacji programów napisanych w Viuact potrzebny jest interpreter języka Python 3 w wersji co najmniej
-3.6. Jest to jedyne ograniczenie, ponieważ na etapie kompilacji Viuact nie odwołuje się do żadnego elementu
+Do kompilacji programów napisanych w \ViuAct\ potrzebny jest interpreter języka Python 3 w wersji co najmniej
+3.6. Jest to jedyne ograniczenie, ponieważ na etapie kompilacji \ViuAct\ nie odwołuje się do żadnego elementu
 Viua VM.
 
 \subsection{Platforma asemblacji i linkowania}
