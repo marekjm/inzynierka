@@ -123,7 +123,7 @@ Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębny
 
   \item[\texttt{Room}] Działa jak router wiadomości i przechowuje listę użytkowników którzy są do niego wpięci. Istnieje w tylu egzemplarzach, ile jest aktywnych pokojów.
 
-  \item[\texttt{MessageCache}] Przechowuje i odtwarza 10 najnowszych wiadomości wysłanych do pokoju. Występuje po jednym egzemplarzu dla każdego aktywnego aktora \texttt{Room}.
+  \item[\texttt{MessageBuffer}] Przechowuje i odtwarza 10 najnowszych wiadomości wysłanych do pokoju. Występuje po jednym egzemplarzu dla każdego aktywnego aktora \texttt{Room}.
 
 \end{labeling}
 
@@ -285,6 +285,16 @@ wielordzeniowym procesorem. Nie ma tu znaczenia, w jakiej architekturze
 zrealizowano określony procesor. Za uruchamianie poszczególnych wątków odpowiada
 bowiem Viua VM.
 
+Urządzenia, które mają zaprezentować funkcjonowanie systemu w wykorzystaniu
+przez użytkowników końcowych, to komputery przenośne (laptopy), jeden z systemem
+operacyjnym Windows 10, a drugi -- z zainstalowaną dystrybucją Linux Mint, o
+której wspomniano wcześniej w kontekście środowiska wytwórczego. Zaplanowano
+również wykorzysanie dwóch urządzeń mobilnych. Jedno z nich jest tabletem z
+rodziny Samsung Galaxy, a drugim -- smartfon LG K11. Oba z nich są wyposażone
+w dystrybucje systemu operacyjnego Android oraz przeglądarkę Google Chrome.
+Dodanie urządzeń mobilnych do zestawu demonstracyjnego ma przede wszystkim
+uczynić zadość wymaganiu WS-03.
+
 \subsection{Środowisko implementacji}
 Pierwszym kryterium przy doborze składników środowiska implementacyjnego była
 spójność z rozwiązaniami produkcyjnymi. Miało to pozwolić uniknąć problemów
@@ -334,11 +344,11 @@ następującą budowę:
       'argument2' : 'abc'
     },
     'seq': 1,
-		'session_key': 'ugduwdfohhoifiergijwipjiwejrijewipj'
+		'session_key': 'abcdef123456'
   }
 \end{lstlisting}
 
-Kolejne parametry:
+Kolejne własności obiektu, wyrażonego w notacji JSON:
 \begin{itemize}
 	\item \texttt{fn} -- łańcuch znaków, który wskazuje, jakiej funkcjonalności
 	(operacji) dotyczy wysłany komunikat (np. \texttt{auth} przy autoryzacji
@@ -388,7 +398,8 @@ Z kolei, w przypadku błędu po stronie serwera, komunikat wygląda następując
 }
 \end{lstlisting}
 
-Poniżej wskazano, jakie typy i znaczenia mają kolejne parametry:
+Poniżej wskazano, jakie typy i znaczenia mają kolejne własności obiektu w
+notacji JSON:
 \begin{itemize}
 	\item \texttt{seq} -- liczba całkowita, przepisana z wiadomości od klienta,
 	pozwalająca zorientować się, jakiej komendy dotyczy wysłany komunikat.
@@ -742,7 +753,7 @@ Wszystkie komunikaty asynchroniczne mają tę samą budowę:
   {
     'content': 'Hej!'
   },
-  'session_key': 'ugduwdfohhoifiergijwipjiwejrijewipj'
+  'session_key': 'abcdef123456'
 }
 \end{lstlisting}
 

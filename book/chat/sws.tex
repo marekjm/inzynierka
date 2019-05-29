@@ -1,12 +1,12 @@
 \section{Wprowadzenie}
 
-Ostatnią częścią pracy inżynierskiej jest program ViuaChat - chat internetowy o funkcjonalności podobnej do IRC.
+Ostatnią częścią pracy inżynierskiej jest program ViuaChat - chat internetowy o funkcjonalności podobnej do IRC\footnote{IRC (\textit{ang. Internet Relay Chat}) -- usługa sieciowa, pozwalająca na tekstową komunikację w czasie rzeczywistym.}.
 Umożliwia użytkownikom logowanie się do sieci, zakładanie pokojów tematycznych do rozmów, oraz rozmowy
 ,,prywatne'' (tj. wyłączne dla dwóch użytkowników).
 
 W poniższym rozdziale zdefiniowano wymagania dla czatu ViuaChat. Ich opracowanie nastąpiło na podstawie analizy otoczenia aplikacji oraz analizy potrzeb projektu w stosunku do niej. W ramach tego procesu nastąpiły:
 \begin{itemize}
-    \item analiza otoczenia, wraz z z klientami;
+    \item analiza otoczenia, wraz z klientami;
     \item wskazanie kontekstu biznesowego systemu;
     \item określenie udziałowców;
 	\item wyszczególnienie i uporządkowanie zasad biznesowych, jakie zostały założone w stosunku do aplikacji;
@@ -105,8 +105,11 @@ Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
     \hline
     \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & \colorbox{yellow}{...} \\
-
+    } & \parbox[t]{12cm}{\strut
+      \begin{labreq}
+          \item[WS-01] W rozwiązaniu należy wykorzystać środowisko Viua VM i język ViuAct.
+      \end{labreq}
+      \strut} \\
     \hline
 \end{tabular}
 
@@ -172,8 +175,23 @@ Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
     \hline
     \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & \colorbox{yellow}{...} \\
-
+    } & \parbox[t]{12cm}{\strut
+      \begin{labreq}
+        \item[WF-03] Jako użytkownik serwera czatu, chcę po wpięciu do
+        pokoju zobaczyć ostatnie wiadomości wysłane przed moim
+        dołączeniem, aby dowiedzieć się, co się tam obecnie dzieje.
+        \item[WF-12] Jako administrator, chcę utworzyć
+        nowy pokój, aby umożliwić użytkownikom konwersację w węższym
+        gronie.
+        \item[WF-13] Jako administrator, chcę usunąć
+        zbędny pokój, aby utrzymać podrządek na swoim serwerze.
+        \item[WS-01] W rozwiązaniu należy wykorzystać
+        środowisko Viua VM i język ViuAct.
+        \item[WW-02] W procesie wytwórczym należy
+        uprzednio przygotować specyfikację przypadków użycia -- co
+        wynika z wymagań uczelni.
+      \end{labreq}
+      \strut} \\
     \hline
 \end{tabular}
 
@@ -237,7 +255,22 @@ Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
     \hline
     \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & \colorbox{yellow}{...} \\
+    } & \parbox[t]{12cm}{\strut
+      \begin{labreq}
+          \item[WF-01] Jako użytkownik serwera czatu, chcę się do
+          niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
+          \item[WF-02] Jako użytkownik serwera czatu, chcę się
+          wpiąć do pokoju, aby wziąć udział w dyskusji.
+          \item[WF-04] Jako użytkownik serwera czatu, chcę wysłać wiadomość do pokoju w który jestem wpięty, aby zobaczyli ją inni uczestnicy dyskusji.
+          \item[WF-09] Jako użytkownik serwera czatu, chcę wysłać
+          wiadomość prywatną do jednego użytkownika, aby prowadzić
+          z nim ciągłą konwersację.
+          \item[HN-02] Loginy i hasła administratorów są gromadzone
+          w plikach konfiguracyjnych, a po uruchomieniu serwera --
+          w jego pamięci podręcznej.
+          \item[WS-01] W rozwiązaniu należy wykorzystać środowisko Viua VM i język ViuAct.
+      \end{labreq}
+      \strut} \\
 
     \hline
 \end{tabular}
@@ -297,7 +330,18 @@ Poniżej wyszczególniono udziałowców, mających wpływ na rozwój czatu.
     \hline
     \parbox[t]{3cm}{
     	\textbf{Wymagania}
-    } & \colorbox{yellow}{...} \\
+    } &
+    \parbox[t]{12cm}{\strut
+      \textbf{Wszystkie, za wyjątkiem:}
+      \begin{labreq}
+          \item[HN-02] Loginy i hasła administratorów są gromadzone
+          w plikach konfiguracyjnych, a po uruchomieniu serwera --
+          w jego pamięci podręcznej.
+          \item[WW-02] W procesie wytwórczym należy uprzednio
+          przygotować specyfikację przypadków użycia -- co wynika z
+          wymagań uczelni.
+      \end{labreq}
+      \strut}\\
 
     \hline
 \end{tabular}
@@ -313,13 +357,9 @@ modelowych użytkowników docelowego oprogramowania:
 		niszczone po jego zakończeniu. Podczas łączenia z czatem, nie będzie musiał się autoryzować przy użyciu hasła, a deklarować
 		tylko unikalną nazwę, nie powtarzającą się z nazwą innego użytkownika, posiadającego konto na danym serwerze czatu.
 
-	\item \textbf{Użytkownik stały.} Typ użytkownika, którego W
-		zamierzeniu, adresatami takiego rozwiązania mają być stali bywalcy serwera, którzy chcą mieć zarezerwowaną określoną nazwę
-		dla siebie i uniknąć ewentualnego podszywania się. Stąd
-
 	\item \textbf{Administrator.} To użytkownik, który jest dodatkowo wyróżniony i posiada uprawienia do szeroko pojętego
 		zarządzania serwerem (w tym - pozostałymi użytkownikami). Konto administratora jest utrzymywane przez serwer pomiędzy połączeniami do czatu. Każdorazowo, przed rozpoczęciem sesji połączenia z serwerem, muszą się dodatkowo autoryzować przy użyciu hasła. Równocześnie, ich nazwa jest zarezerwowana wyłącznie do jego użytku oraz niedostępna
-		dla użytkowników tymczasowych.Nie wyróżnia się wśród administratorów żadnych dodatkowych, szczególnych
+		dla użytkowników tymczasowych. Nie wyróżnia się wśród administratorów żadnych dodatkowych, szczególnych
 		ról (np. superadministrator, właściciel).
 
 \end{enumerate}
@@ -349,31 +389,17 @@ szkolnych, uczelnianych czy hobbystycznych.
 		użytkownika łączącego się z czatem oraz za handshake Websocketu}
 	\end{itemize}
 
-	\item \textit{\textbf{Do uzupełnienia}
-	\begin{itemize}
-		\item Kolejne urządzenie końcowe (trzecie), dzięki któremu będzie można symulować połączenie kolejnej
-		osoby do usługi czatu
-	\end{itemize}}
-
+  \item \textbf{Smartfon C}
+  \begin{itemize}
+    \item telefon LG K11 z systemem operacyjnym Android
+    \item przeglądarka mobilna Google Chrome
+  \end{itemize}
 \end{itemize}
-
 \section{Zasady biznesowe}
 
 Zidentyfikowane zasady pogrupowano w 3 kategorie, biorąc pod uwagę podstawowe bloki funkcjonalności. Przydzielenie
 do kategorii jest sygnalizowanie literą alfabetu, będącą prefiksem identyfikatora danej zasady. Numeracja identyfikatorów może być nieciągła, gdyż
 część z wymagań została usunięta w trakcie prac nad dokumentacją.
-
-Dokonano
-również priorytetyzacji zasad biznesowych według klasycznej skali ,,MoSCoW":
-
-\begin{itemize}
-	\item \textbf{,,M''} (z ang. \textit{must}) - zasady, których spełnienie jest niezbędne dla realizacji systemu
-	\item \textbf{,,S''} (z ang. \textit{should}) - są to zasady o wysokim priorytecie, które powinny;
-	zostać spełnione, o ile tylko jest to możliwe;
-	\item \textbf{,,C''} (z ang. \textit{could}) - dobrze byłoby zrealizować takie wymagania, ale zależy to od czasu
-	i zasobów, jakie pozostaną do dyspozycji po ukończeniu zadań ,,M" i ,,C";
-	\item \textbf{,,W''} (z ang. \textit{won't}) - takie wymagania, po dyskusji, zostały wycofane dalszej realizacji.
-\end{itemize}
 
 \newpage
 
@@ -1008,7 +1034,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 	\hline
 		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
-			Jako użytkownik serwera czatu, chcę chcę wysłać
+			Jako użytkownik serwera czatu, chcę wysłać
 			wiadomość do pokoju w który jestem wpięty, aby
 			zobaczyli ją inni uczestnicy dyskusji.
 		\strut}\\
@@ -1336,7 +1362,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+		\parbox[t]{4cm}{\strut \textbf{Powiązane zasady biznesowe}\strut} \strut & \parbox[t]{11.5cm}{\strut
     ZU-12 Administratorzy mają prawo tworzyć i usuwać pokoje.
 		\strut}\\
 
@@ -1371,7 +1397,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 		\strut}\\
 
 	\hline
-		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+		\parbox[t]{4cm}{\strut\textbf{Powiązane zasady biznesowe}\strut} & \parbox[t]{11.5cm}{\strut
     ZU-12 Administratorzy mają prawo tworzyć i usuwać pokoje.
 		\strut}\\
 
@@ -1537,7 +1563,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 	\hline
 		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
-			ZU-03 Nazwa użytkownika to ciąg od 3 do 32 alfanumerycznych znaków.
+			ZU-03 Nazwa użytkownika to ciąg od 2 do 32 alfanumerycznych znaków.
 		\strut}\\
 
 	\hline
@@ -1562,7 +1588,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 	\hline
 		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
 			Loginy i hasła administratorów są gromadzone w plikach
-      konfiguracyjnych, a po uruchomieniu serwera - w jego
+      konfiguracyjnych, a po uruchomieniu serwera -- w jego
       pamięci operacyjnej.
 		\strut}\\
 
@@ -1626,7 +1652,8 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 	\hline
 		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
-			Nazwy pokojów mają od 3 do 32 znaków alfanumerycznych długości, bez
+			Nazwy pokojów mają od 3 do 32 znaków alfanumerycznych długości,
+      przy czym nigdy dwa pokoje nie mają tej samej nazwy.
 		\strut}\\
 
 	\hline
@@ -1825,7 +1852,7 @@ Ponieważ obraną metodologią wytwarzania aplikacji jest \textit{mini-Scrum}, n
 
 	\hline
 		\textbf{Treść} & \parbox[t]{13cm}{
-			W procesie wytwórczym należy korzystać uprzednio przygotować specyfikację przypadków użycia - co wynika z wymagań uczelni.
+			W procesie wytwórczym należy uprzednio przygotować specyfikację przypadków użycia -- co wynika z wymagań uczelni.
 		}\\
 
 	\hline
