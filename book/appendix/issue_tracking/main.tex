@@ -1,0 +1,58 @@
+\chapter{Narzędzie śledzenia zadań \texttt{issue}}
+\label{issue_tracking_tool}
+
+Narzędzie \texttt{issue} jest to rozproszony system śledzenia zadań.
+Zapewnia ono również wysoką ergonomię i prędkość pracy w środowisku tekstowym,
+oraz niezbędne minimum funkcjonalności potrzebne do wykonania typowych operacji
+związanych ze śledzeniem zadań w projekcie programistycznym. Narzędzie to jest
+rozwijane jako Free~Software na licencji GNU~GPL v3 i jest dostępne do pobrania
+z serwisu GitHub: \url{https://github.com/marekjm/issue}
+
+\section{Dane w rozproszonym systemie śledzenia zadań}
+
+Informacje o zadaniach, które są zachowywane obejmują:
+
+\begin{enumerate}
+\item tytuł i opis zadania
+\item datę utworzenia zadania i datę zamknięcia zadania
+\item osobę tworzącą i zamykającą zadanie
+\item globalnie unikalny identyfikator (GUID) zadania
+\item komentarze
+\item tagi
+\end{enumerate}
+
+Wszystkie modyfikacje są realizowane \emph{offline} i zapisywane w formie plików
+,,zmian'' w zadaniu. Takie ,,rozproszenie'' stanu każdego zadania na mnóstwo
+mniejszych plików powoduje, że baza danych systemu \texttt{issue} musi być
+okresowo indeksowana żeby jej stan prezentowany użytkownikowi nie był
+przekłamany, a jednocześnie uniknąć konsolidowania wszystkich zmian dotyczących
+zadania za każdym razem kiedy jest ono pokazywane użytkownikowi.
+
+Decyzja o rozbiciu stanu zadania na mnóstwo małych plików jest wymuszona przez
+inną decyzję projektową -- rozproszenie systemu i umożliwienie pracy całkowicie
+\emph{offline}, co jest jedną z najważniejszych funkcjonalności \texttt{issue}.
+Zdecydowanie łatwiej jest pobrać wiele mniejszych plików i utworzyć z nich
+lokalny indeks niż projektować algorytm rozproszonej współpracy i negocjowania
+zmian w plikach.
+
+,,Baza danych'' programu issue to po prostu zbiór plików umieszczonych w
+określonej strukturze katalogów. Umożliwia to bezproblemowe zagnieżdżenie jej
+w repozytorium systemu kontroli wersji Git. Narzędzie \texttt{issue} dostarcza
+również swój własny sposób dystrybucji plików opisujących zadania dla osob,
+które nie chcą zagnieżdżać repozytorium \texttt{issue} w repozytorium kodu
+źródłowego. Takie zagnieżdżenie jest jednak zalecaną strategią pracy z
+narzędziem \texttt{issue}.
+
+\section{Operacje}
+
+Operacje, które są oferowane przez \texttt{issue} to między innymi:
+
+\begin{enumerate}
+\item otwieranie nowych zadań
+\item zamykanie zadań
+\item łączenie zadań w drzewa (tworzy to zależności między zadaniami, a otwarte
+    zadanie ,,liść'' uniemożliwia zamknięcie zadania ,,gałęzi'')
+\item automatyczne tworzenie gałęzi w systemie śledzenia wersji Git na podstawie
+    tytułów zadań
+\item komentowanie zadań
+\end{enumerate}

@@ -6,7 +6,7 @@ Opis projektu języka i jego implementacji prezentujemy w rozdziale \nameref{viu
 stronie~\pageref{viuact_impl}. Zakresem tych formalności jest:
 
 \begin{itemize}
-    \item analiza otoczenia, wraz z z klientami
+    \item analiza otoczenia, wraz z klientami
     \item wskazanie kontekstu biznesowego systemu
     \item określenie udziałowców
 \end{itemize}
@@ -85,7 +85,7 @@ uwag udziałowców.
         jego specyfikacji.
     } \\
     \hline
-    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
     \hline
     \textbf{Wymagania powiązane} & WD-01 \\
     \hline
@@ -99,14 +99,14 @@ uwag udziałowców.
     \hline
     \textbf{Priorytet} & M \\
     \hline
-    \textbf{Nazwa} & Implementacja kompilatora \\
+    \textbf{Nazwa} & Implementacja kompilatora języka \ViuAct \\
     \hline
     \textbf{Opis} & \parbox[t]{11cm}{
         Wymagana jest implementacja kompilatora przetwarzającego kod źródłowy napisany w języku
         wyższego poziomu (zaprojektowanym w punkcie WD-02) na kod w języku assemblera Viua VM.
     } \\
     \hline
-    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
     \hline
     \textbf{Wymagania powiązane} & WD-02 \\
     \hline
@@ -126,7 +126,7 @@ uwag udziałowców.
         Musi powstać implementacja czatu napisana w języku zaprojektowanym w punkcie WD-02.
     } \\
     \hline
-    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
     \hline
     \textbf{Wymagania powiązane} & \parbox[t]{11cm}{
         WD-03 (\emph{do wykonania tego wymagania niezbędny jest kompilator})
@@ -165,7 +165,7 @@ W tej sekcji opisane są wymagania dotyczące kompilatora języka \ViuAct.
         logiczny to program wynikowy również będzie go zawierać.
     } \\
     \hline
-    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
     \hline
     \textbf{Wymagania powiązane} & \phantom{} \\
     \hline
@@ -216,7 +216,7 @@ W tej sekcji opisane są wymagania dotyczące kompilatora języka \ViuAct.
         \end{enumerate}
     } \\
     \hline
-    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
     \hline
     \textbf{Wymagania powiązane} & \phantom{} \\
     \hline
@@ -261,11 +261,19 @@ W tej sekcji opisane są wymagania dotyczące kompilatora języka \ViuAct.
         \ViuAct.
     } \\
     \hline
-    \textbf{Udziałowiec} & Promotor, członkowie zespołu \\
+    \textbf{Udziałowiec} & Promotor, Uczelnia, członkowie zespołu \\
     \hline
     \textbf{Wymagania powiązane} & \phantom{} \\
     \hline
 \end{tabular}
+
+\vspace{1em}
+
+Wymaganie WF-01 czyli ,,Zachowanie znaczenia programu podczas kompilacji'' jest
+trudne do spełnienia, ponieważ nie jesteśmy w stanie przetestować wszystkich
+programów możliwych do napisania w języku \ViuAct. Z tego powodu, między innymi,
+testy kompilatora języka \ViuAct\ zostały wykonane jako testy pojedynczych
+konstrukcji językowych -- np. konstrukcji warunkowych i wyrażeń złożonych.
 
 \subsubsection{Interfejs z otoczeniem}
 
@@ -302,7 +310,7 @@ część Viua VM), sieciami (np. Internet), i operatorami (np. programista).
     \hline
     \textbf{Priorytet} & M \\
     \hline
-    \textbf{Nazwa} & Biblioteki implementujące operacji I/O \\
+    \textbf{Nazwa} & Biblioteki implementujące operacje I/O \\
     \hline
     \textbf{Opis} & \parbox[t]{11cm}{
         Muszą być dostarczone biblioteki umożliwiające przeprowadzanie operacji I/O (\emph{wejścia-wyjścia}).
@@ -346,7 +354,7 @@ W tej sekcji opisane są wymagania dotyczące kompilatora języka \ViuAct.
 
 \begin{tabular}{ | l | l | }
     \hline
-    \textbf{Identyfikator} & \parbox[t]{11cm}{PW-01} \\
+    \textbf{Identyfikator} & \parbox[t]{11cm}{PW-02} \\
     \hline
     \textbf{Priorytet} & S \\
     \hline
@@ -354,7 +362,7 @@ W tej sekcji opisane są wymagania dotyczące kompilatora języka \ViuAct.
     \hline
     \textbf{Opis} & \parbox[t]{11cm}{
         Testy kompilatora powinny obejmować jak największe spektrum możliwych konstrukcji językowych i
-        ich kombinacji. W uwagi na to, że jest niemożliwym przetestowanie kompilatora na wszystkich
+        ich kombinacji. Z uwagi na to, że jest niemożliwym przetestowanie kompilatora na wszystkich
         możliwych do napisania programach ,,kompletność'' jest względna, a to wymaganie zakłada jedynie, że
         nie powinna istnieć konstrukcja językowa, która nie będzie przetestowana. \\
         \textbf{Uwaga}: Ostatecznym testem kompilatora pozostaje kompilacja czatu ViuaChat, który jest
