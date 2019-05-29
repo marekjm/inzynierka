@@ -3,7 +3,7 @@
 \label{specyfikacja_jezyka_viuact} % FIXME zbędny label
 
 \ViuAct\ jest językiem kładącym silny nacisk na funkcjonalność związaną z współbieżnością opartą na modelu
-aktorów. Większość konstrukcji językowych jest wyrażeniami (\emph{expressions}) zamiast ''stwierdzeniami''
+aktorów. Większość konstrukcji językowych jest wyrażeniami (\emph{expressions}) zamiast ,,stwierdzeniami''
 (\emph{statements}). Składnia języka przypomina składnię języka Lisp.
 
 Najciekawsze funkcjonalności języka \ViuAct\ to:
@@ -28,7 +28,7 @@ Przekazywanie wiadomości w \ViuAct\ jest \emph{bezpośrednie} (wiadomości są 
 dwoma aktorami, bez użycia jakiegokolwiek kanału pośredniczącego), \emph{asynchroniczne} (wiadomość jest
 wysyłana, a kontrola natychmiast wraca do aktora nadawcy bez oczekiwania na odpowiedź od odbiorcy).
 Przekazywanie wiadomości nie daje gwarancji dostarczenia ani kolejności -- implementacja protokołu
-zapewniającego poprawność komunikacji leży po stronie ''przestrzeni użytkownika''.
+zapewniającego poprawność komunikacji leży po stronie ,,przestrzeni użytkownika''.
 
 \paragraph*{System modułów}
 
@@ -52,7 +52,7 @@ kompilacji). Dowiązania \emph{\texttt{let}} do jednej nazwy mogą być tworzone
 \end{lstlisting}
 
 Po ponownym dowiązaniu nie jest możliwe dotarcie do poprzednio dowiązanej wartości, ale użycia zmiennej
-''przed'' ponownym dowiązaniem zachowują swoje znaczenie (\emph{prior art}: na takiej samej zasadzie działają
+,,przed'' ponownym dowiązaniem zachowują swoje znaczenie (\emph{prior art}: na takiej samej zasadzie działają
 dowiązania \emph{\texttt{let}} w językach OCaml i Rust).
 
 \section{Model programowania}
@@ -67,7 +67,7 @@ Funkcje są zebrane w modułach.
 
 \subsection{Wykonywanie programu}
 
-Program składa się z jednego lub większej ilości ''aktorów'' (procesów).
+Program składa się z jednego lub większej ilości ,,aktorów'' (procesów).
 Aktory są izolowane od siebie nawzajem i działają równolegle (wszystkie naraz).
 Wewnętrznie, każdy z aktorów wykonywany jest sekwencyjnie, bez jakiejkolwiek
 współbieżności.
@@ -75,7 +75,7 @@ Wykonanie programu rozpoczyna się od funkcji \texttt{main}.
 
 \subsection{Komunikacja między aktorami}
 
-Aktory komunikują się ze sobą za pomocą ''wymiany wiadomości''.
+Aktory komunikują się ze sobą za pomocą ,,wymiany wiadomości''.
 Wymiana wiadomości ma następujące cechy:
 
 \begin{enumerate}
@@ -164,7 +164,7 @@ programu.
 \vspace{1em}
 
 Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
-reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (''\emph{run-time}'')
+reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (\emph{run-time})
 zależnie od wcześniejszego stanu programu.
 
 Większość konstrukcji jezykowych oferowanych przez \ViuAct\ może być użyta jako wyrażenie.
@@ -665,9 +665,9 @@ typami danych), oraz umożliwia interakcję ze środowiskiem zewnętrznym gdyż
 Część funkcji udostępnianych przez bibliotekę standardową jest niemożliwa do zaimplementowania w języku
 \ViuAct. Takie funkcje są napisane albo w języku assemblera Viua VM, albo w języku C++.
 
-Nie wszystkie funkcje biblioteki standardowej są ''normalnymi'' funkcjami, możliwymi do uruchomienia jako
-aktor ponieważ niektóre z nich kompilują się do pojedynczych instrukcji maszyny (funkcje ''wbudowane'') albo
-są napisane w języku C++, który jest niemożliwy do wywłaszczenia przez Viua VM (funkcje ''obce'').
+Nie wszystkie funkcje biblioteki standardowej są ,,normalnymi'' funkcjami, możliwymi do uruchomienia jako
+aktor ponieważ niektóre z nich kompilują się do pojedynczych instrukcji maszyny (funkcje ,,wbudowane'') albo
+są napisane w języku C++, który jest niemożliwy do wywłaszczenia przez Viua VM (funkcje ,,obce'').
 
 Dla takich funkcji programista musi napisać \emph{wrappery} jeśli chce użyć ich jak w niektórych kontekstach.
 Jednak w typowym programie nie będzie to potrzebne, gdyż funkcje biblioteki standardowej zazwyczaj
@@ -813,7 +813,7 @@ Zapisuje string do strumienia.
 \subsection{\texttt{Std.Posix.Network}}
 \label{stdlib_Std_Posix_Network}
 
-Moduł udostępniający implementację ''POSIX sockets''. Jest to cienka abstrakcja nad API dostarczanym przez
+Moduł udostępniający implementację ,,POSIX sockets''. Jest to cienka abstrakcja nad API dostarczanym przez
 system operacyjny; w przypadku braków w tym dokumencie ich dokumentację można wydedukować ze stron manuala
 sekcji 3 dostarczanych przez program \texttt{man(1)} (np. dokumentację dla funkcji
 \texttt{Std.Posix.Network.socket} można uzyskać wykonując polecenie \texttt{man 3 socket}).
@@ -977,7 +977,7 @@ Zwraca losową liczbę całkowitą z przedziału [\texttt{\emph{lower}}, \texttt
 
 \section{Interakcja z platformą}
 
-''Platformą'' w przypadku \ViuAct\ jest Viua VM. Narzuca to pewne ograniczenia związane ze środowiskiem, w
+,,Platformą'' w przypadku \ViuAct\ jest Viua VM. Narzuca to pewne ograniczenia związane ze środowiskiem, w
 którym programy napisane w języku \ViuAct\ można skompilować i uruchomić. Wynika to z faktu, że Viua VM sama w
 sobie ma pewną platformę i wymagania.
 

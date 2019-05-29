@@ -7,7 +7,7 @@ W programie istnieją dwie główne grupy struktur opisujące elementy języka -
 (reprezentujących konstrukcje językowe), struktura reprezentująca adres rejestru (abstrakcyjny ,,slot'' na
 wartości), struktura reprezentująca stan kompilowanego programu, oraz cztery struktury reprezentujące
 niskopoziomowe abstrakcje linii programu w języku assemblera -- konstruktor, przeniesienie, wywołanie, i
-,,\emph{verbatim}''.
+\emph{verbatim}.
 
 \begin{quote}
     Listingi przedstawiające wykorzystywane struktury danych jest podany w języku OCaml.
@@ -141,7 +141,7 @@ Typy wywołań opisane są w specyfikacji języka;
 \texttt{Tail} w \ref{viuact_spec_tail_call} (strona \pageref{viuact_spec_tail_call}),
 \texttt{Deferred} w \ref{viuact_spec_deferred_call} (strona \pageref{viuact_spec_deferred_call}).
 
-\subsubsection{Linia ,,\emph{verbatim}''}
+\subsubsection{Linia \emph{verbatim}}
 \label{diagram_klas_linia_verbatim}
 
 \begin{small}
@@ -194,7 +194,7 @@ Dyskusja na temat algorytmów i sposobu implementacji jest częściowo przeprowa
 
 Kompilator składa się z dwóch programów: \texttt{viuact-cc} (kompilatora właściwego) i \texttt{viuact-opt}
 (programu łączącego). Programy te są konfigurowane za pomocą zmiennych środowiskowych, które kontrolują poziom
-''głośności'' logów, położenie assemblera Viua VM, a także włączają bądź wyłączają serializację formy
+,,głośności'' logów, położenie assemblera Viua VM, a także włączają bądź wyłączają serializację formy
 pośredniej.
 
 Interfejs użytkownika opisany jest w rozdziale \ref{viuact_manual}~,,\nameref{viuact_manual}''
@@ -211,16 +211,16 @@ Jest ona opisana w rozdziale \ref{viuact_spec} na stronie \pageref{viuact_spec}.
 \label{pliki_interfejsow_modulow}
 
 Pliki interfejsów modułów wyliczają funkcje eksportowane przez dany moduł, oraz prezentują metadane wymagane
-do połączenia plików w sposób, który będzie mógł działać na Viua VM. Pliki interfejsu dla modułów ''własnych''
-nie różnią się zasadniczą strukturą od plików interfejsu dla modułów ''obcych'', ale pliki interfejsu dla
-modułów ''obcych'' muszą być uzupełnione o kilka dodatkowych pól. Jest to dokładniej opisane w rozdziale
+do połączenia plików w sposób, który będzie mógł działać na Viua VM. Pliki interfejsu dla modułów ,,własnych''
+nie różnią się zasadniczą strukturą od plików interfejsu dla modułów ,,obcych'', ale pliki interfejsu dla
+modułów ,,obcych'' muszą być uzupełnione o kilka dodatkowych pól. Jest to dokładniej opisane w rozdziale
 \ref{pliki_interfejsow_modulow_obcych} na stronie \pageref{pliki_interfejsow_modulow_obcych}.
 
 Pliki interfejsów są zapisywane w formacie JSON.
 
-\paragraph{Plik interfejsu dla modułów ''własnych''}
+\paragraph{Plik interfejsu dla modułów ,,własnych''}
 
-Moduły ''własne'' języka \ViuAct\ to moduły napisane w języku \ViuAct.
+Moduły ,,własne'' języka \ViuAct\ to moduły napisane w języku \ViuAct.
 
 \begin{small}
 \begin{lstlisting}
@@ -239,23 +239,23 @@ Moduły ''własne'' języka \ViuAct\ to moduły napisane w języku \ViuAct.
 \end{lstlisting}
 \end{small}
 
-Atrybut \texttt{foreign} określa czy moduł jest ''obcy'' (\texttt{true}) czy ''własny'' (\texttt{false}).
+Atrybut \texttt{foreign} określa czy moduł jest ,,obcy'' (\texttt{true}) czy ,,własny'' (\texttt{false}).
 Atrybut \texttt{real\_name} określa nazwę modułu tak jak będzie prezentowana na poziomie bytecode'u.
 Atrybut \texttt{fns} jest listą funkcji, które są przez dany moduł eksportowane.
 
 W elementach listy \texttt{fns} atrybuty mają następujące znaczenie:
 
 \begin{enumerate}
-    \item \texttt{arity} określa ''moc'' funkcji
+    \item \texttt{arity} określa liczbę parametrów formalnych funkcji
     \item \texttt{name} określa nazwę funkcji widoczną z poziomu języka \ViuAct
     \item \texttt{real\_name} określa pełną nazwę funkcji widoczną z poziomu bytecode'u
     \item \texttt{from\_module} określa pełną nazwę modułu, z którego pochodzi dana funkcja
 \end{enumerate}
 
-\paragraph{Plik interfejsu dla modułów ''obcych''}
+\paragraph{Plik interfejsu dla modułów ,,obcych''}
 \label{pliki_interfejsow_modulow_obcych}
 
-Moduły ''obce'' języka \ViuAct\ to moduły napisane w języku assemblera Viua VM lub w C++.
+Moduły ,,obce'' języka \ViuAct\ to moduły napisane w języku assemblera Viua VM lub w C++.
 
 \begin{small}
 \begin{lstlisting}
@@ -275,14 +275,14 @@ Moduły ''obce'' języka \ViuAct\ to moduły napisane w języku assemblera Viua 
 \end{lstlisting}
 \end{small}
 
-Różnicą w stosunku do plików interfejsu dla modułow ''własnych'' jest dodatkowy atrybut w deklaracji
+Różnicą w stosunku do plików interfejsu dla modułow ,,własnych'' jest dodatkowy atrybut w deklaracji
 eksportowanej funkcji -- \texttt{bytecode\_name} określający nazwę funkcji na poziomie bytecode'u. Nazwa ta
 nie musi pokrywać się z nazwą w atrybucie \texttt{real\_name}, który określa pełną nazwę funkcji widoczną na
 poziomie języka \ViuAct.
 
-Dwa atrybuty są potrzebne ponieważ na tym poziomie następuje łączenie dwóch ''światów''; języka \ViuAct, który
+Dwa atrybuty są potrzebne ponieważ na tym poziomie następuje łączenie dwóch ,,światów''; języka \ViuAct, który
 narzuca reguły tego jak muszą wyglądać nazwy modułów i funkcji, oraz języka assemblera Viua VM, który takich
-reguł nie narzuca. Dla modułów ''własnych'' atrybuty \texttt{bytecode\_name} jest zbędny ponieważ dla nich
+reguł nie narzuca. Dla modułów ,,własnych'' atrybuty \texttt{bytecode\_name} jest zbędny ponieważ dla nich
 nazwa widoczna na poziomie \ViuAct\ i języka assemblera Viua VM jest taka sama.
 
 \subsubsection{Pliki zależności modułów (\texttt{.d})}
@@ -312,7 +312,7 @@ W elementach listy \texttt{imports} atrybuty mają następujące znaczenie:
 \begin{enumerate}
     \item \texttt{module\_name} określa pełną nazwę modułu z punktu widzenia języka \ViuAct
     \item \texttt{real\_name} określa pełną nazwę modułu widoczną z poziomu bytecode'u
-    \item \texttt{foreign} określa czy moduł jest ''własny'' (\texttt{false}) czy ''obcy'' (\texttt{true})
+    \item \texttt{foreign} określa czy moduł jest ,,własny'' (\texttt{false}) czy ,,obcy'' (\texttt{true})
 \end{enumerate}
 
 \section{Opis implementacji}
@@ -419,7 +419,7 @@ jest z jaką konstrukcją mamy do czynienia:
 
 Wykorzystanie notacji polskiej (notacji prefiksowej) i takie zaprojektowanie
 składni, że każda konstrukcja ma stałą ,,szerokość'' pozwala na zastosowanie
-chwytu ,,\emph{pierwszy token decyduje}''. Sprawia to też, że język ma
+chwytu ,,pierwszy token decyduje''. Sprawia to też, że język ma
 rozpoznawalne tempo i styl, a konsekwencja układu nadaje mu elegancji.
 
 % Żeby ten ostatni akapit był nieco oddzielony od głównego tekstu. On ma tylko
