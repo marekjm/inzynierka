@@ -102,36 +102,80 @@ Obsługa błędów jest realizowana za pomocą wyjątków. \ViuAct\ oferuje typo
 składnię \texttt{try-catch}.
 
 \section{Typy danych}
+\label{viuact_spec_datatypes}
+
+Ten rozdział opisuje typy danych jakie mogą być używane w języku \ViuAct. Każda
+wartość użyta w programie napisanym w języku \ViuAct\ jest wartością jednego z
+typów wymienionych w tym rozdziale -- czasem będąc kombinacją niektórych z nich,
+na przykład ,,wskaźnik do liczby całkowitej'' lub ,,wektor PID-ów''.
 
 \subsection{Typy proste}
 
 \subsubsection{Liczba całkowita}
 \label{viuact_spec_datatypes_simple_integer}
 
-Liczba całkowita ze znakiem, o szerokości 64 bitów, kodowana z dopełnienem do dwóch
+Liczba całkowita ze znakiem, o szerokości 64 bitów, kodowana z dopełnienem do
+dwóch. Liczba całkowita jest typem liczbowym.
+
+Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
+całkowitoliczbowej \texttt{0}.
 
 \subsubsection{Liczba zmiennoprzecinkowa}
 
-Liczba zmiennoprzecinkowa o szerokości 64 bitów kodowana w standardzie IEEE 754-2008
+Liczba zmiennoprzecinkowa podwójnej precyzji o szerokości 64 bitów kodowana w
+standardzie IEEE~754-2008. Liczba całkowita jest typem liczbowym.
+
+Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
+zmiennoprzecinkowej \texttt{0.0}.
 
 \subsubsection{Wartość boolowska}
 
-Wartość logiczna reprezentująca prawdę lub fałsz o szerokości 8 bitów
+Wartość logiczna o szerokości 8 bitów reprezentująca prawdę lub fałsz.
 
 \subsubsection{String}
 
-Ciąg znaków Unicode, kodowany w formacie UTF-8
+Ciąg znaków Unicode, kodowany w formacie UTF-8. Maksymalna długość stringu to
+$2^{64}$ znaków.
+
+Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
+reprezentujących puste napisy (napisy o długości 0).
 
 \subsection{Typy złożone}
 
 \subsubsection{Wektor}
 
-Sekwencja wartości dowolnych typów danych, indeksowana od 0
+Sekwencja wartości dowolnych typów danych, indeksowana od 0. Maksymalna długość
+wektora to $2^{64}$ elementów. Wektory zawierają elementy jednego typu.
+Program, który wykorzystuje wektory przechowujące elementy różnych typów jest
+niepoprawny.
+
+Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
+reprezentujących puste wektory (wektory o długości 0).
 
 \subsubsection{Struktura}
 
-Struktura agregująca wartości dowolnych typów danych, w której jedna
-wartość jest mapowana do jednego pola
+Struktura agregująca wartości dowolnych (różnych) typów danych. Struktury
+ewoluują dynamicznie, a przypisanie wartości do pól struktury odbywa się w
+czasie wykonywania.
+
+Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
+reprezentujących puste struktury (struktury nie mające żadnego pola).
+
+\subsection{Typy referencyjne}
+
+\subsubsection{Wskaźnik}
+
+Wskaźnik umożliwia niebezpośrednie przekazanie informacji o pewnej innej
+wartości i może być użyty do odczytania bądź zmodyfikowania wartości, na którą
+wskazuje.
+
+W przeciwieństwie do wskaźników w językach takich jak C i C++ wskaźniki w języku
+\ViuAct\ są bezpieczne -- nie wskazują na lokalizacje w pamięci lub rejestry, a
+na \emph{wartości}.
+
+Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
+reprezentujących ,,martwe'' wskaźniki (wskaźniki wskazujące na wartość, która
+już nie istnieje).
 
 \subsection{Typy platformy}
 
@@ -139,7 +183,14 @@ wartość jest mapowana do jednego pola
 
 Wartość identyfikująca aktora w programie.
 Jest to typ dostarczany przez Viua VM. Dla programów pisanych w \ViuAct\ jest to
-typ nieprzezroczysty.
+typ nieprzezroczysty\footnote{Typ nieprzezroczysty czyli tzw. \emph{opaque~type}
+to typ, który nie może być analizowany i modyfikowany bezpośredni z poziomu
+języka.}.
+
+Przy konwersji do typu boolowskiego przyjmuje fałsz dla wszystkich wartości.
+Używanie wartości typu PID jako wartości typu boolowskiego jest niezalecane
+ponieważ taka konwersja nie ma sensu praktycznego, a udostępniana jest jedynie
+dla zachowania spójności języka.
 
 \section{Konstrukcje języka}
 
