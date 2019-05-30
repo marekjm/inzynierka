@@ -220,14 +220,20 @@ programu.
 \texttt{expression := \{ \emph{expression}+ \}}
 \vspace{1em}
 
-Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów jest to wartość, którą bezpośrednio
-reprezentują; w przypadku innych wyrażeń wartość ta jest określana na etapie wykonania (\emph{run-time})
-zależnie od wcześniejszego stanu programu.
+Wyrażenia zwracają wartość, którą reprezentują. W przypadku literałów (linie od
+1 do 4 na listingu \ref{lst:language_expressions_example}) jest to wartość,
+którą bezpośrednio reprezentują; w przypadku innych wyrażeń (linie od 5 do 8 na
+listingu \ref{lst:language_expressions_example}) wartość ta jest określana na
+etapie wykonania zależnie od wcześniejszego stanu programu. Dla wyrażeń
+złożonych (listing \ref{lst:language_expressions_compound_example})
+obowiązują specjalne zasady opisane w rozdziale \ref{language_expressions_compound}
+na stronie \pageref{language_expressions_compound}.
 
-Większość konstrukcji jezykowych oferowanych przez \ViuAct\ może być użyta jako wyrażenie.
-Wyjątki to definicje zmiennych, definicje funkcji, definicje modułów, i przypisanie do pola struktury.
+Większość konstrukcji jezykowych oferowanych przez \ViuAct\ może być użyta jako
+wyrażenie. Wyjątki to definicje zmiennych, definicje funkcji, definicje modułów,
+i przypisanie do pola struktury.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Przykłady wyrażeń},label={lst:language_expressions_example}]
 42
 true
 3.14
@@ -236,16 +242,10 @@ x
 (print x)
 (actor server_loop sock)
 (+ x 1)
-
-; compound expression
-{
-    (let x 42)
-    (print (+ x 1))
-    x
-}
 \end{lstlisting}
 
 \subsubsection{Wyrażenia złożone}
+\label{language_expressions_compound}
 
 Wyrażenia złożone są wyrażeniami składającymi się z kilku wyrażeń ograniczonych nawiasami klamrowymi.
 Wyrażenia składowe wyrażenia złożonego są wykonywane po kolei, a końcowa wartość wyrażenia złożonego jest
@@ -253,7 +253,7 @@ wartością ostatniego wyrażenia składowego.
 
 Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \texttt{42}:
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Wyrażenie złożone},label={lst:language_expressions_compound_example}]
 {
     (let x 42)
     (print x)
@@ -262,21 +262,25 @@ Wartością zwracaną wyrażenia złożonego przedstawionego poniżej będzie \t
 }
 \end{lstlisting}
 
-Wyrażenia złożone mogą być dowolnie zagnieżdżane. Mimo iż składają się z potencjalnie wielu wyrażeń
-wyrażenia złożone są traktowane jako jedno wyrażenie -- mogą być wykorzystywane wszędzie tam gdzie składnia
-języka wymaga użycia pojedynczego wyrażenia (definicje funkcji, wyrażenia kontrolne w konstrukcji warunkowej,
-wyrażenia obsługi w konstrukcji \texttt{try}, itp.). Na przykładzie poniżej prezentowane jest dowiązanie
-\emph{\texttt{let}} do wartości wyrażenia złożonego:
+Wyrażenia złożone mogą być dowolnie zagnieżdżane. Mimo iż składają się z
+potencjalnie wielu wyrażeń wyrażenia złożone są traktowane jako jedno wyrażenie
+-- mogą być wykorzystywane wszędzie tam gdzie składnia języka wymaga użycia
+pojedynczego wyrażenia (definicje funkcji, wyrażenia kontrolne w konstrukcji
+warunkowej, wyrażenia obsługi w konstrukcji \texttt{try}, itp.). Na przykładzie
+poniżej prezentowane jest dowiązanie \emph{\texttt{let}} (przedstawione
+dokładniej w rozdziale \ref{viuact_spec_let_binding}) do wartości wyrażenia
+złożonego:
 
 \begin{lstlisting}
 (let x {
-    (let z (do_stuff))
+    (let z (Std.Random.random))
     (print z)
     z
 })
 \end{lstlisting}
 
 \subsection{Definicje zmiennych}
+\label{viuact_spec_let_binding}
 
 \texttt{let-binding := (let \emph{name} \emph{expression})}
 \vspace{1em}
