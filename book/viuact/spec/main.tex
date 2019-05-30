@@ -390,6 +390,7 @@ O funkcjach w \ViuAct\ można myśleć jak o parametryzowanych wyrażeniach.
     (print x)
     (+ x 1)
 })
+(let apply (f x) (f x))
 \end{lstlisting}
 
 \subsubsection{Parametry formalne}
@@ -419,13 +420,21 @@ wskaźnik będzie skopiowany, nie wartość, na którą on wskazuje.
 
 \subsubsection{Ciało funkcji}
 
-Ciało funkcji jest reprezentowane jednym wyrażeniem (może to być wyrażenie złożone).
-Wyrażenia są opisane w rozdziale
-\ref{language_expressions} na stronie \pageref{language_expressions}.
+Ciało funkcji jest reprezentowane jednym wyrażeniem (może to być wyrażenie
+złożone). Wyrażenia są opisane w rozdziale \ref{language_expressions} na stronie
+\pageref{language_expressions}.
 
 \subsubsection{Wartość zwracana}
 
-Wartość zwracana z funkcji jest wartością, do której ewaluuje wyrażenie będące jej ciałem.
+Wartość zwracana z funkcji jest wartością, do której ewaluuje wyrażenie będące
+jej ciałem.
+
+\subsubsection{Rekurencja}
+
+W języku \ViuAct\ nie istnieją pętle. Sposobem na uzyskanie iteracji jest
+rekurencja, ze szczególnym uwzględnieniem rekurencji ogonowej (opisanej w
+rozdziale \ref{viuact_spec_tail_call} na stronie
+\pageref{viuact_spec_tail_call}).
 
 \subsection{Definicje modułów}
 \label{viuact_spec_module_definition}
@@ -453,12 +462,14 @@ składające się na definicję modułu.
 \texttt{fn-call := (\emph{id} \emph{expression}*)}
 \newline
 
-Wywołanie funkcji jest reprezentowane przez podanie jej nazwy w nawiasach okrągłych, po której podane jest
-zero lub więcej wyrażeń, których wartości zostaną przypisane do odpowiednich parametrów formalnych.
+Wywołanie funkcji jest reprezentowane przez podanie jej nazwy w nawiasach
+okrągłych, po której podane jest zero lub więcej wyrażeń, których wartości
+zostaną przypisane do odpowiednich parametrów aktualnych.
 
-Funkcje, których definicje znajdują się w innych modułach niż aktualnie przetwarzany muszą być poprzedzone
-pełną ścieżką do modułu, w którym są zdefiniowane (np. \texttt{Std.Posix.Network.socket}). Jedynie funkcje
-znajdujące się w tym samym module mogą być wywoływane bez pełnej ścieżki.
+Funkcje, których definicje znajdują się w innych modułach niż aktualnie
+przetwarzany muszą być poprzedzone pełną ścieżką do modułu, w którym są
+zdefiniowane (np. \texttt{Std.Posix.Network.socket}). Jedynie funkcje znajdujące
+się w tym samym module muszą być wywoływane bez pełnej ścieżki.
 
 \subsection{Wywołanie ,,tailcall''}
 \label{viuact_spec_tail_call}
@@ -466,29 +477,49 @@ znajdujące się w tym samym module mogą być wywoływane bez pełnej ścieżki
 \texttt{(tailcall \emph{id} \emph{expression}*)}
 \newline
 
-Wywołania \emph{tailcall} powodują wywołanie funkcji nowej funkcje ,,wykorzystując'' ramkę obecnej funkcji.
-W praktyce powodują natychmiastowe zdjęcie obecnej ramki ze stosu (co powoduje destrukcję wszystkich wartości
-w rejestrach lokalnych obecnej ramki, oraz uruchomienie wszelkich wywołań odroczonych) i wepchnięcie na szczyt
+Wywołania \emph{tailcall} powodują wywołanie funkcji ,,wykorzystując'' ramkę
+obecnej funkcji. W praktyce powodują natychmiastowe zdjęcie obecnej ramki ze
+stosu (co powoduje destrukcję wszystkich wartości w rejestrach lokalnych obecnej
+ramki, oraz uruchomienie wszelkich wywołań odroczonych) i wepchnięcie na szczyt
 stosu ramki dla funkcji wywołanej \emph{tailcall}.
 
-Wywołanie \emph{tailcall} nie ma bezpośredniej wartości zwracanej, ponieważ nie da się jej zaobserwować.
-Wywołanie \emph{tailcall} ,,porywa'' (ang. ,,hijacks'') punkt, do którego powinna zwrócić wartość funkcja,
-która wykonała takie wywołanie -- i dopiero ten punkt zaobserwuje de facto wartość zwróconą przez wywołanie
-\emph{tailcall}, ale z jego punktu widzenia wygląda to tak jakby tą wartość zwróciła funkcja, którą on
-bezpośrednio wywołał.
+Wywołanie \emph{tailcall} nie ma bezpośredniej wartości zwracanej, ponieważ nie
+da się jej zaobserwować. Wywołanie \emph{tailcall} ,,porywa'' (ang. ,,hijacks'')
+punkt, do którego powinna zwrócić wartość funkcja, która wykonała takie
+wywołanie -- i dopiero ten punkt zaobserwuje de facto wartość zwróconą przez
+wywołanie \emph{tailcall}, ale z jego punktu widzenia wygląda to tak jakby tą
+wartość zwróciła funkcja, którą on bezpośrednio wywołał.
 
 \begin{lstlisting}
 (let g (x) (+ x 1))
 
-(let f (x) (tailcall g x))  ; call frame of f() is replaced by g()
+(let f (x) (tailcall g x))  ; ramka %*wywołania*) funkcji f()
+                            ; %*zastępowana ramką*) g()
+(let fa (x) (g x))          ; funkcja f() bez tail cal
 
 (let main () {
-    (let i (f 41))  ; here, i will be bound to value returned by g()
+    (let i (f 41))  ; w tym miejscu "i" jest przypisane do
+                    ; wyniku g()
     0
 })
 \end{lstlisting}
 
 Podmiana ramki jest niedostrzegalna dla wywołującego oryginalną funkcję.
+
+\subsubsection{Zastosowania}
+
+Wywołania \emph{tailcall} są wykorzystywane do implementacji iteracji (co jest
+niezbędne przy przetwarzaniu wektorów), oraz przy obsłudze błędów za pomocą
+funkcji \emph{watchdog} (opisanych w rozdziale \ref{viuact_spec_watchdog_call}
+na stronie \pageref{viuact_spec_watchdog_call}) gdzie pozwala na podmianę
+funkcji głównej bez zmiany PID aktora.
+
+Wywołania \emph{tailcall} są również przydatne w typowym wzorcu wykorzystywanym
+w języku \ViuAct\ czyli \emph{init-impl} -- ,,inicjalizacja i implementacja''.
+Funkcja inicjalizująca tworzy i konfiguruje nowego aktora, a następnie wykonuje
+wywołanie w pozycji ogonowej do funkcji implementacji. Po zakończeniu
+inicjalizacji funkcja przeprowadzająca ją nie jest już potrzebna więc jej ramka
+może zostać zastąpiona ramką innej funkcji bez żadnego problemu.
 
 \subsection{Wywołanie odroczone}
 \label{viuact_spec_deferred_call}
@@ -503,7 +534,6 @@ wyjątek, czy wywołanie \emph{tailcall}.
 
 Wywołania odroczone są wykonywane w odwrotnej kolejności rejestracji. Jeśli odroczone wywołanie \texttt{f()}
 zostanie zarejestrowane przed odroczonym wywołaniem \texttt{g()}, to zostanie wykonane po nim. Dla przykładu:
-
 \begin{lstlisting}
 (let f () (print "from f()"))
 (let g () (print "from g()"))
@@ -516,21 +546,22 @@ zostanie zarejestrowane przed odroczonym wywołaniem \texttt{g()}, to zostanie w
 \end{lstlisting}
 
 Wywołując funkcję \texttt{h()} na standardowym wyjściu pojawi się następujący tekst:
-
-\begin{verbatim}
+\begin{lstlisting}
 from h()
 from g()
 from f()
-\end{verbatim}
+\end{lstlisting}
 
-Funkcja uruchomiona w wywołaniu odroczonym może zarejestrować swoje wywołania odroczone; takie wywołania
-mogą być zagnieżdżane bez ograniczeń.
+Funkcja uruchomiona w wywołaniu odroczonym może zarejestrować swoje wywołania
+odroczone; takie wywołania mogą być zagnieżdżane bez ograniczeń.
 
-Wywołania odroczone są uruchamiane po zakończeniu działania funkcji, w której zostały zarejestrowane, ale
-przed zniszczeniem wartości, które były umieszczone w jej zmiennych lokalnych. Ten fakt może zostać
-wykorzystany do implementacji zarządzania zasobami -- jeśli wywołanie odroczone ma jakikolwiek uchwyt (np.
-wskaźnik) do zasobu to może wykonać dla niego jakąś logikę finalizacji. W takim celu po utworzeniu zasobu
-najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ,,finalizacji''.
+Wywołania odroczone są uruchamiane po zakończeniu działania funkcji, w której
+zostały zarejestrowane, ale przed zniszczeniem wartości, które były umieszczone
+w jej zmiennych lokalnych. Ten fakt może zostać wykorzystany do implementacji
+zarządzania zasobami -- jeśli wywołanie odroczone ma jakikolwiek uchwyt
+(np.~wskaźnik) do zasobu to może wykonać dla niego jakąś logikę finalizacji.
+W takim celu po utworzeniu zasobu najlepiej od razu zarejestrować wywołanie
+odroczone, które dokona jego ,,finalizacji''.
 
 \begin{lstlisting}
 (let f () {
@@ -542,6 +573,13 @@ najlepiej od razu zarejestrować wywołanie odroczone, które dokona jego ,,fina
     ; ...
 })
 \end{lstlisting}
+
+\subsubsection{Wywołania odroczone, a \emph{tailcall}}
+
+Wywołania odroczone są związane z ramką wywołania, w której zostały
+zarejestrowane. Jeśli ta ramka jest zastępowana inną z powodu wywołania
+\emph{tailcall} tu tuż \textbf{przed} zastąpieniem ramki uruchamiane są
+wszystkie zarejestrowane wywołania odroczone.
 
 \subsection{Wywołanie aktora}
 \label{viuact_spec_actor_call}
