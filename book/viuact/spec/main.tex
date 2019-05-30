@@ -78,8 +78,8 @@ Wykonanie programu rozpoczyna się od funkcji \texttt{main}.
 
 \subsection{Komunikacja między aktorami}
 
-Aktory komunikują się ze sobą za pomocą ,,wymiany wiadomości''.
-Wymiana wiadomości ma następujące cechy:
+Aktory komunikują się ze sobą za pomocą ,,wymiany wiadomości''. Wymiana
+wiadomości ma następujące cechy:
 
 \begin{enumerate}
     \item jest asynchroniczna (nadawca nie jest blokowany do momentu aż odbiorca otrzyma
@@ -88,6 +88,9 @@ Wymiana wiadomości ma następujące cechy:
         dotrze do odbiorcy)
     \item nie daje gwarancji kolejności dostarczenia (nadawca nie ma gwarancji w jakiej
         kolejności wysłane przez niego wiadomości dotrą do odbiorcy)
+    \item wiadomością może być dowolna wartość, która może być reprezentowana w
+        języku \ViuAct. Typy wartości opisane są w rozdziale
+        \ref{viuact_spec_datatypes} na stronie \pageref{viuact_spec_datatypes}.
 \end{enumerate}
 
 Ten model wymiany wiadomości jest warunkowany faktem, że nie jest fizycznie
