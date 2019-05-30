@@ -322,12 +322,17 @@ Binarne operatory logiczne pobierają dwie wartości, i produkują wartość log
 
 \subsubsection{Operatory binarne (dwuargumentowe) arytmetyczne}
 
-Operatory arytmetyczne pobierają dwie wartości liczbowe i produkują wartość liczbową zgodną z typem operandu
-lewej strony (\emph{left-hand side}).
+Operatory arytmetyczne pobierają dwie wartości liczbowe i produkują wartość
+liczbową zgodną z typem operandu lewej strony (\emph{left-hand side}).
 
 \begin{lstlisting}
 let op : Ta -> Tb -> Ta
 \end{lstlisting}
+
+Przed wykonaniem operacji wartość operandu prawej strony (\emph{right-hand side})
+jest konwertowana na wartość odpowiadającą typowi operandu lewej strony. Liczby
+zmiennoprzecinkowe są zaokrąglane w dół (\emph{floor}) podczas konwersji na
+liczby całkowite.
 
 \begin{labeling}{+}
     \item[\texttt{+}] dodaje dwie wartości liczbowe
