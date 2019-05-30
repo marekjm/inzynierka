@@ -590,10 +590,12 @@ wszystkie zarejestrowane wywołania odroczone.
 
 \subsubsection{Fork-join}
 
-Metoda \emph{fork-join} może być zrealizowana w \ViuAct\ za pomocą aktorów. Jeśli wynik wywołania aktora jest
-przypisywany do zmiennej, to aktor będzie działał jako ,,\emph{aktor potomny}'' aktora, który go wywołał. Taki
-aktor potomny może być włączony (\emph{join}) za pomocą wywołania funkcji wbudowanej \texttt{Std.Actor.join()}
-z biblioteki standardowej (opisanej na stronie \pageref{Std_Actor_join}).
+Metoda \emph{fork-join} może być zrealizowana w \ViuAct\ za pomocą aktorów.
+Jeśli wynik wywołania aktora jest przypisywany do zmiennej, to aktor będzie
+działał jako \emph{aktor potomny} aktora, który go wywołał. Taki aktor potomny
+może być włączony (\emph{join}) za pomocą wywołania funkcji wbudowanej
+\texttt{Std.Actor.join()} z biblioteki standardowej (opisanej na
+stronie~\pageref{Std_Actor_join}).
 
 \begin{lstlisting}
 (let p (actor foo x))           ; %*aktor stworzony z funkcji foo*)
@@ -602,9 +604,10 @@ z biblioteki standardowej (opisanej na stronie \pageref{Std_Actor_join}).
                                 ; %*w zmiennej result*)
 \end{lstlisting}
 
-Funkcja \texttt{Std.Actor.join()} zwraca wartość, którą zwróciła funkcja uruchomiona jako aktor lub wyjątek,
-który tego aktora zabił. Aktor pochodny nie utworzy zrzutu stosu -- w razie awarii jego wyjątek jest
-zachowywyany i czeka na włączenie.
+Funkcja \texttt{Std.Actor.join()} zwraca wartość, którą zwróciła funkcja
+uruchomiona jako aktor lub wyjątek, który tego aktora zabił. Aktor pochodny nie
+utworzy zrzutu stosu -- w razie awarii jego wyjątek jest zachowywyany i czeka na
+włączenie.
 
 \subsubsection{Wolne aktory}
 
@@ -647,6 +650,7 @@ Konstrukcja warunkowa składa się z trzech wyrażeń:
 \end{lstlisting}
 
 \subsection{Wywołanie ,,watchdog''}
+\label{viuact_spec_watchdog_call}
 
 \texttt{(watchdog \emph{name} \emph{expression}*)}
 \newline
