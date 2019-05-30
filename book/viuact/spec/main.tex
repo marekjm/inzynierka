@@ -441,15 +441,17 @@ rozdziale \ref{viuact_spec_tail_call} na stronie
 
 \texttt{inline-module-definition := (module \emph{module-name} (
 \newline
-\phantom{inline-module-definition := ~ }\emph{module-definition}*
+\phantom{inline-module-definition := ~}\emph{module-definition}*
 \newline
-\phantom{inline-module-definition := ~ }\emph{import}*
+\phantom{inline-module-definition := ~}\emph{module-import}*
 \newline
-\phantom{inline-module-definition := ~ }\emph{function-definition}+
+\phantom{inline-module-definition := ~}\emph{function-definition}+
 ))}
 \newline
 \texttt{module-definition := (module \emph{module-name}) \\
 \phantom{module-definition :}| \emph{inline-module-definition}}
+\newline
+\texttt{module-import := (import \emph{module-name})}
 \newline
 
 Moduł jest zbiorem definicji modułów, deklaracji import, i definicji funkcji.
