@@ -180,13 +180,15 @@ przypasowaniu pozycja, która będzie rozpatrywana przez lexer jest przesuwana o
 wygenerowanego tokenu i lexer rozpoczyna pracę od nowa. Ten proces trwa do momentu aż cały string wejściowy
 nie zostanie przeanalizowany, albo odrzucony jako nieprawidłowy.
 
-Algorytm przypasowania jest banalny. Lexer dysponuje listę wzorców (określonych przez wyrażenia regularne),
-które określają jak wygląda każdy możliwy token w języku. Lexer po kolei próbuje przypasować każdy wzorzec z
-listy i kończy na pierwszym trafieniu. Jeśli żaden wzorzec nie może zostać przypisany lexer odrzuca kod
-źródłowy jako nieprawidłowy.
+Algorytm przypasowania jest banalny. Lexer dysponuje listą wzorców (określonych
+przez wyrażenia regularne), które określają jak wygląda każdy możliwy token w
+języku. Lexer po kolei próbuje przypasować każdy wzorzec z listy i kończy na
+pierwszym trafieniu. Jeśli żaden wzorzec nie może zostać przypisany lexer
+odrzuca kod źródłowy jako nieprawidłowy.
 
-Wzorce są uszeregowane w taki sposób żeby nie była możliwa pomyłka i
-na przykład przypasowanie początku nazwy zmiennej \texttt{letter} jako słowa kluczowego \texttt{let}.
+Wzorce są uszeregowane w taki sposób żeby nie była możliwa pomyłka i na przykład
+przypasowanie początku nazwy zmiennej \texttt{letter} jako słowa kluczowego
+\texttt{let}.
 
 \subsubsection{Analiza składniowa}
 \label{opis_etapow_kompilacji_analiza_skladniowa}
