@@ -615,7 +615,9 @@ Wolne aktory to aktory, których adres nie był przypisany do zmiennej w momenci
 niezwiązane w żaden sposób z aktorem, który je utworzył. W przeciwieństwie do aktorów potomnych aktorów
 wolnych nie można włączyć za pomocą funkcji \texttt{Std.Actor.join()}.
 
-Aktory wolne w razie awarii tworzą zrzuty stosu.
+Aktory wolne w razie awarii tworzą zrzuty stosu. Zrzut stosu zawiera zapis
+wszystkich ramek wywołań na stosie, wraz z zawartością rejestrów lokalnych w
+każdej ramce.
 
 Typowym sposobem na uzyskanie adresu aktora wolnego jest takie zaprojektowanie programu żeby aktor wolny jako
 jeden z parametrów przyjmował PID, na który powinien wysłać \emph{swój} PID po wystartowaniu. Dla przykładu:
