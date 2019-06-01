@@ -153,6 +153,7 @@ Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
 reprezentujących puste wektory (wektory o długości 0).
 
 \subsubsection{Struktura}
+\label{viuact_spec_datatypes_aggregate_struct}
 
 Struktura agregująca wartości dowolnych (różnych) typów danych. Struktury
 ewoluują dynamicznie, a przypisanie wartości do pól struktury odbywa się w
@@ -515,6 +516,7 @@ wartość zwróciła funkcja, którą on bezpośrednio wywołał.
 Podmiana ramki jest niedostrzegalna dla wywołującego oryginalną funkcję.
 
 \subsubsection{Zastosowania}
+\label{viuact_spec_tail_call_use_case}
 
 Wywołania \emph{tailcall} są wykorzystywane do implementacji iteracji (co jest
 niezbędne przy przetwarzaniu wektorów), oraz przy obsłudze błędów za pomocą
@@ -523,7 +525,7 @@ na stronie \pageref{viuact_spec_watchdog_call}) gdzie pozwala na podmianę
 funkcji głównej bez zmiany PID aktora.
 
 Wywołania \emph{tailcall} są również przydatne w typowym wzorcu wykorzystywanym
-w języku \ViuAct\ czyli \emph{init-impl} -- ,,inicjalizacja i implementacja''.
+w języku \ViuAct\ czyli \emph{init-impl} -- ,,inicjalizacja-implementacja''.
 Funkcja inicjalizująca tworzy i konfiguruje nowego aktora, a następnie wykonuje
 wywołanie w pozycji ogonowej do funkcji implementacji. Po zakończeniu
 inicjalizacji funkcja przeprowadzająca ją nie jest już potrzebna więc jej ramka
