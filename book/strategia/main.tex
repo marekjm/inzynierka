@@ -87,9 +87,37 @@ zasobach czasowo-ludzkich.
 
 \subsection{Testowanie}
 
-Zestaw prostych programów testowych. Test sprawdza czy program się kompiluje i czy po uruchomieniu daje
-spodziewane wyniki. Jest to strategia zaadaptowana z projektu Viua VM, gdzie jest z powodzeniem
-wykorzystywana.
+Prace nad kompilatorem języka \ViuAct\ były ,,pilnowane'' przez zestaw testów, w
+którym każdy test był prostym, ale kompletnym programem testowym.
+
+Każdy test sprawdza czy dany program poprawnie się kompiluje i czy po wykonaniu
+daje oczekiwane wyniki. Ta strategia -- brak testów poszczególnych elementów
+kompilatora, a jedynie weryfikacja, że całość działa poprawnie -- została
+zaadaptowana z projektu Viua~VM, gdzie jest z powodzeniem wykorzystywana.
+Zapewnia ona maksimum zysków przy minimum narzutu i kosztów czasowych:
+
+\begin{enumerate}
+    \item wiemy, że kompilator jako całość działa ponieważ każdy z programów
+        testowych
+        \begin{enumerate*}[label=(\arabic*)]
+            \item jest możliwy do skompilowania
+            \item daje oczekiwane wyniki
+        \end{enumerate*}
+    \item traktujemy kompilator jako ,,czarną skrzynkę'' i nie testujemy wnętrza
+        kompilatora, a jedynie weryfikujemy czy poprawnie przetwarza kod
+        źródłowy na kod wynikowy co pozwala na dowolne manipulowanie
+        implementacją bez zmiany testów
+\end{enumerate}
+
+Takie podejście wymaga częstego uruchamiania testów w celu weryfikacji czy
+zmiany, które wprowadzamy nie powodują porażki wykonania zestawu testowego --
+łatwiej jest znaleźć błąd w czterech liniach zmian niż w czternastu czy
+czterdziestu -- ponieważ taki zestaw testów nie jest pomocny w szukaniu błędów w
+implementacji. Świadomie podjęliśmy decyzję o przyznaniu większej wagi temu żeby
+sprawdzić czy w zakładanych przypadkach kompilator zachowuje się poprawnie niż
+na temu żeby testy pomagały w wyszukiwaniu błędów ponieważ, z uwagi na bardzo
+ograniczony czas na jego wytworzenie, ważniejsze było osiągnięcie przez
+kompilator ,,kompletności'' niż jego odporność na błędy.
 
 \section{Program ViuaChat}
 
