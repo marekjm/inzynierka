@@ -88,6 +88,7 @@ są zapisywane w plikach \texttt{.d} opisanych dokładnie w rozdziale
 \ref{pliki_zaleznosci_modulow} na stronie \pageref{pliki_zaleznosci_modulow}.
 
 \subsubsection{Emit interface files for modules}
+\label{issue_86fd1a408cf62ecbebb7459b7d08298ce0a851bc}
 
 Identifykator zadania: \texttt{86fd1a408cf62ecbebb7459b7d08298ce0a851bc}
 \newline
@@ -237,52 +238,183 @@ implementować wzorzec ,,inicjalizacja-implementacja'' (rozdział
 
 \subsubsection{Implement vectors}
 
-Identyfikator zadania: \texttt{c499}
+Identifykator zadania: \texttt{c499f685c5736b3a282ed81251f2d1bd869e3684}
+\newline
+Rozpoczęte 2019-01-10 06:46:42, zakończone 2019-01-12 12:18:49.
+\newline
+
+Wektory są podstawowym typem danych używanym do przechowywania kilku wartości
+tego samego typu (mają to samo zastosowanie co tablice i listy).
 
 \subsubsection{Integrate FFI imports}
 
-Identyfikator zadania: \texttt{713e}
+Identifykator zadania: \texttt{713ebf5bc4359b8c74222228e55fcad8d5a7dd05}
+\newline
+Rozpoczęte 2019-01-12 15:25:56, zakończone 2019-01-13 12:22:32.
+\newline
+
+To zadanie jest powiązane z zadaniem \texttt{86fd1a408cf62ecbebb7459b7d08298ce0a851bc}
+(rozdział \ref{issue_86fd1a408cf62ecbebb7459b7d08298ce0a851bc} na stronie
+\pageref{issue_86fd1a408cf62ecbebb7459b7d08298ce0a851bc}). Importowanie modułów
+obcych wymagało zdefiniowania jak napisać plik interfejsu ręcznie, oraz dodania
+do kompilatora logiki odpowiedzialnej za importowanie modułów obcych.
 
 \subsubsection{Make function bodies a single expression}
 
-Identyfikator zadania: \texttt{0d91}
+Identifykator zadania: \texttt{0d911ab770e326a692cb06170eeaf32acc54b50a}
+\newline
+Rozpoczęte 2018-11-29 06:55:06, zakończone 2019-01-12 12:13:41.
+\newline
+
+Ciała funkcji w pierwotnej wersji języka \ViuAct\ nie były pojedynczymi
+wyrażeniami tylko sekwencjami wyrażeń, co wymagało specjalnego kodu do obsługi.
+Było to niepotrzebne i duplikowało ,,funkcjonalności'' języka, które były
+zawarte w wyrażeniach złożonych -- znaczenie programu nie zmieniałoby się
+niezależnie od tego czy ciało funkcji byłoby sekwencją wyrażeń czy pojedynczym
+wyrażeniem złożonym (które samo jest sekwencją wyrażeń).
 
 \subsubsection{Make functions first class values}
 
-Identyfikator zadania: \texttt{04dd}
+Identifykator zadania: \texttt{04dd87b88783077ea7ba64c57e9aa2aa1e8f5f76}
+\newline
+Rozpoczęte 2019-03-26 19:10:55, zakończone 2019-03-26 19:58:43.
+\newline
+
+Zdefiniowanie funkcji jako możliwych do przekazania jako argumenty, możliwych do
+zwrócenia jako wynik działania innych funkcji, itd. jest niezwykle przydatne.
+Funkcje jako wartości pierwszoklasowe\footnote{Wartości pierwszoklasowe
+(ang. \emph{first-class values}) są wartościami, które można
+\begin{enumerate*}[label=(\arabic*)]
+    \item dowiązać do zmiennej
+    \item przekazać jako argument do funkcji
+    \item zwrócić jako wynik działania funkcji.
+\end{enumerate*}
+W języku \ViuAct\ istnieje mało rzeczy, których nie
+można wykorzystać w ten sposób -- moduły, literały timeoutów i definicje
+wyliczeń. Są to wartości drugoklasowe (ang. \emph{second-class values}).} w
+języku \ViuAct\ pozwalają na implementację m.in. funkcji w rodzaju
+\texttt{for\_each()} czy \texttt{map()}.
 
 \subsubsection{Make the compiler installable}
 
-Identyfikator zadania: \texttt{6b5d}
+Identifykator zadania: \texttt{6b5d4b13a50dd9397c4db7cf326fcd2e6dbfabef}
+\newline
+Rozpoczęte 2019-03-28 22:00:26, zakończone 2019-04-01 21:40:55.
+\newline
+
+To zadanie było bardzo istotne ponieważ jeśli kompilatora języka \ViuAct\ dałoby
+się używać jedynie z katalogu, w którym znajduje się jego kod źródłowy to jego
+użyteczność byłaby mocno ograniczona.
 
 \subsubsection{Remove the parentheses around function args}
 
-Identyfikator zadania: \texttt{bb64}
+Identifykator zadania: \texttt{bb64aeee220ffe1f0cebd7aaf01f19fd972845f5}
+\newline
+Rozpoczęte 2018-11-29 07:05:02, zakończone 2018-11-29 07:13:12.
+\newline
+
+W wyniku tego zadania składnia wywołań funkcji zmieniona z
+\begin{lstlisting}
+(fn (arg foo bar))
+\end{lstlisting}
+na
+\begin{lstlisting}
+(fn arg foo bar)
+\end{lstlisting}
+Te dodatkowe nawiasy dookoła argumentów funkcji były nadmiarowe i można je było
+usunąć ze specyfikacji bez strat dla języka.
 
 \subsubsection{Rework README for the Issue project}
 
-Identyfikator zadania: \texttt{7348}
+Identifykator zadania: \texttt{734808030c94028eef293326119d79ffff0d855d}
+\newline
+Rozpoczęte 2018-12-22 16:14:59, zakończone 2019-03-11 19:04:44.
+\newline
 
-\subsubsection{Specify tail calls}
-
-Identyfikator zadania: \texttt{9774}
+To zadanie musiało być wykonane aby wszyscy członkowie zespołu mogli nauczyć się
+korzystać z narzędzia do śledzenia zadań wykorzystywanego przy pracach nad
+kompilatorem języka \ViuAct.
 
 \subsubsection{Specify the module system}
 
-Identyfikator zadania: \texttt{242e}
+Identifykator zadania: \texttt{242ef1a8f720ff43d6828708277a917a7b977e59}
+\newline
+Rozpoczęte 2018-12-18 23:37:37, zakończone 2019-03-26 19:59:47.
+\newline
+
+To zadanie jest tutaj wyszczególnione jako jedyne z zadań polegających na
+wyspecyfikowaniu pewnych działań czy konstrukcji ponieważ jako jedyne wymagało
+zdefiniowania jakie produkty powinien generować kompilator języka \ViuAct\ żeby
+móc się skomunikować z samym sobą -- tylko system modułów wymaga żeby kompilator
+(\texttt{viuact-cc}) przetwarzał swoje własne pliki wynikowe.
+
+Obejmowało to między innymi takie problemy jak zapis interfejsu modułów, zapis
+tego od jakich innych modułów zależy dany moduł, czy to jak moduły zdefiniowane
+\emph{inline} powinny być zapisane w katalogu z plikami wynikowymi. Jest to
+zadanie unikalne pod względem tego jak dużą interakcję z systemem plików
+prowadzi kompilator języka \ViuAct\ podczas wykonywania operacji związanych z
+nim.
 
 \subsubsection{Suppress unused register errors thrown by Viua VM assembler}
 
-Identyfikator zadania: \texttt{cd43}
+Identifykator zadania: \texttt{cd43ec37335b40816059fca8f984088ebfac6339}
+\newline
+Rozpoczęte 2018-12-19 11:25:00, zakończone 2018-12-19 11:26:13.
+\newline
+
+To zadanie polegało na wyłączeniu części analizy statycznej jaką przeprowadza
+assembler Viua~VM poprzed wywoływanie go z flagą \texttt{-Wunused-value}.
+Kompilator języka \ViuAct\ generuje kod, który jest poprawny, ale czasami zbyt
+skomplikowany dla silnika analizy statycznej, który działa wewnątrz assemblera
+Viua~VM i bardzo często generował fałszywe alarmy.
+
+Z uwagi na presję czasu fragment analizy statycznej odpowiadający za odrzucenie
+programu, który zawiera nieużywane wartości nie został poprawiony, a jedynie
+wyłączony.
 
 \subsubsection{Test the compiler and assembly driver}
 
-Identyfikator zadania: \texttt{561c}
+Identifykator zadania: \texttt{561ce14aef1f418849c436eb3bde6bb5c35c03ad}
+\newline
+Rozpoczęte 2018-12-19 00:05:20, zakończone 2019-03-26 20:00:23.
+\newline
 
-\subsubsection{Write some tests}
-
-Identyfikator zadania: \texttt{2925}
+Zadanie zostało zakończone w momencie, w którym większa część języka została już
+udokumentowana w specyfikacji i zaimplementowana w kompilatorze. Polegało na
+przygotowaniu zestawu testów pokrywającego każdą możliwą konstrukcję językową --
+czyli stworzenie testu dla konstrukcji warunkowej, wyrażenia złożonego,
+definicji modułu, itd. Zadanie \textbf{nie} obejmowało stworzenia zestawu testów
+obejmującego kombinacje konstrukcji językowych ponieważ nie jest możliwe
+stworzenie takiego zestawu z uwagi na to, że ilość takich kombinacji jest
+nieskończona.
 
 \subsubsection{Write websockets FFI module}
 
-Identyfikator zadania: \texttt{631b}
+Identifykator zadania: \texttt{631bce2891cc7368c68e010a50e04bd55ffbaf03}
+\newline
+Rozpoczęte 2018-12-19 00:00:24, zakończone 2019-03-11 19:06:19.
+\newline
+
+Istniejące biblioteki implementujące protokoł WebSocket, które były brane pod
+uwagę do wykorzystania to \url{https://libwebsockets.org} i
+\url{https://github.com/zaphoyd/websocketpp}. Obie jednak zostały odrzucone ze
+względu na duży narzut koncepcyjny i poziom skomplikowania API (konieczność
+tworzenia obiektów zarządzających, klas, itd.) oraz konieczność wykorzystania
+\emph{event loops} dostarczanych przez te biblioteki.
+
+Wykorzystanie \emph{event loop} dyskwalifikuje jakąkolwiek bibliotekę, która
+używa takiego modelu programowania ponieważ wymusza on przekazanie kontroli nad
+wykonaniem programu z Viua~VM do jakiegoś zewnętrznego programu, co całkowicie
+niweluje jakiekolwiek gwarancje zapewniane przez Viua~VM.
+
+Oprócz tego czysto technicznego powodu odrzucenia istniejących bibliotek jest
+jeszcze powód subiektywny: stopień ich skomplikowania jest odpychający. Zamiast
+wystawić socket i udostępnić proste API pozwalające na odczytywanie i zapiswanie
+wiadomości oraz nawiązywanie i zrywanie połączenia, a kontrolę zostawić w rękach
+programu, który będzie ich używał -- wymagają oddania kontroli w ich ,,ręce'' i
+wpinania się w ich \emph{event loop}.
+
+Zamiast pozwolić wziąć się jako zakładnika, zadecydowaliśmy o implementacji
+biblioteki zapewniającej obsługę protokołu WebSocket od zera. Ta biblioteka jest
+opisana w dodatku \ref{plain_websocket_library} na stronie
+\pageref{plain_websocket_library}.
