@@ -2,26 +2,35 @@
 \label{viuact_impl}
 \label{jezyk_viuact_i_jego_kompilator}
 
-Pierwszą częścią naszej pracy jest zaprojektowanie wysokopoziomowego języka programowania i opracowanie jego
-implementacji. Z uwagi na to, że platforma uruchomieniowa, którą wykorzystujemy (czyli Viua VM) jest maszyną
-wirtualną wykonującą programy w postaci \emph{bytecode} wybranym sposobem implementacji języka jest
-kompilator - program tłumaczący kod źródłowy w jednym języku na kod źródłowy w innym języku przy jednoczesnym
-zachowaniu zachowania programu. W przypadku naszej pracy językiem źródłowym jest język \ViuAct\ (dokładniej
-opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact} na stronie
-\pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język assemblera Viua VM.
+Pierwszą częścią naszej pracy jest zaprojektowanie wysokopoziomowego języka
+programowania i opracowanie jego implementacji. Z uwagi na to, że platforma
+uruchomieniowa, którą wykorzystujemy (czyli Viua VM) jest maszyną wirtualną
+wykonującą programy w postaci \emph{bytecode} wybranym sposobem implementacji
+języka jest kompilator - program tłumaczący kod źródłowy w jednym języku na kod
+źródłowy w innym języku przy jednoczesnym zachowaniu zachowania programu.
+W przypadku naszej pracy językiem źródłowym jest język \ViuAct\ (dokładniej
+opisany w rozdziale \ref{specyfikacja_jezyka_viuact}.~\nameref{specyfikacja_jezyka_viuact}
+na stronie \pageref{specyfikacja_jezyka_viuact}), a językiem docelowym język
+assemblera Viua VM.
 
-Materiałem teoretycznym przy pracy nad kompilatorem i językiem był \cite{ProgrammingLanguagePragmatics}.
-Jedną z książek, które wywarły wpływ na zestaw instrukcji (ISA) Viua VM był \cite{RISCV}.
-Pomocą w pracach nad systemem modułów był \cite{Linkers}.
+Materiałem teoretycznym przy pracy nad kompilatorem i językiem była książka
+Michaela Lee Scotta ,,Programming language pragmatics'' (\cite{ProgrammingLanguagePragmatics}).
+Jedną z książek, które wywarły wpływ na zestaw instrukcji (ISA) Viua VM była
+książka Davida Pattersona i Andrew Watermana ,,The RISC-V reader'' (\cite{RISCV}).
+Pomocą w pracach nad systemem modułów była książka Johna Levine'a ,,Linkers and
+loaders'' (\cite{Linkers}).
 
-Sama maszyna wirtualna nie tylko implementuje określone ISA, ale też dostarcza \emph{runtime} realizujący
-zadania typowo związane z systemem operacyjnym takie jak zarządzanie czasem procesora, przydzielanie numerów
-PID, czy nadzór na komunikacją między procesami -- w tym rejonie pomocą była \cite{OperatingSystems}.
+Sama maszyna wirtualna nie tylko implementuje określone ISA, ale też dostarcza
+\emph{runtime} realizujący zadania typowo związane z systemem operacyjnym takie
+jak zarządzanie czasem procesora, przydzielanie numerów PID, czy nadzór na
+komunikacją między procesami -- w tym rejonie pomocą była książka Andrew
+Tannenbauma ,,Systemy operacyjne'' (\cite{OperatingSystems}).
 
-Aktory w \ViuAct\ (tak samo jak implementujące je procesy w Viua VM) komunikują się bezpośrednio.
-Dla porównania, język Go (opisany w \cite{Golang}), który podobnie jak \ViuAct\ kładzie duży nacisk na
-współbieżność i równoległość do komunikacji między \emph{goroutines} (jego odmiana procesów) wykorzystuje
-kanały -- używając ,,pośredników'' zamiast skomunikować procesy bezpośrednio.
+Aktory w \ViuAct\ (tak samo jak implementujące je procesy w Viua~VM) komunikują
+się bezpośrednio. Dla porównania, język Go (opisany w \cite{Golang}), który
+podobnie jak \ViuAct\ kładzie duży nacisk na współbieżność i równoległość do
+komunikacji między \emph{goroutines} (jego odmiana procesów) wykorzystuje kanały
+-- używając ,,pośredników'' zamiast skomunikować procesy bezpośrednio.
 
 \input{viuact/ps/architektura}
 
@@ -29,7 +38,7 @@ kanały -- używając ,,pośredników'' zamiast skomunikować procesy bezpośred
 
 \section{Testowanie}
 
-Testy kompilatora polegało na opracowaniu zestawu przypadków testowych (w formie
+Testy kompilatora polegały na opracowaniu zestawu przypadków testowych (w formie
 przykładowych programów napisanych w języku \ViuAct) pokrywających cały zakres
 konstrukcji językowych zawartych w specyfikacji języka \ViuAct. Oprócz prostych
 programów sprawdzających działanie konkretnych konstrukcji (np. definicji
