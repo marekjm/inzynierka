@@ -1,2 +1,98 @@
 \chapter{Biblioteka \texttt{plain-websocket}}
 \label{plain_websocket_library}
+
+Biblioteka \texttt{plain-websocket} jest dostarczana jako zestaw funkcji
+opakowujący \emph{POSIX sockets}, wyliczenie kodów operacji w protokole
+WebSocket i strukturę opisującą pojedynczą ramkę protokołu. Do użycia biblioteki
+nie jest wymagane projektowanie programu dookoła \emph{event loop} -- kontrola
+zostaje w całości po stronie programu używającego biblioteki.
+
+\section{Sposób użycia}
+
+Funkcji dostarczanych przez bibliotekę \texttt{plain-websocket} używa się między
+wywołaniem \texttt{accept(3)}, a \texttt{shutdown(3)}.
+
+Po uzyskaniu połączenia za pomocą standardowych wywołań z API \emph{POSIX
+sockets}, należy wykonać \emph{handshake} protokołu WebSocket za pomocą funkcji
+\texttt{Websocket.handshake()}. Po zakończeniu pracy należy zakończyć połączenie
+w warstwie protokołu WebSocket za pomocą funkcji \texttt{Websocket.close()}.
+
+\subsection{C++}
+
+Przykład kodu w języku C++:
+\begin{small}
+\begin{lstlisting}
+auto handle_websocket_connection(int sock) -> void {
+    auto ws = maelkum::websocket::handshake(sock);
+
+    auto message = maelkum::websocket::read_frame(sock);
+    if (message.has_value()) {
+        auto const text = maelkum::websocket::get_text(*message);
+        if (text.has_value()) {
+            std::cerr << *text << "\n";
+            maelkum::websocket::write(sock, *text);
+        }
+    }
+
+    maelkum::close(sock);
+}
+
+auto main() -> int {
+    auto const host = "127.0.0.1";
+
+    auto server_sock = socket(AF_INET, SOCK_STREAM, 0);
+    sockaddr_in addr;
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(9090);
+    inet_pton(AF_INET, host, &addr.sin_addr.s_addr);
+
+    bind(sock, reinterpret_cast<sockaddr*>(&addr), sizeof(addr));
+    listen(sock, 0);
+
+    auto client = accept(sock, nullptr, nullptr);
+
+    handle_websocket_connection(sock);
+
+    shutdown(sock, SHUT_RDWR);
+    close(sock);
+
+    shutdown(server_sock, SHUT_RDWR);
+    close(server_sock);
+
+    return 0;
+}
+\end{lstlisting}
+\end{small}
+
+\subsection{\ViuAct}
+
+Przykład kodu w języku \ViuAct:
+\begin{small}
+\begin{lstlisting}
+(import Std.Posix.Network)
+(import Websocket)
+
+(let handle_websocket_connection (sock) {
+    (Websocket.handshake sock)
+    (let message (Websocket.read sock))
+    (print message)
+    (Websocket.write sock message)
+    (Websocket.close sock)
+    0
+})
+(let main () {
+    (let server_sock (Std.Posix.Network.sock))
+    (Std.Posix.Network.bind sock "127.0.0.1" 9090)
+    (Std.Posix.Network.listen sock 16)
+
+    (let client (Std.Posix.Network.accept sock))
+    (handle_websocket_connection sock)
+
+    (Std.Posix.Network.close sock)
+    (Std.Posix.Network.close server_sock)
+    0
+})
+\end{lstlisting}
+\end{small}
+
+\section{API}
