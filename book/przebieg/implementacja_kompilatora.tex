@@ -77,47 +77,163 @@ Do zasygnalizowania kompilatorowi tej potrzeby wykorzystywana jest zmienna
 
 \subsubsection{Emit dependency files for modules and executables}
 
-Identyfikator zadania: \texttt{f841}
+Identifykator zadania: \texttt{f841ba29230081e4e6e8eba87857532ae98aff0a}
+\newline
+Rozpoczęte 2018-12-18 23:28:01, zakończone 2018-12-20 16:00:13.
+\newline
+
+Aby poprawnie połączyć moduły \texttt{viuact-opt} potrzebuje informacji o tym,
+jakie moduły są importowane przez dany moduł lub plik wykonywalny. Te zależności
+są zapisywane w plikach \texttt{.d} opisanych dokładnie w rozdziale
+\ref{pliki_zaleznosci_modulow} na stronie \pageref{pliki_zaleznosci_modulow}.
 
 \subsubsection{Emit interface files for modules}
 
-Identyfikator zadania: \texttt{86fd}
+Identifykator zadania: \texttt{86fd1a408cf62ecbebb7459b7d08298ce0a851bc}
+\newline
+Rozpoczęte 2018-12-18 23:13:55, zakończone 2019-03-27 18:09:37.
+\newline
+
+Kompilator podczas przetwarzania wyrażeń importowania modułów (rozdział
+\ref{viuact_spec_module_import} na stronie \pageref{viuact_spec_module_import})
+potrzebuje informacji o tym jakie funkcje i wyliczenia dany moduł udostępnia. Te
+informacje zapisane są w plikach z interfejsami opisanych w rozdziale
+\ref{pliki_interfejsow_modulow} na stronie \pageref{pliki_interfejsow_modulow}.
 
 \subsubsection{Expose pointers}
 
-Identyfikator zadania: \texttt{3208}
+Identifykator zadania: \texttt{3208ed0629487b2c02e14cfe5173a333bc364121}
+\newline
+Rozpoczęte 2019-02-02 14:18:22, zakończone 2019-02-02 19:55:44.
+\newline
+
+Kompilator języka \ViuAct\ potrafi śledzić to czy dana wartość jest wskaźnikiem
+i automatycznie wstawić dereferencję w odpowiednim momencie jedynie dla
+ograniczonego zakresu przypadków. W związku z tym potrzebne było udostępnienie
+programistom narzędzi do bezpośredniej obsługi wskaźników. Tym narzędziami są
+operator dereferencji (\texttt{\^}) i funkcja \texttt{Std.Pointer.take()}.
+
+Nie było by to potrzebne gdyby kompilator języka \ViuAct\ wymagał weryfikacji
+typów wartości na etapie kompilacji -- wtedy informacja o tym czy dana wartość
+jest wskaźnikiem czy nie musiałaby być dostępna, a więc nie było by potrzeby
+nadzorować tego ręcznie. Wskaźniki to jedno z miejsc gdzie brak czasu negatywnie
+wpłynął na specyfikację i implementację języka.
 
 \subsubsection{Expose the mechanism to set a process watchdog}
 
-Identyfikator zadania: \texttt{cc03}
+Identifykator zadania: \texttt{cc03c40b74d5ce2a7e9fa398ae0912c9a107b02d}
+\newline
+Rozpoczęte 2019-03-25 16:23:52, zakończone 2019-04-01 21:40:18.
+\newline
+
+\emph{Watchdog} to jeden z najważniejszych mechanizmów jakie język \ViuAct\ 
+,,odziedziczył'' po Viua~VM. Jest to funkcja, która jest automatycznie
+wywyoływana w momencie awarii procesu, aby
+\begin{enumerate*}[label=(\arabic*)]
+    \item zarejestrować wystąpienie awarii
+    \item postawać się naprawić awarię restartując proces
+    \item poinformować proces nadrzędny o awarii,
+\end{enumerate*}
+lub w jakikolwiek inny sposób zareagować na awarię, której główna funkcja
+procesu nie dała rady obsłużyć.
+
+Dokładny opis funkcji \emph{watchdog} znajduje się w rozdziale
+\ref{viuact_spec_watchdog_call} na stronie \pageref{viuact_spec_watchdog_call}.
 
 \subsubsection{Implement an exception catching mechanism}
 
-Identyfikator zadania: \texttt{d4bd}
+Identifykator zadania: \texttt{d4bddf8f6b83c9957556465c8e9e112bddf747a1}
+\newline
+Rozpoczęte 2019-01-14 06:42:52, zakończone 2019-03-26 20:00:07.
+\newline
+
+Wyjątki to podstawowy sposób obsługi błędów w języku \ViuAct, a ich obsłużenie
+jest pierwszą linią obrony przed awariami procesów.
 
 \subsubsection{Implement an impressive example program}
 
-Identyfikator zadania: \texttt{b28a}
+Identifykator zadania: \texttt{b28ab36f969b4852a735850af1d1f509647b655c}
+\newline
+Rozpoczęte 2019-01-13 12:24:14, zakończone 2019-03-11 19:08:00.
+\newline
+
+W ramach tego zadania powstał prototypowy czat wykorzystujący protokół
+WebSocket, który prezentowaliśmy m.in. na seminarium.
 
 \subsubsection{Implement boolean values}
 
-Identyfikator zadania: \texttt{0050}
+Identifykator zadania: \texttt{0050c352061a18221e21438e697c11d61c11a5a7}
+\newline
+Rozpoczęte 2019-01-07 18:23:12, zakończone 2019-01-07 18:23:37.
+\newline
+
+Wartości typu boolowskiego są istotnym elementem programów i mogą określać np.
+czy dana funkcjonalność jest włączona lub wyłączona, czy autoryzacja się
+powiodła lub nie, itd.
 
 \subsubsection{Implement compound expressions}
 
-Identyfikator zadania: \texttt{d452}
+Identifykator zadania: \texttt{d452c8ee6fcc4b245e7021fec2ceb0958aad1f84}
+\newline
+Rozpoczęte 2018-12-18 23:12:42, zakończone 2019-01-12 12:20:08.
+\newline
+
+Wyrażenia złożone (opisane w rozdziale \ref{language_expressions_compound} na
+stronie \pageref{language_expressions_compound}) są jednym z ważniejszych
+elementów języka. Pozwalają na pisanie funkcji wykonujących kilka operacji
+dzięki temu, że umożliwiają zgrupowanie kilku prostszych wyrażeń w jedno.
 
 \subsubsection{Implement proper imports inside Viua VM}
 
-Identyfikator zadania: \texttt{6f4f}
+Identifykator zadania: \texttt{6f4f7baff22706628e7003303ff2aa0973460432}
+\newline
+Rozpoczęte 2018-12-22 16:08:28, zakończone 2019-01-14 06:41:41.
+\newline
+
+Mechanizm importowania modułów w Viua~VM był zbyt prymitywny żeby poradzić sobie
+w elegancki sposób z importowaniem modułów jakie potrzebne było w języku
+\ViuAct. Jedną z najbardziej oczywistych rzeczy, które musiały być poprawione w
+samej maszynie wirtualnej było importowanie modułów obcych, które nie mogły być
+linkowane statycznie do plików wykonywalnych lub modułów własnych Viua~VM i
+musiały być linkowane dynamicznie.
+
+Linkowanie dynamiczne musiało być wykonywane jawnie -- wykonywany program musiał
+sam wykonać instrukcje odpowiadające za linkowanie modułu obcego. Po zakończeniu
+tego zadania (i odpowiadającego mu zadania
+\texttt{0f8c916c2499aab93cf8c55cc1fd6bbf354bd34d} w repozytorium Viua~VM) moduły
+obce mogły być importowane automatycznie przez jądro Viua~VM dzięki dodaniu do
+plików z bytecode sekcji informującej o modułach, które muszą być dolinkowane
+dynamicznie. W pliku z kodem źródłowym w języku assemblera Viua~VM można
+zarządać takiego dołączenia za pomocą następującego polecenia:
+\begin{lstlisting}
+.import: [[dynamic]] some::module
+\end{lstlisting}
 
 \subsubsection{Implement structs}
 
-Identyfikator zadania: \texttt{1f45}
+Identifykator zadania: \texttt{1f45e908dcde2f12b761da53183e2475619f64ef}
+\newline
+Rozpoczęte 2019-01-02 21:13:48, zakończone 2019-01-06 12:03:04.
+\newline
+
+Struktury w języku \ViuAct\ są sposobem na tworzenie nowych typów przez
+programistę. Bez nich, tworzenie nietrywialnego oprogramowania byłoby mocno
+utrudnione. Struktury są opisane w rozdziale \ref{viuact_spec_datatypes_aggregate_struct}
+na stronie \pageref{viuact_spec_datatypes_aggregate_struct}.
 
 \subsubsection{Implement tail calls}
 
-Identyfikator zadania: \texttt{b680}
+Identifykator zadania: \texttt{b680202a36a7358006d87cf371686fc2d42aecdc}
+\newline
+Rozpoczęte 2019-01-06 22:02:12, zakończone 2019-01-06 22:04:33.
+\newline
+
+Wywołania w pozycji ogonowej są przydatne w wielu miejscach: przy obsłudze
+błędów (gdzie pozwalają zastąpić funkcję \emph{watchdog} nową funkcją,
+restartując proces bez zmiany jego PID), zastępują pętle, oraz pozwalają
+implementować wzorzec ,,inicjalizacja-implementacja'' (rozdział
+\ref{viuact_spec_tail_call_use_case} na stronie
+\pageref{viuact_spec_tail_call_use_case}).
 
 \subsubsection{Implement vectors}
 
