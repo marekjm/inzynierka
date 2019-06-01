@@ -455,15 +455,100 @@ rozdziale \ref{viuact_spec_tail_call} na stronie
 \phantom{inline-module-definition := ~}\emph{function-definition}+
 ))}
 \newline
-\texttt{module-definition := (module \emph{module-name}) \\
+\texttt{module-definition := \emph{module-declaration} \\
 \phantom{module-definition :}| \emph{inline-module-definition}}
+\newline
+\texttt{module-declaration := (module \emph{module-name})}
 \newline
 \texttt{module-import := (import \emph{module-name})}
 \newline
 
 Moduł jest zbiorem definicji modułów, deklaracji import, i definicji funkcji.
-Taka kolejność w kodzie źródłowym nie jest wymagana, ale kompilator w takiej kolejności przetwarza konstrukcje
-składające się na definicję modułu.
+Taka kolejność w kodzie źródłowym nie jest wymagana, ale kompilator w takiej
+kolejności przetwarza konstrukcje składające się na definicję modułu.
+
+\subsubsection{Definicje modułów w plikach}
+\label{viuact_spec_module_definition_file}
+
+Moduł jest definiowany w pliku, a nazwa pliku przekłada się na nazwę modułu. Dla
+przykładu: plik \texttt{A\_module.lisp} definiuje moduł o nazwie
+\texttt{A\_module}.
+
+Relację zagnieżdżania pomiędzy modułami wprowadza się poprzez umieszczenie
+definicji lub deklaracji modułu-dziecka w definicji modułu-rodzica. Dla modułów
+zdefiniowanych w osobnych plikach używa się deklaracji modułów.
+
+\begin{small}
+\begin{lstlisting}[caption={Plik \texttt{src/A\_module.lisp}}]
+(module Nested_module)
+
+(let fn () {
+    (let s "Hello, World! (from A_module)")
+    (print s)
+    0
+})
+\end{lstlisting}
+\end{small}
+
+\begin{small}
+\begin{lstlisting}[caption={Plik \texttt{src/A\_module/Nested\_module.lisp}}]
+(let fn () {
+    (let s "Hello, World! (from A_module.Nested_module)")
+    (print s)
+    0
+})
+\end{lstlisting}
+\end{small}
+
+W przykładzie powyżej moduł \texttt{Nested\_module} jest modułem zagnieżdżonym
+w module \texttt{A\_module} i musi być importowany za pomocą wyrażenia
+\texttt{(import~A\_module.Nested\_module)}.
+
+\subsubsection{Definicje modułów \emph{inline}}
+\label{viuact_spec_module_definition_inline}
+
+Moduł jest definiowany w tym samym pliku co jego moduł-rodzic. Relację
+zagnieżdżenia pomiędzy modułami widać bezpośrednio -- jeden moduł jest dosłownie
+zagnieżdżony wewnątrz innego modułu.
+
+\begin{small}
+\begin{lstlisting}[caption={Plik \texttt{src/A\_module.lisp}}]
+(module Nested_module (
+    (let fn () {
+        (let s "Hello, World! (from A_module.Nested_module)")
+        (print s)
+        0
+    })
+))
+
+(let fn () {
+    (let s "Hello, World! (from A_module)")
+    (print s)
+    0
+})
+\end{lstlisting}
+\end{small}
+
+W przykładzie powyżej moduł \texttt{Nested\_module} jest modułem zagnieżdżonym
+w module \texttt{A\_module} i musi być importowany za pomocą wyrażenia
+\texttt{(import~A\_module.Nested\_module)}.
+
+\subsubsection{Importowanie modułów}
+\label{viuact_spec_module_import}
+
+Importowanie modułów jest realizowane przez wyrażenie \texttt{import}. Po słowie
+kluczowym \texttt{import} należy umieścić pełną ścieżkę do importowanego modułu,
+na przykład:
+\begin{small}
+\begin{lstlisting}[caption={Plik \texttt{src/A\_module.lisp}}]
+(import A_module)
+(import A_module.Nested_module)
+(import Std.Posix.Network)
+\end{lstlisting}
+\end{small}
+
+Dostęp do funkcji i wyliczeń zdefiniowanych wewnątrz modułu odbywa się z użyciem
+pełnej ścieżki, na przykład \texttt{(Std.Posix.Network.socket~"127.0.0.1"~8080)}.
 
 \subsection{Wywołanie funkcji}
 \label{viuact_spec_fn_call}
