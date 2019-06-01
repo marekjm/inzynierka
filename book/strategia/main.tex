@@ -6,43 +6,79 @@ innym sposobem z powodu dużych rozbieżności specyfiki konkretnych problemów 
 nad semi-formalną specyfikacją języka programowania niż nad aplikacją użytkową, więc podjęliśmy decyzję o
 rozdzieleniu tych części i poprowadzeniu ich jako osobne, mniejsze projekty wewnątrz pracy inżynierskiej.
 
-\section{Język \ViuAct}
+\section{Specyfikacja języka \ViuAct}
 
-% Specyfikacja. Analiza wymagań. Formalizm. Kaskada.
-
-Tworzenie specyfikacji języka odbywa się w modelu kaskadowo-prototypowym i przeplata się z implementacją
-prototypu kompilatora.
+Tworzenie specyfikacji języka odbywało się w modelu kaskadowo-prototypowym i
+przeplatało się z implementacją prototypu kompilatora.
 
 \subsection{Określenie wymagań}
 
-Przed rozpoczęciem specyfikowania poszczególnych konstrukcji językowych należało podjąć decyzję co w języku
-powinno się znaleźć, a co nie powinno zostać włączone do specyfikacji.
+Przed rozpoczęciem specyfikowania poszczególnych konstrukcji językowych należało
+podjąć decyzję co w języku powinno się znaleźć, a co nie powinno zostać włączone
+do specyfikacji. Pragmatyczne podejście pozwoliło ograniczyć do minimum liczbę
+potrzebnych elementów języka -- zrezygnowano między innymi z umieszczenia pętli
+w języku ponieważ można je zastąpić rekurencyjnymi wywołaniami w pozycji
+ogonowej (\emph{recursive tail calls}).
 
 \subsection{Specyfikacja konkretnej konstrukcji języka}
 
-Każda konstrukcja językowa jest najpierw projektowana, następnie dokumentowana i omawiana (żeby wychwycić
-pewne oczywiste błędy ,,grube'' na wczesnym etapie prac). Potem proces specyfikacji zostaje zawieszony do
-momentu wytworzenia w kompilatorze prototypu danej konstrukcji, lub odrzucenia jej jako niewykonalnej w
-zakładanym czasie lub zakresie funkcjonalności.
+Każda konstrukcja językowa była najpierw projektowana, następnie dokumentowana i
+omawiana (żeby wychwycić oczywiste błędy ,,grube'' na wczesnym etapie prac).
+Potem proces specyfikacji zostawał zawieszony do momentu wytworzenia w
+kompilatorze prototypu implementacji danej konstrukcji, lub odrzucenia jej jako
+niewykonalnej w zakładanym czasie lub zakresie funkcjonalności. Na tym etapie
+specyfikacja była ,,luźna'' i półformalna.
 
-Wynik prac prototypowych (sukces bądź porażka) decyduje o tym czy prace specyfikacyjne są prowadzone dalej.
-Jeśli konstrukcja jest możliwa do zaimplementowania jej specyfikacja jest formalizowana oraz przygotowana dla
-niej zostaje dokumentacja (obejmująca m.in. przykłady użycia).
+Wynik prac prototypowych (sukces bądź porażka) decydował o tym czy prace
+specyfikacyjne były prowadzone dalej. Jeśli konstrukcja okazywała się możliwa
+do zaimplementowania jej specyfikacja była formalizowana oraz przygotowywana
+była jej dokumentacja (obejmująca m.in. przykłady użycia). Po tym etapie
+specyfikacja była już w pełni formalna.
 
 \section{Kompilator języka \ViuAct}
 
 Prace nad kompilatorem języka \ViuAct\ były prowadzone w identyczny sposób jak
-prace nad Viua VM. Jest to połączenie strategii prototypowania i iteracji, które
+prace nad Viua~VM. Jest to połączenie strategii prototypowania i iteracji, które
 spawdza się przy projekcie rozwijanym w stylu \emph{one-man show}, czyli tam
 gdzie za cały projekt odpowiada jeden programista. Jest to częsta sytuacja w
-przypadku projektów Free Software.
+przypadku projektów Free Software i na takim modelu wytwarzania był oparty
+sposób wytworzenia kompilatora języka \ViuAct.
+
+\subsection{Określenie wymagań}
+
+Przed rozpoczęciem prac nad kompilatorem języka \ViuAct\ należało określić
+wymagania jakie powinien spełnić. Z uwagi na krótki czas trwania projektu lista
+wymagań musiała być krótka. Zaowocowało to rezygnacją z niektórych
+funkcjonalności podnoszących \emph{quality of life} programisty korzystającego z
+kompilatora, np. dokładnego raportowania błędów. Wymagania, które finalnie
+zostały zaakceptowane są opisane w rozdziale \ref{viuact_zal_wymagania} na
+stronie \pageref{viuact_zal_wymagania}.
+
+\subsection{,,Swobodna'' strategia}
+
+Strategia nie zakładała planowania znanych z Agile sprintów, przypisywania zadań
+do konkretnych terminów, czy tworzenia złożonych \emph{workflow}. Jedynym planem
+była lista zadań, które musiały być zrealizowane aby projekt został z sukcesem
+ukończony i powiązanie ich w relacje \emph{zależy-od}, gdzie jeśli zadanie A
+\emph{zależy-od} zadania B, to zadanie B musi być ukończone przed zadaniem A.
+W wyniku takich powiązań powstało drzewo, które określało kolejność w jakiej
+poszczególne zadania musiały być wykonywane.
+
+Takie względnie ,,swobodne'' podejście do spraw planowania i formalnego
+zarządzania projektem pozwoliło na drastyczne zminimalizowanie biurokratycznego
+narzutu na projekt i umożliwiło przeznaczenie większej ilości czasu na prace
+programistyczne bądź przygotowywanie dokumentacji.
+
+\subsection{Narzędzia wspierające wybraną strategię}
 
 Zadania w tej części projektu były śledzone za pomocą narzędzia
-\texttt{issue}\footnote{\url{https://github.com/marekjm/issue} Narzędzie to jest
-krótko opisane w dodatku \ref{issue_tracking_tool} na stronie
-\pageref{issue_tracking_tool}.}, które jest również wykorzystywane przez jednego
-z członków (Marka Mareckiego) zespołu do śledzenia zadań w pracy zawodowej i
-projektach Free~Software.
+\texttt{issue}\footnote{Kod źródłowy dostępny jest pod adresem
+\url{https://github.com/marekjm/issue}. Narzędzie to jest również krótko opisane
+w dodatku \ref{issue_tracking_tool} na stronie \pageref{issue_tracking_tool}.},
+które jest również wykorzystywane przez jednego z członków zespołu (Marka
+Mareckiego) do śledzenia zadań w pracy zawodowej oraz jego projektach
+Free~Software i bezpośrednio wspiera opisane powyżej ,,swobodne'' podejście do
+zarządzania zadaniami w projekcie.
 
 Prace implementacyjne przeplatały się z pracami nad specyfikacją w celu
 weryfikowania na bieżąco co jest możliwe do wykonania w zamierzonym czasie w
