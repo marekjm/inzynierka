@@ -5,7 +5,7 @@
 	\centering
 	\includegraphics[width=\textwidth]{chat/fig/deploy-diag}
 	\caption{Diagram rozmieszczenia elementów architektury systemu ViuaChat}
-	\label{diag-komp}
+	\label{deploy-diag}
 \end{figure}
 
 Architektura systemu opiera się na klasycznym modelu klient-serwer.
@@ -146,6 +146,22 @@ Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębny
 	\includegraphics[width=\textwidth]{chat/fig/com-diag-room-bind}
 	\caption{Diagram komunikacji pomiędzy aktorami w ramach podpinania do pokoju}
 	\label{com-diag-room-bind}
+\end{figure}
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/com-diag-room-msgs}
+	\caption{Diagram komunikacji pomiędzy aktorami podczas pobierania listy
+	ostatnich wiadomości}
+	\label{com-diag-room-msgs}
+\end{figure}
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/com-diag-msg}
+	\caption{Diagram komunikacji pomiędzy aktorami w czasie wysyłania wiadomości
+	do pokoju (ogólnodostępnego)}
+	\label{com-diag-msg}
 \end{figure}
 
 
@@ -535,7 +551,9 @@ notacji JSON:
 	Uzyskanie ostatnich 10 wiadomości wysłanych do pokoju, do którego jest wpięty użytkownik
 
 } & \parbox{3.9cm}{
-	\textit{Brak.}
+\begin{itemize}
+	\item \texttt{room} (nazwa pokoju)
+\end{itemize}
 
 
 } & \parbox{3.9cm}{
@@ -556,7 +574,9 @@ notacji JSON:
 	prywatnej.
 
 } & \parbox{3.9cm}{
-	\textit{Brak.}
+\begin{itemize}
+	\item \texttt{room} (nazwa pokoju)
+\end{itemize}
 
 
 } & \parbox{3.9cm}{
@@ -621,6 +641,7 @@ notacji JSON:
 } & \parbox{3.9cm}{
 	\begin{itemize}
 		\item \texttt{offset} (liczba najnowszych wiadomości które można pominąć)
+		\item \texttt{username} (nazwa użytkownika którego dotyczy lista wiadomości)
 	\end{itemize}
 
 
@@ -733,8 +754,11 @@ notacji JSON:
 	\begin{itemize}
 		\item \texttt{username} (nazwa obecnego użytkownika);
 		\item \texttt{admin} (liczba 1 jeżeli obecny użytkownik jest administratorem, a w przeciwnym przypadku 0);
-		\item \texttt{current\_room} (nazwa pokoju do którego obecnie podpięty jest użytkownik; jeżeli nie jest podpięty, łańcuch jest pusty);
-		\item \texttt{current\_pm} (nazwa użytkownika z którym obecnie prowadzona jest konwersacja prywatna; gdy taka konwersacja nie jest prowadzona, łańcuch jest pusty)
+		\item \texttt{current\_rooms} (tablica nazw pokojów do których obecnie
+		podpięty jest użytkownik; jeżeli nie jest podpięty, tablica jest pusta);
+		\item \texttt{current\_pms} (tablica nazwa użytkowników z którymi obecnie
+		prowadzona jest konwersacja prywatna; gdy taka konwersacja nie jest
+		prowadzona, tablica jest pusty)
 	\end{itemize}
 } \\
 
@@ -811,6 +835,23 @@ synchronicznych (wytłuszczono wartość parametru \textbf{\texttt{reason}}):
 	\item \textbf{\texttt{disconn\_ban}} -- wysłana przez serwer, oznacza że
 	użytkownik został wyrzucony z serwera
 \end{enumerate}
+
+\subsection{Protokół komunikacji pomiędzy aktorami}
+W celu zachowania porządku podczas opracowywania wielu współpacujących ze
+sobą aktorów, zadecydowano o narzuceniu pewnej ramowej struktury wszystkim
+komunikatom, które zostaną pomiędzy nimi wymienione. Przede wszystkim przyjęto
+założenie, że wszystkie komunikaty będą miały formę struktury \texttt{struct} o
+ściśle ustalonych, stale obecnych polach:
+\begin{itemize}
+	\item \texttt{fn} -- zawsze niepusty łańcuch znaków, jednoznacznie identyfikujący
+	znaczenie komunikatu;
+	\item \texttt{from} -- zawsze wskaźnik na aktora, który nadał wiadomość;
+	\item \texttt{sync} -- zawsze liczba całkowita 1 lub 0, wskazująca, czy nadawca
+	oczekuje na wiadomość zwrotną (1), czy też nie (0);
+	\item \texttt{arg} -- zawsze struktura \texttt{struct}, służąca do przenoszenia
+	wraz z treścią wiadomości dodatkowych danych dla odbiorcy (np. parametrów
+	wywołania); może być pusta;
+\end{itemize}
 
 \section{Projekt interfejsu}
 
