@@ -7,6 +7,8 @@ WebSocket i strukturę opisującą pojedynczą ramkę protokołu. Do użycia bib
 nie jest wymagane projektowanie programu dookoła \emph{event loop} -- kontrola
 zostaje w całości po stronie programu używającego biblioteki.
 
+Dla języka \ViuAct\ biblioteka jest dostępna jako moduł \texttt{Websocket}.
+
 \section{Sposób użycia}
 
 Funkcji dostarczanych przez bibliotekę \texttt{plain-websocket} używa się między
@@ -96,3 +98,38 @@ Przykład kodu w języku \ViuAct:
 \end{small}
 
 \section{API}
+
+\subsection{\texttt{Websocket.handshake()}}
+
+\begin{lstlisting}
+Websocket.handshake(Integer)
+\end{lstlisting}
+
+Wykonanie \emph{handshake} protokołu WebSocket. Po wykonaniu tej funkcji socket
+jest gotowy do użycia jako argument dla pozostałych funkcji z modułu
+\texttt{Websocket}.
+
+\subsection{\texttt{Websocket.read()}}
+
+\begin{lstlisting}
+Websocket.read(Integer)
+\end{lstlisting}
+
+Odczyt pojedynczej wiadomości tekstowej z socketu. Jeśli wiadomość nie jest
+możliwa do odebrania zgłaszany jest wyjątek z tagiem \texttt{Exception}.
+
+\subsection{\texttt{Websocket.write()}}
+
+\begin{lstlisting}
+Websocket.write(Integer, String)
+\end{lstlisting}
+
+Zapis pojedynczej wiadomości do socketu.
+
+\subsection{\texttt{Websocket.close()}}
+
+\begin{lstlisting}
+Websocket.close(Integer)
+\end{lstlisting}
+
+Zakończenie połączenia w warstwie protokołu WebSocket.
