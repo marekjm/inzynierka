@@ -1,24 +1,32 @@
 \chapter{Przebieg prac}
 \label{przebieg_prac}
 
-\section*{Środowisko}
+\section*{Środowisko pracy}
 
-Aby ułatwić prace rozwojowe nad składnikami tej pracy inżynierskiej został napisany skrypt
-przygotowujący środowisko wytwórcze. Zapewnia on spójną strukturę katalogów pomiędzy
-maszynami członków zespołu co eliminuje niepotrzebne różnice między środowiskami
-wytwórczymi. Skrypt pozwala na przygotowanie środowiska za pomocą jednego polecenie
-wydanego w powłoce:
-
+Aby ułatwić prace rozwojowe nad składnikami tej pracy inżynierskiej został
+napisany skrypt przygotowujący środowisko wytwórcze. Zapewnia on spójną
+strukturę katalogów pomiędzy maszynami członków zespołu co eliminuje
+niepotrzebne różnice między środowiskami wytwórczymi. Skrypt pozwala na
+przygotowanie środowiska za pomocą jednego polecenia wydanego w powłoce:
 \begin{lstlisting}
 wget -O https://viuavm.org/viuact-bootstrap.sh | bash -s
 \end{lstlisting}
 
-Skrypt ten utworzy w katalogu roboczym katalog ,,\texttt{viuact-workspace}'', pobierze
-najnowsze wersje każdego z komponentów projektu (klonując ich repozytoria Git) i
-skompiluje je w odpowiedniej kolejności.
+Skrypt ten utworzy w katalogu roboczym katalog \texttt{viuact-workspace},
+pobierze najnowsze wersje każdego z komponentów projektu (klonując ich
+repozytoria Git) i skompiluje je w odpowiedniej kolejności.
 
-Takie podejście znacząco zredukowało problemy wynikające z różnic, które członkowie
-zespołu mogli -- nawet omyłkowo -- wprowadzić do swojego lokalnego środowiska.
+Aby aktywować środowisko (ustawić zmienne środowiskowe istotne dla kompilatora
+języka \ViuAct\ oraz jądra i assemblera dostarczanych z Viua~VM) należy wykonać
+następujące polecenie wewnątrz utworzonego przez skrypt katalogu
+\texttt{viuact-workspace}:
+\begin{lstlisting}
+source ./activate.sh
+\end{lstlisting}
+
+Takie podejście (oskryptowanie i automatyzacja przygotowanie środowiska pracy)
+znacząco zredukowało problemy wynikające z różnic, które członkowie zespołu
+mogli -- nawet omyłkowo -- wprowadzić do swojego lokalnego środowiska.
 
 \input{przebieg/specyfikacja_jezyka}
 
