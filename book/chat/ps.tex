@@ -57,7 +57,7 @@ wcześniej do komunikacji z frontendem, oraz ulega autodestrukcji.
 \subsection{Dekompozycja systemu na podsystemy}
 \label{architektura_chatu}
 
-\subsubsection{Strona serwera (,,backend'')}
+\subsubsection{Warstwa serwera -- backend}
 Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębnych od siebie aktorów.
 
 \begin{figure}[!htp]
@@ -121,7 +121,13 @@ Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębny
   użytkowników do pokoju, tworzeniem nowych i usuwaniem istniejących pokojów, a
   także utrzymywanie i udostępnianie kompletnej listy aktywnych pokojów.
 
-  \item[\texttt{Room}] Działa jak router wiadomości i przechowuje listę użytkowników którzy są do niego wpięci. Istnieje w tylu egzemplarzach, ile jest aktywnych pokojów.
+  \item[\texttt{Room}] Działa jak router wiadomości i przechowuje listę użytkowników którzy są do niego wpięci. Istnieje w tylu egzemplarzach, ile jest aktywnych pokojów. Od strony
+	backendu, jedynym odróżnieniem pomiędzy aktorami \texttt{Room} reprezentującymi
+	klasyczny, ogólnodostępny pokój, a reprezentującymi jedynie wymianę prywatnych
+	wiadomości pomiędzy określoną parą użytkowników, jest jego nazwa. Nazwy pokojów
+	z wiadomościami prywatnymi zawsze zawierają znak krzyżyka (\#),
+	rozdzielający nazwy użytkowników biorących udział w konwersacji. Pokoje
+	ogólnodostępne nigdy nie będą miały w nazwie tego znaku.
 
   \item[\texttt{MessageBuffer}] Przechowuje i odtwarza 10 najnowszych wiadomości wysłanych do pokoju. Występuje po jednym egzemplarzu dla każdego aktywnego aktora \texttt{Room}.
 
@@ -167,7 +173,7 @@ Na serwer czatu składa się grupa współdziałających, ale zupełnie odrębny
 
 \newpage
 
-\subsubsection{Warstwa interfejsu użytkownika (,,frontend'')}
+\subsubsection{Warstwa interfejsu użytkownika -- frontend}
 Podczas pracy nad wartwą frontendu, zastosowano framework webowy Vue.js. Jedną
 z przyczyn dla tej decyzji jest możliwość zdekomponowania projektowanej aplikacji na mniejsze części, nazywane modułami (ang. \textit{modules}). Są one zorganizowane hierarchiczne. Każdy z modułów zawiera własny skrypt JavaScript, a także kod HTML i arkusz CSS. Powoduje to, że każdy z modułów jest niezależny od pozostałych i może realizować swoje zadania w pełni autonomicznie.
 
@@ -179,7 +185,7 @@ zmieniać węzły DOM w sposób jawny poprzez skrypt, programista wskazuje w
 szablonie HTML te miejsca, które ulegają określonym przemianom wraz ze
 zmian wewnętrznych parametrów modułu.
 
-Podstawowa struktura aplikacji frontendowej przewiduje podział na
+Podstawowa struktura warstwy frontendowej przewiduje podział na
 pięć części:
 \begin{itemize}
 	\item Część autoryzacyjna -- służy do nawiązania połączenia z
@@ -204,7 +210,6 @@ pięć części:
 
 W projekcie przewidziano zastosowanie modułów, przedstawionych na rysunku \ref{diag-komp-front}.
 
-\nameref{diag-komp-front}.
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[width=\textwidth]{chat/fig/pck-diag-front}
@@ -350,7 +355,7 @@ przeniesiono na komputer z natywnie zainstanowanym systemem Linux Mint.
 Równolegle z testami współpracy Viua VM ze środowiskiem Linux Mint, Marek
 Marecki przygotowywał skrypt powłoki Bash oraz zestaw repozytoriów Git z
 podstawowymi komponentami platformy \ViuAct\ (czyli maszyną Viua VM, kompilatorem
-\ViuAct i kolekcją bibliotek zewnętrznych). Tak przygotowany zestaw mógł zostać
+\ViuAct\ i kolekcją bibliotek zewnętrznych). Tak przygotowany zestaw mógł zostać
 pobrany i skompilowany z użyciem jednej komendy, co znacznie ułatwiło prace
 nad czatem.
 
@@ -819,21 +824,36 @@ Poniżej wskazano, jakie typy i znaczenia mają kolejne parametry:
 \end{itemize}
 
 Powodów wysyłki wiadomości asynchronicznych jest znacznie mniej niż typów wiadomości
-synchronicznych (wytłuszczono wartość parametru \textbf{\texttt{reason}}):
+synchronicznych. Poniżej wymieniono wszystkie z nich (wytłuszczono wartość
+parametru \textbf{\texttt{reason}}):
 
 \begin{enumerate}
-	\item \textbf{\texttt{msg}} -- wysłana przez klienta do serwera reprezentuje
-	wysłanie wiadomości do czatu lub konwersacji, w której obecnie jest wpięty użytkownik;
-	przesłana w odwrotnym kierunku oznacza nową wiadomość;
+	\item \textbf{\texttt{msg}} -- nowa wiadomość w czacie:
+	\begin{enumerate}
+		\item wiadomość tego typu, wysłana od klienta do serwera, reprezentuje wiadomość
+		wysłaną przez użytkownika do pokoju lub konwersacji prywatnej; komunikat
+		powinien zawierać dwa obowiązkowe właściwości obiektu \texttt{payload}:
+		właściwość \texttt{content} z łańcuchem znaków z treścią wiadomości
+		oraz \texttt{room} z łańcuchem alfanumerycznych znaków z nazwą pokoju lub
+		konwersacji prywatnej;
+		\item wiadomość tego typu wysłana od serwera do klienta oznacza nową wiadomość
+		w jednym z pokojów lub prywatnych konwersacji, w których użytkownik bierze
+		udział; wymagane są obowiązkowe własności obiektu \texttt{payload} tak jak
+		we wcześniejszym przypadku;
+	\end{enumerate}
 
 	\item \textbf{\texttt{unbind\_removed}} -- wysłana przez serwer, oznacza że
-	wymuszono odpięcie się od pokoju z powodu jego usunięcia
+	wymuszono odpięcie się od pokoju z powodu jego usunięcia, w obiekcie
+	\texttt{payload} obowiązkowa jest własność \texttt{room} zawierająca nazwę
+	pokoju z którego użytkownik został wyrzucony;
 
 	\item \textbf{\texttt{unbind\_ban}} -- wysłana przez serwer, oznacza że użytkownik
-	został wyrzucony z pokoju
+	został wyrzucony z pokoju, w obiekcie \texttt{payload} obowiązkowa jest własność
+	\texttt{room} zawierająca łańcuch znaków z nazwą pokoju, z któregp użytkownik
+	został wyrzucony;
 
 	\item \textbf{\texttt{disconn\_ban}} -- wysłana przez serwer, oznacza że
-	użytkownik został wyrzucony z serwera
+	użytkownik został wyrzucony z serwera.
 \end{enumerate}
 
 \subsection{Protokół komunikacji pomiędzy aktorami}
@@ -855,8 +875,46 @@ założenie, że wszystkie komunikaty będą miały formę struktury \texttt{str
 
 \section{Projekt interfejsu}
 
-\textit{Do uzupełnienia.}
+Interfejs graficzny czatu oparto na bibliotece Material, zapewniającej stabline
+i przetestowane rozwiązania z zakresu UI. Jej użycie w projekcie było możliwe dzięki
+temu, że twórcy udostępnili ją na licencji MIT.
 
-\subsection{Interfejs użytkownika}
+Aby umożliwić szybką i łatwą nawigację po podstawowych funkcjonalnościach czatu,
+od początku zakładano, że w górnej części okna znajdzie się główne menu. Będzie
+ono obecne stale, przez cały czas korzystania z aplikacji. Pozwoli to na szybkie
+przechodzenie do uwidocznionych na nim opcji:
 
-\textit{Do uzupełnienia.}
+\begin{itemize}
+	\item \textbf{Pokoje} -- dostęp do listy ogólnodostępnych pokojów;
+	\item \textbf{PW} -- dostęp do listy użytkowników, z którymi dotychczas
+	wymieniono wiadomości prywatne;
+	\item \textbf{Admin} -- opcja widoczna wyłącznie po autoryzacji z uprawnieniami
+	administracyjnymi, pozwala na przejście do narzędzi zarządzania serwerem
+	(pokojami, użytkownikami);
+	\item \textbf{Konto} -- dostęp do informacji na temat bieżącego użytkownika i
+	opcji związanych z bieżącą sesją.
+\end{itemize}
+
+Nawigacja po aplikacji czatu będzie odbywała się według schematu ujętego na
+rysunku \ref{nav-diag}.
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/nav-diag}
+	\caption{Diagram nawigacji po interfejsie aplikacji ViuaChat (ścieżki i
+	komponenty oznaczone przerywaną linią są dostępne wyłącznie dla administratorów)}
+	\label{nav-diag}
+\end{figure}
+
+Wygląd okna czatu, z uwagi na oszczędności czasu i wąski zakres użycia czatu,
+zaprojektowano wyłącznie na najmniejsze urządzenia mobilne, rezygnując tym
+samym z przygotowania wariantów na inne rozmiary ekranów. Okno czatu ma stały,
+na sztywno ustalony wymiar 360 na 640 pikseli. Podejście do pozwoliło
+przeznaczyć zaoszczędzony czas na prace nad samą aplikacją serwera.
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{chat/fig/GUI}
+	\caption{Projekt interfejsu graficznego czatu ViuaChat}
+	\label{GUI}
+\end{figure}
