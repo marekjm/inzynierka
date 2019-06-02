@@ -1,0 +1,251 @@
+\subsection{Sprint 4}
+
+\textbf{Termin realizacji:} 7-27 kwietnia 2019 r.
+
+\subsubsection{Cel sprintu}
+Sprint ma na celu wykonanie mechanizmu prywatnych wiadomości. Wlicza się do
+niego lista użytkowników obecnych na czacie, z którymi ma być prowadzona
+rozmowa, a także nawiązywanie rozmowy w pokoju PW oraz wysyłanie i odbiór
+wiadomości w pokoju PW.
+
+\subsubsection{Zadania oparte o pierwotne wymagania}
+
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-08
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako użytkownik serwera czatu, chcę zobaczyć
+			okno wiadomości prywatnych, aby odczytać wiadomości,
+			które wysłano specjalnie do mnie.
+		\strut}\\
+
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Po kliknięciu w link ,,PW'', użytkownik
+				zobaczy okno prywatnych wiadomości
+				\item W oknie wiadomości prywatnych, użytkownik
+				zobaczy listę użytkowników, od których otrzymał
+				wiadomości prywatne.
+				\item Po kliknięciu w link z nazwą użytkownika,
+				użytkownik zobaczy prywatne wiadomości, których
+				nadawcą i odbiorcą jest wskazana osoba.
+			\end{enumreq}
+			\strut}
+		\\
+    \hline
+      \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+      \parbox[t]{11.5cm}{\strut
+        6h / 5h
+      \strut}\\
+
+      \hline
+        \parbox[t]{4cm}{\textbf{Ukończono?}} &
+        \parbox[t]{11.5cm}{\strut
+          Tak.
+        \strut}\\
+	\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-09
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako użytkownik serwera czatu, chcę wysłać
+			wiadomość prywatną do jednego użytkownika, aby
+			prowadzić z nim ciągłą konwersację.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Użytkownik wpisze tekst wiadomości w polu
+				tekstowym u dołu okna wiadomości prywatnych
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po wciśnięciu klawisza ,,Enter'', gdy
+				aktywne
+				będzie pole tekstowe
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po naciśnięciu przycisku ,,Wyślij'',
+				widocznego obok pola tekstowego
+				\item Po wysłaniu wiadomości, pole tekstowe zostanie
+				wyczyszczone (niezależnie od tego czy wiadomość
+				zostanie doręczona)
+				\item Wiadomość wysłana w oknie zostanie pokazana
+				tylko użytkownikowi, z którym trwa otwarta
+				konwersacja
+				\item Nowa wiadomość jest pokazywana wraz z nazwą
+				użytkownika wysyłającego u dołu konwersacji
+			\end{enumreq}
+			\strut}
+		\\
+
+    \hline
+      \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+      \parbox[t]{11.5cm}{\strut
+        2h / 1h
+      \strut}\\
+
+      \hline
+        \parbox[t]{4cm}{\textbf{Ukończono?}} &
+        \parbox[t]{11.5cm}{\strut
+          Tak.
+        \strut}\\
+	\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-11
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako użytkownik serwera czatu, chcę wysłać wiadomość
+			prywatną do innego użytkownika, z którym wcześniej nie
+			wymieniałem takich wiadomości, aby rozpocząć z nim
+			prywatną konwersację.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Użytkownik kliknie w oknie wiadomości
+				prywatnych w przyciski ,,Nowy''.
+				\item Użytkownik zobaczy monit o podanie nazwy
+				użytkownika, z którym chce rozpocząć rozmowę
+				\item Jeżeli użytkownik jest aktywny, wówczas
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po wciśnięciu klawisza ,,Enter'', gdy
+				aktywne
+				będzie pole tekstowe
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po naciśnięciu przycisku ,,Wyślij'',
+				widocznego obok pola tekstowego
+				\item Po wysłaniu wiadomości, pole tekstowe zostanie
+				wyczyszczone (niezależnie od tego czy wiadomość
+				zostanie doręczona)
+				\item Wiadomość wysłana w oknie zostanie pokazana
+				tylko użytkownikowi, z którym trwa otwarta
+				konwersacja
+				\item Nowa wiadomość jest pokazywana wraz z nazwą
+				użytkownika wysyłającego u dołu konwersacji
+			\end{enumreq}
+			\strut}
+		\\
+    \hline
+      \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+      \parbox[t]{11.5cm}{\strut
+        11h / 5h
+      \strut}\\
+
+      \hline
+        \parbox[t]{4cm}{\textbf{Ukończono?}} &
+        \parbox[t]{11.5cm}{\strut
+          Nie -- przeniesiono do kolejnego sprintu.
+        \strut}\\
+
+	\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-05
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Wiadomości prywatne są czyszczone niezwłocznie po rozłączeniu się przez dowolnego z rozmówców.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+			ZW-10 Wiadomości prywatne są utrzymywane dopóki nadawca i odbiorca mają aktywną sesję na serwerze.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Po zamknięciu sesji użytkownika, wiadomości prywatne których był nadawcą lub odbiorcą ulegają
+        usunięciu.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+   --
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Nie -- zadanie przeniesiono do kolejnego sprintu.
+    \strut}\\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-06
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Bufor pokoju wiadomości prywatnych zawiera do 100 wiadomości.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+			ZW-11 Dla każdej pary użytkowników, na serwerze jest gromadzone co najwyżej 100 wiadomości prywatnych.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Po przekroczeniu liczby 100 wiadomości prywatnych w pokoju, bufor
+        ulega ,,zawinięciu'', usuwając najstarsze wiadomości.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    --
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Nie -- zadanie przeniesiono do kolejnego sprintu.
+    \strut}\\
+\hline
+\end{tabular}
+
+\subsubsection{Zadania wykraczające poza pierwotne wymagania}
+
+Brak.

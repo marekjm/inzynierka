@@ -1,0 +1,239 @@
+\subsection{Sprint 3}
+
+\textbf{Termin realizacji:} 24 marca -- 6 kwietnia 2019 r.
+
+\subsubsection{Cel sprintu}
+Po zakończeniu sprintu, powinno być możliwe podpięcie się do pokoju i rozmowa z
+innymi użytkownikami, którzy są podpięci do tego samego pokoju.
+
+\subsubsection{Zadania oparte o pierwotne wymagania}
+
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+ \hline
+   \textbf{Identyfikator} &
+   WF-02
+   \\
+
+ \hline
+   \textbf{Treść} & \parbox[t]{11.5cm}{\strut
+     Jako użytkownik serwera czatu, chcę wpiąć się do pokoju,
+     aby wziąć udział w dyskusji.
+   \strut}\\
+
+ \hline
+   \parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+     \begin{enumreq}
+       \item Użytkownik, który ma otwartą sesję
+       połączenia z serwerem czatu i nie jest wpięty
+       do żadnego pokoju, zobaczy listę pokojów.
+       \item Użytkownik, po kilknięciu w liście pokojów
+       na nazwę pokoju, zostanie do niego podpięty
+       \item Użytkownik po wpięciu się do pokoju zobaczy
+       okno pokoju
+       \item Użytkownik, który ma otwartą sesję
+       połączenia z serwerem i jest wpięty do pokoju,
+       po odświeżeniu przeglądarki zobaczy okno pokoju,
+       do którego jest wpięty
+     \end{enumreq}
+     \strut}
+   \\
+
+   \hline
+     \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+     \parbox[t]{11.5cm}{\strut
+       7h / 5h
+     \strut}\\
+
+       \hline
+         \parbox[t]{4cm}{\textbf{Ukończono?}} &
+         \parbox[t]{11.5cm}{\strut
+           Tak.
+         \strut}\\
+
+         \hline
+     \end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+ \hline
+   \textbf{Identyfikator} &
+   WF-03
+   \\
+
+ \hline
+   \textbf{Treść} & \parbox[t]{11.5cm}{\strut
+     Jako użytkownik serwera czatu, chcę po wpięciu
+     do pokoju zobaczyć ostatnie wiadomości wysłane
+     przed moim dołączeniem, aby dowiedzieć się, co
+     tam się obecnie dzieje.
+   \strut}\\
+
+ \hline
+   \parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+     \begin{enumreq}
+       \item Użytkownik po wpięciu się do pokoju zobaczy
+       10 najnowszych wiadomości wysłanych do pokoju
+       przed jego dołączeniem (lub mniej, jeżeli
+       dotychczas nie wysłano do pokoju co najmniej
+       10 wiadomości)
+     \end{enumreq}
+     \strut}
+   \\
+
+   \hline
+     \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+     \parbox[t]{11.5cm}{\strut
+       6h / 5h
+     \strut}\\
+
+ \hline
+   \parbox[t]{4cm}{\textbf{Ukończono?}} &
+   \parbox[t]{11.5cm}{\strut
+     Tak.
+   \strut}\\
+
+   \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+ \hline
+   \textbf{Identyfikator} &
+   WF-04
+   \\
+
+ \hline
+   \textbf{Treść} & \parbox[t]{11.5cm}{\strut
+     Jako użytkownik serwera czatu, chcę wysłać
+     wiadomość do pokoju w który jestem wpięty, aby
+     zobaczyli ją inni uczestnicy dyskusji.
+   \strut}\\
+
+ \hline
+   \parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+     \begin{enumreq}
+       \item Użytkownik wpisze tekst wiadomości w polu
+       tekstowym u dołu czatu
+       \item Wiadomość wpisana w polu tekstowym zostanie
+       wysłana po wciśnięciu klawisza ,,Enter'', gdy aktywne
+       będzie pole tekstowe
+       \item Wiadomość wpisana w polu tekstowym zostanie
+       wysłana po naciśnięciu przycisku ,,Wyślij'',
+       widocznego obok pola tekstowego
+       \item Po wysłaniu wiadomości, pole tekstowe zostanie
+       wyczyszczone (niezależnie od tego czy wiadomość
+       zostanie doręczona)
+       \item Wiadomość wysłana do pokoju jest pokazywana
+       wszystkim użytkownikom podpiętym do czatu u dołu
+       strony
+       \item Nowa wiadomość jest pokazywana wraz z nazwą
+       użytkownika wysyłającego u dołu konwersacji
+     \end{enumreq}
+     \strut}
+   \\
+
+   \hline
+     \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+     \parbox[t]{11.5cm}{\strut
+       3.5h / 5h
+     \strut}\\
+ \hline
+
+   \parbox[t]{4cm}{\textbf{Ukończono?}} &
+   \parbox[t]{11.5cm}{\strut
+     Tak.
+   \strut}\\
+
+   \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+ \hline
+   \textbf{Identyfikator} &
+   WF-07
+   \\
+
+ \hline
+   \textbf{Treść} & \parbox[t]{11.5cm}{\strut
+     Jako użytkownik serwera czatu, chcę odpiąć się od pokoju,
+     aby wpiąć się do innego pokoju.
+   \strut}\\
+
+ \hline
+   \parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+     ZP-06 Użytkownik może się samodzielnie wypiąć z pokoju,
+     do którego jest wpięty
+
+   \strut}\\
+
+ \hline
+   \parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+     \begin{enumreq}
+       \item W oknie pokoju użytkownik zobaczy przycisk
+       lub link ,,Opuść pokój''.
+       \item Po kliknięciu w ,,Opuść pokój'', użytkownik
+       zobaczy listę pokojów.
+     \end{enumreq}
+     \strut}
+   \\
+
+   \hline
+     \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+     \parbox[t]{11.5cm}{\strut
+       2h / 1h
+     \strut}\\
+
+     \hline
+       \parbox[t]{4cm}{\textbf{Ukończono?}} &
+       \parbox[t]{11.5cm}{\strut
+         Tak.
+       \strut}\\
+ \hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-07
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Bufor pokoju niebędącego dedykowanym do wiadomości prywatnych zawiera do
+      10 wiadomości.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Po przekroczeniu liczby 10 wiadomości w pokoju, bufor ulega
+        ,,zawinięciu'', usuwając najstarsze wiadomości.
+			\end{enumreq}
+			\strut}
+		\\
+    \hline
+      \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+      \parbox[t]{11.5cm}{\strut
+        Nakład czasowy ujęto podczas realizacji zadania WF-03.
+      \strut}\\
+
+      \hline
+        \parbox[t]{4cm}{\textbf{Ukończono?}} &
+        \parbox[t]{11.5cm}{\strut
+          Tak.
+        \strut}\\
+
+	\hline
+\end{tabular}
+
+\subsubsection{Zadania wykraczające poza pierwotne wymagania}
+
+Brak.

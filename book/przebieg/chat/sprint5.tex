@@ -1,0 +1,163 @@
+\subsection{Sprint 5}
+
+\textbf{Termin realizacji:} 28 kwietnia -- 11 maja 2019 r.
+
+\subsubsection{Cel sprintu}
+Celem jest dokończenie mechanizmu prywatnych wiadomości, których nie udało się
+dokończyć w poprzednim sprincie -- łączenia z wybranym użytkownikiem, z którym
+wcześniej nie prowadzono korespondencji.
+
+\subsubsection{Zadania oparte o pierwotne wymagania}
+
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-09
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako użytkownik serwera czatu, chcę wysłać
+			wiadomość prywatną do jednego użytkownika, aby
+			prowadzić z nim ciągłą konwersację.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Użytkownik wpisze tekst wiadomości w polu
+				tekstowym u dołu okna wiadomości prywatnych
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po wciśnięciu klawisza ,,Enter'', gdy
+				aktywne
+				będzie pole tekstowe
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po naciśnięciu przycisku ,,Wyślij'',
+				widocznego obok pola tekstowego
+				\item Po wysłaniu wiadomości, pole tekstowe zostanie
+				wyczyszczone (niezależnie od tego czy wiadomość
+				zostanie doręczona)
+				\item Wiadomość wysłana w oknie zostanie pokazana
+				tylko użytkownikowi, z którym trwa otwarta
+				konwersacja
+				\item Nowa wiadomość jest pokazywana wraz z nazwą
+				użytkownika wysyłającego u dołu konwersacji
+			\end{enumreq}
+			\strut}
+		\\
+
+    \hline
+      \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+      \parbox[t]{11.5cm}{\strut
+        4h / 5h
+      \strut}\\
+
+      \hline
+        \parbox[t]{4cm}{\textbf{Ukończono?}} &
+        \parbox[t]{11.5cm}{\strut
+          Tak.
+        \strut}\\
+
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-11
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako użytkownik serwera czatu, chcę wysłać wiadomość
+			prywatną do innego użytkownika, z którym wcześniej nie
+			wymieniałem takich wiadomości, aby rozpocząć z nim
+			prywatną konwersację.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Użytkownik kliknie w oknie wiadomości
+				prywatnych w przyciski ,,Nowy''.
+				\item Użytkownik zobaczy monit o podanie nazwy
+				użytkownika, z którym chce rozpocząć rozmowę
+				\item Jeżeli użytkownik jest aktywny, wówczas
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po wciśnięciu klawisza ,,Enter'', gdy
+				aktywne
+				będzie pole tekstowe
+				\item Wiadomość wpisana w polu tekstowym zostanie
+				wysłana po naciśnięciu przycisku ,,Wyślij'',
+				widocznego obok pola tekstowego
+				\item Po wysłaniu wiadomości, pole tekstowe zostanie
+				wyczyszczone (niezależnie od tego czy wiadomość
+				zostanie doręczona)
+				\item Wiadomość wysłana w oknie zostanie pokazana
+				tylko użytkownikowi, z którym trwa otwarta
+				konwersacja
+				\item Nowa wiadomość jest pokazywana wraz z nazwą
+				użytkownika wysyłającego u dołu konwersacji
+			\end{enumreq}
+			\strut}
+		\\
+
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    3h / 5h
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Tak.
+    \strut}\\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-07
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Bufor pokoju niebędącego dedykowanym do wiadomości prywatnych zawiera do
+      10 wiadomości.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Po przekroczeniu liczby 10 wiadomości w pokoju, bufor ulega
+        ,,zawinięciu'', usuwając najstarsze wiadomości.
+			\end{enumreq}
+			\strut}
+		\\
+    \hline
+      \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+      \parbox[t]{11.5cm}{\strut
+        Nakład czasu ujęto w zadaniu WF-11.
+      \strut}\\
+
+      \hline
+        \parbox[t]{4cm}{\textbf{Ukończono?}} &
+        \parbox[t]{11.5cm}{\strut
+          Tak.
+        \strut}\\
+
+	\hline
+\end{tabular}
+
+\subsubsection{Zadania wykraczające poza pierwotne wymagania}
+
+Brak.

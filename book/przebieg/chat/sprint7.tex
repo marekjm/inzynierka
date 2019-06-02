@@ -1,0 +1,182 @@
+\subsection{Sprint 7}
+
+\textbf{Termin realizacji:} 27 maja -- 6 czerwca 2019 r.
+
+\subsubsection{Cel sprintu}
+Celem sprintu jest wykonanie testów całego systemu, a także wykrycie i
+poprawienie niedoróbek.
+
+\subsubsection{Zadania oparte o pierwotne wymagania}
+
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-05
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako użytkownik serwera czatu, chcę chcę zobaczyć
+			powiadomienie o wpięciu się nowego użytkownika do
+			pokoju w którym sam jestem obecnie wpięty, aby powitać
+			nowego dyskutanta
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Niezwłocznie po wpięciu się użytkownika do
+				pokoju, serwer wyśle wiadomość systemową o treści
+				,,Użytkownik ... dołączył do pokoju'', widoczną
+				dla wszystkich użytkowników wpiętych do tego pokoju
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    ...
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      ...
+    \strut}\\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-06
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako użytkownik serwera czatu, chcę zobaczyć
+			powiadomienie o opuszczeniu pokoju przez użytkownika,
+			aby łatwo zorientować się, że nie bierze już udziału
+			w dyskusji.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Niezwłocznie po wypięciu się użytkownika z
+				pokoju, serwer wyśle wiadomość systemową, widoczną
+				dla wszystkich użytkowników wpiętych do tego pokoju,
+				o treści:
+				\begin{enumerate}
+					\item ,,Użytkownik ... opuścił pokój'', gdy
+					użytkownik samodzielnie wypiął się z pokoju
+					\item ,,Użytkownik ... stracił połączenie'',
+					gdy użytkownik został wypięty z pokoju na skutek
+					przerwania sesji z uwagi na zerwanie połączenia
+					\item ,,Użytkownik ... został wyrzucony'', gdy
+					użytkownik został wypięty wskutek interwencji
+					administratora
+				\end{enumerate}
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    ...
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      ...
+    \strut}\\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-16
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako administrator, chcę zmienić swoje hasło, aby zabezpieczyć swoje hasło w razie ujawnienia go osobie niepowołanej, bez zmiany plików konfiguracyjnych i restartowania całego serwera.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Administrator wejdzie na kartę ,,Moje konto''.
+        \item Administrator kliknie na przycisk ,,Zmień hasło'',
+        widoczny pod nazwą użytkownika.
+				\item Administrator zobaczy monit zmiany hasła,
+        zawierający jedno pole tekstowe na stare hasło i dwa na
+        nowe hasło (wszystkie trzy ukryte przed podglądaniem
+        treści podczas ich wprowadzania).
+        \item Administrator potwierdzi decyzję o zmianie hasła w monicie.
+        \item Po potwierdzeniu decyzji, administrator zobaczy wiadomość systemową o zmianie hasła.
+        \item Administrator rozłączy się z serwerem.
+        \item Administrator spróbuje rozpocząć nową sesję z
+        serwerem, autoryzując się nowym hasłem.
+        \item Nowe hasło zostanie zaakceptowane przez serwer,
+        sesja zostanie rozpoczęta prawidłowo.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    ...
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      ...
+    \strut}\\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+	WS-03
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{
+			Aplikacja czatu będzie dostosowana przede wszystkim
+			do obsługi z wykorzystaniem urządzeń mobilnych.
+		}\\
+
+	\hline      \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+        \parbox[t]{11.5cm}{\strut
+          ...
+        \strut}\\
+
+        \hline
+          \parbox[t]{4cm}{\textbf{Ukończono?}} &
+          \parbox[t]{11.5cm}{\strut
+            ...
+          \strut}\\
+  	\hline
+\end{tabular}
+
+\subsubsection{Zadania wykraczające poza pierwotne wymagania}
+
+Brak.

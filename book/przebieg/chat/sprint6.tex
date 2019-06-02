@@ -1,0 +1,260 @@
+\subsection{Sprint 6}
+
+\textbf{Termin realizacji:} 12-26 maja 2019 r.
+
+\subsubsection{Cel sprintu}
+W tym sprincie zaplanowano wykonanie narzędzi administracyjnych, służących
+do zarządzania serwerem.
+
+\subsubsection{Zadania oparte o pierwotne wymagania}
+
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-12
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako administrator, chcę utworzyć nowy pokój, aby umożliwić użytkownikom konwersację w węższym gronie.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Administrator kliknie w oknie z listą pokojów w przycisk ,,Nowy''.
+				\item Administrator zobaczy monit o podanie nazwy
+				nowego pokoju.
+				\item Administrator po podaniu nazwy i zaakceptowaniu,
+        zostanie przeniesiony do listy pokojów, na której
+        będzie widoczna nazwa dodanego pokoju.
+				\item Administrator i inni użytkownicy mogą wpiąć się do nowoutworzonego pokoju.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-13
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako administrator, chcę usunąć zbędny pokój, aby utrzymać porządek na swoim serwerze czatu.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Administrator wejdzie do pokoju, który chce
+        usunąć.
+        \item Administrator zobaczy obok tytułu z nazwą pokoju
+        przycisk ,,Usuń''.
+				\item Administrator po kliknięciu przycisku zobaczy
+        monit z potwierdzeniem działania.
+        \item Administrator potwierdzi decyzję w monicie.
+        \item Po potwierdzeniu decyzji o usunięciu, administrator
+        zostanie przeniesiony do listy pokojów, na której nie
+         będzie już widniała nazwa usuniętego pokoju.
+				\item Pozostali użytkownicy w usuniętym pokoju zostaną niezwłocznie od niego odpięci i zobaczą monit systemowy informujący o usunięciu pokoju.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    2h / 3h
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Tak.
+    \strut}\\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-14
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako administrator, chcę usunąć użytkownika z pokoju,
+      aby utrzymać należyty poziom konwersacji.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Administrator wejdzie do pokoju.
+        \item Administrator najedzie na nazwę użytkownika którego chce usunąć z pokoju i kliknie na przycisk z
+        nazwą ,,Usuń z pokoju''.
+				\item Administrator po kliknięciu przycisku zobaczy
+        monit z potwierdzeniem działania.
+        \item Administrator potwierdzi decyzję w monicie.
+        \item Po potwierdzeniu decyzji o usunięciu, administrator
+        (tak samo jak każdy inny użytkownik podpięty do pokoju) zobaczy wiadomość systemową o usunięciu z konwersacji.
+				\item Usunięty użytkownik zostanie niezwłocznie wypięty
+        z pokoju, a także zobaczy monit o przyczynie wypięcia.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    6h / 5h
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Tak.
+    \strut}\\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-15
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako administrator, chcę usunąć użytkownika z serwera,
+      aby ukarać go za łamanie zasad netykiety.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Administrator wejdzie do pokoju.
+        \item Administrator najedzie na nazwę użytkownika którego chce usunąć z pokoju i kliknie na przycisk z
+        nazwą ,,Usuń z serwera''.
+				\item Administrator po kliknięciu przycisku zobaczy
+        monit z potwierdzeniem działania.
+        \item Administrator potwierdzi decyzję w monicie.
+        \item Po potwierdzeniu decyzji o usunięciu, administrator
+        (tak samo jak każdy inny użytkownik podpięty do pokoju) zobaczy wiadomość systemową o usunięciu z serwera.
+				\item Usunięty użytkownik zostanie niezwłocznie wypięty
+        z pokoju i jego sesja zostanie zakończona, a także pokazany zostanie monit o przyczynie tych zdarzeń (usunięcie z serwera czatu).
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    2h / 5h
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Tak.
+    \strut}\\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-03
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Loginy administratorów w oknach czatu są pogrubione i pokolorowane na czerwono.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Nazwy administratorów w oknach czatu są pogrubione
+        i pokolorowane na czerowono.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    1h / 1h
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Tak.
+    \strut}\\
+\hline
+\end{tabular}
+
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		HN-04
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Nazwy pokojów mają od 3 do 32 znaków alfanumerycznych długości,
+      przy czym nigdy dwa pokoje nie mają tej samej nazwy.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+			ZP-02 Każdy pokój ma unikalną nazwę będącą ciągiem
+      alfanumerycznym od 3 do 32 znaków.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Nie jest możlwe utworzenie pokoju o nazwie, która
+        już wcześniej się pojawiała
+        \item Nie jest możliwe utworzenie pokoju o nazwie krótszej niż 3 znaki i dłuższej niż 32 znaki.
+        \item Nie jest możliwe utworzenie pokoju o nazwie zawierającej znaki inne niż litery alfabetu łacińskiego, cyfry i znak podkreślenia.
+			\end{enumreq}
+			\strut}
+		\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+  \parbox[t]{11.5cm}{\strut
+    Nakład czasowy ujęto w ramach zadania WF-13.
+  \strut}\\
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Tak.
+    \strut}\\
+\hline
+\end{tabular}
+
+\subsubsection{Zadania wykraczające poza pierwotne wymagania}
+
+Brak.

@@ -1,0 +1,164 @@
+\subsection{Sprint 1}
+
+\textbf{Termin realizacji:} 2-9 marca 2019 r.
+
+\subsubsection{Cel sprintu}
+Celem sprintu było utworzenie podstawowej funkcjonalności związanej z
+komunikacją frontend-backend -- ustanawiania połączenia WebSocket,
+dekodowania komunikatów bo obu stronach aplikacji, a także podstawowa
+walidacja funkcjonalności.
+
+\subsubsection{Zadania oparte o pierwotne wymagania}
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+	WS-01
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			W rozwiązaniu należy wykorzystać środowisko Viua VM i
+			język \ViuAct
+		\strut}\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} & \parbox[t]{11.5cm}{\strut
+    Nakład godzinowy związany z zadaniem ujęto przy realizacji zadań ZZ-01 i
+    ZZ-02.
+  \strut}\\
+
+\hline
+  \parbox[t]{4cm}{\textbf{Ukończono?}} &
+  \parbox[t]{11.5cm}{\strut
+    Tak.
+  \strut}\\
+
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+	WS-02
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Czat będzie użytkowany jako aplikacja webowa typu
+			\textit{single page application}
+		\strut}\\
+
+	\hline
+  \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} & \parbox[t]{11.5cm}{\strut
+    Nakład godzinowy związany z zadaniem ujęto przy realizacji zadań ZZ-01 i
+    ZZ-02.
+  \strut}\\
+
+\hline
+  \parbox[t]{4cm}{\textbf{Ukończono?}} &
+  \parbox[t]{11.5cm}{\strut
+    Tak.
+  \strut}\\
+
+\hline
+\end{tabular}
+
+\subsubsection{Zadania wykraczające poza pierwotne wymagania}
+
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+ \hline
+   \textbf{Identyfikator} &
+   ZZ-01
+   \\
+
+ \hline
+   \textbf{Treść} & \parbox[t]{11.5cm}{\strut
+     Frontend aplikacji jest w stanie nawiązać połączenie WebSocket z backendem.
+   \strut}\\
+
+ \hline
+   \parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+     \begin{enumreq}
+       \item Frontend nawiązał połączenie z serwerem (tj. doszło do
+       zmiany protokołu z HTTP na WS).
+       \item Frontend wysłał wiadomość do backendu, a wiadomość została
+       odebrana.
+       \item Backend wysłał wiadomość do frontendu, a wiadomość została
+       odebrana.
+     \end{enumreq}
+     \strut}
+   \\
+
+   \hline
+     \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} & \parbox[t]{11.5cm}{\strut
+       5h / 5.5h
+     \strut}\\
+
+   \hline
+     \parbox[t]{4cm}{\textbf{Ukończono?}} &
+     \parbox[t]{11.5cm}{\strut
+       Tak.
+     \strut}\\
+
+   \hline
+ \end{tabular}
+
+ \vspace{1em}
+
+\begin{tabular}{ | l | l | }
+ \hline
+   \textbf{Identyfikator} &
+   ZZ-02
+   \\
+
+ \hline
+   \textbf{Treść} & \parbox[t]{11.5cm}{\strut
+     Obie strony (tj. frontend i backend) potrafią zakodować wiadomości w
+     ustalonym formacie JSON przed ich wysyłką i odebrać je po ich odebraniu.
+   \strut}\\
+
+ \hline
+   \parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+     \begin{enumreq}
+       \item Frontend potrafi zakodować wiadomość w formacie JSON -- wiadomość
+       synchroniczną oraz wiadomość asynchroniczną.
+       \item Frontend potrafi odkodować wiadomość w formacie JSON.
+       \item Frontend potrafi ustalić, czy odebrana wiadomość jest synchroniczna,
+       czy asynchroniczna, a w przypadku synchronicznej -- dopasować ją do
+       wysłanej wcześniej wiadomości.
+       \item Frontend potrafi właściwie obsługiwać wyjątki wynikające z błędów
+       w składni JSON odbieranych wiadomości oraz z błędów w strukturze obiektów
+       JSON: braku obowiązkowych własności oraz nieprawidłowych typów tych
+       wiadomości. Błędy te nie powodują krytycznego przerwania pracy działania
+       programu.
+       \item Backend potrafi odkodować otrzymywane wiadomości w  formacie JSON.
+       \item Backend potrafi ustalić, czy otrzymana wiadomość jest synchroniczna,
+       czy asynchroniczna.
+       \item Backend potrafi odesłać odpowiedź pasującą do otrzymanej wiadomości
+       synchronicznej.
+       \item Backend potrafi właściwie obsługiwać wyjątki z tytułu niewłaściwie
+       skonstruowanych wiadomości. W razie otrzymania takiej wiadomości, nie
+       dochodzi do przerwania pracy serwera (tj. aktora \texttt{WsConnector}).
+     \end{enumreq}
+     \strut}
+   \\
+
+   \hline
+     \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} & \parbox[t]{11.5cm}{\strut
+       10h / 12h
+     \strut}\\
+
+       \hline
+         \parbox[t]{4cm}{\textbf{Ukończono?}} &
+         \parbox[t]{11.5cm}{\strut
+           Tak.
+         \strut}\\
+
+         \hline
+     \end{tabular}

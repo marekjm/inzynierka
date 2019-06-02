@@ -1,0 +1,188 @@
+\subsection{Sprint 2}
+
+\textbf{Termin realizacji:} 10-23 marca 2019 r.
+
+\subsubsection{Cel sprintu}
+W ramach tego sprintu zaplanowano opracowanie mechanizm autoryzacji do czatu i
+możliwość przejrzenia listy pokojów.
+
+\subsubsection{Zadania oparte o pierwotne wymagania}
+
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		WF-01
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Jako użytkownik serwera czatu, chcę się do niego zalogować, aby zobaczyć listę pokojów dyskusyjnych.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item Po wejściu na czat bez rozpoczętej sesji, pokazuje się monit o podanie nazwy użytkownika.
+				\item Po wpisaniu nazwy użytkownika i zatwierdzeniu, użytkownik rozpocznie sesję na serwerze czatu.
+				\item Tuż po rozpoczęciu sesji czatu, użytkownik zobaczy listę pokojów.
+			\end{enumreq}
+			\strut}
+		\\
+
+    \hline
+      \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} & \parbox[t]{11.5cm}{\strut
+        15h / 21h
+      \strut}\\
+	\hline
+
+    \hline
+      \parbox[t]{4cm}{\textbf{Ukończono?}} &
+      \parbox[t]{11.5cm}{\strut
+        Tak.
+      \strut}\\
+
+      \hline
+  \end{tabular}
+
+\vspace{1em}
+
+  \begin{tabular}{ | l | l | }
+  	\hline
+  		\textbf{Identyfikator} &
+  		HN-01
+  		\\
+
+  	\hline
+  		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+  			Długość nazwy użytkownika jest ograniczona od 2 do 32 znaków alfanumerycznych, w celu uniknięcia problemów z identyfikacją użytkownika na serwerze.
+  		\strut}\\
+
+  	\hline
+  		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+  			ZU-03 Nazwa użytkownika to ciąg od 2 do 32 alfanumerycznych znaków.
+  		\strut}\\
+
+  	\hline
+  		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+  			\begin{enumreq}
+  				\item Po wpisaniu do pola użytkownika nazwy krótszej niż 2 znaki, dłużej niż 32 znaki lub zawierającej inne znaki niż alfanumeryczne, zwracany jest błąd.
+  			\end{enumreq}
+  			\strut}
+  		\\
+
+  	\hline
+    \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} & \parbox[t]{11.5cm}{\strut
+      Czas wynikający z tego zadania ujęto przy realizacji zadania WF-01.
+    \strut}\\
+\hline
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Tak.
+    \strut}\\
+
+    \hline
+  \end{tabular}
+
+  \vspace{1em}
+
+  \begin{tabular}{ | l | l | }
+  	\hline
+  		\textbf{Identyfikator} &
+  		HN-02
+  		\\
+
+  	\hline
+  		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+  			Loginy i hasła administratorów są gromadzone w plikach
+        konfiguracyjnych, a po uruchomieniu serwera -- w jego
+        pamięci operacyjnej.
+  		\strut}\\
+
+  	\hline
+  		\parbox[t]{4cm}{\textbf{Powiązane zasady biznesowe}} & \parbox[t]{11.5cm}{\strut
+  			ZU-07 Konta administratorów są utrzymywane na serwerze w postaci par wartości: nazwa użytkownika i hasło.
+  		\strut}\\
+
+  	\hline
+  		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+  			\begin{enumreq}
+  				\item Serwer jest wyposażony w pliki konfiguracyjne
+          \item Po załadowaniu serwera, z plików konfiguracyjnych
+          są odczytywane dane kont administracyjnych
+          \item Serwer po uruchomieniu jest wyposażony w konta o
+          nazwach i hasłach zgodnych z wpisami w plikach konfiguracyjnych.
+  			\end{enumreq}
+  			\strut}
+  		\\
+
+  	\hline
+    \parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} & \parbox[t]{11.5cm}{\strut
+      Czas wynikający z tego zadania ujęto przy realizacji zadania WF-01.
+    \strut}\\
+\hline
+
+  \hline
+    \parbox[t]{4cm}{\textbf{Ukończono?}} &
+    \parbox[t]{11.5cm}{\strut
+      Tak.
+    \strut}\\
+
+    \hline
+  \end{tabular}
+
+\subsubsection{Zadania wykraczające poza pierwotne wymagania}
+
+\leavevmode\hbox{}
+
+\begin{tabular}{ | l | l | }
+	\hline
+		\textbf{Identyfikator} &
+		ZZ-03
+		\\
+
+	\hline
+		\textbf{Treść} & \parbox[t]{11.5cm}{\strut
+			Połączenie po autoryzacji powinno zostać zabezpieczone losowym łańcuchem
+      znaków -- kluczem sesji. Klucz sesji powinien być generowany
+      automatycznie po stronie backendu i wysyłany frontendowi tuż po
+      autoryzacji użytkownika. Od tej pory backend nie zaakceptuje żadnej
+      wiadomości od frontendu, dopóki nie
+      będzie zawierała dodatkowego parametru \texttt{session\_key} z treścią
+      klucza sesji. Celem tego środka jest uniknięcie sytuacji zwielokrotnienia
+      klientów na tym samym kanale w razie zresetowania lub wielokrotnego
+      nawiązywania połączenia z tego samego urządzenia.
+		\strut}\\
+
+	\hline
+		\parbox[t]{4cm}{\textbf{Kryteria akceptacji}} & \parbox[t]{11.5cm}{\strut
+			\begin{enumreq}
+				\item W momencie autoryzacji, backend wygeneruje 32-znakowy,
+        alfanumeryczny, losowy klucz.
+        \item Backend odeśle klucz z informacją o autoryzacji do frontendu.
+        \item Frontent zapisze i utrzyma otrzymany klucz sesji
+        \item Frontent będzie automatycznie dodawać parametr \texttt{session\_key},
+        otrzymany podczas autoryzacji, do każdej kolejnej, dodawanej wiadomości.
+			\end{enumreq}
+			\strut}
+		\\
+
+    \hline
+  		\parbox[t]{4cm}{\textbf{Nakład godzinowy (planowany / włożony)}} &
+      \parbox[t]{11.5cm}{\strut
+  			2h / 1h
+  		\strut}\\
+
+        \hline
+          \parbox[t]{4cm}{\textbf{Ukończono?}} &
+          \parbox[t]{11.5cm}{\strut
+            Tak.
+          \strut}\\
+
+          \hline
+      \end{tabular}
+
+      \vspace{1em}
