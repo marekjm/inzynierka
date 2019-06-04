@@ -38,6 +38,8 @@ mogli -- nawet omyłkowo -- wprowadzić do swojego lokalnego środowiska.
 
 W trakcie realizacji projektu nie wszystko przebiegło po myśli zespołu.
 
+\paragraph*{Prędkość kompilacji}
+
 Przede wszystkim, wiele do życzenia pozostawiała prędkość kompilacji, znacznie
 spadająca wraz z przyrastającym kodem źródłowym. Co ciekawe, w początkowej fazie
 prac, za źródło problemów uważano implementację kompilatora ViuAct w języku
@@ -51,13 +53,20 @@ bardziej czasochłonna od kompilacji. Niestety, poprawianie wydajności asembler
 pozostawało poza zakresem projektu, a wydłużony czas asemblacji musiał zostać
 zaakceptowany.
 
+\paragraph*{Pozostanie przy prototypie}
+
 Nie udało się również przepisać kompilatora języka ViuAct w docelowym języku
 programowania jakim miał być OCaml. Przeciwnikiem okazał się tu harmonogram,
 zdecydowanie zbyt napięty, by pozwolić na przepisanie prototypu.
 
 Dodatkowo, pierwsze tygodnie prac nad systemem ViuaChat ujawniły niezgodności
-pomiędzy zakładanymi rezultatami kompilacji, a jej faktycznymi wynikami. Ich
-ujawnienie nie byłoby możliwe, gdyby nie zastosowanie teoretycznych konstrukcji
-składniowych do zaimplementowania realnych programów o wartości użytkowej.
-Wobec tego, nie chcąc ryzykować dalszych problemów, pozostano przy dalszym
-rozwoju ,,pythonowego'' prototypu.
+pomiędzy teoretycznymi możliwościami kompilatora języka \ViuAct\ wynikającymi ze
+specyfikacji języka, a praktycznymi możliwościami wynikającymi z implementacji.
+Ich ujawnienie nie byłoby możliwe, gdyby nie zastosowanie teoretycznych
+konstrukcji składniowych do zaimplementowania realnych programów o wartości
+użytkowej gdyż te naturalnie dążyły do zastosowania pełnej gamy narzędzi,
+które w teorii miał dostarczać język.
+
+Daleko idące uproszczenia implementacji kompilatora języka \ViuAct\ okazały się
+jednak zgubne. Wobec tego, nie chcąc ryzykować dalszych problemów, zadecydowano
+o kontynuacji rozwoju ,,pythonowego'' prototypu.
