@@ -17,25 +17,3 @@
 \input{przebieg/chat/sprint6}
 
 \input{przebieg/chat/sprint7}
-
-\section{Wyzwania i niepowodzenia}
-W trakcie realizacji projektu nie wszystko przebiegło po myśli
-zespołu. Przede wszystkim, wiele do życzenia pozostawiała prędkość kompilacji,
-znacznie spadająca wraz z przyrastającym kodem źródłowym. Co ciekawe, w początkowej
-fazie prac, za źródło problemów uważano implementację kompilatora ViuAct w języku Python.
-Ustępuje on wydajnością programom opracowanym w językach takich jak C, czy też OCaml. Ku
-zaskoczeniu studentów, wraz z kolejnymi linijkami kodu, widocznemu wydłużeniu
-ulegała faza asemblacji, za którą odpowiadał asembler maszyny wirtualnej ViuaVM.
-Wreszcie, w końcowych wersjach serwera ViuaChat, asemblacja była do 5 razy
-bardziej czasochłonna od kompilacji. Niestety, poprawianie wydajności asemblera
-pozostawało poza zakresem projektu, a wydłużony czas asemblacji musiał
-zostać zaakceptowany.
-
-Niee udało się również zrealizować kompilatora języka ViuAct w
-docelowym języku programowania, jakim miał zostać OCaml. Przeciwnikiem okazał się tu
-harmonogram, zdecydowanie zbyt napięty, by pozwolić na przepisanie prototypu.
-Pierwsze tygodnie prac nad systemem ViuaChat dodatkowo ujawniły niezgodności 
-pomiędzy zakładanymi rezultatami kompilacji a jej faktycznymi wynikami. Ich ujawnienie
-nie byłoby możliwe, gdyby nie zastosowanie teoretycznych konstrukcji składniowych
-do zaimplementowania realnych programów o wartości użytkowej. Wobec tego, nie chcąc
-ryzykować dalszych problemów, pozostano przy dalszym rozwoju ,,pythonowego'' prototypu.
