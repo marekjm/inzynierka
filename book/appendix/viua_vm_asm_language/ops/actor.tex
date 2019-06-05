@@ -2,6 +2,22 @@
 \label{viua_vm_ops_actor}
 
 \subsubsection{\texttt{process}}
+
+\begin{lstlisting}
+process Rd fn/0
+process void fn/0
+\end{lstlisting}
+
+\paragraph*{Opis}
+
+Wywołuje funkcję tworząc nowy proces.
+Wariant 1 zapisuje PID nowego procesu w rejestrze \texttt{Rd}.
+Wariant drugi nie zapisuje PID nowego procesu.
+\begin{lstlisting}
+process %4 local do_some_processing/1
+process void a_free_actor/4
+\end{lstlisting}
+
 \subsubsection{\texttt{self}}
 \subsubsection{\texttt{pideq}}
 \subsubsection{\texttt{join}}

@@ -3,60 +3,282 @@
 
 \subsubsection{\texttt{bits\_of\_integer}}
 
-Konstruktor bitów z liczby całkowitej.
+\begin{lstlisting}
+bits_of_integer Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruktor bitów z liczby całkowitej.
+
+Dokonuje konwersji liczby całkowitej znajdującej się w rejestrze \texttt{Rs} na
+ciąg bitów o długości 64. Wynik konwersji jest zapisywany w rejestrze
+\texttt{Rt}.
+
+Wartość w rejestrze \texttt{Rs} pozostaje niezmieniona.
+
+\begin{lstlisting}
+integer %1 local 42
+bits_of_integer %1 local %1 local
+print %1 local
+\end{lstlisting}
+
+Powyższy przykład spowoduje wydrukowanie na ekran następującego ciągu bitów:
+\newline
+\texttt{0000000000000000000000000000000000000000000000000000000000101010}.
 
 \subsubsection{\texttt{integer\_of\_bits}}
 
-Konstruktor liczby całkowitej z bitów.
+\begin{lstlisting}
+integer_of_bits Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruktor liczby całkowitej z bitów.
+
+Dokonuje konwersji ciągu bitów znajdującej się w rejestrze \texttt{Rs} na liczbę
+całkowitą. Wynik konwersji jest zapisywany w rejestrze \texttt{Rt}.
+
+Wartość w rejestrze \texttt{Rs} pozostaje niezmieniona.
+
+\begin{lstlisting}
+bits %1 local 0b0101010
+integer_of_bits %1 local %1 local
+print %1 local
+\end{lstlisting}
+
+Powyższy przykład spowoduje wydrukowanie na ekran liczby 42.
+
+\paragraph*{Uwagi}
+
+Konwersja ciągów dłuższych niż 64 bity powinna spowodować błąd. Jednak nie jest
+to weryfikowane i obecna wersja maszyny ,,po cichu'' powoduje zawinięcie liczby.
 
 \subsubsection{\texttt{bits}}
 
-Konstruktor bitów.
+\begin{lstlisting}
+bits Rd 0x%*\emph{<hex-digits>}*)
+bits Rd 0o%*\emph{<octal-digits>}*)
+bits Rd 0b%*\emph{<binary-digits>}*)
+bits Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruktor bitów.
+
+W wariantach 1-3 konstruuje ciąg bitów z literału podanego jako drugi operand.
+W wariancie 4 konstruuje ciąg bitów o długości podanej w rejestrze \texttt{Rs}.
+We wszystkich wariantach wynikowy ciąg bitów zapisywany jest w rejestrze
+\texttt{Rd}.
+
+\begin{lstlisting}
+bits %1 local 0xdeadbeef
+bits %2 local 0o1337
+bits %3 local 0b01
+
+integer %4 local 8
+bits %4 local %4 local
+\end{lstlisting}
 
 \subsubsection{\texttt{bitand}}
 
-Bitowa operacja \emph{\texttt{and}}.
+\begin{lstlisting}
+bitand Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Bitowa operacja \emph{\texttt{and}}.
+Długość wynikowego ciągu bitów jest równa długości ciągu, który w znadował się w
+rejestrze \texttt{Ra}.
 
 \subsubsection{\texttt{bitor}}
 
-Bitowa operacja \emph{\texttt{or}}.
+\begin{lstlisting}
+bitor Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Bitowa operacja \emph{\texttt{or}}.
+Długość wynikowego ciągu bitów jest równa długości ciągu, który w znadował się w
+rejestrze \texttt{Ra}.
 
 \subsubsection{\texttt{bitnot}}
 
-Bitowa operacja \emph{\texttt{not}}.
+\begin{lstlisting}
+bitxor Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Bitowa operacja \emph{\texttt{not}}.
+Konstruuje nowy ciąg bitów będący negacją ciągu bitów znajdującego się w
+rejestrze \texttt{Rs}.
 
 \subsubsection{\texttt{bitxor}}
 
-Bitowa operacja \emph{\texttt{xor}}.
+\begin{lstlisting}
+bitxor Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Bitowa operacja \emph{\texttt{xor}}.
+Długość wynikowego ciągu bitów jest równa długości ciągu, który w znadował się w
+rejestrze \texttt{Ra}.
 
 \subsubsection{\texttt{bitat}}
 
-Sprawdzenie wartości pojedynczego bitu.
+\begin{lstlisting}
+bitat Rd Rs Ri
+\end{lstlisting}
+
+\paragraph*{Opis} Sprawdzenie wartości pojedynczego bitu.
+Po wykonaniu instrukcji w rejestrze \texttt{Rd} znajduje się wartość boolowska
+określająca czy w ciągu bitów znajdującym się w rejestrze \texttt{Rs} bit pod
+indeksem określonym przez liczbę całkowitą znajdującą się w rejestrze
+\texttt{Ri} jest włączony czy wyłączony.
+
+\begin{lstlisting}
+integer %1 local 0
+bitat %3 local %2 local %1 local
+print %3 local
+
+integer %1 local 1
+bitat %3 local %2 local %1 local
+print %3 local
+\end{lstlisting}
+Powyższy przykład wydrukuje na ekran najpierw \texttt{true}, a potem
+\texttt{false}.
 
 \subsubsection{\texttt{bitset}}
 
-Ustawienie wartości pojedynczego bitu.
+\begin{lstlisting}
+bitset Rt Ri %*\emph{<boolean-literal>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Ustawienie wartości pojedynczego bitu.
+Po wykonaniu instrukcji w ciągu bitów znajdującym się w rejestrze \texttt{Rt}
+bit znajdujący się pod indeksem określonym przez liczbę całkowitą znajdującą
+się w rejestrze \texttt{Ri} jest
+\begin{enumerate*}[label=(\arabic*)]
+\item włączony jeśli \texttt{\emph{<boolean-literal>}} był wartością
+    \texttt{true}
+\item wyłączony jeśli \texttt{\emph{<boolean-literal>}} był wartością
+    \texttt{fale}
+\end{enumerate*}
 
 \subsubsection{\texttt{shl}}
 
-Przesunięcie bitowe w lewo.
+\begin{lstlisting}
+shl Ro Rt Rn
+\end{lstlisting}
+
+\paragraph*{Opis} Przesunięcie bitowe w lewo.
+
+Przesuwa ciąg bitów w rejestrze \texttt{Rt} o ilość bitów określoną przez liczbę
+całkowitą znajdującą się w rejestrze \texttt{Rn}. Wartość w rejestrze
+\texttt{Rt} jest modyfikowana \emph{w miejscu}, a w rejestrze \texttt{Ro}
+umieszczany jest ,,wysunięty'' ciąg bitów.
+\begin{lstlisting}
+bits %3 local 0x4a
+print %3 local
+integer %4 local 4
+shl %4 local %3 local %4 local
+print %3 local
+print %4 local
+\end{lstlisting}
+
+Powyższy przykład spowoduje wydrukowanie na ekranie następujących wartości:
+\begin{lstlisting}
+01001010
+10100000
+0100
+\end{lstlisting}
 
 \subsubsection{\texttt{shr}}
 
-Przesunięcie bitowe w prawo.
+\begin{lstlisting}
+shr Rd Rs Rn
+\end{lstlisting}
+
+\paragraph*{Opis} Przesunięcie bitowe w prawo.
+
+Przesuwa ciąg bitów w rejestrze \texttt{Rt} o ilość bitów określoną przez liczbę
+całkowitą znajdującą się w rejestrze \texttt{Rn}. Wartość w rejestrze
+\texttt{Rt} jest modyfikowana \emph{w miejscu}, a w rejestrze \texttt{Ro}
+umieszczany jest ,,wysunięty'' ciąg bitów.
+\begin{lstlisting}
+bits %3 local 0x4a
+print %3 local
+integer %4 local 4
+shr %4 local %3 local %4 local
+print %3 local
+print %4 local
+\end{lstlisting}
+
+Powyższy przykład spowoduje wydrukowanie na ekranie następujących wartości:
+\begin{lstlisting}
+01001010
+00000100
+1010
+\end{lstlisting}
 
 \subsubsection{\texttt{ashl}}
 
-Arytmetyczne (z zachowaniem znaku) przesunięcie bitowe w lewo.
+\begin{lstlisting}
+ashl Rd Rs Rn
+\end{lstlisting}
+
+\paragraph*{Opis} Arytmetyczne (z zachowaniem znaku) przesunięcie bitowe w lewo.
+
+Przesuwa ciąg bitów w rejestrze \texttt{Rt} o ilość bitów określoną przez liczbę
+całkowitą znajdującą się w rejestrze \texttt{Rn}. Wartość w rejestrze
+\texttt{Rt} jest modyfikowana \emph{w miejscu}, a w rejestrze \texttt{Ro}
+umieszczany jest ,,wysunięty'' ciąg bitów.
+\begin{lstlisting}
+bits %3 local 0xa4
+print %3 local
+integer %4 local 4
+ashl %4 local %3 local %4 local
+print %3 local
+print %4 local
+\end{lstlisting}
+
+Powyższy przykład spowoduje wydrukowanie na ekranie następujących wartości:
+\begin{lstlisting}
+10100100
+11000000
+1010
+\end{lstlisting}
 
 \subsubsection{\texttt{ashr}}
 
-Arytmetyczne przesunięcie bitowe w prawo.
+\begin{lstlisting}
+ashr Rd Rs Rn
+\end{lstlisting}
+
+\paragraph*{Opis} Arytmetyczne przesunięcie bitowe w prawo.
+
+Przesuwa ciąg bitów w rejestrze \texttt{Rt} o ilość bitów określoną przez liczbę
+całkowitą znajdującą się w rejestrze \texttt{Rn}. Wartość w rejestrze
+\texttt{Rt} jest modyfikowana \emph{w miejscu}, a w rejestrze \texttt{Ro}
+umieszczany jest ,,wysunięty'' ciąg bitów.
+\begin{lstlisting}
+bits %3 local 0xa4
+print %3 local
+integer %4 local 4
+ashr %4 local %3 local %4 local
+print %3 local
+print %4 local
+\end{lstlisting}
+
+Powyższy przykład spowoduje wydrukowanie na ekranie następujących wartości:
+\begin{lstlisting}
+10100100
+11111010
+0100
+\end{lstlisting}
 
 \subsubsection{\texttt{rol}}
 
-Rotacja bitowa w lewo.
+\begin{lstlisting}
+\end{lstlisting}
+
+\paragraph*{Opis} Rotacja bitowa w lewo.
 
 \subsubsection{\texttt{ror}}
 
-Rotacja bitowa w prawo.
+\begin{lstlisting}
+\end{lstlisting}
+
+\paragraph*{Opis} Rotacja bitowa w prawo.

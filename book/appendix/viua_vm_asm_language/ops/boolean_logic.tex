@@ -3,12 +3,42 @@
 
 \subsubsection{\texttt{not}}
 
-Negacja boolowska.
+\begin{lstlisting}
+not Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Negacja boolowska wartości w rejestrze \texttt{Rt}.
+
+Po wykonaniu instrukcji w rejestrze \texttt{Rt} znajduje się wartość boolowska
+reprezentująca negację wartości otrzymanej po konwersji wartości znajdującej się
+poprzednio w rejestrze \texttt{Rt} na typ boolowski.
 
 \subsubsection{\texttt{and}}
 
-Iloczyn boolowski.
+\begin{lstlisting}
+and Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Iloczyn boolowski.
+
+Po wykonaniu instrukcji w rejestrze \texttt{Rd} znajduje się wartość boolowska
+reprezentująca iloczyn wartości boolowskich powstałych z konwersji wartości
+znajdujących się przed wykonaniem instrukcji w rejestrach \texttt{Ra} i
+\texttt{Rb}.
+
+Wartości w rejestrach \texttt{Ra} i \texttt{Rb} pozostają nienaruszone.
 
 \subsubsection{\texttt{or}}
 
-Suma boolowska.
+\begin{lstlisting}
+or Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Suma boolowska.
+
+Po wykonaniu instrukcji w rejestrze \texttt{Rd} znajduje się wartość boolowska
+reprezentująca sumę wartości boolowskich powstałych z konwersji wartości
+znajdujących się przed wykonaniem instrukcji w rejestrach \texttt{Ra} i
+\texttt{Rb}.
+
+Wartości w rejestrach \texttt{Ra} i \texttt{Rb} pozostają nienaruszone.
