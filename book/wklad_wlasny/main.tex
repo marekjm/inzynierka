@@ -16,10 +16,44 @@ większe nakłady pracy na etapie szczegółowego projektowania czy implementacj
 
 \section{Marek Marecki}
 
-Opracowanie specyfikacji języka \ViuAct.
-Wytworzenie kompilatora języka \ViuAct.
-Wytworzenie skrypu \texttt{viuact-bootstrap.sh}.
-Wytworzenie biblioteki do obsługi protokołu WebSocket.
+Głównymi zadaniami Marka Mareckiego było opracowanie specyfikacji języka
+\ViuAct\ oraz implementacja kompilatora i biblioteki standardowej tegoż języka.
+Dodatkowymi zadaniami, które wynikły w trakcie projektu były
+\begin{enumerate*}[label=(\arabic*)]
+\item implementacja bibliotek, na które zapotrzebowanie zgłosił Krzysztof Franek
+\item dostosowanie Viua~VM do potrzeb projektu przez drobne poprawki i przeróbki
+\item stworzenie skryptu tworzącego środowisko programistyczne, który pozwolił
+    obu członkom zespołu pracować w jednolitych warunkach
+\end{enumerate*}.
+
+Specyfikacja języka \ViuAct\ obejmowała między innymi określenie ogólnego
+charakteru i semantyki języka, oraz skonkretyzowanie tych ogólnych założeń w
+formie konstrukcji językowych, typów danych i wbudowanych bezpośrednio w język
+mechanizmów (np.~wywołania \emph{watchdog}, komunikacja przez wymianę
+wiadomości) w stopniu na tyle dokładnym, aby możliwa była ich implementacja.
+
+Marek Marecki zaprojektował, a następnie zaimplementował kompilator języka
+\ViuAct\ -- od podsystemów odpowiedzialnych za analizę leksykalną i składniową,
+do podsystemu emitującego kod wynikowy w języku assemblera Viua~VM. Elementem
+implementacji kompilatora języka \ViuAct\ było również opracowanie sposobów
+alokacji rejestrów (przydzielenia rejestru każdej wartości nazwanej -
+tj.~będącej operandem dowiązania \emph{let} - i anonimowej), tłumaczenia
+konstrukcji językowych mających swoje bezpośrednie odpowiedniki w języku
+assemblera Viua~VM (np.~dowiązania \emph{let} czy wyrażenia warunkowe), oraz
+redukcji konstrukcji, które nie posiadały bezpośrednich odpowiedników
+(np.~wyliczenia).
+
+W gestii Marka Mareckiego była również implementacja biblioteki standardowej
+języka \ViuAct\ oraz pozostałych bibliotek potrzebnych Krzysztofowi Frankowi w
+pracach nad czatem. Jedną z tych pozostałych bibliotek jest biblioteka
+\texttt{plain-websocket} (w języku \ViuAct\ dostępna jako moduł
+\texttt{Websocket}) opisana w dodatku \ref{plain_websocket_library} na stronie
+\pageref{plain_websocket_library}.
+
+Jako zadanie poboczne powstał skrypt \texttt{viuact-bootstrap.sh}, którego
+zadaniem jest tworzenie jednolitego środowiska do pracy na językiem \ViuAct\ i
+programem ViuaChat. Sposób użycia skryptu jest opisany we wstępie do rozdziału
+\ref{przebieg_prac}.~\nameref{przebieg_prac} na stronie \pageref{przebieg_prac}.
 
 \section{Krzysztof Franek}
 
