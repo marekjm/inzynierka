@@ -2,8 +2,108 @@
 \label{viua_vm_ops_vector}
 
 \subsubsection{\texttt{vector}}
+
+\begin{lstlisting}
+vector Rd
+vector Rd Rp %*\emph{n}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje wektor w rejestrze \texttt{Rd}.
+
+Pierwszy wariant konstruuje pusty wektor.
+Drugi wariant konstruuje wektor ,,pakując'' \emph{n} wartości rozpoczynając od
+rejestru określonego przez \texttt{Rp} (wszystkie ,,spakowane'' wartości
+pochodzą z tego samego zestawu rejestrów, określonego przez zestaw rejestrów
+użyty w adresie rejestru \texttt{Rp}).
+
+Przykład pakowania:
+\begin{lstlisting}
+integer %2 local 1
+integer %3 local 2
+integer %4 local 3
+integer %5 local 4
+vector %1 local %2 local %4
+\end{lstlisting}
+
+Wektor znajdujący się w rejestrze \texttt{\%1 local} spakuje wartości z
+rejestrów lokalnych 2, 3, 4 i 5 (czyli będzie miał długość 4).
+
+\paragraph*{Uwagi} Wektor nie może spakować:
+\begin{enumerate}
+    \item rejestru, w którym będzie skonstruowany
+    \item rejestru, który nie zawiera żadnej wartości
+    \item rejestru, którego indeks jest poza zakresem dla zestawu rejestrów, do
+        którego odnosi się adres rejestru \texttt{Rp}
+\end{enumerate}
+
 \subsubsection{\texttt{vinsert}}
+
+\begin{lstlisting}
+vinsert Rd Rs void
+vinsert Rd Rs Ri
+\end{lstlisting}
+
+\paragraph*{Opis} Przenosi wartość z rejestru \texttt{Rs} do wektora
+znajdującego się w rejestrze \texttt{Rd}.
+
+Pierwszy wariant przenosi wartość na początek wektora (na pozycję 0).
+Drugi wariant przenosi wartość na pozycję określoną przez liczbę całkowitą
+znajdującą się w rejestrze \texttt{Ri}.
+
+\paragraph*{Wyjątki} Jeśli żądany indeks jest poza zakresem długości wektora
+wygenerowany zostanie wyjątek.
+
 \subsubsection{\texttt{vpush}}
+
+\begin{lstlisting}
+vpush Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Przenosi wartość z rejestru \texttt{Rs} na koniec wektora
+znajdującego się w rejestrze \texttt{Rd}.
+
 \subsubsection{\texttt{vpop}}
+
+\begin{lstlisting}
+vpop Rd Rs Ri
+\end{lstlisting}
+
+\paragraph*{Opis} Usuwa wartość znajdującą się pod indeksem określonym przez
+liczbę całkowitą znajdującą się w rejestrze \texttt{Ri} w wektorze znajdującym
+się w rejestrze \texttt{Rs} i zapisuje ją w rejestrze \texttt{Rd}.
+
+Jeśli rejestr \texttt{Rd} jest podany jako \texttt{void} to wartość usunięta z
+wektora nie jest zapisywana, a od razu niszczona.
+
+Jeśli rejestr \texttt{Ri} jest podany jako \texttt{void} to wartość jest usuwana
+z końca wektora.
+
+Rejestr \texttt{Rd} i \texttt{Ri} mogą być podane jako \texttt{void}
+jednocześnie (co spowoduje usunięcie ostatniej wartości w wektorze i jej
+nastychmiastowe zniszczenie).
+
+\paragraph*{Wyjątki} Jeśli żądany indeks jest poza zakresem długości wektora
+wygenerowany zostanie wyjątek.
+
 \subsubsection{\texttt{vat}}
+
+\begin{lstlisting}
+vat Rd Rs Ri
+\end{lstlisting}
+
+\paragraph*{Opis} Tworzy wskaźnik do wartości znajdującej się pod indeksem
+określonym przez liczbę całkowitą znajdującą się w rejestrze \texttt{Ri} w
+wektorze znajdującym się w rejestrze \texttt{Rs} i zapisuje go w rejestrze
+\texttt{Rd}.
+
+\paragraph*{Wyjątki} Jeśli żądany indeks jest poza zakresem długości wektora
+wygenerowany zostanie wyjątek.
+
 \subsubsection{\texttt{vlen}}
+
+\begin{lstlisting}
+vlen Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Odczytuje długość wektora znajdującego się w rejestrze
+\texttt{Rd} i zapisuje ją jako liczbę całkowitą w rejestrze \texttt{Rd}.
