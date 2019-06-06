@@ -1,7 +1,14 @@
 \chapter{Język assemblera Viua VM}
 \label{appendix_viua_vm_assembly_language}
 
-W tym rozdziale zostanie po krótce omówiony język assemblera Viua VM.
+W tym rozdziale zostanie omówiony język assemblera Viua VM -- jego składnia,
+dostępne dyrektywy, oraz instrukcje. Wyjaśnione zostaną pojęcia takie jak
+,,adres~rejestru'' i ,,tryby dostępu''. Zostaną przedstawione istniejące i
+możliwe do wykorzystania zestawy rejestrów.
+
+W dalszej części rozdziału (na stronie \pageref{appendix_viua_vm_assembly_language_ops})
+przedstawiona zostanie dokumentacja zestawu instrukcji jakie oferuje
+programistom Viua~VM.
 
 \section{Składnia języka assemblera}
 
@@ -97,7 +104,9 @@ bezpośrednio. Muszą być najpierw przeniesione lub skopiowane do rejestrów lo
 .name: <index> <name>
 \end{lstlisting}
 
+\newpage
 \section{Instrukcje Viua VM}
+\label{appendix_viua_vm_assembly_language_ops}
 
 \input{appendix/viua_vm_asm_language/ops/value_management}
 \input{appendix/viua_vm_asm_language/ops/boolean_logic}
