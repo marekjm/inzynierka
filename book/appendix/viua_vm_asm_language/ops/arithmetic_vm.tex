@@ -150,13 +150,115 @@ stać się ujemy i \emph{vice versa}.
 
 \subsubsection{\texttt{checkedsincrement}}
 
-Sprawdzana inkrementacja ze znakiem.
+\begin{lstlisting}
+checkedsincrement Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Inkrementacja weryfikowana ze znakiem.
+
+Instrukcja interpretuje ciąg bitów jako liczbę całkowitą w kodowaniu z
+dopełnieniem do dwóch o szerokości równej długości ciągu bitów, na którym
+instrukcja operuje.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia zgłaszany jest wyjątek.
 
 \subsubsection{\texttt{checkedsdecrement}}
+
+\begin{lstlisting}
+checkedsdecrement Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Inkrementacja weryfikowana ze znakiem.
+
+Instrukcja interpretuje ciąg bitów jako liczbę całkowitą w kodowaniu z
+dopełnieniem do dwóch o szerokości równej długości ciągu bitów, na którym
+instrukcja operuje.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia zgłaszany jest wyjątek.
+
 \subsubsection{\texttt{checkedsadd}}
+
+\begin{lstlisting}
+checkedsadd Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dodawanie weryfikowane ze znakiem.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a + b$.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia zgłaszany jest wyjątek.
+
 \subsubsection{\texttt{checkedssub}}
+
+\begin{lstlisting}
+checkedssub Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Odejmowanie weryfikowane ze znakiem.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a - b$.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia zgłaszany jest wyjątek.
+
 \subsubsection{\texttt{checkedsmul}}
+
+\begin{lstlisting}
+checkedsmul Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dzielenie weryfikowane ze znakiem.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a * b$.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia zgłaszany jest wyjątek.
+
 \subsubsection{\texttt{checkedsdiv}}
+
+\begin{lstlisting}
+checkedsdiv Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dzielenie weryfikowane ze znakiem.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a / b$.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia zgłaszany jest wyjątek.
 
 \subsubsection{\texttt{saturatingsincrement}}
 
