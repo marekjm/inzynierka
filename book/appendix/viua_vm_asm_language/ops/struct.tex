@@ -3,9 +3,50 @@
 
 \subsubsection{\texttt{struct}}
 
-Konstruktor struktury.
+\begin{lstlisting}
+struct Rd
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje pustą strukturę (rekord) w rejestrze \texttt{Rd}.
 
 \subsubsection{\texttt{structinsert}}
+
+\begin{lstlisting}
+structinsert Rt Rk Rv
+\end{lstlisting}
+
+\paragraph*{Opis} Do struktury znajdującej się w rejestrze \texttt{Rt}, do pola
+określonego przez atom znajdujący się w rejestrze \texttt{Rk} przenosi wartość
+znajdującą się w rejestrze \texttt{Rv}.
+
 \subsubsection{\texttt{structremove}}
+
+\begin{lstlisting}
+structremove Rd Rt Rk
+\end{lstlisting}
+
+\paragraph*{Opis} Ze struktury znajdującej się w rejestrze \texttt{Rt} usuwa
+pole określone przez atom znajdujący się w rejestrze \texttt{Rk} i zapisuje ją w
+rejestrze \texttt{Rd}.
+
+Jeśli rejestr \texttt{Rd} jest podany jako \texttt{void} to usunięta ze
+struktury wartość jest natychmiast niszczona.
+
 \subsubsection{\texttt{structat}}
+
+\begin{lstlisting}
+structat Rd Rt Rk
+\end{lstlisting}
+
+\paragraph*{Opis} Tworzy wskaźnik do wartości w polu określonym przez atom
+znajdujący się w rejestrze \texttt{Rk} w strukturze znajdującej się w rejestrze
+\texttt{Rt}.
+
 \subsubsection{\texttt{structkeys}}
+
+\begin{lstlisting}
+structkeys Rd Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Odczytuje listę pól struktury znajdującej się w rejestrze
+\texttt{Rt} i wynik zapisuje w rejestrze \texttt{Rd} jako wektor atomów.
