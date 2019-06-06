@@ -272,13 +272,49 @@ Powyższy przykład spowoduje wydrukowanie na ekranie następujących wartości:
 \subsubsection{\texttt{rol}}
 
 \begin{lstlisting}
+rol Rt Rn
 \end{lstlisting}
 
 \paragraph*{Opis} Rotacja bitowa w lewo.
 
+,,Obraca'' ciąg bitów w rejestrze \texttt{Rt} o ilość bitów określoną przez
+liczbę całkowitą znajdującą się w rejestrze \texttt{Rn}. Wartość w rejestrze
+\texttt{Rt} jest modyfikowana \emph{w miejscu}.
+\begin{lstlisting}
+bits %3 local 0x8e
+integer %4 local 3
+print %3 local
+rol %3 local %4 local
+print %3 local
+\end{lstlisting}
+
+Powyższy przykład spowoduje wydrukowanie na ekranie następujących wartości:
+\begin{lstlisting}
+10001110
+01110100
+\end{lstlisting}
+
 \subsubsection{\texttt{ror}}
 
 \begin{lstlisting}
+ror Rt Rn
 \end{lstlisting}
 
 \paragraph*{Opis} Rotacja bitowa w prawo.
+
+,,Obraca'' ciąg bitów w rejestrze \texttt{Rt} o ilość bitów określoną przez
+liczbę całkowitą znajdującą się w rejestrze \texttt{Rn}. Wartość w rejestrze
+\texttt{Rt} jest modyfikowana \emph{w miejscu}.
+\begin{lstlisting}
+bits %3 local 0x8e
+integer %4 local 3
+print %3 local
+ror %3 local %4 local
+print %3 local
+\end{lstlisting}
+
+Powyższy przykład spowoduje wydrukowanie na ekranie następujących wartości:
+\begin{lstlisting}
+10001110
+11010001
+\end{lstlisting}
