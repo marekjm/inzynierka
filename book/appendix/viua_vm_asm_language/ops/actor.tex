@@ -19,7 +19,91 @@ process void a_free_actor/4
 \end{lstlisting}
 
 \subsubsection{\texttt{self}}
+
+\begin{lstlisting}
+self Rd
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje PID procesu wewnątrz którego instrukcja jest
+wykonywana.
+
 \subsubsection{\texttt{pideq}}
+
+\begin{lstlisting}
+pideq Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Porównuje wartości PID znajdujące się w rejestrach \texttt{Ra}
+i \texttt{Rb}. Wynik porównania zapisuje jako wartość boolowską w rejestrze
+\texttt{Rd}.
+
 \subsubsection{\texttt{join}}
+
+\begin{lstlisting}
+join Rd Rp
+join Rd Rp infinity
+join Rd Rp %*\emph{<timeout>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Zatrzymuje wykonanie procesu wewnątrz którego wykonywana jest
+instrukcja i oczekuje na zakończenie procesu identyfikowanego przez PID
+znajdujący się w rejestrze \texttt{Rp}.
+
+Wariant pierwszy jest identyczny w zachowaniu jak wariant drugi i powoduje, że
+proces wykonujący instrukcję oczekuje w nieskończoność.
+
+Wariant trzeci umożliwia podanie wartości \emph{timeout}, która określa
+maksymalny czas oczekiwania na zakończenie pracy przez zadany proces. Czas może
+być podany w sekundach (\texttt{\emph{N}s}) lub
+milisekundach~(\texttt{\emph{N}ms}), a wartość zero jest poprawna. Przykład:
+\begin{lstlisting}
+join %1 local %2 local 1s
+join %1 local %2 local 0ms
+\end{lstlisting}
+
+Jeśli rejestr \texttt{Rd} jest podany jako \texttt{void} wartość zwracana przez
+zadany proces jest natychmiast niszczona.
+
+\paragraph*{Uwagi}
+
+Jeśli do momentu upłynięcia czasu oczekiwania zadany proces nie zakończył pracy
+zgłaszany jest wyjątek.
+
+Jeśli zadany proces zakończył pracę z powodu awarii to nieobsłużony wyjątek,
+który tę awarię wywołał jest ponownie zgłaszany wewnątrz procesu, który wykonał
+instrukcję \texttt{join}.
+
 \subsubsection{\texttt{send}}
+
+\begin{lstlisting}
+send Rp Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Wysyła wartość znajdującą się w rejestrze \texttt{Rs} jako
+wiadomość do procesu identyfikowanego przez PID znajdujący się w rejestrze
+\texttt{Rp}.
+
 \subsubsection{\texttt{receive}}
+
+\begin{lstlisting}
+receive Rd
+receive Rd infinity
+receive Rd %*\emph{<timeout>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Blokuje proces wewnątrz którego wykonywana jest instrukcja i
+oczekuje na nadejście wiadomości. Jeśli jakaś wiadomość jest już dostępna w
+kolejce wiadomości procesu jest ona zwracana od razu, bez oczekiwania. Odebrana
+wiadomość jest umieszczana w rejestrze \texttt{Rd}.
+
+Pierwszy i drugi wariant są identyczne w zachowaniu i blokują proces oczekując
+w nieskończoność na nadejście wiadomości.
+
+Wariant trzeci umożliwia podanie wartości \emph{timeout} określającej maksymalny
+czas oczekiwania na nadejście wiadomości w sekundach lub milisekundach. Czas
+oczekiwania może wynosić zero sekund lub milisekund.
+
+\paragraph*{Uwagi}
+
+Jeśli po upłynięciu czasu oczekiwania żadna wiadomość nie będzie dostępna
+zgłaszany jest wyjątek.
