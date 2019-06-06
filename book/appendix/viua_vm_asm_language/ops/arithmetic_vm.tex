@@ -262,10 +262,148 @@ W przypadku przepełnienia zgłaszany jest wyjątek.
 
 \subsubsection{\texttt{saturatingsincrement}}
 
-Nasycająca inkrementacja ze znakiem.
+\begin{lstlisting}
+saturatingsincrement Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Inkrementacja nasyceniowa ze znakiem.
+
+Instrukcja interpretuje ciąg bitów jako liczbę całkowitą w kodowaniu z
+dopełnieniem do dwóch o szerokości równej długości ciągu bitów, na którym
+instrukcja operuje.
+
+\paragraph*{Uwagi}
+
+W przypadku wykrycia przepełnienia następuje nasycenie i wynik jest wartością
+maksymalną dla liczby całkowitej ze znakiem w kodowaniu do dwóch o szerokości
+równej długości ciągu bitów użytego jako operand instrukcji.
 
 \subsubsection{\texttt{saturatingsdecrement}}
+
+\begin{lstlisting}
+saturatingsdecrement Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Dekrementacja nasyceniowa ze znakiem.
+
+Instrukcja interpretuje ciąg bitów jako liczbę całkowitą w kodowaniu z
+dopełnieniem do dwóch o szerokości równej długości ciągu bitów, na którym
+instrukcja operuje.
+
+\paragraph*{Uwagi}
+
+W przypadku wykrycia przepełnienia następuje nasycenie i wynik jest wartością
+minimalną dla liczby całkowitej ze znakiem w kodowaniu do dwóch o szerokości
+równej długości ciągu bitów użytego jako operand instrukcji.
+
 \subsubsection{\texttt{saturatingsadd}}
+
+\begin{lstlisting}
+saturatingsadd Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dodawanie nasyceniowe ze znakiem.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a + b$.
+
+\paragraph*{Uwagi}
+
+W przypadku wykrycia przepełnienia następuje nasycenie i
+\begin{enumerate}
+\item jeśli wynik miał być dodatni to jest wartością maksymalną dla liczby
+    całkowitej ze znakiem w kodowaniu do dwóch o szerokości równej długości
+    ciągu bitów użytego jako operand instrukcji
+\item jeśli wynik miał być ujemny to jest wartością minimalną dla liczby
+    całkowitej ze znakiem w kodowaniu do dwóch o szerokości równej długości
+    ciągu bitów użytego jako operand instrukcji
+\end{enumerate}
+
 \subsubsection{\texttt{saturatingssub}}
+
+\begin{lstlisting}
+saturatingssub Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Odejmowanie nasyceniowe ze znakiem.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a - b$.
+
+\paragraph*{Uwagi}
+
+W przypadku wykrycia przepełnienia następuje nasycenie i
+\begin{enumerate}
+\item jeśli wynik miał być dodatni to jest wartością maksymalną dla liczby
+    całkowitej ze znakiem w kodowaniu do dwóch o szerokości równej długości
+    ciągu bitów użytego jako operand instrukcji
+\item jeśli wynik miał być ujemny to jest wartością minimalną dla liczby
+    całkowitej ze znakiem w kodowaniu do dwóch o szerokości równej długości
+    ciągu bitów użytego jako operand instrukcji
+\end{enumerate}
+
 \subsubsection{\texttt{saturatingsmul}}
+
+\begin{lstlisting}
+saturatingsmul Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Mnożenie nasyceniowe ze znakiem.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a * b$.
+
+\paragraph*{Uwagi}
+
+W przypadku wykrycia przepełnienia następuje nasycenie i
+\begin{enumerate}
+\item jeśli wynik miał być dodatni to jest wartością maksymalną dla liczby
+    całkowitej ze znakiem w kodowaniu do dwóch o szerokości równej długości
+    ciągu bitów użytego jako operand instrukcji
+\item jeśli wynik miał być ujemny to jest wartością minimalną dla liczby
+    całkowitej ze znakiem w kodowaniu do dwóch o szerokości równej długości
+    ciągu bitów użytego jako operand instrukcji
+\end{enumerate}
+
 \subsubsection{\texttt{saturatingsdiv}}
+
+\begin{lstlisting}
+checkedsdiv Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dzielenie nasyceniowe ze znakiem.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a / b$.
+
+\paragraph*{Uwagi}
+
+W przypadku wykrycia przepełnienia następuje nasycenie i
+\begin{enumerate}
+\item jeśli wynik miał być dodatni to jest wartością maksymalną dla liczby
+    całkowitej ze znakiem w kodowaniu do dwóch o szerokości równej długości
+    ciągu bitów użytego jako operand instrukcji
+\item jeśli wynik miał być ujemny to jest wartością minimalną dla liczby
+    całkowitej ze znakiem w kodowaniu do dwóch o szerokości równej długości
+    ciągu bitów użytego jako operand instrukcji
+\end{enumerate}
