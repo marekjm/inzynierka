@@ -3,6 +3,19 @@
 
 \subsubsection{\texttt{atom}}
 
-Konstruktor atomu.
+\begin{lstlisting}
+atom Rd '%*\emph{<value>}*)'
+\end{lstlisting}
+
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} atom o wartości
+\texttt{\emph{value}}.
 
 \subsubsection{\texttt{atomeq}}
+
+\begin{lstlisting}
+atomeq Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Sprawdza czy atomy w rejestrach \texttt{Ra} i \texttt{Ra} są
+identyczne i zapisuje wynik w postaci wartości boolowskiej w rejestrze
+\texttt{Rd}.
