@@ -11,11 +11,13 @@ przedstawiona zostanie dokumentacja zestawu instrukcji jakie oferuje
 programistom Viua~VM.
 
 \section{Składnia języka assemblera}
+\label{appendix_viua_vm_assembly_language_syntax}
 
 Składnia języka assemblera Viua VM jest prosta. Wyglądem przypomina składnię innych języków tego rodzaju
 (np. języki assemblera x86 czy ARM).
 
 \subsection{Ogólna składnia instrukcji}
+\label{appendix_viua_vm_assembly_language_syntax_generic}
 
 Instrukcje składają się z mnemoniki, zera lub więcej adresów rejestrów, i co najwyżej jednego literału. Ogólną składnię można zapisać więc tak:
 
@@ -36,6 +38,7 @@ należy zdefiniować czym jest ,,adres rejestru'' (lub, skrótowo, ,,rejestr''),
 \end{labeling}
 
 \subsubsection{Adresy rejestrów}
+\label{appendix_viua_vm_assembly_language_register_addrs}
 
 \begin{lstlisting}
 <access-operator> <index> <register-set>
@@ -87,6 +90,7 @@ bezpośrednio. Muszą być najpierw przeniesione lub skopiowane do rejestrów lo
 \end{lstlisting}
 
 \subsection{Import modułów}
+\label{appendix_viua_vm_assembly_language_dir_import}
 
 \begin{lstlisting}
 .import: <module>[::<module>...]
