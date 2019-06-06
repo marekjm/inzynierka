@@ -4,27 +4,111 @@
 \subsubsection{\texttt{string}}
 
 \begin{lstlisting}
-string Rd %*\emph{<str>}*)
+string Rd "%*\emph{<str>}*)"
 \end{lstlisting}
 
 \paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} ciąg bajtów o wartości \emph{\texttt{str}}.
 
 \subsubsection{\texttt{streq}}
 
+\begin{lstlisting}
+streq Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Weryfikuje czy ciągi bajtów w rejestarch \texttt{Ra} i
+\texttt{Rb} są sobie równe, a wynik sprawdzenia przechowuje w rejestrze
+\texttt{Rd} jako wartość typu boolowskiego
+\begin{enumerate*}[label=(\arabic*)]
+    \item \texttt{true} jeśli ciągi są sobie równe
+    \item \texttt{false} jeśli ciągi nie są sobie równe
+\end{enumerate*}.
+
 \subsubsection{\texttt{text}}
 
 \begin{lstlisting}
-text Rd %*\emph{<txt>}*)
+text Rd "%*\emph{<txt>}*)"
 text Rd Rs
 \end{lstlisting}
 
 \paragraph*{Opis} Wariant pierwszy konstruuje w rejestrze \texttt{Rd} tekst o wartości \emph{\texttt{txt}}.
 Wariant drugi konwertuje wartość z rejestru \texttt{Rs} na tekst i umieszcza go w rejestrze \texttt{Rd}.
 
+Utworzona wartość tekstowa jest ciągiem \emph{codepoint}-ów Unicode w kodowaniu UTF-8.
+
 \subsubsection{\texttt{texteq}}
+
+\begin{lstlisting}
+texteq Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Weryfikuje czy ciągi bajtów w rejestarch \texttt{Ra} i
+\texttt{Rb} są sobie równe, a wynik sprawdzenia przechowuje w rejestrze
+\texttt{Rd} jako wartość typu boolowskiego
+\begin{enumerate*}[label=(\arabic*)]
+    \item \texttt{true} jeśli ciągi są sobie równe
+    \item \texttt{false} jeśli ciągi nie są sobie równe
+\end{enumerate*}.
+
 \subsubsection{\texttt{textat}}
+
+\begin{lstlisting}
+textat Rd Rs Rn
+\end{lstlisting}
+
+\paragraph*{Opis} Z tekstu w rejestrze \texttt{Rs} pobiera \emph{codepoint}
+Unicode z indeksu określonego przez liczbę całkowitą znajdującą się w rejestrze
+\texttt{Rn}. Wartość w rejestrze \texttt{Rs} pozostaje nienaruszona.
+
 \subsubsection{\texttt{textsub}}
+
+\begin{lstlisting}
+textsub Rd Rs Rbegin Rend
+\end{lstlisting}
+
+\paragraph*{Opis} Z tekstu w rejestrze \texttt{Rs} kopiuje tekst pomiędzy
+indeksem określonym przez liczbę całkowitą znajdującą się w rejestrze
+\texttt{Rbegin}, a indeksem określonym przez liczbę całkowitą znajdującą się w
+rejestrze \texttt{Rend} bez uwzględnienia znaku pod indeksem określonym przez
+\texttt{Rend} -- czyli zakres wycinka tekstu to $[begin, end)$.
+
 \subsubsection{\texttt{textlength}}
+
+\begin{lstlisting}
+textlength Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Odczytuje długość tekstu znajdującego się w rejestrze
+\texttt{Rs} jako liczbę całkowitą, a wynik umieszcza w rejestrze \texttt{Rd}.
+Długość tekstu jest określona przez liczbę \emph{codepoint}-ów Unicode, nie
+liczbę bajtów.
+
 \subsubsection{\texttt{textcommonprefix}}
+
+\begin{lstlisting}
+textcommonprefix Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Określna wspólny prefiks tekstów znajdujących się w rejestrach
+\texttt{Ra} i \texttt{Rb}. Wynik umieszcza w rejestrze \texttt{Rd}. Wynik jest
+podany jako liczba całkowita określająca długość wspólnego prefiksu w
+\emph{codepoint}-ach Unicode.
+
 \subsubsection{\texttt{textcommonsuffix}}
+
+\begin{lstlisting}
+textcommonsuffix Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Określna wspólny sufiks tekstów znajdujących się w rejestrach
+\texttt{Ra} i \texttt{Rb}. Wynik umieszcza w rejestrze \texttt{Rd}. Wynik jest
+podany jako liczba całkowita określająca długość wspólnego sufiksu w
+\emph{codepoint}-ach Unicode.
+
 \subsubsection{\texttt{textconcat}}
+
+\begin{lstlisting}
+textconcat Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Łączy teksty znajdujące się w rejestrach \texttt{Ra} i
+\texttt{Rb}, a wynik zapisuje w rejestrze \texttt{Rd}.
