@@ -33,7 +33,24 @@ integer Rd %*\emph{<integer>}*)
 \paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} liczbę całkowitą o wartości \emph{\texttt{integer}}.
 
 \subsubsection{\texttt{iinc}}
+
+\begin{lstlisting}
+iinc Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Zwiększa wartość liczby całkowitej w rejestrze \texttt{Rt} o 1.
+\paragraph*{Uwagi} Zachowanie w przypadku przepełnienia jest zdefiniowane przez
+zachowanie platformy sprzętowej.
+
 \subsubsection{\texttt{idec}}
+
+\begin{lstlisting}
+idec Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Zmniejsza wartość liczby całkowitej w rejestrze \texttt{Rt} o 1.
+\paragraph*{Uwagi} Zachowanie w przypadku przepełnienia jest zdefiniowane przez
+zachowanie platformy sprzętowej.
 
 \subsubsection{\texttt{float}}
 
@@ -45,16 +62,160 @@ float Rd %*\emph{<float>}*)
 \emph{\texttt{float}}.
 
 \subsubsection{\texttt{itof}}
+
+\begin{lstlisting}
+itof Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Konwertuje wartość całkowitoliczbową z rejestru \texttt{Rs} na
+wartość zmiennoprzecinkową i umieszcza wynik w rejestrze \texttt{Rd}.
+
 \subsubsection{\texttt{ftoi}}
+
+\begin{lstlisting}
+ftoi Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Konwertuje wartość zmiennoprzecinkową z rejestru \texttt{Rs}
+na wartość całkowitoliczbową i umieszcza wynik w rejestrze \texttt{Rd}.
+
 \subsubsection{\texttt{stoi}}
+
+\begin{lstlisting}
+stoi Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Konwertuje string z rejestru \texttt{Rs} na wartość
+całkowitoliczbową i umieszcza wynik w rejestrze \texttt{Rd}.
+
 \subsubsection{\texttt{stof}}
 
+\begin{lstlisting}
+stof Rd Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Konwertuje string z rejestru \texttt{Rs} na wartość
+zmiennoprzecinkową i umieszcza wynik w rejestrze \texttt{Rd}.
+
 \subsubsection{\texttt{add}}
+
+\begin{lstlisting}
+add Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dodaje dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb} do
+siebie, a wynik umieszcza w rejestrze \texttt{Rd}.
+
+Wartość umieszczona w rejestrze \texttt{Rd} ma taki sam typ jak wartość w
+rejestrze \texttt{Ra}. Wartości w rejestrach \texttt{Ra} i \texttt{Rb} pozostają
+nienaruszone.
+
 \subsubsection{\texttt{sub}}
+
+\begin{lstlisting}
+sub Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Odejmuje dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb} do
+siebie, a wynik umieszcza w rejestrze \texttt{Rd}.
+
+Wartość umieszczona w rejestrze \texttt{Rd} ma taki sam typ jak wartość w
+rejestrze \texttt{Ra}. Wartości w rejestrach \texttt{Ra} i \texttt{Rb} pozostają
+nienaruszone.
+
 \subsubsection{\texttt{mul}}
+
+\begin{lstlisting}
+mul Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Mnoży dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb}, a
+wynik umieszcza w rejestrze \texttt{Rd}. Działanie jest przeprowadzane zgodnie
+ze wzorem $a * b$.
+
+Wartość umieszczona w rejestrze \texttt{Rd} ma taki sam typ jak wartość w
+rejestrze \texttt{Ra}. Wartości w rejestrach \texttt{Ra} i \texttt{Rb} pozostają
+nienaruszone.
+
 \subsubsection{\texttt{div}}
+
+\begin{lstlisting}
+add Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dzieli dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb}, a
+wynik umieszcza w rejestrze \texttt{Rd}. Działanie jest przeprowadzane zgodnie
+ze wzorem $a / b$.
+
+Wartość umieszczona w rejestrze \texttt{Rd} ma taki sam typ jak wartość w
+rejestrze \texttt{Ra}. Wartości w rejestrach \texttt{Ra} i \texttt{Rb} pozostają
+nienaruszone.
+
 \subsubsection{\texttt{lt}}
+
+\begin{lstlisting}
+lt Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Porównuje dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb}, a
+wynik umieszcza w rejestrze \texttt{Rd}. Działanie jest przeprowadzane zgodnie
+ze wzorem $a < b$.
+
+Wartość wynika jest typu boolowskiego.
+
 \subsubsection{\texttt{lte}}
+
+\begin{lstlisting}
+lte Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Porównuje dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb}, a
+wynik umieszcza w rejestrze \texttt{Rd}. Działanie jest przeprowadzane zgodnie
+ze wzorem $a <= b$.
+
+Wartość wynika jest typu boolowskiego.
+
 \subsubsection{\texttt{gt}}
+
+\begin{lstlisting}
+gt Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Porównuje dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb}, a
+wynik umieszcza w rejestrze \texttt{Rd}. Działanie jest przeprowadzane zgodnie
+ze wzorem $a > b$.
+
+Wartość wynika jest typu boolowskiego.
+
 \subsubsection{\texttt{gte}}
+
+\begin{lstlisting}
+gte Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Porównuje dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb}, a
+wynik umieszcza w rejestrze \texttt{Rd}. Działanie jest przeprowadzane zgodnie
+ze wzorem $a >= b$.
+
+Wartość wynika jest typu boolowskiego.
+
 \subsubsection{\texttt{eq}}
+
+\begin{lstlisting}
+eq Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Porównuje dwie wartości liczbowe (całkowitoliczbową lub
+zmiennoprzecinkową) znajdujące się w rejestrach \texttt{Ra} i \texttt{Rb}, a
+wynik umieszcza w rejestrze \texttt{Rd}. Działanie jest przeprowadzane zgodnie
+ze wzorem $a = b$.
+
+Wartość wynika jest typu boolowskiego.
