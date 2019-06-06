@@ -51,6 +51,35 @@ Powyższy przykład spowoduje wydrukowanie na ekran liczby 42.
 Konwersja ciągów dłuższych niż 64 bity powinna spowodować błąd. Jednak nie jest
 to weryfikowane i obecna wersja maszyny ,,po cichu'' powoduje zawinięcie liczby.
 
+Ciągi krótsze niż 64 bity przed konwersją są rozszerzane do długości 64 bitów.
+Na najbardziej znaczące pozycje wpisywane są zera, co może spowodować produkować
+,,zaskakujące'' wyniki, gdzie małe liczby ujemne są konwertowane na małe liczby
+dodatnie.
+
+Jeśli wymagane są częste konwersje między ciągami bitów, a sprzętowymi liczbami
+całkowitymi zaleca się używanie ciągów bitów o długości 64 (odpowiadającej
+szerokości bitowej sprzętowej liczby całkowitej). Jeśli konwersje nie są częste,
+rozszerzenia ze znakiem (ang. \emph{sign extension}) można dokonać za pomocą
+następującej sekwencji instrukcji (dla liczby reprezentowanej przez ciąg o
+długości 16 bitów):
+\begin{small}
+\begin{lstlisting}
+.name: 1 se     %*\emph{; ,,sign extended''}*)
+.name: 2 input  %*\emph{; wejściowy ciąg bitów, do rozszerzenia}*)
+.name: 3 n      %*\emph{; wartość pomocnicza}*)
+
+integer %se local 64
+bits    %se local %se local
+bitor   %se local %se local %input local
+
+integer %n local 48
+shl     void %se local %n local
+ashr    void %se local %n local
+\end{lstlisting}
+\end{small}
+Po wykonaniu tej sekwencji instrukcji w rejestrze \texttt{se} znajduje się
+rozszerzona wartość wejściowa.
+
 \subsubsection{\texttt{bits}}
 
 \begin{lstlisting}
