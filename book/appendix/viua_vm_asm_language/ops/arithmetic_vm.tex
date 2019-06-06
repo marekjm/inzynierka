@@ -15,27 +15,138 @@ stronie \pageref{viua_vm_ops_bit_ops}.
 
 \subsubsection{\texttt{wrapincrement}}
 
-Modulo inkrementacja ze znakiem.
+\begin{lstlisting}
+wrapincrement Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Inkrementacja modulo (ze znakiem).
+
+Instrukcja interpretuje ciąg bitów jako liczbę całkowitą w kodowaniu z
+dopełnieniem do dwóch\footnote{Kodowanie z dopełnieniem do dwóch
+(ang. \emph{two's complement})} o szerokości równej długości ciągu bitów, na
+którym instrukcja operuje.
+
+\paragraph*{Uwagi}
+
+W przypadku wystąpienia przepełnienia największa wartość dodatnia staje się
+największą (tj. najbardziej oddaloną od zera) wartością ujemną.
+\begin{lstlisting}
+bits %1 local 0b01111111
+print %1 local
+wrapincrement %1 local
+print %1 local
+\end{lstlisting}
+Ma to zastosowanie jedynie jeśli ciągi bitów są interpretowane przy konwersji
+jako liczby ze znakiem.
 
 \subsubsection{\texttt{wrapdecrement}}
 
-Modulo dekrementacja ze znakiem.
+\begin{lstlisting}
+wrapdecrement Rt
+\end{lstlisting}
+
+\paragraph*{Opis} Dekrementacja modulo (ze znakiem).
+
+Instrukcja interpretuje ciąg bitów jako liczbę całkowitą w kodowaniu z
+dopełnieniem do dwóch o szerokości równej długości ciągu bitów, na którym
+instrukcja operuje.
+
+\paragraph*{Uwagi}
+
+W przypadku wystąpienia przepełnienia największa (tj. najbardziej oddalona od
+zera) wartość ujemna staje się największą wartością dodatnią.
+\begin{lstlisting}
+bits %1 local 0x80
+print %1 local
+wrapdecrement %1 local
+print %1 local
+\end{lstlisting}
+Ma to zastosowanie jedynie jeśli ciągi bitów są interpretowane przy konwersji
+jako liczby ze znakiem.
 
 \subsubsection{\texttt{wrapadd}}
 
-Modulo dodawanie ze znakiem.
+\begin{lstlisting}
+wrapadd Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dodawanie modulo.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a + b$.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia wartość jest ,,zawijana'' i wynik z dodatniego może
+stać się ujemy i \emph{vice versa}.
 
 \subsubsection{\texttt{wrapsub}}
 
-Modulo odejmowanie ze znakiem.
+\begin{lstlisting}
+wrapsub Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Odejmowanie modulo.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a - b$.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia wartość jest ,,zawijana'' i wynik z dodatniego może
+stać się ujemy i \emph{vice versa}.
 
 \subsubsection{\texttt{wrapmul}}
 
-Modulo mnożenie ze znakiem.
+\begin{lstlisting}
+wrapmul Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Mnożenie modulo.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a * b$.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia wartość jest ,,zawijana'' i wynik z dodatniego może
+stać się ujemy i \emph{vice versa}.
 
 \subsubsection{\texttt{wrapdiv}}
 
-Modulo dzielenie ze znakiem.
+\begin{lstlisting}
+wrapdiv Rd Ra Rb
+\end{lstlisting}
+
+\paragraph*{Opis} Dzielenie modulo.
+
+Instrukcja interpretuje liczby w rejestrach \texttt{Ra} i \texttt{Rb} jaki
+liczby całkowite ze znakiem w kodowaniu z dopełnieniem do dwóch. Wynikiem
+instrukcji jest ciąg bitów reprezentujący liczbe całkowitą ze znakiem w
+kodowaniu z dopełnieniem do dwóch, o długości odpowiadającej długości ciągu
+bitów znajdującemu się w rejestrze \texttt{Ra}.
+
+Operacja jest wykonywana według wzoru $a / b$.
+
+\paragraph*{Uwagi}
+
+W przypadku przepełnienia wartość jest ,,zawijana'' i wynik z dodatniego może
+stać się ujemy i \emph{vice versa}.
 
 \subsubsection{\texttt{checkedsincrement}}
 
