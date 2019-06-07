@@ -33,6 +33,9 @@
 \newcommand{\ViuAct}{ViuAct}
 \newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} \nameref*{#1}}}
 
+\newcommand{\Dyplomant}{Marek Marecki}
+\newcommand{\NumerAlbumu}{14288}
+
 \renewcommand*{\lstlistlistingname}{Spis listingów}
 
 \setcounter{secnumdepth}{4}
@@ -65,7 +68,58 @@
 		numberstyle=\tiny
 		}
 
-\maketitle
+\begin{titlepage}
+    \includegraphics[width=\textwidth]{pjwstk_logo}
+    \begin{center}
+        {\huge\texttt{Polsko-Japońska Akademia Technik Komputerowych}}
+        {\huge\texttt{Zamiejscowy Wydział Informatyki w Gdańsku}}
+    \end{center}
+    \vspace{1cm}
+    {\Large\textbf{Imię i nazwisko dyplomanta:} \Dyplomant}
+    \vspace{0.5cm}
+    \newline
+    {\Large\textbf{Nr albumu:} \NumerAlbumu}
+    \vspace{0.5cm}
+    \newline
+    {\Large\textbf{Kierunek studiów:} Informatyka \hfill \textbf{Rodzaj studiów:} niestacjonarne}
+
+    \vspace{1.5cm}
+    \begin{center}
+        {\huge\textsc{Praca dyplomowa}}
+    \end{center}
+    \vspace{1cm}
+
+    ~
+    \newline
+    {\Large\textbf{Temat pracy:} \inzmaintitlePL\\
+        \phantom{\textbf{Temat pracy:}} Implementacja języka wysokiego poziomu i
+        prostej aplikacji}
+    \vspace{1cm}
+    \newline
+    {\Large\textbf{Temat w języku angielskim:} Viua VM in action\\
+        \phantom{\textbf{Temat w języku angielskim:}} Implementation of a high-level programming\\
+        \phantom{\textbf{Temat w języku angielskim:}} language and a simple application}
+    \vspace{1cm}
+    \newline
+    {\Large\textbf{Opiekun pracy:} dr hab. Marek. A. Bednarczyk, prof. PJWSTK}
+    \vspace{0.5cm}
+    \newline
+    {\Large\textbf{Wykonawcy:} Marek~Marecki i Krzysztof~Franek}
+    \vspace{1.5cm}
+    \newline
+    {\Large\textbf{Streszczenie:} Głównym pytaniem pracy jest ,,Czy Viua~VM
+        umożliwia tworzenie niezawodnego, wysoce współbieżnego, nietrywialnego
+        oprogramowania?''\\ Na to pytanie odpowiadamy projektując język
+        programowania wysokiego poziomu (\ViuAct) i implementując jego
+        kompilator, oraz pisząc czat (ViuaChat) w tymże języku. W zakończeniu
+        pracy przedstawiamy wnioski oraz odpowiedź na główne pytanie pracy.}
+
+    \vspace*{\fill}
+    \begin{center}
+    Gdańsk, 2019 rok
+    \end{center}
+\end{titlepage}
+% \maketitle
 
 \frontmatter
 \tableofcontents
