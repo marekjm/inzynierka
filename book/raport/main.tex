@@ -123,15 +123,34 @@ kontrolę ,,w rękach'' programu.
 
 \section{Wpływ pracy na platformę Viua VM}
 
-W tym rozdziale omówiony jest wpływ naszej pracy inżynierskiej na platformę Viua VM; zarówno na implementację
-samej maszyny wirtualnej i dopracowanie jej mechanizmów (np. doprowadzenie systemu modułów do stanu
-używalności), ale też na ,,ekosystem'' dookoła niej -- nowe moduły biblioteki standardowej i zewnętrzne.
+W tym rozdziale omówiony jest wpływ naszej pracy inżynierskiej na platformę
+Viua~VM; zarówno na implementację samej maszyny wirtualnej i dopracowanie jej
+mechanizmów, ale też na ,,ekosystem'' dookoła niej -- nowe moduły biblioteki
+standardowej i zewnętrzne.
 
 \subsection{System modułów}
 
-Viua VM musiała zostać wyposażona w system modułów. Wymagane było przeprojektowanie i ,,ucywilizowanie''
-stanu, w którym system modułów Viua VM się znajdował przed rozpoczęciem prac nad projektem inżynierskim.
+Umieszczenie w specyfikacji języka \ViuAct\ systemu modułów wymusiło
+,,ucywilizowanie'' systemu modułów i linkera Viua~VM. Stan w jakim oba te
+komponenty znajdowały się przed rozpoczęciem pracy inżynierskiej powodował, że
+nadawały się one do wykorzystania jedynie w najprostrzych przypadkach.
+
+Po zakończeniu pracy inżynierskiej system modułów i linker Viua~VM pozwalają na
+wykorzystanie w dużo szerszym wachlarzu zastosowań, są prostsze w użyciu, a
+linkowanie dynamiczne ma mniejszy narzut. Ujednolicone zostały również zasady
+linkowania modułów ,,własnych'' (tj. modułów \emph{bytecode} Viua~VM) i
+,,obcych'' (tj. napisanych w języku C++).
+
+\subsection{Biblioteka standardowa}
+
+Biblioteka standardowa została powiększona o moduły do obsługi I/O na plikach,
+moduł dający dostęp do API systemowego \emph{POSIX sockets}, oraz moduł do
+obsługi formatu serializacji danych JSON.
+Wszystkie te moduły zostały wykorzystane w implementacji programu ViuaChat.
 
 \subsection{Moduł do obsługi protokołu WebSocket}
 
 Do wykonania czatu potrzebny był moduł do obsługi protokołu WebSocket.
+Został on dostarczony jako biblioteka obca z plikiem interfejsu umożliwiającym
+jej wykorzystanie w języku \ViuAct. Moduł ten jest opisany w załączniku
+\ref{plain_websocket_library} na stronie \pageref{plain_websocket_library}.
