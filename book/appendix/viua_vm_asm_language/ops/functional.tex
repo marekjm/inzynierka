@@ -78,6 +78,9 @@ Przykład powyżej ,,chwyta'' wartość tekstową znajdującą się w rejestrze
 \texttt{\%3~local} i jej kopię umieszcza w lokalnym rejestrze o indeksie 1
 wewnętrznym do domknięcia znajdującego się w rejestrze \texttt{\%1~local}.
 
+Odpowiada to instrukcji \texttt{copy}, dla której wynikowym zestawem rejestrów
+jest lokalny zestaw rejestrów wewnętrzny dla domknięcia.
+
 \subsubsection{\texttt{capturemove}}
 
 \begin{lstlisting}
@@ -95,3 +98,6 @@ capturemove %1 local %1 %3 local
 Przykład powyżej ,,chwyta'' wartość tekstową znajdującą się w rejestrze
 \texttt{\%3~local} i przenosi ją do lokalnego rejestru o indeksie 1
 wewnętrznego do domknięcia znajdującego się w rejestrze \texttt{\%1~local}.
+
+Odpowiada to instrukcji \texttt{move}, dla której wynikowym zestawem rejestrów
+jest lokalny zestaw rejestrów wewnętrzny dla domknięcia.
