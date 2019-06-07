@@ -52,13 +52,25 @@ void
 \item[\texttt{register-set}] nazwa zestawu rejestrów
 \end{labeling}
 
-Dostępne zestawy rejestrów to:
+Dostępne zestawy rejestrów ogólnego przeznaczenia to:
 
 \begin{labeling}{\texttt{parameters}}
 \item[\texttt{local}] zawiera wartości lokalne (,,zmienne lokalne'')
 \item[\texttt{static}] zawiera wartości statyczne (,,zmienne statyczne'')
 \item[\texttt{arguments}] zawiera wartości przekazane do aktywnej funkcji jako argumenty
 \item[\texttt{parameters}] zawiera wartości przekazane do przygotowywanej ramki wywołania jako parametry
+\end{labeling}
+
+Pseudo-zestawy rejestrów specjalnego przeznaczenia to:
+
+\begin{labeling}{\emph{exception register}}
+\item[\emph{exception register}] rejestr przechowujący aktywny wyjątek; zapis do
+    tego rejestru odbywa się za pomocą instrukcji \texttt{throw}, a odczyt z
+    niego za pomocą instrukcji \texttt{draw}
+\item[\emph{message queue}] kolejka wiadomości procesu; zapis do niej odbywa się
+    za pomocą instrukcji \texttt{send}, a odczyt z niej za pomocą instrukcji
+    \texttt{receive} (jest to jedyny ,,zestaw rejestrów'', który może być
+    modyfikowany przez procesy nie będące jego ,,właścicielami'')
 \end{labeling}
 
 Podczas odczytu wartości adres \texttt{\%3 static} powoduje ,,dostęp do wartości w 3. statycznym rejestrze'';
