@@ -94,6 +94,33 @@ skoku warunkowego w teorii podwaja koszt analizy.
 
 \section{Zmiany założeń wprowadzone w trakcie trwania projektu}
 
+Większość założeń, które zostały określone na początku projektu okazała się
+słuszna, a ogólna koncepcja oraz kierunek rozwoju projektu nie wymagały dużych
+zmian.
+
+\subsection{Obsługa błędów kompilacji}
+
+Drobnej korekcie uległo założenie ,,nie implementujemy obsługi błędów w
+kompilatorze''. Okazało się, że potrzebna jest przynajmniej minimalna obróbka
+błędów zgłaszanych przez kompilator ponieważ surowe zrzuty stosu nie były
+wystarczające do szybkiego odnajdowania błędów.
+
+\subsection{Obsługa protokołu WebSocket}
+
+Większą zmianą założeń była rezygnacja z wykorzystania gotowej biblioteki
+implementującej protokół WebSocket i zamiast tego implementacja tego protokołu
+,,od zera''. Wynikło to z bardzo prostego powodu -- każda biblioteka, która
+była brana pod uwagę okazywała się tak naprawdę \emph{frameworkiem} co
+dyskwalifikowało jej wykorzystanie w Viua~VM.
+
+Frameworki narzucają programom swój reżim i wizję tego jak ma wyglądać
+współpraca z nimi -- narzucają współpracę o dostarczany przez siebie
+\emph{event-loop}. Viua~VM jednak w bardzo ostry sposób wchodzi w konflikt z
+takim podejściem ponieważ sama narzuca reżim i model programowania.  Ta
+,,niekompatybilność'' wymusiła na nas wykonanie implementacji modułu do obsługi
+protokołu WebSocket w formie biblioteki -- czyli modułu pozostawiającego
+kontrolę ,,w rękach'' programu.
+
 \section{Wpływ pracy na platformę Viua VM}
 
 W tym rozdziale omówiony jest wpływ naszej pracy inżynierskiej na platformę Viua VM; zarówno na implementację
