@@ -64,6 +64,11 @@ znajdującej się w rejestrze \texttt{\emph{Rs}}.
 ptr %1 local %2 local
 \end{lstlisting}
 
+\paragraph*{Uwagi -- przekazywanie wiadomości} Wskaźniki są ważne jedynie
+wewnątrz procesu, w którym zostały utworzone. Jeśli zostaną przekazane do innego
+procesu jako wiadomość i zostaną rozwiązane w innym procesie zgłoszony zostanie
+wyjątek.
+
 \subsubsection{\texttt{ptrlive}}
 
 \begin{lstlisting}
