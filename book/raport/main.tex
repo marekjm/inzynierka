@@ -14,20 +14,61 @@ na ,,zewnętrzne'' efekty pracy osiągnęliśmy wszystko co było zakładane.
 
 \section{Niepowodzenia}
 
+\subsection{Pozostanie przy prototypie kompilatora}
+
 Najbardziej widoczną porażką projektu jest pozostawienie implementacji języka
 \ViuAct\ w fazie prototypowej -- budżet czasowy jakim dysponowaliśmy okazał się
 niewystarczający na stworzenie prototypu kompilatora (w języku Python) w celu
 przeprowadzenia ,,rozpoznania'' przestrzeni problemu, a następnie korzystając z
 nabytej wiedzy napisanie kompilatora ,,produkcyjnego'' (w języku OCaml).
 
-Kolejnym niepowodzeniem jest również fakt, że kompilator, którym dysponujemy nie
-jest w stanie przetworzyć stu procent możliwych do napisania konstrukcji
-językowych wynikających ze specyfikacji języka. Nie uniemożliwiło to co prawda
-napisania programu ViuaChat jednak wprowadziło pewne opóźnienia w pracach nad
-nim z powodu rozbieżności między teorią (specyfikacją języka), a praktyką (jego
-implementacją).
+\subsection{Niekompletność implementacji}
 
-% Opisać co się nie udało, z czym nie zdążyliśmy, z czego musieliśmy zrezygnować, co okazało się niemożliwe.
+Niepowodzeniem jest również fakt, że kompilator, którym dysponujemy nie jest w
+stanie przetworzyć stu procent możliwych do napisania konstrukcji językowych
+wynikających ze specyfikacji języka. Nie uniemożliwiło to co prawda napisania
+programu ViuaChat jednak wprowadziło pewne opóźnienia w pracach nad nim z powodu
+rozbieżności między teorią (specyfikacją języka), a praktyką (implementacją
+języka).
+
+\subsection{Czas kompilacji}
+
+Kolejnym niepowodzeniem jest również szybkość kompilacji. Całość procesu, który
+z plików źródłowych w języku \ViuAct\ wyprodukuje pliki z binarną reprezentacją
+programu w \emph{bytecode} Viua~VM trwa długo. Przy nietrywialnych programach,
+takich jak ViuaChat, etap przetwarzania kodu programu w języku assemblera
+Viua~VM na formę binarną (realizowany przez assembler dostarczany przez Viua~VM)
+zajmuje dużą ilość czasu.
+
+Wynika to po części z faktu, że w nietrywialne programy zawierają dużą ilość
+wyrażeń warunkowych. Analizator statyczny wbudowany w assembler dostarczany
+przez Viua~VM duplikuje swój stan dla każdej instrukcji skoku warunkowego
+(emitowanej dla każdego wyrażenia warunkowego) i rozważa wykonanie każdej
+ścieżki osobno.
+Jest to potrzebne ponieważ na podstawie niezależnej analizy każdej ścieżki
+wykonania analizator wykrywa między innymi martwe (tj. takie, który program nie
+wykorzystuje) wartości i rejestry -- jednak powoduje to, że każda instrukcja
+skoku warunkowego w teorii podwaja koszt analizy.
+
+% \subsection{Typowanie dynamiczne}
+
+% Mimo iż nie było to ujęte w wymaganiach, za drobną porażkę uważam również
+% dyscyplinę typowania jaką charakteryzuje się języku \ViuAct. Klasyfikując język
+% \ViuAct\ na dwóch osiach dyscyplin typowania:
+% \begin{enumerate}
+% \item dynamiczne---statyczne (\emph{dynamic---static}) -- określająca kiedy
+%     weryfikowane są typy danych. W typowaniu dynamicznym na etapie wykonywania
+%     (\emph{run-time}), a w typowaniu statycznym na etapie kompilacji
+%     (\emph{compile-time}).
+% \item słabe---silne (\emph{weak---strong}) -- określająca jaka jest reakcja
+%     języka na użycie niekompatybilnych typów danych. Typowanie słabe zakłada
+%     automatyczną koercję typów danych, a typowanie silne zakłada zgłoszenie
+%     błędu.
+% \end{enumerate}
+% otrzymujemy typowanie dynamiczne---silne. Lepsze gwarancje poprawności można
+% uzyskać kombinacją statycze---silne, jednak zbudowanie poprawnego statycznego
+% systemu typów jest samo w sobie czasochłonne i skomplikowane, co
+% dyskwalifikowało taką dyscyplinę typowania już na starcie projektu.
 
 \section{Zmiany założeń wprowadzone w trakcie trwania projektu}
 
