@@ -1,6 +1,18 @@
 \subsection{Kontrola przepływu}
 \label{viua_vm_ops_control_flow}
 
+\paragraph*{Specyfikacje celów skoków}
+
+\begin{lstlisting}
++%*\emph{<offset>}*)
+-%*\emph{<offset>}*)
+%*\emph{<marker>}*)
+\end{lstlisting}
+
+Pierwszy i drugi wariant przenoszą kontrolę o \emph{offset} instrukcji w przód
+lub w tył. Trzeci wariant przenosi kontrolę do pierwszej instrukcji za markerem
+\texttt{\emph{marker}}.
+
 \subsubsection{\texttt{nop}}
 
 \begin{lstlisting}
@@ -9,17 +21,45 @@ nop
 
 \paragraph*{Opis} Instrukcja ,,pusta''.
 
-\paragraph*{Wyjątki} Brak.
-
-\paragraph*{Uwagi} Brak.
-
 \subsubsection{\texttt{jump}}
+
+\begin{lstlisting}
+jump %*\emph{<jump-spec>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Instrukcja skoku bezwarunkowego. Przenosi kontrolę do
+instrukcji określonej przez \texttt{\emph{jump-spec}}.
+
 \subsubsection{\texttt{if}}
 
+\begin{lstlisting}
+if Rcond %*\emph{<true-jump-spec>}*) %*\emph{<false-jump-spec>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Instrukcja skoku warunkowego odczytuje wartość z rejestru
+\texttt{Rcond}, interpretuje ją jako wartość boolowską i podejmuje decyzję,
+który skok wykonać. Jeśli warunek jest prawdziwy wykonywany jest skok
+\texttt{\emph{true-jump-spec}}, jeśli warunek jest prawdziwy wykonywany jest
+skok \texttt{\emph{false-jump-spec}}.
+
 \subsubsection{\texttt{frame}}
+
+\begin{lstlisting}
+frame %*\emph{n}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Przygotowuje do ramkę wywołania zawierającą \emph{n} rejestrów
+do przekazania parametrów, np. \texttt{frame \%2} utworzy ramkę z dwoma
+rejestrami.
+
+Przygotowana ramka jest potem ,,konsumowana'' przez instrukcję \texttt{call},
+\texttt{tailcall}, \texttt{process}, \texttt{defer} lub \texttt{watchdog}.
+
 \subsubsection{\texttt{param}}
 
 Instrukcja prywatna.
+Przekazanie parametrów przez kopię odbywa się za pomocą instrukcji
+\texttt{copy}.
 
 \paragraph*{Uwagi}
 
@@ -29,6 +69,8 @@ je są odrzucane przez assembler jako nieprawidłowe.
 \subsubsection{\texttt{pamv}}
 
 Instrukcja prywatna.
+Przekazanie parametrów przez przeniesienie odbywa się za pomocą instrukcji
+\texttt{move}.
 
 \paragraph*{Uwagi}
 
@@ -36,11 +78,66 @@ Instrukcje prywatne nie są dostępne dla kodu użytkownika, a programy zawieraj
 je są odrzucane przez assembler jako nieprawidłowe.
 
 \subsubsection{\texttt{call}}
+
+\begin{lstlisting}
+call Rr %*\emph{function-name}*)
+call Rr Rf
+\end{lstlisting}
+
+\paragraph*{Opis} Instrukcja wywołania funkcji lub instancji domknięcia.
+Konsumuje utworzoną wcześniej ramkę wywołania i dodaje ją na szczyt stosu
+wywołań.
+
+Wariant 1 wywołuje funkcję określoną przez \texttt{\emph{function-name}}.
+Wariant 2 wywołuje funkcję lub instancję domknięcia wskazywaną przez wartość w
+rejestrze \texttt{Rf}. Tylko wariant drugi może być użyty do wywołania instancji
+domknięcia.
+
+W każdym wariancie wynik pracy funkcji jest umieszczany w rejestrze \texttt{Rr}.
+Jeśli rejestr \texttt{Rr} jest podany jako \texttt{void} to wartość zwrotna
+wywołanej funkcji jest natychmiast niszczona.
+
 \subsubsection{\texttt{tailcall}}
+
+\begin{lstlisting}
+tailcall %*\emph{function-name}*)
+tailcall Rf
+\end{lstlisting}
+
+\paragraph*{Opis} Instrukcja wywołania ogonowego funkcji lub instancji
+domknięcia. Konsumuje utworzoną wcześniej ramkę wywołania i zamienia ją z ramką
+znajdującą się na szczycie stosu wywołań -- nie zwiększając rozmiaru stosu
+wywołań.
+
+Wariant 1 wywołuje funkcję określoną przez \texttt{\emph{function-name}}.
+Wariant 2 wywołuje funkcję lub instancję domknięcia wskazywaną przez wartość w
+rejestrze \texttt{Rf}. Tylko wariant drugi może być użyty do wywołania instancji
+domknięcia.
+
 \subsubsection{\texttt{defer}}
+
+\begin{lstlisting}
+defer %*\emph{function-name}*)
+defer Rf
+\end{lstlisting}
+
+\paragraph*{Opis} Instrukcja wywołania odroczonego funkcji. Konsumuje utworzoną
+wcześniej ramkę wywołania.
+
+Wariant 1 wywołuje funkcję określoną przez \texttt{\emph{function-name}}.
+Wariant 2 wywołuje funkcję wskazywaną przez wartość w rejestrze \texttt{Rf}.
+
+Wywołania odroczone będą wywołane w odwrotnej kolejności zgłaszania ich w
+momencie, w którym ramka wywołania, w której zostały zarejestrowane jest
+zdejmowana ze stosu wywołań (np. na skutek wykonania instrukcji \texttt{return},
+podmiany ramki przez instrukcję \texttt{tailcall} lub odwinięcia stosu na skutek
+nieobsłużonego wyjątku).
+
 \subsubsection{\texttt{arg}}
 
 Instrukcja prywatna.
+Odczyt parametrów przez przeniesienie odbywa się za pomocą instrukcji
+\texttt{move}.
 
 \paragraph*{Uwagi}
 
@@ -49,10 +146,31 @@ je są odrzucane przez assembler jako nieprawidłowe.
 
 \subsubsection{\texttt{allocate\_registers}}
 
+\begin{lstlisting}
+allocate_registers Rn
+\end{lstlisting}
+
+\paragraph*{Opis} Alokuje lokalny zestaw rejestrów w rozmiarze określonym przez
+operand \texttt{Rn}. Jest to pierwsza instrukcja, która musi być wykonana przez
+funkcję.
+
+\paragraph*{Uwagi} Domknięcia \emph{nie mogą} używać tej instrukcji. Ich zestaw
+rejestrów lokalnych jest alokowany przez instrukcję \texttt{closure}.
+
 \subsubsection{\texttt{return}}
 
-Wyjście z funkcji.
+\begin{lstlisting}
+return
+\end{lstlisting}
+
+\paragraph*{Opis} Kończy wykonywanie funkcji i zdejmuje jej ramkę ze stosu
+wywołań.
 
 \subsubsection{\texttt{halt}}
 
-Zakończenie działania i wyłączenie VM.
+\begin{lstlisting}
+halt
+\end{lstlisting}
+
+\paragraph*{Opis} Natychmiast przerywa wykonywanie programu i wyłącza maszynę
+wirtualną.
