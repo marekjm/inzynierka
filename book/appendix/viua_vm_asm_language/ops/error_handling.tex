@@ -3,12 +3,102 @@
 
 \subsubsection{\texttt{watchdog}}
 
+\begin{lstlisting}
+watchdog %*\emph{<function-name>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Ustawia funkcję \texttt{\emph{function-name}} jako funkcję
+\emph{watchdog}. Ta funkcja zostanie wywołana w momencie, w którym proces
+ulegnie awarii -- czyli w momencie, w którym na skutek zgłoszenia wyjątku
+zostanie odwinięty cały stos wywołań w procesie, a wyjątek nie zostanie mimo
+to obsłużony.
+
+W takim przypadku funkcja \emph{watchdog} jest uruchamiana, a jako swój pierwszy
+parametr otrzymuje strukturę przechowującą informacje o:
+\begin{enumerate}
+    \item funkcji głównej procesu, który uległ awarii
+    \item wyjątku, który spowodował awarię
+\end{enumerate}
+Funkcja \emph{watchdog} może obsłużyć awarię na wiele sposobów, ale typowe są
+dwie strategie:
+\begin{enumerate}
+    \item powiadomienie procesu nadrzędnego o wystąpieniu awarii, a następnie
+        zakończenie procesu, który tej awarii uległ
+    \item zrestartowanie procesu, który uległ awarii
+\end{enumerate}
+Jeśli wykorzystywana jest druga strategia pozostałe procesy w systemie mogą nie
+zauważyć, że proces uległ awarii (co jest pożądane) ponieważ zachowuje on swój
+PID (swoją ,,tożsamość'') oraz wszystkie wiadomości, które znajdowały się w jego
+kolejce wiadomości w momencie wystąpienia awarii.
+
 \subsubsection{\texttt{throw}}
 
-Rzucenie wartości jako wyjątku.
+\begin{lstlisting}
+throw Rs
+\end{lstlisting}
+
+\paragraph*{Opis} Zgłasza wartość znajdującą się w rejestrze \texttt{Rs} jako
+wyjątek.
 
 \subsubsection{\texttt{catch}}
+
+\begin{lstlisting}
+catch "%*\emph{<exception-tag>}*)" %*\emph{<block-name>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Wyłapuje wyjątki z tagiem \texttt{\emph{<exception-tag>}} i
+przenosi kontrolę do bloku \texttt{\emph{<block-name>}}, który zajmie się ich
+obsługą. Wyłapane wyjątki są umieszczane w specjalnym rejestrze, a pobrane mogą
+być z niego za pomocą instrukcji \texttt{draw}.
+
+\paragraph*{Uwagi} Instrukcje \texttt{catch} zazwyczaj wykonywane są w serii --
+wyłapując kilka wyjątków w jednej ramce obsługi wyjątków. Przed każdą taką serią
+musi zostać wykonana instrukcja \texttt{try}. Ramka obsługi wyjątków musi
+istnieć zanim możliwe będzie rejestrowanie bloków obsługi.
+
 \subsubsection{\texttt{draw}}
+
+\begin{lstlisting}
+draw Rd
+\end{lstlisting}
+
+\paragraph*{Opis} Przenosi wyłapany wyjątek z rejestru wyjątków do rejestru
+\texttt{Rd}.
+
+Rejestr \texttt{Rd} może być podany jako \texttt{void} żeby natychmiast
+zniszczyć wartość znajdującą się w rejestrze wyjątków. Wartość wyjątku nie
+zawsze jest potrzebna, ale rejestr wyjątków \emph{musi} zostać zawsze opróżniony
+w każdym bloku obsługi.
+
+\paragraph*{Uwagi} Jeśli w momencie wykonania tej instrukcji rejestr wyjątków
+jest pusty zgłoszony zostanie wyjątek.
+
 \subsubsection{\texttt{try}}
+
+\begin{lstlisting}
+try
+\end{lstlisting}
+
+\paragraph*{Opis} Przygotowuje ramkę, w której rejestrowane za pomocą instrukcji
+\texttt{catch} będą bloki obsługi dla wyjątków.
+
 \subsubsection{\texttt{enter}}
+
+\begin{lstlisting}
+enter %*\emph{<block-name>}*)
+\end{lstlisting}
+
+\paragraph*{Opis} Przeniesienie kontroli do bloku \texttt{\emph{<block-name>}}.
+Instrukcja konsumuje ramkę obsługi wyjątków utworzoną wcześniej przez instrukcję
+\texttt{try}, a całe wykonanie wewnątrz bloku chronionego
+\texttt{\emph{<block-name>}} jest ,,chronione'' przez bloki obsługi wyjątków
+zarejestrowane w tej ramce (przez instrukcje \texttt{catch}).
+
 \subsubsection{\texttt{leave}}
+
+\begin{lstlisting}
+leave
+\end{lstlisting}
+
+\paragraph*{Opis} Wyjście z bloku. Instrukcja powoduje zakończenie wykonywania
+bloku chroninego lub bloku obsługi wyjątków.
