@@ -121,8 +121,58 @@ kompilator ,,kompletności'' niż jego odporność na błędy.
 
 \section{Program ViuaChat}
 
-Mini-SCRUM.
+\subsection{mini-Scrum}
+Dla czatu ViuaChat, Krzysztof Franek, odpowiedzialny za tę część projektu, wybrał strategię mini-Scrum. Jest to
+wariant techniki Scrum, korzystający z tych podobnych wydarzeń (Sprint, Planowanie Sprintu, Przegląd Sprintu,
+Retrospektywa Sprintu), tych samych artefaktów (Backlog Produktu, Backlog Sprintu, Przyrost) i niektórych ról
+(Właściciel Produktu, Zespół Deweloperski).
+
+Podstawową zaletą tej metodyki działania był podział zadań na mniejsze fragmenty, a także możliwość łatwego
+planowania i nadzorowania tempa prac poprzez obserwowanie wykresu wypalania produktu. Umówiono się, że rolę
+właściciela produktu (ang. \textit{product owner}) będzie pełnił p. Marecki, zaś w rolę zespołu deweloperskiego
+wcieli się p. Franek. Z powodu mało licznego zespołu, w metodologi mini-Scrum dokonano pewnych uproszczeń w
+stosunku do oryginalnego modelu Scruma, zaproponowanego w oficjalnym podręczniku (\cite{Scrum}). Zrezygnowano
+z codziennych scrumów (ang. \textit{daily scrums}), z uwagi na nieregularny charakter prac (uczestnicy projektu
+studiują w trybie zaocznym i realizują zadania w czasie wolnym od pracy), a także z odrębnej roli \textit{scrum
+mastera}.
+
+\subsubsection{Kanban}
+Dodatkowo, jako technikę prowadzenia Sprintów mini-Scruma wybrano Kanban, w ramach którego każda z historyjek
+w Sprincie była umieszczana w postaci ,,karteczki'' na wirtualnej tablicy i przemieszczana pomiędzy jej kolumnami,
+wraz z ich kolejnymi etapami realizacji. Na tablicy przewidziano następujące kolumny: ,,Do zrobienia'', ,,W
+realizacji'', ,,W testowaniu'', ,,Zrealizowano''. Ponadto, każda karteczka ma przypisaną etykietę z priorytetem.
+
+Początkowo, dla każdego sprintu  utworzona osobną tablicę. Karteczki reprezentujące historyjki, których nie udało się
+zrealizować w sprincie, miały być kopiowane do tablic kolejnych sprintów. Ostatecznie poprzestano na uproszczonym toku postępowania, współdzielącym
+jedną tablicę dla wszystkich sprintów -- karteczki
+ze zrealizowanymi i przetestowanymi zadaniami poddawano archiwizacji, zaś
+niezrealizowane wyróżniano dodatkową, ostrzegawczą etykietą.
+
+Oprogramowanie zaproponowane do utrzymywania mini-Scruma dla ViuaChat to Trello, umożliwiające łatwe
+zaimplementowanie techniki Kanban, rejestrowanie czasu pracy oraz integrację z najpopularniejszymi
+dostarczycielami repozytoriów Git.
 
 \subsection{Testowanie}
 
-Jak wygląda testowanie czatu.
+Proces testowania systemu ViuaChat został rozbity na dwa, odrębne poziomy,
+realizowane w sposób równoległy.
+
+Pierwszy z poziomów dotyczył testów jednostkowych backendu ViuaChat, tj. części systemu ViuaChat, która działa po stronie serwera. Aby zweryfikować działanie poszczególnych
+komend oraz prawidłowość zwracanych rezultatów, przygotowywane były specjalnie
+spreparowane pliki HTML. Ich esencją były osadzone skrypty w języku JavaScript,
+które samoczynnie próbowały łączyć się z serwerem czatu, a w razie sukcesu
+wysyłały serię zdefiniowanych komend. Przebieg komunikacji w był prezentowany
+w przeglądarce internetowej.
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[width=\textwidth]{strategia/fig/testyws}
+	\caption{Skrypt służący do zautomatyzowanych testów backendu ViuaChat}
+	\label{testy-ws}
+\end{figure}
+
+Drugi z poziomów obejmował typowe testy integracyjne. Proces testowania
+niejako ,,wbudowano'' w metodologię mini-Scrum. Wynika to z faktu, iż każda
+z historyjek oraz każde z zadań posiada jasno określoną definicję ukończenia
+(ang. \textit{Definition of Done}, \textit{DoD}). Nie było zatem możliwe jego
+ukończenie bez spełnienia z góry określonych warunków.

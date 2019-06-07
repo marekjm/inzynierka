@@ -13,7 +13,8 @@ Niewątpliwym sukcesem jest doprowadzenie pracy inżynierskiej do końca. Patrz�
 na ,,zewnętrzne'' efekty pracy osiągnęliśmy wszystko co było zakładane -- czyli
 zarówno specyfikację i implementację (w formie kompilatora) języka wysokiego
 poziomu na platformie Viua~VM, oraz nietrywialny program -- ViuaChat -- napisany
-w języku \ViuAct.
+w języku \ViuAct. Przygotowano również kompletne, zintegrowane środowisko,
+dzięki czemu wyniki prac mogą być użyteczne dla osób spoza zespołu projektowego.
 
 Nieoczywistym sukcesem jest również fakt, że Krzysztof Franek wykorzystał język
 \ViuAct\ w trakcie zajęć na Uczelni -- pisząc program zaliczeniowy z
@@ -34,7 +35,29 @@ zlokalizować największe niedociągnięcia, a nawet część z nich usunąć.
 Jednym z obszarów, który został znacząco poprawiony w trakcie prac nad
 projektem inżynierskim było łączenie modułów w finalne programy.
 
-\section{Niepowodzenia}
+\subsection{Opracowanie systemu ViuaChat}
+Pomimo licznych przeciwności i problemów wynikających z początkowej niedojrzałości, udało się szczęśliwie ukończyć system ViuaChat. Było to
+możliwe dzięki zacieśnionej współpracy obu członków zespołu, a także dzięki
+kreatywnemu podejściu do napotykanych utrudnień.
+
+\section{Wyzwania i niepowodzenia}
+
+W trakcie realizacji projektu nie wszystko przebiegło po myśli zespołu.
+
+\subsection{Prędkość kompilacji}
+
+Przede wszystkim, wiele do życzenia pozostawiała prędkość kompilacji, znacznie
+spadająca wraz z przyrastającym kodem źródłowym. Co ciekawe, w początkowej fazie
+prac, za źródło problemów uważano implementację kompilatora ViuAct w języku
+Python ponieważ programy napisane w Pythonie ustępują wydajnością programom
+napisanym w językach takich jak C, czy też OCaml.
+
+Ku zaskoczeniu studentów, wraz z kolejnymi linijkami kodu, widocznemu wydłużeniu
+ulegała faza asemblacji, za którą odpowiadał assembler maszyny wirtualnej
+Viua~VM. W końcowych wersjach serwera ViuaChat, asemblacja była do 5 razy
+bardziej czasochłonna od kompilacji. Niestety, poprawianie wydajności asemblera
+pozostawało poza zakresem projektu, a wydłużony czas asemblacji musiał zostać
+zaakceptowany.
 
 \subsection{Pozostanie przy prototypie kompilatora}
 
@@ -120,6 +143,39 @@ takim podejściem ponieważ sama narzuca reżim i model programowania.  Ta
 ,,niekompatybilność'' wymusiła na nas wykonanie implementacji modułu do obsługi
 protokołu WebSocket w formie biblioteki -- czyli modułu pozostawiającego
 kontrolę ,,w rękach'' programu.
+
+\subsection{Wskaźniki w ViuAct}
+W pierwszych wersjach języka ViuAct, wskaźniki nie istniały w jawnej formie.
+Nie przewidziano konstrukcji do tworzenia i rozwiązywania wskażników, ani
+pozwalającej na jawne skopiowanie wartości do której odwołuje się wskaźnik.
+Nie przeszkadzało to jednak, aby wskaźniki występowały w formie niejawnej.
+Kompilator stosował je w wynikowym kodzie asemblera, np. przy odwoływaniu się do zawartości w typach złożonych. Z czasem okazało się, że brak jawnych instrukcji,
+które pozwoliłyby na manualne wywołanie operacji na wskaźnikach, istotnie
+ogranicza możliwości programisty. Problemy pojawiały się podczas iteracji
+wektorów czy też przy wykorzystywaniu wartości pól w strukturach,
+które zostały uprzednio ,,wyłuskane'' i zwrócone przez funkcję.
+
+Zgłoszone niedociągnięcia doprowadziły do ubogacenia składni ViuAct o
+instrukcję wyłuskania \texttt{(\^ ptr)}, kopiowania wskazywanej wartości
+\texttt{(Std.copy ptr)} oraz jawnego utworzenia wskaźnika
+ \texttt{(Std.Pointer.take var)}.
+
+ \subsection{}{Zakres funkcjonalności systemu ViuaChat}
+ W początkowej fazie projektu, system ViuaChat miał zostać zrealizowany ze
+ znacznie większym rozmachem. Z czasem, wskutek ożywionych dyskusji i ciągłych
+ korekt harmonogramu, stawało się jasne że utrzymanie pierwotnie założonych
+ funkcjonalności nie będzie możliwe. Stąd zrezygnowano z kilku z nich, m.in.:
+
+ \begin{enumerate}
+   \item możliwość wysyłania i odbierania wiadomości prywatnych z okien
+   pokojów ogólnodostępnych;
+   \item możliwość zakładania stałych kont zabezpieczonych hasłem dla użytkowników bez uprawnień administracyjnych;
+   \item możliwość zabezpieczania dostępu do wybranych
+   pokojów poprzez konieczność podania dodatkowego hasła.
+ \end{enumerate}
+
+ Pomimo zarzucenia tych i innych pomysłów, nie naruszono podstawowego rdzenia
+ funkcjonalności, ustalonego jeszcze przed przystąpieniem do samego projektu.
 
 \section{Wpływ pracy na platformę Viua VM}
 
