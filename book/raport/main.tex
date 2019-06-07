@@ -9,12 +9,31 @@ planu w trakcie trwania projektu (decyzja o uwzględnieniu raportowania błędó
 
 \section{Sukcesy}
 
-\subsection{Opracowanie języka ViuAct wraz z jego kompilatorem}
-Niewątpliwym sukcesem jest ukończenie definicji języka wysokiego poziomu,
-jakim jest ViuAct. Przygotowano również kompletne, zintegrowane środowisko,
+Niewątpliwym sukcesem jest doprowadzenie pracy inżynierskiej do końca. Patrząc
+na ,,zewnętrzne'' efekty pracy osiągnęliśmy wszystko co było zakładane -- czyli
+zarówno specyfikację i implementację (w formie kompilatora) języka wysokiego
+poziomu na platformie Viua~VM, oraz nietrywialny program -- ViuaChat -- napisany
+w języku \ViuAct. Przygotowano również kompletne, zintegrowane środowisko,
 dzięki czemu wyniki prac mogą być użyteczne dla osób spoza zespołu projektowego.
-Pomimo napotkanych przeszkód, kompilator prawidłowo przetwarza podstawowe
-instrukcje języka.
+
+Nieoczywistym sukcesem jest również fakt, że Krzysztof Franek wykorzystał język
+\ViuAct\ w trakcie zajęć na Uczelni -- pisząc program zaliczeniowy z
+przedmiotu ,,Narzędzia Sztucznej Inteligencji'' w języku \ViuAct.
+
+\subsection{Ocena i poprawa stanu Viua~VM}
+
+Projekt pozwolił krytycznym okiem spojrzeć na stan w jakim znajdowała się
+Viua~VM i ocenić ją w obiektywny sposób za pomocą jasnego kryterium: albo da się
+oprzeć na niej implementację języka wysokiego poziomu i napisać ,,prawdziwy''
+program, albo nie.
+
+W trakcie pracy okazało się, że odpowiedź na to pytanie jest \emph{raczej
+pozytywna}. Niektóre aspekty Viua~VM wymagają pracy (który to fakt był znany),
+jednak przeprowadzenie projektu inżynierskiego na jej podstawie pozwoliło
+zlokalizować największe niedociągnięcia, a nawet część z nich usunąć.
+
+Jednym z obszarów, który został znacząco poprawiony w trakcie prac nad
+projektem inżynierskim było łączenie modułów w finalne programy.
 
 \subsection{Opracowanie systemu ViuaChat}
 Pomimo licznych przeciwności i problemów wynikających z początkowej niedojrzałości, udało się szczęśliwie ukończyć system ViuaChat. Było to
@@ -40,7 +59,7 @@ bardziej czasochłonna od kompilacji. Niestety, poprawianie wydajności asembler
 pozostawało poza zakresem projektu, a wydłużony czas asemblacji musiał zostać
 zaakceptowany.
 
-\paragraph*{Pozostanie przy prototypie}
+\subsection{Pozostanie przy prototypie kompilatora}
 
 Najbardziej widoczną porażką projektu jest pozostawienie implementacji języka
 \ViuAct\ w fazie prototypowej -- budżet czasowy jakim dysponowaliśmy okazał się
@@ -48,59 +67,84 @@ niewystarczający na stworzenie prototypu kompilatora (w języku Python) w celu
 przeprowadzenia ,,rozpoznania'' przestrzeni problemu, a następnie korzystając z
 nabytej wiedzy napisanie kompilatora ,,produkcyjnego'' (w języku OCaml).
 
-Dodatkowo, pierwsze tygodnie prac nad systemem ViuaChat ujawniły niezgodności
-pomiędzy teoretycznymi możliwościami kompilatora języka \ViuAct\ wynikającymi ze
-specyfikacji języka, a praktycznymi możliwościami wynikającymi z implementacji.
-Kompilator, którym dysponujemy nie jest w stanie przetworzyć stu procent możliwych do napisania konstrukcji
-językowych wynikających ze specyfikacji języka. Nie uniemożliwiło to co prawda
-napisania programu ViuaChat jednak wprowadziło pewne opóźnienia w pracach nad
-nim z powodu rozbieżności między teorią (specyfikacją języka), a praktyką (jego
-implementacją).
+\subsection{Niekompletność implementacji}
 
-Daleko idące uproszczenia implementacji kompilatora języka \ViuAct\ okazały się
-zgubne. Wobec tego, nie chcąc ryzykować dalszych problemów, zadecydowano
-o kontynuacji rozwoju ,,pythonowego'' prototypu.
+Niepowodzeniem jest również fakt, że kompilator, którym dysponujemy nie jest w
+stanie przetworzyć stu procent możliwych do napisania konstrukcji językowych
+wynikających ze specyfikacji języka. Nie uniemożliwiło to co prawda napisania
+programu ViuaChat jednak wprowadziło pewne opóźnienia w pracach nad nim z powodu
+rozbieżności między teorią (specyfikacją języka), a praktyką (implementacją
+języka).
 
-% Opisać co się nie udało, z czym nie zdążyliśmy, z czego musieliśmy zrezygnować, co okazało się niemożliwe.
+\subsection{Czas kompilacji}
+
+Kolejnym niepowodzeniem jest również szybkość kompilacji. Całość procesu, który
+z plików źródłowych w języku \ViuAct\ wyprodukuje pliki z binarną reprezentacją
+programu w \emph{bytecode} Viua~VM trwa długo. Przy nietrywialnych programach,
+takich jak ViuaChat, etap przetwarzania kodu programu w języku assemblera
+Viua~VM na formę binarną (realizowany przez assembler dostarczany przez Viua~VM)
+zajmuje dużą ilość czasu.
+
+Wynika to po części z faktu, że w nietrywialne programy zawierają dużą ilość
+wyrażeń warunkowych. Analizator statyczny wbudowany w assembler dostarczany
+przez Viua~VM duplikuje swój stan dla każdej instrukcji skoku warunkowego
+(emitowanej dla każdego wyrażenia warunkowego) i rozważa wykonanie każdej
+ścieżki osobno.
+Jest to potrzebne ponieważ na podstawie niezależnej analizy każdej ścieżki
+wykonania analizator wykrywa między innymi martwe (tj. takie, który program nie
+wykorzystuje) wartości i rejestry -- jednak powoduje to, że każda instrukcja
+skoku warunkowego w teorii podwaja koszt analizy.
+
+% \subsection{Typowanie dynamiczne}
+
+% Mimo iż nie było to ujęte w wymaganiach, za drobną porażkę uważam również
+% dyscyplinę typowania jaką charakteryzuje się języku \ViuAct. Klasyfikując język
+% \ViuAct\ na dwóch osiach dyscyplin typowania:
+% \begin{enumerate}
+% \item dynamiczne---statyczne (\emph{dynamic---static}) -- określająca kiedy
+%     weryfikowane są typy danych. W typowaniu dynamicznym na etapie wykonywania
+%     (\emph{run-time}), a w typowaniu statycznym na etapie kompilacji
+%     (\emph{compile-time}).
+% \item słabe---silne (\emph{weak---strong}) -- określająca jaka jest reakcja
+%     języka na użycie niekompatybilnych typów danych. Typowanie słabe zakłada
+%     automatyczną koercję typów danych, a typowanie silne zakłada zgłoszenie
+%     błędu.
+% \end{enumerate}
+% otrzymujemy typowanie dynamiczne---silne. Lepsze gwarancje poprawności można
+% uzyskać kombinacją statycze---silne, jednak zbudowanie poprawnego statycznego
+% systemu typów jest samo w sobie czasochłonne i skomplikowane, co
+% dyskwalifikowało taką dyscyplinę typowania już na starcie projektu.
 
 \section{Zmiany założeń wprowadzone w trakcie trwania projektu}
 
-\paragraph*{Podejście do wersji kompilatora opracowanej w języku Python.}
-Jak już ujęto w sekcji poświęconej wyzwaniom i porażkom, w trakcie trwania
-projektu zmieniły się założenia co do początkowej wersji kompilatora ViuAct,
-opracowanego w języku Python. W grudniu 2018 roku podjęto ostatecznie decyzję,
-że wersja ta, dotychczas ujmowana jako prototyp, nie będzie zarzucana na rzecz
-innego, docelowego rozwiązania w języku OCaml. Dccyzja ta zaważyła m.in. na
-tempie prac nad systemem ViuaChat oraz na założeniach projektowych kompilatora.
-Śladem tych założeń jest ,,ocamlowska'' notacja, pozostawiona w niektórych sekcjach niniejszej pracy.
+Większość założeń, które zostały określone na początku projektu okazała się
+słuszna, a ogólna koncepcja oraz kierunek rozwoju projektu nie wymagały dużych
+zmian.
 
-\paragraph*{Zakres funkcjonalności systemu ViuaChat.}
-W początkowej fazie projektu, system ViuaChat miał zostać zrealizowany ze
-znacznie większym rozmachem. Z czasem, wskutek ożywionych dyskusji i ciągłych
-korekt harmonogramu, stawało się jasne że utrzymanie pierwotnie założonych
-funkcjonalności nie będzie możliwe. Stąd zrezygnowano z kilku z nich, m.in.:
+\subsection{Obsługa błędów kompilacji}
 
-\begin{enumerate}
-  \item możliwość wysyłania i odbierania wiadomości prywatnych z okien
-  pokojów ogólnodostępnych;
-  \item możliwość zakładania stałych kont zabezpieczonych hasłem dla użytkowników bez uprawnień administracyjnych;
-  \item możliwość zabezpieczania dostępu do wybranych
-  pokojów poprzez konieczność podania dodatkowego hasła.
-\end{enumerate}
+Drobnej korekcie uległo założenie ,,nie implementujemy obsługi błędów w
+kompilatorze''. Okazało się, że potrzebna jest przynajmniej minimalna obróbka
+błędów zgłaszanych przez kompilator ponieważ surowe zrzuty stosu nie były
+wystarczające do szybkiego odnajdowania błędów.
 
-Pomimo zarzucenia tych i innych pomysłów, nie naruszono podstawowego rdzenia
-funkcjonalności, ustalonego jeszcze przed przystąpieniem do samego projektu.
+\subsection{Obsługa protokołu WebSocket}
 
-\paragraph*{Poziom rozbudowania systemu modułów ViuAct.}
-Pierwsze szkice języka ViuAct przewidywały pojawienie się konstrukcji, które
-pozwoliłyby na prymitywną modularyzację kodu źródłowego. Rozwiązania te okazały się jednak niedostateczne, co uwypukliło się w miarę rozrostu serwera
-ViuaChat. Przede wszystkim, brakowało mechanizmu pozwalającego na złożone
-zależności pomiędzy poszczególnymi modułami. Dzięki poprawieniu i poszerzeniu
-konstrukcji modułów, stało się możliwe odwoływanie przez kilka modułów do jednej
-biblioteki. Pozwoliło to na odejście od jednego, ,,dużego'' pliku z kodem
-źródłowym na rzecz kilkunastu mniejszych.
+Większą zmianą założeń była rezygnacja z wykorzystania gotowej biblioteki
+implementującej protokół WebSocket i zamiast tego implementacja tego protokołu
+,,od zera''. Wynikło to z bardzo prostego powodu -- każda biblioteka, która
+była brana pod uwagę okazywała się tak naprawdę \emph{frameworkiem} co
+dyskwalifikowało jej wykorzystanie w Viua~VM.
 
-\paragraph*{Wskaźniki w ViuAct.}
+Frameworki narzucają programom swój reżim i wizję tego jak ma wyglądać
+współpraca z nimi -- narzucają współpracę o dostarczany przez siebie
+\emph{event-loop}. Viua~VM jednak w bardzo ostry sposób wchodzi w konflikt z
+takim podejściem ponieważ sama narzuca reżim i model programowania.  Ta
+,,niekompatybilność'' wymusiła na nas wykonanie implementacji modułu do obsługi
+protokołu WebSocket w formie biblioteki -- czyli modułu pozostawiającego
+kontrolę ,,w rękach'' programu.
+
+\subsection{Wskaźniki w ViuAct}
 W pierwszych wersjach języka ViuAct, wskaźniki nie istniały w jawnej formie.
 Nie przewidziano konstrukcji do tworzenia i rozwiązywania wskażników, ani
 pozwalającej na jawne skopiowanie wartości do której odwołuje się wskaźnik.
@@ -116,12 +160,53 @@ instrukcję wyłuskania \texttt{(\^ ptr)}, kopiowania wskazywanej wartości
 \texttt{(Std.copy ptr)} oraz jawnego utworzenia wskaźnika
  \texttt{(Std.Pointer.take var)}.
 
+ \subsection{}{Zakres funkcjonalności systemu ViuaChat}
+ W początkowej fazie projektu, system ViuaChat miał zostać zrealizowany ze
+ znacznie większym rozmachem. Z czasem, wskutek ożywionych dyskusji i ciągłych
+ korekt harmonogramu, stawało się jasne że utrzymanie pierwotnie założonych
+ funkcjonalności nie będzie możliwe. Stąd zrezygnowano z kilku z nich, m.in.:
+
+ \begin{enumerate}
+   \item możliwość wysyłania i odbierania wiadomości prywatnych z okien
+   pokojów ogólnodostępnych;
+   \item możliwość zakładania stałych kont zabezpieczonych hasłem dla użytkowników bez uprawnień administracyjnych;
+   \item możliwość zabezpieczania dostępu do wybranych
+   pokojów poprzez konieczność podania dodatkowego hasła.
+ \end{enumerate}
+
+ Pomimo zarzucenia tych i innych pomysłów, nie naruszono podstawowego rdzenia
+ funkcjonalności, ustalonego jeszcze przed przystąpieniem do samego projektu.
+
 \section{Wpływ pracy na platformę Viua VM}
 
-W tym rozdziale omówiony jest wpływ naszej pracy inżynierskiej na platformę Viua VM; zarówno na implementację
-samej maszyny wirtualnej i dopracowanie jej mechanizmów (np. doprowadzenie systemu modułów do stanu
-używalności), ale też na ,,ekosystem'' dookoła niej -- nowe moduły biblioteki standardowej i zewnętrzne.
+W tym rozdziale omówiony jest wpływ naszej pracy inżynierskiej na platformę
+Viua~VM; zarówno na implementację samej maszyny wirtualnej i dopracowanie jej
+mechanizmów, ale też na ,,ekosystem'' dookoła niej -- nowe moduły biblioteki
+standardowej i zewnętrzne.
 
-\subsection{Biblioteka do obsługi protokołu WebSocket}
+\subsection{System modułów}
+
+Umieszczenie w specyfikacji języka \ViuAct\ systemu modułów wymusiło
+,,ucywilizowanie'' systemu modułów i linkera Viua~VM. Stan w jakim oba te
+komponenty znajdowały się przed rozpoczęciem pracy inżynierskiej powodował, że
+nadawały się one do wykorzystania jedynie w najprostrzych przypadkach.
+
+Po zakończeniu pracy inżynierskiej system modułów i linker Viua~VM pozwalają na
+wykorzystanie w dużo szerszym wachlarzu zastosowań, są prostsze w użyciu, a
+linkowanie dynamiczne ma mniejszy narzut. Ujednolicone zostały również zasady
+linkowania modułów ,,własnych'' (tj. modułów \emph{bytecode} Viua~VM) i
+,,obcych'' (tj. napisanych w języku C++).
+
+\subsection{Biblioteka standardowa}
+
+Biblioteka standardowa została powiększona o moduły do obsługi I/O na plikach,
+moduł dający dostęp do API systemowego \emph{POSIX sockets}, oraz moduł do
+obsługi formatu serializacji danych JSON.
+Wszystkie te moduły zostały wykorzystane w implementacji programu ViuaChat.
+
+\subsection{Moduł do obsługi protokołu WebSocket}
 
 Do wykonania czatu potrzebny był moduł do obsługi protokołu WebSocket.
+Został on dostarczony jako biblioteka obca z plikiem interfejsu umożliwiającym
+jej wykorzystanie w języku \ViuAct. Moduł ten jest opisany w załączniku
+\ref{plain_websocket_library} na stronie \pageref{plain_websocket_library}.

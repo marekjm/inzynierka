@@ -52,7 +52,7 @@ void
 \item[\texttt{register-set}] nazwa zestawu rejestrów
 \end{labeling}
 
-Dostępne zestawy rejestrów to:
+Dostępne zestawy rejestrów ogólnego przeznaczenia to:
 
 \begin{labeling}{\texttt{parameters}}
 \item[\texttt{local}] zawiera wartości lokalne (,,zmienne lokalne'')
@@ -61,25 +61,87 @@ Dostępne zestawy rejestrów to:
 \item[\texttt{parameters}] zawiera wartości przekazane do przygotowywanej ramki wywołania jako parametry
 \end{labeling}
 
+Pseudo-zestawy rejestrów specjalnego przeznaczenia to:
+
+\begin{labeling}{\emph{exception register}}
+\item[\emph{exception register}] rejestr przechowujący aktywny wyjątek; zapis do
+    tego rejestru odbywa się za pomocą instrukcji \texttt{throw}, a odczyt z
+    niego za pomocą instrukcji \texttt{draw}
+\item[\emph{message queue}] kolejka wiadomości procesu; zapis do niej odbywa się
+    za pomocą instrukcji \texttt{send}, a odczyt z niej za pomocą instrukcji
+    \texttt{receive} (jest to jedyny ,,zestaw rejestrów'', który może być
+    modyfikowany przez procesy nie będące jego ,,właścicielami'')
+\end{labeling}
+
 Podczas odczytu wartości adres \texttt{\%3 static} powoduje ,,dostęp do wartości w 3. statycznym rejestrze'';
 \texttt{*4 local} powoduje ,,dostęp do wartości, na którą wskazuje wskaźnik w 4. lokalnym rejestrze''.
 
 Wartości w rejestrach z zestawów \texttt{parameters} i \texttt{arguments} nie mogą być modyfikowane
 bezpośrednio. Muszą być najpierw przeniesione lub skopiowane do rejestrów lokalnych lub statycznych.
 
-\subsection{Definicje funkcji i bloków}
+\subsection{Definicje funkcji, domknięć i bloków}
 
+\subsubsection{Funkcje}
+
+Pierwszą instrukcją w funkcji zawsze \emph{musi} być \texttt{allocate\_registers}.
 \begin{lstlisting}
 .function: <name>/<arity>
+    allocate_registers
 	<instruction>
 	[<instruction>...]
 .end
 \end{lstlisting}
 
+Przykład:
+\begin{lstlisting}
+.function: main/0
+    allocate_registers %2 local
+
+    text %1 local "Hello, World!"
+    print %1 local
+
+    izero %0 local
+    return
+.end
+\end{lstlisting}
+
+\subsubsection{Domknięcia}
+
+W przeciwieństwie do funkcji, pierwszą instrukcją w definicji domknięcia
+\emph{nie może} być instrukcja \texttt{allocate\_registers}. Zestaw lokalnych
+rejestrów dla domknięcia jest tworzony przez instrukcję \texttt{closure} w
+momencie konstrukcji instacji domknięcia.
+\begin{lstlisting}
+.closure: <name>/<arity>
+	<instruction>
+	[<instruction>...]
+.end
+\end{lstlisting}
+
+Przykład:
+\begin{lstlisting}
+.closure: print_whatever_was_captured/0
+    print %1 local
+    return
+.end
+\end{lstlisting}
+
+\subsubsection{Bloki}
+
 \begin{lstlisting}
 .block: <name>
 	<instruction>
 	[<instruction>...]
+.end
+\end{lstlisting}
+
+Przykład:
+\begin{lstlisting}
+.block: handle_an_exception
+    draw void
+    text %1 local "An error occured."
+    print %1 local
+    leave
 .end
 \end{lstlisting}
 
