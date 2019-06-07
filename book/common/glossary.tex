@@ -68,6 +68,15 @@ Pojęcia są ułożone w kolejności alfabetycznej.
         identyfikatora, składająca się z nazwy typu tokenu i leksemu, który dana instancja tokenu zawiera
 	\item[wiadomość] wiadomość jest to dowolna wartość (np. liczba całkowita,
 		napis, struktura) wysłana przez jednego aktora do drugiego
+    \item[wywołanie ogonowe] (ang. \emph{tail call}) lub: wywołanie w pozycji
+        ogonowej, pozycja ogonowa; jest to wywołanie przez funkcję samej siebie
+        lub innej funkcji w pozycji, w której to wywołanie jest ostatnią
+        operacją na danej ścieżce wykonania -- takie wywołanie pozwala nie
+        dokładać kolejnej ramki wywołania na stos, a podmienić istniejącą, co
+        pozwala korzystać z algorytmów rekurencyjnych bez obawy o przepełnienie
+        stosu (jest to bardzo istotne w językach funkcyjnych, w których
+        rekurencja jest głównym sposobem na wykonywanie obliczeń wymagających
+        iteracji)
     \item[wzorzec] wyrażenie regularne określające jaką formę mogą przyjąć leksemy danego typu tokenu
 \end{labeling}
 
