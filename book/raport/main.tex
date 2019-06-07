@@ -36,9 +36,12 @@ Jednym z obszarów, który został znacząco poprawiony w trakcie prac nad
 projektem inżynierskim było łączenie modułów w finalne programy.
 
 \subsection{Opracowanie systemu ViuaChat}
-Pomimo licznych przeciwności i problemów wynikających z początkowej niedojrzałości, udało się szczęśliwie ukończyć system ViuaChat. Było to
-możliwe dzięki zacieśnionej współpracy obu członków zespołu, a także dzięki
-kreatywnemu podejściu do napotykanych utrudnień.
+
+Pomimo licznych przeciwności i problemów wynikających z początkowej
+niedojrzałości języka \ViuAct\ i jego kompilatora, udało się szczęśliwie
+ukończyć system ViuaChat. Było to możliwe dzięki zacieśnionej współpracy obu
+członków zespołu, a także dzięki kreatywnemu podejściu do napotykanych
+utrudnień.
 
 \section{Wyzwania i niepowodzenia}
 
@@ -48,9 +51,9 @@ W trakcie realizacji projektu nie wszystko przebiegło po myśli zespołu.
 
 Przede wszystkim, wiele do życzenia pozostawiała prędkość kompilacji, znacznie
 spadająca wraz z przyrastającym kodem źródłowym. Co ciekawe, w początkowej fazie
-prac, za źródło problemów uważano implementację kompilatora ViuAct w języku
+prac, za źródło problemów uważano implementację kompilatora \ViuAct\ w języku
 Python ponieważ programy napisane w Pythonie ustępują wydajnością programom
-napisanym w językach takich jak C, czy też OCaml.
+napisanym w językach takich jak C++, czy też OCaml.
 
 Ku zaskoczeniu studentów, wraz z kolejnymi linijkami kodu, widocznemu wydłużeniu
 ulegała faza asemblacji, za którą odpowiadał assembler maszyny wirtualnej
@@ -58,6 +61,24 @@ Viua~VM. W końcowych wersjach serwera ViuaChat, asemblacja była do 5 razy
 bardziej czasochłonna od kompilacji. Niestety, poprawianie wydajności asemblera
 pozostawało poza zakresem projektu, a wydłużony czas asemblacji musiał zostać
 zaakceptowany.
+
+\subsubsection*{Dlaczego kompilacja trwa tak długo?}
+
+Całość procesu, który z plików źródłowych w języku \ViuAct\ wyprodukuje pliki z
+binarną reprezentacją programu w \emph{bytecode} Viua~VM trwa długo. Przy
+nietrywialnych programach, takich jak ViuaChat, etap przetwarzania kodu programu
+w języku assemblera Viua~VM na formę binarną (realizowany przez assembler
+dostarczany przez Viua~VM) zajmuje dużą ilość czasu.
+
+Wynika to po części z faktu, że w nietrywialne programy zawierają dużą ilość
+wyrażeń warunkowych. Analizator statyczny wbudowany w assembler dostarczany
+przez Viua~VM duplikuje swój stan dla każdej instrukcji skoku warunkowego
+(emitowanej dla każdego wyrażenia warunkowego) i rozważa wykonanie każdej
+ścieżki osobno.
+Jest to potrzebne ponieważ na podstawie niezależnej analizy każdej ścieżki
+wykonania analizator wykrywa między innymi martwe (tj. takie, który program nie
+wykorzystuje) wartości i rejestry -- jednak powoduje to, że każda instrukcja
+skoku warunkowego w teorii podwaja koszt analizy.
 
 \subsection{Pozostanie przy prototypie kompilatora}
 
@@ -75,25 +96,6 @@ wynikających ze specyfikacji języka. Nie uniemożliwiło to co prawda napisani
 programu ViuaChat jednak wprowadziło pewne opóźnienia w pracach nad nim z powodu
 rozbieżności między teorią (specyfikacją języka), a praktyką (implementacją
 języka).
-
-\subsection{Czas kompilacji}
-
-Kolejnym niepowodzeniem jest również szybkość kompilacji. Całość procesu, który
-z plików źródłowych w języku \ViuAct\ wyprodukuje pliki z binarną reprezentacją
-programu w \emph{bytecode} Viua~VM trwa długo. Przy nietrywialnych programach,
-takich jak ViuaChat, etap przetwarzania kodu programu w języku assemblera
-Viua~VM na formę binarną (realizowany przez assembler dostarczany przez Viua~VM)
-zajmuje dużą ilość czasu.
-
-Wynika to po części z faktu, że w nietrywialne programy zawierają dużą ilość
-wyrażeń warunkowych. Analizator statyczny wbudowany w assembler dostarczany
-przez Viua~VM duplikuje swój stan dla każdej instrukcji skoku warunkowego
-(emitowanej dla każdego wyrażenia warunkowego) i rozważa wykonanie każdej
-ścieżki osobno.
-Jest to potrzebne ponieważ na podstawie niezależnej analizy każdej ścieżki
-wykonania analizator wykrywa między innymi martwe (tj. takie, który program nie
-wykorzystuje) wartości i rejestry -- jednak powoduje to, że każda instrukcja
-skoku warunkowego w teorii podwaja koszt analizy.
 
 % \subsection{Typowanie dynamiczne}
 
@@ -145,37 +147,42 @@ protokołu WebSocket w formie biblioteki -- czyli modułu pozostawiającego
 kontrolę ,,w rękach'' programu.
 
 \subsection{Wskaźniki w ViuAct}
-W pierwszych wersjach języka ViuAct, wskaźniki nie istniały w jawnej formie.
+
+W pierwszych wersjach języka \ViuAct, wskaźniki nie istniały w jawnej formie.
 Nie przewidziano konstrukcji do tworzenia i rozwiązywania wskażników, ani
 pozwalającej na jawne skopiowanie wartości do której odwołuje się wskaźnik.
 Nie przeszkadzało to jednak, aby wskaźniki występowały w formie niejawnej.
-Kompilator stosował je w wynikowym kodzie asemblera, np. przy odwoływaniu się do zawartości w typach złożonych. Z czasem okazało się, że brak jawnych instrukcji,
+
+Kompilator stosował je w wynikowym kodzie asemblera, np. przy odwoływaniu się do
+zawartości w typach złożonych. Z czasem okazało się, że brak jawnych instrukcji,
 które pozwoliłyby na manualne wywołanie operacji na wskaźnikach, istotnie
-ogranicza możliwości programisty. Problemy pojawiały się podczas iteracji
-wektorów czy też przy wykorzystywaniu wartości pól w strukturach,
-które zostały uprzednio ,,wyłuskane'' i zwrócone przez funkcję.
+ogranicza możliwości programisty. Problemy pojawiały się podczas iteracji po
+wektorach czy też przy wykorzystywaniu wartości pól w strukturach, które zostały
+uprzednio ,,wyłuskane'' i zwrócone przez funkcję.
 
-Zgłoszone niedociągnięcia doprowadziły do ubogacenia składni ViuAct o
-instrukcję wyłuskania \texttt{(\^ ptr)}, kopiowania wskazywanej wartości
+Zgłoszone niedociągnięcia doprowadziły do ubogacenia składni języka \ViuAct\ o
+instrukcję wyłuskania \texttt{(\^~ptr)}, kopiowania wskazywanej wartości
 \texttt{(Std.copy ptr)} oraz jawnego utworzenia wskaźnika
- \texttt{(Std.Pointer.take var)}.
+\texttt{(Std.Pointer.take var)}.
 
- \subsection{}{Zakres funkcjonalności systemu ViuaChat}
- W początkowej fazie projektu, system ViuaChat miał zostać zrealizowany ze
- znacznie większym rozmachem. Z czasem, wskutek ożywionych dyskusji i ciągłych
- korekt harmonogramu, stawało się jasne że utrzymanie pierwotnie założonych
- funkcjonalności nie będzie możliwe. Stąd zrezygnowano z kilku z nich, m.in.:
+\subsection{Zakres funkcjonalności systemu ViuaChat}
 
- \begin{enumerate}
-   \item możliwość wysyłania i odbierania wiadomości prywatnych z okien
-   pokojów ogólnodostępnych;
-   \item możliwość zakładania stałych kont zabezpieczonych hasłem dla użytkowników bez uprawnień administracyjnych;
-   \item możliwość zabezpieczania dostępu do wybranych
-   pokojów poprzez konieczność podania dodatkowego hasła.
- \end{enumerate}
+W początkowej fazie projektu, system ViuaChat miał zostać zrealizowany ze
+znacznie większym rozmachem. Z czasem, wskutek ożywionych dyskusji i ciągłych
+korekt harmonogramu, stawało się jasne że utrzymanie pierwotnie założonych
+funkcjonalności nie będzie możliwe. Stąd zrezygnowano z kilku z nich, m.in.:
 
- Pomimo zarzucenia tych i innych pomysłów, nie naruszono podstawowego rdzenia
- funkcjonalności, ustalonego jeszcze przed przystąpieniem do samego projektu.
+\begin{enumerate}
+    \item możliwość wysyłania i odbierania wiadomości prywatnych z okien pokojów
+        ogólnodostępnych
+    \item możliwość zakładania stałych kont zabezpieczonych hasłem dla
+        użytkowników bez uprawnień administracyjnych
+    \item możliwość zabezpieczania dostępu do wybranych pokojów poprzez
+        konieczność podania dodatkowego hasła
+\end{enumerate}
+
+Pomimo zarzucenia tych i innych pomysłów, nie naruszono podstawowego rdzenia
+funkcjonalności, ustalonego jeszcze przed przystąpieniem do samego projektu.
 
 \section{Wpływ pracy na platformę Viua VM}
 
