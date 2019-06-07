@@ -118,7 +118,7 @@ Liczba całkowita ze znakiem, o szerokości 64 bitów, kodowana z dopełnienem d
 dwóch. Liczba całkowita jest typem liczbowym.
 
 Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
-całkowitoliczbowej \texttt{0}.
+całkowitoliczbowej \texttt{0}, a prawdę dla pozostałych wartości.
 
 \subsubsection{Liczba zmiennoprzecinkowa}
 
@@ -126,19 +126,22 @@ Liczba zmiennoprzecinkowa podwójnej precyzji o szerokości 64 bitów kodowana w
 standardzie IEEE~754-2008. Liczba całkowita jest typem liczbowym.
 
 Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
-zmiennoprzecinkowej \texttt{0.0}.
+zmiennoprzecinkowej \texttt{0.0}, a prawdę dla pozostałych wartości.
 
 \subsubsection{Wartość boolowska}
 
 Wartość logiczna o szerokości 8 bitów reprezentująca prawdę lub fałsz.
+Prawda jest reprezentowana jako wartość \texttt{0x01} (najmniej znaczący bit
+,,włączony''), a fałsz jako \texttt{0x00}.
 
 \subsubsection{String}
 
-Ciąg znaków Unicode, kodowany w formacie UTF-8. Maksymalna długość stringu to
-$2^{64}$ znaków.
+Ciąg znaków Unicode, kodowany w formacie UTF-8. Maksymalna (teoretyczna) długość
+stringu to $2^{64}$ znaków.
 
 Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
-reprezentujących puste napisy (napisy o długości 0).
+reprezentujących puste napisy (napisy o długości 0), a prawdę dla pozostałych
+wartości.
 
 \subsection{Typy złożone}
 
@@ -150,7 +153,8 @@ Program, który wykorzystuje wektory przechowujące elementy różnych typów je
 niepoprawny.
 
 Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
-reprezentujących puste wektory (wektory o długości 0).
+reprezentujących puste wektory (wektory o długości 0), a prawdę dla pozostałych
+wartości.
 
 \subsubsection{Struktura}
 \label{viuact_spec_datatypes_aggregate_struct}
@@ -160,7 +164,8 @@ ewoluują dynamicznie, a przypisanie wartości do pól struktury odbywa się w
 czasie wykonywania.
 
 Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
-reprezentujących puste struktury (struktury nie mające żadnego pola).
+reprezentujących puste struktury (struktury nie mające żadnego pola), a prawdę
+dla pozostałych wartości.
 
 \subsection{Typy referencyjne}
 
@@ -176,7 +181,7 @@ na \emph{wartości}.
 
 Przy konwersji do typu boolowskiego przyjmuje fałsz dla wartości
 reprezentujących ,,martwe'' wskaźniki (wskaźniki wskazujące na wartość, która
-już nie istnieje).
+już nie istnieje), a prawdę dla pozostałych wartości.
 
 \subsection{Typy platformy}
 
@@ -185,8 +190,8 @@ już nie istnieje).
 Wartość identyfikująca aktora w programie.
 Jest to typ dostarczany przez Viua VM. Dla programów pisanych w \ViuAct\ jest to
 typ nieprzezroczysty\footnote{Typ nieprzezroczysty czyli tzw. \emph{opaque~type}
-to typ, który nie może być analizowany i modyfikowany bezpośredni z poziomu
-języka.}.
+to typ, którego wartości nie mogą być analizowane i modyfikowane bezpośrednio z
+poziomu języka.}.
 
 Przy konwersji do typu boolowskiego przyjmuje fałsz dla wszystkich wartości.
 Używanie wartości typu PID jako wartości typu boolowskiego jest niezalecane
