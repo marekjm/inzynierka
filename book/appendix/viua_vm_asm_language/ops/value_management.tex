@@ -20,12 +20,23 @@ move %0 parameters %1 local
 move %1 local %1 static
 \end{lstlisting}
 
-Instrukcja z wariantu \emph{1} przesuwa wartość z lokalnego rejestru 4 do
+Instrukcja z przykładu \emph{1} przesuwa wartość z lokalnego rejestru 4 do
 lokalnego rejstru 0.
-Instrukcja z wariantu \emph{2} przesuwa wartość z lokalnego rejestru 1 do
+Instrukcja z przykładu \emph{2} przesuwa wartość z lokalnego rejestru 1 do
 rejestru parametrów 0 (znajdującego się w ramce wywołania).
-Instrukcja z wariantu \emph{3} przesuwa wartość ze statycznego rejestru 1 do
+Instrukcja z przykładu \emph{3} przesuwa wartość ze statycznego rejestru 1 do
 lokalnego rejestru 1.
+
+\paragraph*{Uwagi -- przekazywanie parametrów} Instrukcja \texttt{copy} jest
+wykorzystywana do przekazania parametrów formalnych przez przeniesienie i przy
+odczycie parametrów faktycznych.
+Przy przekazaniu parametrów wynikowym zestawem rejestrów musi być
+\texttt{arguments}. Przy odczycie parametrów źródłowym zestawem rejestrów musi
+być \texttt{parameters}.
+\begin{lstlisting}
+move %0 arguments %1 local      ; przekazanie
+move %1 local %0 parameters     ; odczyt
+\end{lstlisting}
 
 \subsubsection{\texttt{copy}}
 
@@ -44,12 +55,20 @@ copy %0 parameters %1 local
 copy %1 local %1 static
 \end{lstlisting}
 
-Instrukcja z wariantu \emph{1} kopiuje wartość z lokalnego rejestru 4 do
+Instrukcja z przykładu \emph{1} kopiuje wartość z lokalnego rejestru 4 do
 lokalnego rejstru 0.
-Instrukcja z wariantu \emph{2} kopiuje wartość z lokalnego rejestru 1 do
+Instrukcja z przykładu \emph{2} kopiuje wartość z lokalnego rejestru 1 do
 rejestru parametrów 0 (znajdującego się w ramce wywołania).
-Instrukcja z wariantu \emph{3} kopiuje wartość ze statycznego rejestru 1 do
+Instrukcja z przykładu \emph{3} kopiuje wartość ze statycznego rejestru 1 do
 lokalnego rejestru 1.
+
+\paragraph*{Uwagi -- przekazywanie parametrów} Instrukcja \texttt{copy} jest
+wykorzystywana do przekazania parametrów formalnych przez kopię do funkcji.
+Przy przekazaniu parametrów wynikowym zestawem rejestrów musi być
+\texttt{arguments}. Przy odczycie parametrów
+\begin{lstlisting}
+copy %0 arguments %1 local
+\end{lstlisting}
 
 \subsubsection{\texttt{ptr}}
 
