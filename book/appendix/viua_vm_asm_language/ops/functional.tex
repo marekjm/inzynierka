@@ -7,15 +7,30 @@
 function Rd %*\emph{function-name}*)
 \end{lstlisting}
 
-\paragraph*{Opis}
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} wartość reprezentującą
+funkcję określoną przez \texttt{\emph{function-name}}.
+
+Wartość ta może być wykorzystana w instrukcjach \texttt{call}, \texttt{tailcall}
+i \texttt{process} aby wywołać funkcję niebezpośrednio. Przykład:
+\begin{lstlisting}
+function %1 local a_function/0
+frame %0
+call void %1 local
+\end{lstlisting}
 
 \subsubsection{\texttt{closure}}
 
 \begin{lstlisting}
-closure Rd %*\emph{function-name}*)
+closure Rd %*\emph{closure-name}*)
 \end{lstlisting}
 
-\paragraph*{Opis}
+\paragraph*{Opis} Konstruuje w rejestrze \texttt{Rd} wartość będącą instancją
+domknięcia (ang. \emph{closure}) określonego przez \texttt{\emph{closure-name}}.
+
+Zanim tak utworzona wartość będzie mogła być wywołana wszystkie wartości, do
+których domknięcie \emph{closure-name} się odwołuje muszą zostać ,,schwytane''
+wewnątrz utworzonego domknięcia za pomocą instrukcji \texttt{capture},
+\texttt{capturecopy} lub \texttt{capturemove}.
 
 \subsubsection{\texttt{capture}}
 
@@ -23,7 +38,27 @@ closure Rd %*\emph{function-name}*)
 capture Rc Ri Rv
 \end{lstlisting}
 
-\paragraph*{Opis}
+\paragraph*{Opis} W rejestrze lokalnym o indeksie \texttt{Ri} wewnętrznym do
+domknięcia znajdującego się w rejestrze \texttt{Rc} tworzy referencję do
+wartości znajdującej się w rejestrze \texttt{Rv}.
+\begin{lstlisting}
+text %3 local "Hello World!"
+capture %1 local %1 %3 local
+\end{lstlisting}
+
+Przykład powyżej ,,chwyta'' wartość tekstową znajdującą się w rejestrze
+\texttt{\%3~local} i referencję do niej umieszcza w lokalnym rejestrze o
+indeksie 1 wewnętrznym do domknięcia znajdującego się w rejestrze
+\texttt{\%1~local}.
+
+\paragraph*{Uwagi -- czas życia} Schwytanie wartości przez referencję powoduje,
+że przestaje ona być śledzona przez standardowy deterministyczny mechanizm
+zarządzania wartościami i jej czas życia może być trudny do określenia jeśli
+domknięcie jest zwracane z funkcji lub przekazywane dalej jak parametr.
+
+\paragraph*{Uwagi -- przekazywanie wiadomości} Wartości schwytane przez
+referencję nie mogą być przekazywane jako wiadomości ponieważ naruszyło by to
+ścisłą izolację procesów.
 
 \subsubsection{\texttt{capturecopy}}
 
@@ -31,7 +66,17 @@ capture Rc Ri Rv
 capturecopy Rc Ri Rv
 \end{lstlisting}
 
-\paragraph*{Opis}
+\paragraph*{Opis} W rejestrze lokalnym o indeksie \texttt{Ri} wewnętrznym do
+domknięcia znajdującego się w rejestrze \texttt{Rc} tworzy kopię wartości
+znajdującej się w rejestrze \texttt{Rv}.
+\begin{lstlisting}
+text %3 local "Hello World!"
+capturecopy %1 local %1 %3 local
+\end{lstlisting}
+
+Przykład powyżej ,,chwyta'' wartość tekstową znajdującą się w rejestrze
+\texttt{\%3~local} i jej kopię umieszcza w lokalnym rejestrze o indeksie 1
+wewnętrznym do domknięcia znajdującego się w rejestrze \texttt{\%1~local}.
 
 \subsubsection{\texttt{capturemove}}
 
@@ -39,4 +84,14 @@ capturecopy Rc Ri Rv
 capturemove Rc Ri Rv
 \end{lstlisting}
 
-\paragraph*{Opis}
+\paragraph*{Opis} Przenosi wartość z rejestru \texttt{Rv} do rejestru lokalnego
+o indeksie \texttt{Ri} wewnętrznego do domknięcia znajdującego się w rejestrze
+\texttt{Rc}.
+\begin{lstlisting}
+text %3 local "Hello World!"
+capturemove %1 local %1 %3 local
+\end{lstlisting}
+
+Przykład powyżej ,,chwyta'' wartość tekstową znajdującą się w rejestrze
+\texttt{\%3~local} i przenosi ją do lokalnego rejestru o indeksie 1
+wewnętrznego do domknięcia znajdującego się w rejestrze \texttt{\%1~local}.
