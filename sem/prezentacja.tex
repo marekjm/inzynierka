@@ -237,13 +237,23 @@ moredelim=**[is][\color{red}]{@}{@}}
             \end{small}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \begin{small}
+            \begin{tiny}
             \begin{lstlisting}
-integer %1 local 42
-eq %2 local %n local %1 local
-if %2 local true_branch false_branch
+integer %3 local 42
+eq %4 local %n local %3 local
+if %4 local if_arm_true_e3f9 if_arm_false_f493
+
+.mark: if_arm_true_e3f9
+text %2 local "Hello, World!"
+jump if_end_7564
+
+.mark: if_arm_false_f493
+text %2 local "Goodby, World!"
+
+.mark: if_end_7564
+print %2 local
             \end{lstlisting}
-            \end{small}
+            \end{tiny}
         \end{column}
     \end{columns}
 \end{frame}
