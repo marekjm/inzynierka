@@ -222,6 +222,33 @@ moredelim=**[is][\color{red}]{@}{@}}
 \end{frame}
 
 \begin{frame}[fragile]
+    \frametitle{Przykładowy wynik kompilacji}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{small}
+            \begin{lstlisting}
+(let x
+    (if (= n 42)
+        "Hello World!"
+        "Goodbye World!"))
+(print x)
+            \end{lstlisting}
+            \end{small}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{small}
+            \begin{lstlisting}
+integer %1 local 42
+eq %2 local %n local %1 local
+if %2 local true_branch false_branch
+            \end{lstlisting}
+            \end{small}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
     \frametitle{Przykład kodu}
     \framesubtitle{Wszystkie konstrukcje w ViuAct}
 
