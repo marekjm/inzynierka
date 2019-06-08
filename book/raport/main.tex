@@ -140,6 +140,34 @@ przypadku skopiuje wartość, na którą wskazuje wskaźnik \texttt{ptr}.
 })
 \end{lstlisting}
 
+\subsubsection*{Dostęp do pól struktur}
+
+Jednym z bardziej problematycznych elementów jest również dostęp do pól
+struktur, do których mamy jedynie wskaźnik. Żeby uzyskać dostęp do takiego pola
+należy skopiować całą strukturę. Jest to szalenie niewydajne i widocznie
+spowalnia działanie oprogramowania.
+
+Tworzenie kopii jest wymuszone tym, że poniższa kombinacja konstrukcji
+językowych jest przez kompilator przetwarzana nieprawidłowo, już na etapie
+parsowania kodu źródłowego:
+\begin{lstlisting}
+(print (^ ptr).some.field)
+\end{lstlisting}
+W teorii, ten fragment kodu powinien wydrukować na ekran wartość przypisaną do
+pola \texttt{some.field} wewnątrz struktury, na którą wskazuje wskaźnik
+\texttt{ptr}. W praktyce, ten fragment wydrukuje na ekran strukturę, na którą
+wskazuje wskaźnik. Wynika to z faktu, że parser zakłada, że wszystkie wyrażenia
+składają się z pojedynczej grupy zamkniętej w nawiasach. W przypadku dostępów do
+pól to założenie jest fałszywe -- dostępy do pól są jedynymi wyrażeniami w
+języku, które tego założenia nie spełniają (i jedynymi które nie są zapisywane w
+notacji prefiksowej, a w infiksowej).
+
+Parser i specyfikacja zakładają, że dostępy do pól (czyli operator \texttt{.})
+będą miały z lewej strony zawsze nazwę, nie wrażenie. Nie jest to więc
+,,rozbieżność'' między implementacją, a specyfikacją. Krzysztof Franek jednak
+podczas prac na programem ViuaChat spróbował wykorzystać taką konstrukcję i
+natknął się na tą nieścisłość w projekcie języka.
+
 \subsection{Typowanie dynamiczne}
 
 Mimo iż nie było to ujęte w wymaganiach, za drobną porażkę uważam również
