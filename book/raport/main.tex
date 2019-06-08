@@ -88,14 +88,57 @@ niewystarczający na stworzenie prototypu kompilatora (w języku Python) w celu
 przeprowadzenia ,,rozpoznania'' przestrzeni problemu, a następnie korzystając z
 nabytej wiedzy napisanie kompilatora ,,produkcyjnego'' (w języku OCaml).
 
-\subsection{Niekompletność implementacji}
+\subsection{Rozbieżności między specyfikacją, a implementacją}
 
-Niepowodzeniem jest również fakt, że kompilator, którym dysponujemy nie jest w
-stanie przetworzyć stu procent możliwych do napisania konstrukcji językowych
-wynikających ze specyfikacji języka. Nie uniemożliwiło to co prawda napisania
-programu ViuaChat jednak wprowadziło pewne opóźnienia w pracach nad nim z powodu
-rozbieżności między teorią (specyfikacją języka), a praktyką (implementacją
-języka).
+Rozbieżności wynikaję z tego, że żeby szybko uzyskać działąjący w dużej liczbie
+przypadków kompilator czasami implementacja ,,szła na skróty''.
+
+Spowodowało to, że kompilator, którym dysponujemy nie jest w stanie przetworzyć
+stu procent możliwych kombinacji konstrukcji językowych wynikających ze
+specyfikacji języka. Nie uniemożliwiło to co prawda napisania programu ViuaChat
+jednak wprowadziło pewne opóźnienia w pracach nad nim z powodu rozbieżności
+między teorią (specyfikacją języka), a praktyką (implementacją języka).
+
+\subsubsection*{Dowiązania \emph{let} i wysłuskiwanie wskaźników}
+
+\begin{lstlisting}[caption={Błędnie działający przykład dowiązania do wyłuskania}]
+(let main () {
+    (let n 42)
+    (let ptr (Std.Pointer.take n))
+    (let x (^ ptr))
+    (print x)
+    0
+})
+\end{lstlisting}
+
+Jednym z przykładów kodu, który nie daje oczekiwanych rezultatów jest
+przypisanie wyniku wyłuskania wskaźnika do zmiennej:
+\begin{lstlisting}
+(let x (^ ptr))
+\end{lstlisting}
+W zmiennej \texttt{x} nie znajduje się, jak należałoby oczekiwać, kopia
+wartości, na którą wskazywał wskaźnik \texttt{ptr}. Zmiennej \texttt{x} tak
+naprawdę \emph{nie ma} po skompilowaniu. Wynika to z faktu, że operator
+wyłuskania wskaźnika nie zwraca wartości, a jedynie wpływa na sposób adresowania
+wartości w rejestrach.
+
+Aby zapisać w zmiennej wynik wyłuskania należy posłużyć się funkcją
+\texttt{Std.copy}:
+\begin{lstlisting}
+(let x (Std.copy (^ ptr)))
+\end{lstlisting}
+Funkcja ta zwraca kopię wartości podanej jej jako parametr, czyli w powyższym
+przypadku skopiuje wartość, na którą wskazuje wskaźnik \texttt{ptr}.
+
+\begin{lstlisting}[caption={Poprawnie działający przykład dowiązania do wyłuskania}]
+(let main () {
+    (let n 42)
+    (let ptr (Std.Pointer.take n))
+    (let x (Std.copy (^ ptr)))
+    (print x)
+    0
+})
+\end{lstlisting}
 
 \subsection{Typowanie dynamiczne}
 
