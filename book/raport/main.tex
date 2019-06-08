@@ -5,13 +5,13 @@ W tym rozdziale prezentujemy raport końcowy z efektów pracy inżynierskiej.
 Podsumowujemy odniesione sukcesy (wykonane oprogramowanie, wytworzoną dokumentację), porażki (elementy, na
 których wykonanie nie wystarczyło czasu, okazały się zbyt trudne do wykonania w ramach projektu
 inżynierskiego, bądź z innych powodów musiały zostać odrzucone), oraz zmiany, które musieliśmy wprowadzać do
-planu w trakcie trwania projektu (decyzja o uwzględnieniu raportowania błędów w kompilatorze).
+planu w trakcie trwania projektu (m.in. decyzja o uwzględnieniu raportowania błędów w kompilatorze).
 
 \section{Sukcesy}
 
 Niewątpliwym sukcesem jest doprowadzenie pracy inżynierskiej do końca. Patrząc
 na ,,zewnętrzne'' efekty pracy osiągnęliśmy wszystko co było zakładane -- czyli
-zarówno specyfikację i implementację (w formie kompilatora) języka wysokiego
+zarówno specyfikację i implementację (w~formie kompilatora) języka wysokiego
 poziomu na platformie Viua~VM, oraz nietrywialny program -- ViuaChat -- napisany
 w języku \ViuAct. Przygotowano również kompletne, zintegrowane środowisko,
 dzięki czemu wyniki prac mogą być użyteczne dla osób spoza zespołu projektowego.
@@ -70,7 +70,7 @@ nietrywialnych programach, takich jak ViuaChat, etap przetwarzania kodu programu
 w języku assemblera Viua~VM na formę binarną (realizowany przez assembler
 dostarczany przez Viua~VM) zajmuje dużą ilość czasu.
 
-Wynika to po części z faktu, że w nietrywialne programy zawierają dużą ilość
+Wynika to po części z faktu, że nietrywialne programy zawierają dużą ilość
 wyrażeń warunkowych. Analizator statyczny wbudowany w assembler dostarczany
 przez Viua~VM duplikuje swój stan dla każdej instrukcji skoku warunkowego
 (emitowanej dla każdego wyrażenia warunkowego) i rozważa wykonanie każdej
