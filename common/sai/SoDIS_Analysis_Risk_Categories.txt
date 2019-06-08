@@ -1,0 +1,14 @@
+# Raport z SoDIS: Viua VM
+
+--------------------------------------------------------------------------------
+
+# Krótki opis projektu
+
+Viua VM to środowisko uruchomieniowe przeznaczone dla oprogramowania o
+podwyższonych wymaganiach niezawodności. Viua VM charakteryzuje się wysokim
+poziomem stabilności, determinizmem wykonania programów, oraz niską
+awaryjnością.
+
+--------------------------------------------------------------------------------
+
+# Lista udziałowców
