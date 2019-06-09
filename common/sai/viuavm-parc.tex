@@ -506,47 +506,49 @@
 	9
 	& Czy ukończenie zadania może wymagać akceptacji oprogramowania, które może
     nie spełnić wymagań określonych w umowie?
-	& --
-	& --
+	& Nie.
+	& Całe oprogramowanie jest napisane przez nas.
 	\\\hline
 
 	10
 	& Czy zadanie może spowodować szkodę dla użytkownika, ogółu społeczeństwa, lub
     środowiska?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	11
 	& Czy zadanie może nie uwzględnić interesów udziałowca, klienta, lub ogółu
     społeczeństwa?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	12
 	& Czy zadanie może wymagać założenia nieosiągalnych celów?
-	& --
-	& --
+	& Tak.
+	& Możemy założyć, że podsystem ma przeprowadzać optymalizacje o niemożliwym
+    do osiągnięcia poziomie.
 	\\\hline
 
 	13
 	& Czy zadanie może wymagać fałszywego zaprezentowania możliwości lub
     niezawodności produktu?
-	& --
-	& --
+	& Tak.
+	& Jeśli chcielibyśmy fałszywie przedstawić stopień niezawodności i
+    zgodności podsystemu ze specyfikacją.
 	\\\hline
 
 	14
 	& Czy zadanie może wymagać od programisty pracy ponad możliwości?
-	& --
-	& --
+	& Tak.
+	& Jeśli zostaną postawione niemożliwe do osiągnięcia cele.
 	\\\hline
 
 	15
 	& Czy zadanie może spowodować stratę informacji, stratę majątku, uszkodzenia
     majątku, lub mieć wpływ na środowisko?
-	& --
+	& Nie.
 	& --
 	\\\hline
 \end{tabularx}
@@ -558,46 +560,46 @@
 	16
 	& Czy zadanie może spowodować utratę lub niepożądane zmiany w plikach i
     programach posiadanych lub używanych przez udziałowców?
-	& --
+	& Nie.
 	& --
 	\\\hline
 	
 	17
 	& Czy zadanie może wymagać poniesienia niepożądanych wydatków?
-	& --
+	& Nie.
 	& --
 	\\\hline
 	
 	18
 	& Czy zadanie może wymagać zaprojektowania lub akceptacji oprogramowania,
     które może negatywnie wpłynąć na jakość życia udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 	
 	19
 	& Czy zadanie może dyskryminować udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 	
 	20
 	& Czy zadanie może pozwolić na nieautoryzowany dostęp lub nieautoryzowane
     wprowadzenie zmian w danych posiadanych przez udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 	
 	21
 	& Czy zadanie może wymagać zaprojektowania lub akceptacji oprogramowania,
     które może negatywnie wpłynąć na jakość życia udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 	
 	22
 	& Czy zadanie może wymagać naruszenia prywatności lub poufności udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 	
@@ -605,14 +607,14 @@
 	& Czy zadanie może wymagać zaprojektowania lub akceptacji oprogramowania,
     które może spowodować u udziałowca ryzyko uszczerbku na zdrowiu lub utraty
     życia?
-	& --
+	& Nie.
 	& --
 	\\\hline
 	
 	24
 	& Czy zadanie może pozwolić na uszkodzenie danych należących do lub
     dotyczących udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 \end{tabularx}
@@ -623,15 +625,17 @@
     
 	25
 	& Czy zadanie może nieuwzględnić jakiegokolwiek upośledzenia udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
     
 	26
 	& Czy zadanie może preferować łatwość wykonania nad interes lub wygodę
     udziałowca?
-	& --
-	& --
+	& Tak.
+	& Podystem może być zaprogramowany niewydajnie, ale w prosty sposób.
+    Spowoduje to wygodę dla programisty implementującego kompilator, ale
+    stratę czasu u programisty używającego kompilatora.
 	\\\hline
 \end{tabularx}
 
@@ -641,32 +645,32 @@
 
 	27
 	& Czy zadanie może wymagać ukrycia potencjalnych zagrożeń przed udziałowcem?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	28
 	& Czy zadanie może wymagać od udziałowca braku szczerości?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	29
 	& Czy zadanie może naruszać prawa własności intelektualnej udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	30
 	& Czy zadanie może wymagać użycia nielegalnie pozyskanego oprogramowania?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	31
 	& Czy zadanie może spowodować przewidywalne ryzyko, o którym udziałowiec nie
     zostanie poinformowany?
-	& --
+	& Nie.
 	& --
 	\\\hline
 \end{tabularx}
@@ -677,39 +681,40 @@
     
 	32
 	& Czy zadanie może uniemożliwić wzięcie odpowiedzialności przez udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	33
 	& Czy zadanie może spowodować nieefektywne lub niewydajne użycie zasobów
     komputerowych udziałowca?
-	& --
-	& --
+	& Tak.
+	& Podsystem może być zaimplementowany niewydajnie, lub emitować niewydajny
+    kod wynikowy.
 	\\\hline
 
 	34
 	& Czy zadanie może spowodować konflikt interesów z udziałowcem?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	35
 	& Czy zadanie może spowodować złamanie kontraktów lub umów zawartych z
     udziałowcem?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	36
 	& Czy zadanie może wymagać nieuprawnionego użycia zasobów udziałowca?
-	& --
+	& Nie.
 	& --
 	\\\hline
 
 	36
 	& Czy zadanie może utrudnić udziałowcowi stosowanie się do przepisów prawa?
-	& --
+	& Nie.
 	& --
 	\\\hline
 \end{tabularx}
