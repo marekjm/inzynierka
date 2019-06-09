@@ -12,3 +12,29 @@ awaryjnością.
 --------------------------------------------------------------------------------
 
 # Lista udziałowców
+
+Rola: Implementator kompilatora.
+Nazwa: Marek Marecki
+Powód włączenia: Osoba odpowiedzialna za implementację kompilatora.
+
+Rola: Programista-użytkownik kompilatora.
+Nazwa: Krzysztof Franek
+Powód włączenia: Osoba, na którą największy wpływ będzie miała jakość
+    kompilatora.
+Komentarz: Krzysztof jest również testerem kompilatora.
+
+Rola: Promotor.
+Nazwa: Marek Bednarczyk
+Powód włączenia: Osoba oceniająca wynik prac.
+
+--------------------------------------------------------------------------------
+
+# Protokół z analizy SoDIS
+
+## Informacje ogólne
+
+## Główne zagrożenia
+
+## Wpływ na aplikację
+
+## Rekomendacje/rozwiązania

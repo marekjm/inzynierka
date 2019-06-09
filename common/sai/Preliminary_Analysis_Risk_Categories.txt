@@ -112,9 +112,9 @@ STAKEHOLDERS: ANALYSE STAKEHOLDERS (PRELIMINARY ANALYSIS)
 8. Yes. (the plan it to abandon the software, or to rewrite it to cut ties to
    the PJATK)
 
-STAKEHOLDER 0: Marek Marecki (implementor)
-STAKEHOLDER 0: Krzysztof Franek (user-programmer)
-STAKEHOLDER 1: Marek Bednarczyk (dziekan)
+stakeholder 0: marek marecki (implementor)
+stakeholder 0: krzysztof franek (user-programmer)
+stakeholder 1: marek bednarczyk (dziekan)
 
 TASKS/STAKEHOLDERS ANALYSIS (PRELIMINARY ANALYSIS)
 
